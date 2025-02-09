@@ -1,4 +1,6 @@
 boucle infini qui attend str
+    dfkdfhjkldf
+        krle
 parsing pour aller chercher les commandes
 execution des commandes.
 redirection des inputs/outputs et pipe
