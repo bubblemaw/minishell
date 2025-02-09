@@ -1,0 +1,7 @@
+boucle infini qui attend str
+parsing pour aller chercher les commandes
+execution des commandes.
+redirection des inputs/outputs et pipe
+recodage des commandes internes built in
+gestion des signaux ctrl c ctrl v
+gestion d'erreur.
