@@ -1,0 +1,42 @@
+boucle infini qui attend un str ce str etant la commande souhaitee
+    - afficher un prompt qui attend une commande
+    - Tokkenisation de la commande
+        - decouper chaque element
+        - verifier l ordre des elements
+        - verifier la validiter de la commande
+        - verifier si la commande est built in ou un exe
+parsing pour aller chercher les commandes
+    - verifier tous les chemins du PATH, donc mettre **env en arg
+    - verifier si la commande est executable (execve)
+    - gerer une erreur si la commande n'est pas trouvee
+execution des commandes.
+    - comparaisons de verifications de commande
+        - verifiers si les tokken existent
+        - verifier si l'ordre est correct
+        - verifier si la commande est built in ou un exe
+        - gerer les redirections > < | >> <<
+    - creation du processsur enfant
+    - execution de l'enfant
+    - mise en attente du parent (waitpid)
+redirection des inputs/outputs et pipe
+    - une fonction pour chaque type de redirection
+        - inputs / outputs
+        - pipe
+    - appliquer n'importe quelle fonction de redirection a un tokken
+        - quotes '' "" $ a gerer
+            - '' = Afficher tous les char sans aucune interpretation
+            - "" = les char doivent etre interprete "$USER"
+            - sans quotes, interpretation
+recodage des commandes internes built in
+    - echo with -n
+    - cd
+    - pwd
+    - export
+    - unset
+    - env
+    - exit
+gestion des signaux ctrl-C ctrl-D ctr-\
+    - sigint
+    - sigquit
+historique
+    - gerer un historique qui repertorie TOUTES les commandes effectuers

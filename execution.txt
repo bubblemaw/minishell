@@ -1,0 +1,8 @@
+The strategy for your shell is to have the parent process do all the piping and redirection
+before forking the processes. In this way the children will inherit the redirection. The parent
+needs to save input/output and restore it at the end. Stderr is the same for all processes
+
+built in Functions
+All built-in funnctions except printenv are executed by 
+the parent process the reason is thaht we want the
+built inc ommand to modify the state of the parent
