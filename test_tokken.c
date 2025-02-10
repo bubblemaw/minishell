@@ -3,17 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   test_tokken.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:02:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/02/10 17:24:21 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/02/10 22:34:52 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+#include "minishell.h"
 
 int	ft_strncmp(char *str1, char *str2, size_t n)
 {
@@ -45,8 +42,8 @@ int	main (void)
 
 	while (1)
 	{
-		input = readline("> ");
-		if (strncmp(input, "minishell$ ", 4) == 0)
+		input = readline("minishell$ ");
+		if (strncmp(input, "exit ", 4) == 0)
 			return (0);
 	}
 	return (0);
