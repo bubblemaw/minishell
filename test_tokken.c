@@ -3,33 +3,52 @@
 /*                                                        :::      ::::::::   */
 /*   test_tokken.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:02:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/02/11 18:09:17 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/02/11 21:03:31 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int skip_space(char *str)
+int	skip_space(char *str, int *i)
 {
-	int i;
+	while ((str[*i] >= 9 && str[*i] <= 13) || str[*i] == 32)
+	{
+		double_quotes(str, i);
+		single_quotes(str, i);
+		(*i)++;
+	}
+	return (0);
+}
 
-	i = 0;
-	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
-		i++;
+int	double_quotes(char *str, int *i)
+{
+	while (str[*i] != '"')
+		(*i)++;
+	if (str[*i] == '"')
+		(*i)++;
+	return (0);
+}
+
+int	single_quotes(char *str, int *i)
+{
+	while (str[*i] != '\'')
+		(*i)++;
+	if (str[*i] == '\'')
+		(*i)++;
 	return (0);
 }
 
 int creat_tokken(char *input, t_shell *shell)
 {
-	int i;
+	int *i;
 
-	i = 0;
-	while (input[i] != '\0')
+	*i = 0;
+	while (input[*i] != '\0')
 	{
-		i++;
+		(*i)++;
 	}
 	return (0);
 }
@@ -63,6 +82,19 @@ void	add_node(t_shell *shell, t_list *new)
 	current->next = new;
 	return ;
 }
+
+void	print_list(t_list *head)
+{
+	t_list	*current;
+
+	current = head;
+	while (current)
+	{
+		printf("%s\n", (char *)current->value);
+		current = current->next;
+	}
+}
+
 
 int	main (void)
 {
