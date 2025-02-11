@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 22:12:05 by david             #+#    #+#             */
-/*   Updated: 2025/02/11 14:27:38 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/02/11 15:39:56 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,7 @@ typedef struct s_list
 {
 	char 			*value;
 	struct s_list	*next;
-	struct s_list	*prev;
 }	t_list;
-
 
 typedef struct s_shell
 {

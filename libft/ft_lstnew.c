@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 11:44:34 by dchellen          #+#    #+#             */
-/*   Updated: 2025/02/11 14:29:12 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/02/11 15:39:56 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_list	*ft_lstnew(void *content)
 		return (NULL);
 	pt_nb->content = content;
 	pt_nb->next = NULL;
+	pt_nb->prev = NULL;
 	return (pt_nb);
 }
 
