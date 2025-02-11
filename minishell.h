@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 22:12:05 by david             #+#    #+#             */
-/*   Updated: 2025/02/11 15:39:56 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/02/11 18:09:19 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ typedef struct s_list
 
 typedef struct s_shell
 {
-	t_list			*head;
+	t_list			*tokken;
 }	t_shell;
 
 #endif
