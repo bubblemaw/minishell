@@ -1,0 +1,1 @@
+The shell will work only in interactive mode (no scripts, i.e. the executable takes no arguments)

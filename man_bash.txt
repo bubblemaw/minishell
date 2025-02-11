@@ -1,0 +1,5 @@
+Bash's exit status is the exit status of the last command executed in the script.
+If no commands are executed, the exit status is 0
+An attempt is first made to open the file in the current directory,
+and, if no file is found, then the shell searches the directories in PATH for the script.
+The return value of a simple command is its exit status, or 128+n if the command is terminated by signal n. 

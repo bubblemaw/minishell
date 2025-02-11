@@ -1,25 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_readline.c                                    :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/09 18:40:04 by masase            #+#    #+#             */
-/*   Updated: 2025/02/10 01:56:24 by maw              ###   ########.fr       */
+/*   Created: 2025/02/11 15:17:30 by maw               #+#    #+#             */
+/*   Updated: 2025/02/11 15:36:30 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+#ifndef MINISHELL_H
+# define MINISHELL_H
+# include <unistd.h>
+# include <stdlib.h>
+# include <sys/wait.h>
+# include <fcntl.h>
+# include <string.h>
+# include <stdio.h>
+# include <errno.h>
 
-int main(void)
+typedef struct s_cmd
 {
-    char *rl;
-    rl = readline("Prompt > ");
-    printf("%s\n", rl);
-    free(rl);
-    return (0);
-}
+	char **arg;
+	char *infile;
+	char *outfile;
+	int	append;
+	struct s_cmd *next;
+}	t_cmd;
+
+#endif

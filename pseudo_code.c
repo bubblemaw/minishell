@@ -1,25 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_readline.c                                    :+:      :+:    :+:   */
+/*   pseudo_code.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/09 18:40:04 by masase            #+#    #+#             */
-/*   Updated: 2025/02/10 01:56:24 by maw              ###   ########.fr       */
+/*   Created: 2025/02/11 15:16:38 by maw               #+#    #+#             */
+/*   Updated: 2025/02/11 16:50:56 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+#include "minishell.h"
 
-int main(void)
+int execution(t_cmd *cmd)
 {
-    char *rl;
-    rl = readline("Prompt > ");
-    printf("%s\n", rl);
-    free(rl);
-    return (0);
+	while(cmd->next)
+	{
+		execute();
+		//iterate trough commands
+	}
+	
 }
+
+int execute()
+{
+	//chemin absolu ou juste la commande
+	// builtin ou pas
+	//changer les outputs input
+	// lire l'input
+	// fermer les fd
+	//executer la cmd
+	// si built in parent process
+	// si exe child process
+	// (remettre les inputs et outputs normalement)
+
+}
+
+
+
