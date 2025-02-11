@@ -1,34 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_tokken.c                                      :+:      :+:    :+:   */
+/*   ft_lstadd_font.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 16:02:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/02/11 14:27:32 by dchellen         ###   ########.fr       */
+/*   Created: 2024/10/22 14:20:58 by dchellen          #+#    #+#             */
+/*   Updated: 2024/10/23 15:36:12 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-// int gestion_tokken_1(char *input)
-// {
-// 	return (0);
-// }
-
-int	main (void)
+void	ft_lstadd_front(t_list **lst, t_list *new)
 {
-	char *input;
-
-	while (1)
-	{
-		input = readline("minishell$ ");
-		if (strncmp(input, "exit ", 4) == 0)
-		{
-			free(input);
-			return (0);
-		}
-	}
-	return (0);
+	if (new == NULL)
+		return ;
+	new->next = *lst;
+	*lst = new;
+	return ;
 }

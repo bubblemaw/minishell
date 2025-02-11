@@ -1,34 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_tokken.c                                      :+:      :+:    :+:   */
+/*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 16:02:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/02/11 14:27:32 by dchellen         ###   ########.fr       */
+/*   Created: 2024/08/26 11:02:50 by david_chell       #+#    #+#             */
+/*   Updated: 2024/10/12 17:57:07 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-// int gestion_tokken_1(char *input)
-// {
-// 	return (0);
-// }
-
-int	main (void)
+int	ft_tolower(int c)
 {
-	char *input;
-
-	while (1)
-	{
-		input = readline("minishell$ ");
-		if (strncmp(input, "exit ", 4) == 0)
-		{
-			free(input);
-			return (0);
-		}
-	}
-	return (0);
+	if (c >= 'A' && c <= 'Z')
+		c += 32;
+	return (c);
 }
+
+// int main (void)
+// {
+//     printf("%d\n", ft_tolower(65));
+//     return (0);
+// }

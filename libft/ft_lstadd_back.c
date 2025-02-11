@@ -1,34 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_tokken.c                                      :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 16:02:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/02/11 14:27:32 by dchellen         ###   ########.fr       */
+/*   Created: 2024/10/23 17:38:23 by dchellen          #+#    #+#             */
+/*   Updated: 2025/02/11 14:24:32 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-// int gestion_tokken_1(char *input)
-// {
-// 	return (0);
-// }
-
-int	main (void)
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	char *input;
+	t_list	*first;
 
-	while (1)
+	if (new == NULL)
+		return ;
+	if (*lst == NULL)
 	{
-		input = readline("minishell$ ");
-		if (strncmp(input, "exit ", 4) == 0)
-		{
-			free(input);
-			return (0);
-		}
+		*lst = new;
+		return ;
 	}
-	return (0);
+	first = *lst;
+	while (first->next != NULL)
+	{
+		first = first->next;
+	}
+	first->next = new;
+	return ;
 }

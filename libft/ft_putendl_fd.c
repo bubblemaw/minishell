@@ -1,34 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_tokken.c                                      :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 16:02:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/02/11 14:27:32 by dchellen         ###   ########.fr       */
+/*   Created: 2024/08/27 19:28:30 by david_chell       #+#    #+#             */
+/*   Updated: 2024/10/12 16:26:50 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-// int gestion_tokken_1(char *input)
-// {
-// 	return (0);
-// }
-
-int	main (void)
+void	ft_putendl_fd(char *s, int fd)
 {
-	char *input;
+	int	i;
 
-	while (1)
+	i = 0;
+	while (s[i] != '\0')
 	{
-		input = readline("minishell$ ");
-		if (strncmp(input, "exit ", 4) == 0)
-		{
-			free(input);
-			return (0);
-		}
+		write(fd, &s[i], 1);
+		i++;
 	}
-	return (0);
+	write(fd, "\n", 1);
+	return ;
 }
+
+// int main (void)
+// {
+//     char line[] = "La menace fantome";
+//     int fd;
+//     ft_putendl(line, fd);
+//     return (0);
+// }

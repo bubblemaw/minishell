@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: david <david@student.42.fr>                +#+  +:+       +#+         #
+#    By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 22:16:43 by david             #+#    #+#              #
-#    Updated: 2025/02/10 22:37:44 by david            ###   ########.fr        #
+#    Updated: 2025/02/11 13:22:07 by dchellen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,16 +24,27 @@ RM = rm -f
 
 OBJS = $(SRCS:%.c=%.o)
 
-$(NAME) : $(OBJS)
-			$(CC) $(FLAGS) $(OBJS) -o $(NAME) $(LIBS)
+LIBFT_PATH = libft/
 
-all : $(NAME)
+LIBFT_LIB = $(LIBFT_PATH)libft.a
 
-clean : 
+$(NAME): subsystems $(OBJS)
+	$(CC) $(FLAGS) $(LIBFT_LIB) $(OBJS) -o $(NAME) $(LIBS)
 
-		$(RM) $(OBJS)
+%.o: %.c
+	$(CC) $(FLAGS) -c $< -o $@
 
-fclean : clean
-		 $(RM) $(NAME)
+subsystems:
+	@make -C $(LIBFT_PATH) all
 
-re : fclean all
+all: $(NAME)
+
+clean:
+	$(RM) $(OBJS)
+	make -C $(LIBFT_PATH) clean
+
+fclean: clean
+	$(RM) $(NAME)
+	make -C $(LIBFT_PATH) fclean
+
+re: fclean all

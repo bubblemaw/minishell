@@ -1,34 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_tokken.c                                      :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 16:02:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/02/11 14:27:32 by dchellen         ###   ########.fr       */
+/*   Created: 2024/10/24 11:22:33 by dchellen          #+#    #+#             */
+/*   Updated: 2024/10/24 13:38:37 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-// int gestion_tokken_1(char *input)
-// {
-// 	return (0);
-// }
-
-int	main (void)
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	char *input;
+	t_list	*actu;
+	t_list	*suivant;
 
-	while (1)
+	if (lst == NULL || *lst == NULL)
+		return ;
+	actu = *lst;
+	while (actu != NULL)
 	{
-		input = readline("minishell$ ");
-		if (strncmp(input, "exit ", 4) == 0)
-		{
-			free(input);
-			return (0);
-		}
+		suivant = actu->next;
+		del(actu->content);
+		free(actu);
+		actu = suivant;
 	}
-	return (0);
+	*lst = NULL;
+	return ;
 }
