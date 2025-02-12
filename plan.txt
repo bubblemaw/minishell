@@ -3,13 +3,20 @@ PLAN DE MINSHELL
 (1) boucle infini qui attend un str ce str etant la commande souhaitee
     - afficher un prompt qui attend une commande
     - Tokkenisation de la commande
-        - Les commandes doivent obligatoirement etre separees par un ou plusieurs
-            espaces, 
-        - les options egalement, 
-        - mais les redirection peuve etre collees ou avoir plusieurs espaces
 
+        - Les commandes doivent obligatoirement etre separees par un ou plusieurs
+            espaces
+        - les options egalement
+        - mais les redirection peuve etre collees ou avoir plusieurs espaces
+        - quand on crée des variables tout doit être collé avant et apres le =
         - si on detecte des "" ou '' c est considere comme
  		  un separateur jusqu a ce qu on le retrouve
+
+        - GESTIONS A DISTINGUER EN TYPE
+            - les mots clé reservé
+            - les opérateurs
+            - commandes
+            - arguments / options
 
         - mettre un flag begin et end pour savoir de ou a ou va le mot dans le string
         - injecter cette partie du string dans un noeud de la liste chainee
@@ -21,15 +28,12 @@ PLAN DE MINSHELL
         - verifier la validiter de la commande
         - verifier la validiter des redirection
 
-
-
-
-
-
 (2) parsing pour aller chercher les commandes
     - verifier tous les chemins du PATH, donc mettre **env en arg
     - verifier si la commande est executable (execve)
     - gerer une erreur si la commande n'est pas trouvee
+
+//-------------------------------------------------------------------------------//
 
 (3) execution des commandes.
     (2)
