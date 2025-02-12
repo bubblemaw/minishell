@@ -6,19 +6,20 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:02:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/02/12 11:29:08 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/02/12 13:25:01 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Il faut seprar chaque tokken avec les espaces
+// Il faut separer chaque tokken
+// 
 // si on detecte des "" ou '' c est considere comme
-// un separateur jusqu a ce qu on le retrouve
+// 		un separateur jusqu a ce qu on le retrouve
 // mettre un flag begin et end pour savoir de ou a ou va le mot dans le string
 // injecter cette partie du string dans un noeud de la liste chainee
 // pour injecter le noeud il faut faire un strdup de la partie du string
-// que l on souhaite prendre
+// 		que l on souhaite prendre
 
 int	skip_space(char *str, int *i)
 {
@@ -33,8 +34,6 @@ int	double_quotes(char *str, int *i)
 {
 	while (str[*i] != '"')
 		(*i)++;
-	if (str[*i] == '"')
-		(*i)++;
 	return (0);
 }
 
@@ -42,28 +41,6 @@ int	single_quotes(char *str, int *i)
 {
 	while (str[*i] != '\'')
 		(*i)++;
-	if (str[*i] == '\'')
-		(*i)++;
-	return (0);
-}
-
-int creat_tokken(char *input, t_shell *shell)
-{
-	int *i;
-	int begin;
-	int end;
-
-	*i = 0;
-	begin = 0;
-	end = 0;
-	while (input[*i] != '\0')
-	{
-		skip_space(input, &i);
-		begin = *i;
-		double_quotes(input, &i);
-		single_quotes(input, &i);
-		(*i)++;
-	}
 	return (0);
 }
 
