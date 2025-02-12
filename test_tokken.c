@@ -3,23 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   test_tokken.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:02:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/02/12 13:25:01 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/02/12 17:47:05 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// Il faut separer chaque tokken
-// 
-// si on detecte des "" ou '' c est considere comme
-// 		un separateur jusqu a ce qu on le retrouve
-// mettre un flag begin et end pour savoir de ou a ou va le mot dans le string
-// injecter cette partie du string dans un noeud de la liste chainee
-// pour injecter le noeud il faut faire un strdup de la partie du string
-// 		que l on souhaite prendre
 
 int	skip_space(char *str, int *i)
 {

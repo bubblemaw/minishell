@@ -68,7 +68,7 @@ recodage des commandes internes built in
     - unset  (desactive une variable d environnement)
     - env    (affiche l environnement)
     - exit   (quitte le terminal)
-
+        - la commande exit doit return la bonne valeur de sortie si on fait echo
 gestion des signaux ctrl-C ctrl-D ctr-    - sigint
     - sigquit
 
