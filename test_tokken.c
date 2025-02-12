@@ -3,21 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   test_tokken.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:02:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/02/11 21:03:31 by david            ###   ########.fr       */
+/*   Updated: 2025/02/12 11:29:08 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// Il faut seprar chaque tokken avec les espaces
+// si on detecte des "" ou '' c est considere comme
+// un separateur jusqu a ce qu on le retrouve
+// mettre un flag begin et end pour savoir de ou a ou va le mot dans le string
+// injecter cette partie du string dans un noeud de la liste chainee
+// pour injecter le noeud il faut faire un strdup de la partie du string
+// que l on souhaite prendre
+
 int	skip_space(char *str, int *i)
 {
 	while ((str[*i] >= 9 && str[*i] <= 13) || str[*i] == 32)
 	{
-		double_quotes(str, i);
-		single_quotes(str, i);
 		(*i)++;
 	}
 	return (0);
@@ -44,10 +50,18 @@ int	single_quotes(char *str, int *i)
 int creat_tokken(char *input, t_shell *shell)
 {
 	int *i;
+	int begin;
+	int end;
 
 	*i = 0;
+	begin = 0;
+	end = 0;
 	while (input[*i] != '\0')
 	{
+		skip_space(input, &i);
+		begin = *i;
+		double_quotes(input, &i);
+		single_quotes(input, &i);
 		(*i)++;
 	}
 	return (0);
@@ -95,20 +109,32 @@ void	print_list(t_list *head)
 	}
 }
 
-
-int	main (void)
+// main test juste avec ac av pour tester les tokkens
+int	main (int ac, char *av[])
 {
 	t_shell shell;
-	char *input;
 
-	while (1)
-	{
-		input = readline("minishell$ ");
-		if (strncmp(input, "exit ", 4) == 0)
-		{
-			free(input);
-			return (0);
-		}
-	}
+
 	return (0);
 }
+
+
+
+// Ci dessous le main avec le prompt 
+
+// int	main (void)
+// {
+// 	t_shell shell;
+// 	char *input;
+
+// 	while (1)
+// 	{
+// 		input = readline("minishell$ ");
+// 		if (strncmp(input, "exit ", 4) == 0)
+// 		{
+// 			free(input);
+// 			return (0);
+// 		}
+// 	}
+// 	return (0);
+// }
