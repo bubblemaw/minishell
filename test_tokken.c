@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:02:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/02/13 17:37:20 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/02/13 18:03:25 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,12 @@ int	creat_tokken(char *input)
 		{
 			end = i;
 		}
-		if (input[i] != ' ')
+		if (input[i] != ' ' && input[i] != '>'
+			&& input[i] != '<' && input[i] != '|')
 			i++;
 		else
-		{
 			end = i;
-			break ;
-		}
+		i++;
 	}
 	new = ft_substr(input, begin, end - begin);
 	printf("le substr est : %s\n", new);
