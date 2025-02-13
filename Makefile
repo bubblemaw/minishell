@@ -6,7 +6,7 @@
 #    By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 22:16:43 by david             #+#    #+#              #
-#    Updated: 2025/02/11 16:05:58 by dchellen         ###   ########.fr        #
+#    Updated: 2025/02/13 17:14:59 by dchellen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ LIBFT_PATH = libft/
 LIBFT_LIB = $(LIBFT_PATH)libft.a
 
 $(NAME): subsystems $(OBJS)
-	$(CC) $(FLAGS) $(LIBFT_LIB) $(OBJS) -o $(NAME) $(LIBS)
+	$(CC) $(FLAGS) $(OBJS) -o $(NAME) $(LIBFT_LIB) $(LIBS)
 
 %.o: %.c
 	$(CC) $(FLAGS) -c $< -o $@

@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:02:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/02/13 11:43:35 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/02/13 17:37:20 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,16 @@
 int	skip_space(char *str, int *i)
 {
 	while ((str[*i] >= 9 && str[*i] <= 13) || str[*i] == 32)
-	{
 		(*i)++;
-	}
 	return (0);
 }
 
 int	double_quotes(char *str, int *i)
 {
+	if (str[*i] == '"')
+		(*i)++;
+	else
+		return (0);
 	while (str[*i] != '"')
 		(*i)++;
 	return (0);
@@ -30,63 +32,120 @@ int	double_quotes(char *str, int *i)
 
 int	single_quotes(char *str, int *i)
 {
+	if (str[*i] == '\'')
+		(*i)++;
+	else
+		return (0);
 	while (str[*i] != '\'')
 		(*i)++;
 	return (0);
 }
 
-t_list	*creat_node(t_shell *shell, void *content)
+int detect_redirections(char *str, int *i)
 {
-	shell->tokken = (t_list *)malloc(sizeof(t_list));
-	if (shell->tokken == NULL)
-		return (NULL);
-	shell->tokken->value = content;
-	shell->tokken->next = NULL;
-	return (shell->tokken);
+	int next;
+
+	next = *i;
+	if (str[*i] == '>' || str[*i] == '<')
+	{
+		if (str[next + 1] == str[*i])
+		{
+			(*i)++;
+			return (1);
+		}
+		return (1);
+	}
+	if (str[*i] == '|')
+		return (1);
+	return (0);
 }
 
-void	add_node(t_shell *shell, t_list *new)
+int	creat_tokken(char *input)
 {
-	t_list	*current;
+	int	i;
+	int	begin;
+	int	end;
+	char *new;
 
-	if (new == NULL)
-		return ;
-	if (shell->tokken == NULL)
+	i = 0;
+	begin = 0;
+	end = 0;
+	skip_space(input, &i);
+	begin = i;
+	while (input[i] != '\0')
 	{
-		shell->tokken = new;
-		return ;
+		double_quotes(input, &i);
+		single_quotes(input, &i);
+		if (detect_redirections(input, &i) == 1)
+		{
+			end = i;
+		}
+		if (input[i] != ' ')
+			i++;
+		else
+		{
+			end = i;
+			break ;
+		}
 	}
-	current = shell->tokken;
-	while (current->next != NULL)
-	{
-		current = current->next;
-	}
-	current->next = new;
-	return ;
+	new = ft_substr(input, begin, end - begin);
+	printf("le substr est : %s\n", new);
+	return (0);
 }
 
-void	print_list(t_list *head)
-{
-	t_list	*current;
+// t_list	*creat_node(t_shell *shell, void *content)
+// {
+// 	shell->tokken = (t_list *)malloc(sizeof(t_list));
+// 	if (shell->tokken == NULL)
+// 		return (NULL);
+// 	shell->tokken->value = content;
+// 	shell->tokken->next = NULL;
+// 	return (shell->tokken);
+// }
 
-	current = head;
-	while (current)
-	{
-		printf("%s\n", (char *)current->value);
-		current = current->next;
-	}
-}
+// void	add_node(t_shell *shell, t_list *new)
+// {
+// 	t_list	*current;
+
+// 	if (new == NULL)
+// 		return ;
+// 	if (shell->tokken == NULL)
+// 	{
+// 		shell->tokken = new;
+// 		return ;
+// 	}
+// 	current = shell->tokken;
+// 	while (current->next != NULL)
+// 	{
+// 		current = current->next;
+// 	}
+// 	current->next = new;
+// 	return ;
+// }
+
+// void	print_list(t_list *head)
+// {
+// 	t_list	*current;
+
+// 	current = head;
+// 	while (current)
+// 	{
+// 		printf("%s\n", (char *)current->value);
+// 		current = current->next;
+// 	}
+// }
 
 // main test juste avec ac av pour tester les tokkens
 int	main (int ac, char *av[])
 {
-	t_shell shell;
-
-
+	if (ac < 2)
+	{
+		printf("Error\n");
+		return (0);
+	}
+	creat_tokken(av[1]);
 	return (0);
 }
-
-
 
 // Ci dessous le main avec le prompt 
 
