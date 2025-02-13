@@ -110,3 +110,23 @@ dchellen@c1r7s1:~/Desktop/minishell$ echo "bonjour" " ca va"
 bonjour  ca va
 dchellen@c1r7s1:~/Desktop/minishell$ echo "bonjour" "ca va"
 bonjour ca va
+
+//-----------------------------------------------------------------------------//
+
+GESTION DES PRIORITEES EN BASH
+
+1. preparer l entree avec les redirection
+    < et << prennent ce qu il y a a droite 
+    et en font l'entree de l'element a gauche
+
+2. transmissions entre processsusavec les pipes
+    transmissions des entree et sortie a tranvers Les
+    child processsus
+
+3. executer la commande
+    execture la commande avec les redirections au 
+    prealable
+
+4. rediriger vers la sortie
+    prendre la sortie de l'exec de la commande et
+    le mettre dans la sortie
