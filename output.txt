@@ -1,0 +1,22 @@
+on va executer
+total 1632
+drwxr-xr-x 4 masase 2024_lausanne    4096 Feb 13 15:10 FT_PRINTF
+-rw-r--r-- 1 masase 2024_lausanne 1568461 Feb 13 11:35 en.subject.pdf
+-rw-r--r-- 1 masase 2024_lausanne     458 Feb 10 18:37 execution.txt
+-rw-r--r-- 1 masase 2024_lausanne      15 Feb 13 15:10 final.txt
+-rw-r--r-- 1 masase 2024_lausanne      97 Feb 13 11:35 info_imp.txt
+-rw-r--r-- 1 masase 2024_lausanne    2659 Feb 13 11:35 liste_chaine.c
+-rw-r--r-- 1 masase 2024_lausanne    3240 Feb 13 15:10 liste_chaine.o
+-rw-r--r-- 1 masase 2024_lausanne    1351 Feb 13 14:19 makefile
+-rw-r--r-- 1 masase 2024_lausanne     398 Feb 13 11:35 man_bash.txt
+-rwxr-xr-x 1 masase 2024_lausanne   21680 Feb 13 15:10 minishell
+-rw-r--r-- 1 masase 2024_lausanne    1618 Feb 13 14:08 minishell.h
+-rw-r--r-- 1 masase 2024_lausanne      15 Feb 13 15:10 output.txt
+-rw-r--r-- 1 masase 2024_lausanne     116 Feb 13 13:11 pense_bete.txt
+-rw-r--r-- 1 masase 2024_lausanne     256 Feb 10 15:22 plan_david.txt
+-rw-r--r-- 1 masase 2024_lausanne    1594 Feb 10 15:23 plan_ditch.txt
+-rw-r--r-- 1 masase 2024_lausanne    3734 Feb 13 15:10 pseudo_code.c
+-rw-r--r-- 1 masase 2024_lausanne    4416 Feb 13 15:10 pseudo_code.o
+-rw-r--r-- 1 masase 2024_lausanne    2271 Feb 13 14:08 search_cmd.c
+-rw-r--r-- 1 masase 2024_lausanne    2728 Feb 13 15:10 search_cmd.o
+-rw-r--r-- 1 masase 2024_lausanne      33 Feb 10 15:22 todo.txt

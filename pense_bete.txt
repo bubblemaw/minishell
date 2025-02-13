@@ -2,3 +2,6 @@ file Descriptor:
 STDIN = 0
 STDOUT = 1
 STDERR = 2
+
+pipefd[0] = READ END OF THE PIPE
+pipefd[1] = WRITE END OF THE PIPE

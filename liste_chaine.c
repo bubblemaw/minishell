@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   _liste_chaine.c                                    :+:      :+:    :+:   */
+/*   liste_chaine.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 21:17:50 by maw               #+#    #+#             */
-/*   Updated: 2025/02/11 21:26:20 by maw              ###   ########.fr       */
+/*   Updated: 2025/02/13 15:24:13 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <string.h>
 
 // Fonction pour créer un nouveau nœud de commande
-t_cmd *create_cmd(char **arg, char *infile, char *outfile, int append)
+t_cmd *create_cmd(char **arg, char *infile, char *outfile, int append, int type)
 {
     t_cmd *new_cmd = malloc(sizeof(t_cmd));
     if (!new_cmd)
@@ -26,14 +26,15 @@ t_cmd *create_cmd(char **arg, char *infile, char *outfile, int append)
     new_cmd->infile = infile ? strdup(infile) : NULL;
     new_cmd->outfile = outfile ? strdup(outfile) : NULL;
     new_cmd->append = append;
+    new_cmd->type = type;
     new_cmd->next = NULL;
     return new_cmd;
 }
 
 // Fonction pour ajouter une commande à la liste
-void add_cmd(t_cmd **head, char **arg, char *infile, char *outfile, int append)
+void add_cmd(t_cmd **head, char **arg, char *infile, char *outfile, int append, int type)
 {
-    t_cmd *new_cmd = create_cmd(arg, infile, outfile, append);
+    t_cmd *new_cmd = create_cmd(arg, infile, outfile, append, type);
     if (!new_cmd)
         return;
     if (!*head)

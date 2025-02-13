@@ -3,22 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   search_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 22:35:59 by maw               #+#    #+#             */
-/*   Updated: 2025/02/12 00:13:05 by maw              ###   ########.fr       */
+/*   Updated: 2025/02/13 14:08:12 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_parse(t_cmd *cmd)
+void	free_tab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		tab[i] = NULL;
+		i++;
+	}
+	free(tab);
+	tab = NULL;
+}
+
+char	*ft_parse(t_cmd *cmd)
 {
 	//est-ce qu'on passe par un chemin absolu
 	//est-ce que on va chercher la commande dans
 	//le PATH
 
-	char cmd_path;
+	char *cmd_path;
 
 	cmd_path = NULL;
 	cmd_path = ft_cmd_path(cmd);
