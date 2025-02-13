@@ -13,10 +13,10 @@ PLAN DE MINSHELL
  		  un separateur jusqu a ce qu on le retrouve
 
         - GESTIONS A DISTINGUER EN TYPE
-            - les mots clé reservé
-            - les opérateurs
-            - commandes
-            - arguments / options
+            - tab en 2 dimensions
+            - commande + arguments / options
+            - a voir pour les redirections
+            - ajout pour les append
 
         - mettre un flag begin et end pour savoir de ou a ou va le mot dans le string
         - injecter cette partie du string dans un noeud de la liste chainee
@@ -74,3 +74,40 @@ gestion des signaux ctrl-C ctrl-D ctr-    - sigint
 
 historique
     - gerer un historique qui repertorie TOUTES les commandes effectuers
+
+
+//-------------------------------------------------------------------------------//
+
+QUELQUES TEST DE fonctions
+
+echo
+
+dchellen@c1r7s1:~/Desktop/minishell$ echo "bonjour"
+bonjour
+dchellen@c1r7s1:~/Desktop/minishell$ echo "bonjour" "ca va"
+bonjour ca va
+dchellen@c1r7s1:~/Desktop/minishell$ echo "bonjour""ca va"
+bonjourca va
+dchellen@c1r7s1:~/Desktop/minishell$ echo ""bonjour" "ca va""
+bonjour ca va
+dchellen@c1r7s1:~/Desktop/minishell$ echo "bonjour" "ca va"
+bonjour ca va
+dchellen@c1r7s1:~/Desktop/minishell$ echo "bonjour" "ca va" 'eh'
+bonjour ca va eh
+dchellen@c1r7s1:~/Desktop/minishell$ echo "bonjour" "ca va" 'eh''
+> ^C
+dchellen@c1r7s1:~/Desktop/minishell$ echo "bonjour"""
+bonjour
+dchellen@c1r7s1:~/Desktop/minishell$ echo "bonjour"""""
+bonjour
+dchellen@c1r7s1:~/Desktop/minishell$ echo "bonjour"""""""
+bonjour
+dchellen@c1r7s1:~/Desktop/minishell$ echo "bonjour""""""""
+> ^C
+dchellen@c1r7s1:~/Desktop/minishell$ echo "bonjour" "ca va"
+bonjour ca va
+dchellen@c1r7s1:~/Desktop/minishell$ echo "bonjour" " ca va"
+bonjour  ca va
+dchellen@c1r7s1:~/Desktop/minishell$ echo "bonjour" "ca va"
+bonjour ca va
+
