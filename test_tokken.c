@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:02:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/02/14 16:04:12 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/02/14 16:56:12 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,11 +92,11 @@ int	creat_tokken(char *input)
 	printf("b : %d\n", begin);
 	while (input[i] != '\0')
 	{
-		// if (double_quotes(input, &i) == 1)
-		// 	end = i;
-		// else if (single_quotes(input, &i) == 1)
-		// 	end = i;
-		if (detect_redirections(input, &i) == 1)
+		if (double_quotes(input, &i) == 1)
+			end = i;
+		else if (single_quotes(input, &i) == 1)
+			end = i;
+		else if (detect_redirections(input, &i) == 1)
 			end = i + 1;
 		// else if (detect_command(input, &i, &end) == 1)
 		// 	break ;
@@ -105,7 +105,7 @@ int	creat_tokken(char *input)
 	}
 	printf("i : %d\n", i);
 	new = ft_substr(input, begin, end - begin);
-	printf("le substr est : %s\n", new);
+	printf("le token est : %s\n", new);
 	return (0);
 }
 
