@@ -6,7 +6,7 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:17:30 by maw               #+#    #+#             */
-/*   Updated: 2025/02/13 16:47:58 by masase           ###   ########.fr       */
+/*   Updated: 2025/02/14 17:00:32 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,9 @@ void free_cmds(t_cmd *head);
 char	*ft_parse(t_cmd *cmd);
 char	*ft_cmd_path(t_cmd *cmd);
 char	*join_path(char **tab_path, t_cmd *cmd);
-int execute_cmd(t_cmd *cmd, int *leftfd, int *rightfd);
+// int execute_cmd(t_cmd *cmd, int *leftfd, int *rightfd);
 void	free_tab(char **tab);
+int execute_cmd(t_cmd *cmd, int input_fd, int output_fd);
 
 
 #endif
