@@ -60,7 +60,9 @@
   "C_Cpp_Runner.msvcSecureNoWarnings": false,
   "files.associations": {
     "minishell.h": "c",
+    "history.h": "c",
     "libft.h": "c",
-    "readline.h": "c"
+    "stdio.h": "c",
+    "stdlib.h": "c"
   }
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_tokken.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:02:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/02/13 21:15:38 by david            ###   ########.fr       */
+/*   Updated: 2025/02/14 16:04:12 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,33 @@ int	skip_space(char *str, int *i)
 int	double_quotes(char *str, int *i)
 {
 	if (str[*i] == '"')
+	{
+		printf("oui\n");
 		(*i)++;
-	else
-		return (0);
-	while (str[*i] != '"')
-		(*i)++;
+		while (str[*i] != '"')
+			(*i)++;
+		if (str[*i] == '"')
+		{
+			(*i)++;
+			return (1);
+		}
+	}
 	return (0);
 }
 
 int	single_quotes(char *str, int *i)
 {
 	if (str[*i] == '\'')
+	{
 		(*i)++;
-	else
-		return (0);
-	while (str[*i] != '\'')
-		(*i)++;
+		while (str[*i] != '\'')
+			(*i)++;
+		if (str[*i] == '\'')
+		{
+			(*i)++;
+			return (1);
+		}
+	}
 	return (0);
 }
 
@@ -49,15 +60,21 @@ int detect_redirections(char *str, int *i)
 	if (str[*i] == '>' || str[*i] == '<')
 	{
 		if (str[next + 1] == str[*i])
-		{
 			(*i)++;
-			return (1);
-		}
 		return (1);
 	}
-	if (str[*i] == '|')
+	else if (str[*i] == '|')
 		return (1);
 	return (0);
+}
+
+int detect_command(char *input, int *i, int *end)
+{
+	while (input[*i] != ' ' && input[*i] != '>'
+		&& input[*i] != '<' && input[*i] != '|')
+		(*i)++;
+	*end = *i;
+	return (1);
 }
 
 int	creat_tokken(char *input)
@@ -72,21 +89,21 @@ int	creat_tokken(char *input)
 	end = 0;
 	skip_space(input, &i);
 	begin = i;
+	printf("b : %d\n", begin);
 	while (input[i] != '\0')
 	{
-		double_quotes(input, &i);
-		single_quotes(input, &i);
+		// if (double_quotes(input, &i) == 1)
+		// 	end = i;
+		// else if (single_quotes(input, &i) == 1)
+		// 	end = i;
 		if (detect_redirections(input, &i) == 1)
-		{
-			end = i;
-		}
-		if (input[i] != ' ' && input[i] != '>'
-			&& input[i] != '<' && input[i] != '|')
-			i++;
-		else
-			end = i;
+			end = i + 1;
+		// else if (detect_command(input, &i, &end) == 1)
+		// 	break ;
 		i++;
+		printf("e : %d\n", end);
 	}
+	printf("i : %d\n", i);
 	new = ft_substr(input, begin, end - begin);
 	printf("le substr est : %s\n", new);
 	return (0);
@@ -134,33 +151,20 @@ int	creat_tokken(char *input)
 // 	}
 // }
 
-// main test juste avec ac av pour tester les tokkens
-int	main (int ac, char *av[])
+int	main (void)
 {
-	if (ac < 2)
+	// t_shell shell;
+	char *input;
+
+	while (1)
 	{
-		printf("Error\n");
-		return (0);
+		input = readline("minishell$ ");
+		if (strncmp(input, "exit ", 4) == 0)
+		{
+			free(input);
+			return (0);
+		}
+		creat_tokken(input);
 	}
-	creat_tokken(av[1]);
 	return (0);
 }
-
-// Ci dessous le main avec le prompt 
-
-// int	main (void)
-// {
-// 	t_shell shell;
-// 	char *input;
-
-// 	while (1)
-// 	{
-// 		input = readline("minishell$ ");
-// 		if (strncmp(input, "exit ", 4) == 0)
-// 		{
-// 			free(input);
-// 			return (0);
-// 		}
-// 	}
-// 	return (0);
-// }
