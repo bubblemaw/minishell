@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_tokken.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:02:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/02/14 16:56:12 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/02/16 19:38:07 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,10 @@ int	skip_space(char *str, int *i)
 	return (0);
 }
 
-int	double_quotes(char *str, int *i)
+int	double_quotes(char *str, int *i, int *end)
 {
 	if (str[*i] == '"')
 	{
-		printf("oui\n");
 		(*i)++;
 		while (str[*i] != '"')
 			(*i)++;
@@ -68,13 +67,19 @@ int detect_redirections(char *str, int *i)
 	return (0);
 }
 
-int detect_command(char *input, int *i, int *end)
+int detect_command(char *input, int *i)
 {
 	while (input[*i] != ' ' && input[*i] != '>'
-		&& input[*i] != '<' && input[*i] != '|')
+		&& input[*i] != '<' && input[*i] != '|'
+		&& input[*i] != '\0')
 		(*i)++;
-	*end = *i;
-	return (1);
+	if (input[*i] == ' ' || input[*i] == '>'
+		|| input[*i] == '<' || input[*i] == '|'
+		|| input[*i] == '\0')
+		return (1);
+	else 
+		return (0);
+	return (0);
 }
 
 int	creat_tokken(char *input)
@@ -85,21 +90,23 @@ int	creat_tokken(char *input)
 	char *new;
 
 	i = 0;
-	begin = 0;
 	end = 0;
 	skip_space(input, &i);
 	begin = i;
 	printf("b : %d\n", begin);
 	while (input[i] != '\0')
 	{
-		if (double_quotes(input, &i) == 1)
+		if (double_quotes(input, &i, &end) == 1)
 			end = i;
 		else if (single_quotes(input, &i) == 1)
 			end = i;
 		else if (detect_redirections(input, &i) == 1)
 			end = i + 1;
-		// else if (detect_command(input, &i, &end) == 1)
-		// 	break ;
+		else if (detect_command(input, &i) == 1)
+		{
+			end = i;
+			break;
+		}
 		i++;
 		printf("e : %d\n", end);
 	}
