@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:02:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/02/16 19:38:07 by david            ###   ########.fr       */
+/*   Updated: 2025/02/17 16:30:33 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	skip_space(char *str, int *i)
 	return (0);
 }
 
-int	double_quotes(char *str, int *i, int *end)
+int	double_quotes(char *str, int *i)
 {
 	if (str[*i] == '"')
 	{
@@ -60,20 +60,35 @@ int detect_redirections(char *str, int *i)
 	{
 		if (str[next + 1] == str[*i])
 			(*i)++;
+		if (str[next + 2] == '>' || str[next + 2] == '<' 
+			|| (str[*i] == '>' && str[next + 1] == '<')
+			|| (str[*i] == '<' && str[next + 1] == '>'))
+			return (ERROR);
 		return (1);
 	}
 	else if (str[*i] == '|')
+	{
+		if (str[next + 1] == '|')
+			return (ERROR);
 		return (1);
+	}
 	return (0);
 }
 
 int detect_command(char *input, int *i)
 {
+	int next;
+
+	next = *i;
 	while (input[*i] != ' ' && input[*i] != '>'
 		&& input[*i] != '<' && input[*i] != '|'
 		&& input[*i] != '\0')
 		(*i)++;
-	if (input[*i] == ' ' || input[*i] == '>'
+	if (input[next + *i] != ' ' && input[next + *i] != '>'
+		&& input[next + *i] != '<' && input[next + *i] != '|'
+		&& input[next + *i] != '\0')
+		return (ERROR);
+	else if (input[*i] == ' ' || input[*i] == '>'
 		|| input[*i] == '<' || input[*i] == '|'
 		|| input[*i] == '\0')
 		return (1);
@@ -96,17 +111,22 @@ int	creat_tokken(char *input)
 	printf("b : %d\n", begin);
 	while (input[i] != '\0')
 	{
-		if (double_quotes(input, &i, &end) == 1)
+		if (double_quotes(input, &i) == 1)
 			end = i;
 		else if (single_quotes(input, &i) == 1)
 			end = i;
+		else if (detect_redirections(input, &i) == ERROR)
+			return (ERROR);
 		else if (detect_redirections(input, &i) == 1)
 			end = i + 1;
 		else if (detect_command(input, &i) == 1)
 		{
 			end = i;
+			printf("e : %d\n", end);
 			break;
 		}
+		else if (detect_command(input, &i) == ERROR)
+			return (ERROR);
 		i++;
 		printf("e : %d\n", end);
 	}
@@ -171,7 +191,8 @@ int	main (void)
 			free(input);
 			return (0);
 		}
-		creat_tokken(input);
+		if (creat_tokken(input) == ERROR)
+			printf("Error command not found\n");
 	}
 	return (0);
 }

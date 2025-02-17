@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 22:12:05 by david             #+#    #+#             */
-/*   Updated: 2025/02/16 18:27:11 by david            ###   ########.fr       */
+/*   Updated: 2025/02/17 15:39:10 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <string.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+
+# define ERROR 2
 
 // typedef struct s_list
 // {
