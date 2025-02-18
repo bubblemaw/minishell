@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 22:12:05 by david             #+#    #+#             */
-/*   Updated: 2025/02/18 15:46:09 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/02/18 16:49:29 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "libft/libft.h"
 # include <stdio.h>
+# include <stdbool.h>
 # include <stdlib.h>
 # include <string.h>
 # include <readline/readline.h>
@@ -22,15 +23,15 @@
 
 # define ERROR 2
 
-// typedef struct s_chain
-// {
-// 	char 			*value;
-// 	struct s_chain	*next;
-// }	t_chain;
+typedef struct s_chain
+{
+	char 			*value;
+	struct s_chain	*next;
+}	t_chain;
 
-// typedef struct s_shell
-// {
-// 	t_chain			*tokken;
-// }	t_shell;
+typedef struct s_shell
+{
+	t_chain			*tokken;
+}	t_shell;
 
 #endif

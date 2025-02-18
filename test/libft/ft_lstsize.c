@@ -1,36 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 22:12:05 by david             #+#    #+#             */
-/*   Updated: 2025/02/18 15:46:09 by dchellen         ###   ########.fr       */
+/*   Created: 2024/10/23 15:07:55 by dchellen          #+#    #+#             */
+/*   Updated: 2024/10/23 17:17:53 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-# include "libft/libft.h"
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <readline/readline.h>
-# include <readline/history.h>
+int	ft_lstsize(t_list *lst)
+{
+	int	count;
 
-# define ERROR 2
-
-// typedef struct s_chain
-// {
-// 	char 			*value;
-// 	struct s_chain	*next;
-// }	t_chain;
-
-// typedef struct s_shell
-// {
-// 	t_chain			*tokken;
-// }	t_shell;
-
-#endif
+	count = 0;
+	while (lst != NULL)
+	{
+		lst = lst->next;
+		count++;
+	}
+	return (count);
+}

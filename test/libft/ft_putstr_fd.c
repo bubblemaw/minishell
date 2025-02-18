@@ -1,36 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 22:12:05 by david             #+#    #+#             */
-/*   Updated: 2025/02/18 15:46:09 by dchellen         ###   ########.fr       */
+/*   Created: 2024/08/27 19:09:45 by david_chell       #+#    #+#             */
+/*   Updated: 2024/10/12 16:26:32 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-# include "libft/libft.h"
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <readline/readline.h>
-# include <readline/history.h>
+void	ft_putstr_fd(char *s, int fd)
+{
+	int	i;
 
-# define ERROR 2
+	i = 0;
+	while (s[i] != '\0')
+	{
+		write(fd, &s[i], 1);
+		i++;
+	}
+	return ;
+}
 
-// typedef struct s_chain
+// int main (void)
 // {
-// 	char 			*value;
-// 	struct s_chain	*next;
-// }	t_chain;
-
-// typedef struct s_shell
-// {
-// 	t_chain			*tokken;
-// }	t_shell;
-
-#endif
+// 	char line[] = "Bonjour tout le monde";
+// 	int fd;
+// 	ft_putstr_fd(line, fd);
+// 	printf("\n");
+// 	return (0);
+// }

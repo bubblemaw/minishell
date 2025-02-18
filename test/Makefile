@@ -6,7 +6,7 @@
 #    By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 22:16:43 by david             #+#    #+#              #
-#    Updated: 2025/02/18 15:20:19 by dchellen         ###   ########.fr        #
+#    Updated: 2025/02/18 15:49:46 by dchellen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = minishell
 
 CC = gcc
 
-SRCS = test_tokken.c
+SRCS = test.c
 
 FLAGS = -Wall -Wextra -Werror  -g
 

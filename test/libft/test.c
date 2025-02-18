@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:02:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/02/18 15:39:22 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/02/18 15:26:37 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,56 +97,57 @@ int detect_command(char *input, int *i)
 	return (0);
 }
 
-// t_chain *creat_node(void *content)
-// {
-//     t_chain *new;
+t_chain *creat_node(void *content)
+{
+    t_chain *new;
 
-//     new = (t_chain *)malloc(sizeof(t_chain));
-//     if (new == NULL)
-//         return (NULL);
-//     new->value = content;
-//     new->next = NULL;
-//     return (new);
-// }
+    new = (t_chain *)malloc(sizeof(t_chain));
+    if (new == NULL)
+        return (NULL);
+    new->value = content;
+    new->next = NULL;
+    return (new);
+}
 
-// void	add_node(t_shell *shell, t_chain *new)
-// {
-// 	t_chain	*current;
+void	add_node(t_shell *shell, t_chain *new)
+{
+	t_chain	*current;
 
-// 	if (new == NULL)
-// 		return ;
-// 	if (shell->tokken == NULL)
-// 	{
-// 		shell->tokken = new;
-// 		return ;
-// 	}
-// 	current = shell->tokken;
-// 	while (current->next != NULL)
-// 	{
-// 		current = current->next;
-// 	}
-// 	current->next = new;
-// 	return ;
-// }
+	if (new == NULL)
+		return ;
+	if (shell->tokken == NULL)
+	{
+		shell->tokken = new;
+		return ;
+	}
+	current = shell->tokken;
+	while (current->next != NULL)
+	{
+		current = current->next;
+	}
+	current->next = new;
+	return ;
+}
 
-// void	print_chain(t_chain *head)
-// {
-// 	t_chain	*current;
+void	print_chain(t_chain *head)
+{
+	t_chain	*current;
 
-// 	current = head;
-// 	while (current)
-// 	{
-// 		printf("%s\n", (char *)current->value);
-// 		current = current->next;
-// 	}
-// }
+	current = head;
+	while (current)
+	{
+		printf("%s\n", (char *)current->value);
+		current = current->next;
+	}
+}
 
-int	creat_tokken(char *input)
+int	creat_tokken(t_shell *shell, char *input)
 {
 	int	i;
 	int	begin;
 	int	end;
 	char *content;
+	t_chain	*new;
 
 	i = 0;
 	end = 0;
@@ -173,15 +174,18 @@ int	creat_tokken(char *input)
 			return (ERROR);
 		i++;
 		printf("e : %d\n", end);
+		// content = ft_substr(input, begin, end - begin);
+		// new = creat_node(content);
+		// add_node(shell, new);
 	}
-	content = ft_substr(input, begin, end - begin);
 	printf("i : %d\n", i);
-	printf("tokken : %s\n", content);
+	// print_chain(shell->tokken);
 	return (0);
 }
 
 int	main (void)
 {
+	t_shell shell;
 	char *input;
 
 	while (1)
@@ -192,7 +196,7 @@ int	main (void)
 			free(input);
 			return (0);
 		}
-		if (creat_tokken(input) == ERROR)
+		if (creat_tokken(&shell, input) == ERROR)
 			printf("Error command not found\n");
 	}
 	return (0);

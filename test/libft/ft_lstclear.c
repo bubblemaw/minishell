@@ -1,36 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 22:12:05 by david             #+#    #+#             */
-/*   Updated: 2025/02/18 15:46:09 by dchellen         ###   ########.fr       */
+/*   Created: 2024/10/24 11:22:33 by dchellen          #+#    #+#             */
+/*   Updated: 2024/10/24 13:38:37 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-# include "libft/libft.h"
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <readline/readline.h>
-# include <readline/history.h>
+void	ft_lstclear(t_list **lst, void (*del)(void *))
+{
+	t_list	*actu;
+	t_list	*suivant;
 
-# define ERROR 2
-
-// typedef struct s_chain
-// {
-// 	char 			*value;
-// 	struct s_chain	*next;
-// }	t_chain;
-
-// typedef struct s_shell
-// {
-// 	t_chain			*tokken;
-// }	t_shell;
-
-#endif
+	if (lst == NULL || *lst == NULL)
+		return ;
+	actu = *lst;
+	while (actu != NULL)
+	{
+		suivant = actu->next;
+		del(actu->content);
+		free(actu);
+		actu = suivant;
+	}
+	*lst = NULL;
+	return ;
+}

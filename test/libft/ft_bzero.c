@@ -1,36 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 22:12:05 by david             #+#    #+#             */
-/*   Updated: 2025/02/18 15:46:09 by dchellen         ###   ########.fr       */
+/*   Created: 2024/08/23 14:55:32 by david_chell       #+#    #+#             */
+/*   Updated: 2024/10/12 14:05:08 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-# include "libft/libft.h"
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <readline/readline.h>
-# include <readline/history.h>
+void	ft_bzero(void *s, size_t n)
+{
+	size_t	i;
 
-# define ERROR 2
+	i = 0;
+	if (n == 0)
+	{
+		return ;
+	}
+	while (i < n)
+	{
+		((unsigned char *)s)[i] = 0;
+		i++;
+	}
+	return ;
+}
 
-// typedef struct s_chain
+// int main (void)
 // {
-// 	char 			*value;
-// 	struct s_chain	*next;
-// }	t_chain;
-
-// typedef struct s_shell
-// {
-// 	t_chain			*tokken;
-// }	t_shell;
-
-#endif
+// 	char a[] = "Ekip";
+// 	size_t n = 1;
+// 	printf("%s\n", a);
+// 	ft_bzero(a, n);
+// 	printf("%s\n", a);
+// 	return (0);
+// }
