@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_tokken.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:02:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/02/18 15:39:22 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/02/19 15:47:37 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,23 +77,16 @@ int detect_redirections(char *str, int *i)
 
 int detect_command(char *input, int *i)
 {
-	int next;
-
-	next = *i;
 	while (input[*i] != ' ' && input[*i] != '>'
 		&& input[*i] != '<' && input[*i] != '|'
 		&& input[*i] != '\0')
 		(*i)++;
-	if (input[next + *i] != ' ' && input[next + *i] != '>'
-		&& input[next + *i] != '<' && input[next + *i] != '|'
-		&& input[next + *i] != '\0')
+	if (input[*i] != ' ' && input[*i] != '>'
+		&& input[*i] != '<' && input[*i] != '|'
+		&& input[*i] != '\0')
 		return (ERROR);
-	else if (input[*i] == ' ' || input[*i] == '>'
-		|| input[*i] == '<' || input[*i] == '|'
-		|| input[*i] == '\0')
-		return (1);
 	else 
-		return (0);
+		return (1);
 	return (0);
 }
 
@@ -150,11 +143,10 @@ int	creat_tokken(char *input)
 
 	i = 0;
 	end = 0;
-	skip_space(input, &i);
-	begin = i;
 	while (input[i] != '\0')
 	{
-		printf("b : %d\n", begin);
+		skip_space(input, &i);
+		begin = i;
 		if (double_quotes(input, &i) == 1)
 			end = i;
 		else if (single_quotes(input, &i) == 1)
@@ -164,19 +156,13 @@ int	creat_tokken(char *input)
 		else if (detect_redirections(input, &i) == 1)
 			end = i + 1;
 		else if (detect_command(input, &i) == 1)
-		{
 			end = i;
-			printf("e : %d\n", end);
-			break;
-		}
 		else if (detect_command(input, &i) == ERROR)
 			return (ERROR);
+		content = ft_substr(input, begin, end - begin);
+		printf("tokken : %s\n", content);
 		i++;
-		printf("e : %d\n", end);
 	}
-	content = ft_substr(input, begin, end - begin);
-	printf("i : %d\n", i);
-	printf("tokken : %s\n", content);
 	return (0);
 }
 
