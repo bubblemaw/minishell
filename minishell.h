@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 22:12:05 by david             #+#    #+#             */
-/*   Updated: 2025/02/18 15:46:09 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/02/19 17:25:59 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,18 @@
 # include <readline/history.h>
 
 # define ERROR 2
+# define VALID 1
 
-// typedef struct s_chain
-// {
-// 	char 			*value;
-// 	struct s_chain	*next;
-// }	t_chain;
+typedef struct s_chain
+{
+	char 			*value;
+	struct s_chain	*prev;
+	struct s_chain	*next;
+}	t_chain;
 
-// typedef struct s_shell
-// {
-// 	t_chain			*tokken;
-// }	t_shell;
+typedef struct s_shell
+{
+	t_chain			*tokken;
+}	t_shell;
 
 #endif

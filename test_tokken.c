@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:02:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/02/19 15:47:37 by david            ###   ########.fr       */
+/*   Updated: 2025/02/19 17:28:19 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	double_quotes(char *str, int *i)
 		if (str[*i] == '"')
 		{
 			(*i)++;
-			return (1);
+			return (VALID);
 		}
 	}
 	return (0);
@@ -45,7 +45,7 @@ int	single_quotes(char *str, int *i)
 		if (str[*i] == '\'')
 		{
 			(*i)++;
-			return (1);
+			return (VALID);
 		}
 	}
 	return (0);
@@ -68,9 +68,9 @@ int detect_redirections(char *str, int *i)
 	}
 	else if (str[*i] == '|')
 	{
-		if (str[next + 1] == '|')
+		if (str[next +1] == '|')
 			return (ERROR);
-		return (1);
+		return (VALID);
 	}
 	return (0);
 }
@@ -86,90 +86,102 @@ int detect_command(char *input, int *i)
 		&& input[*i] != '\0')
 		return (ERROR);
 	else 
-		return (1);
+		return (VALID);
 	return (0);
 }
 
-// t_chain *creat_node(void *content)
-// {
-//     t_chain *new;
-
-//     new = (t_chain *)malloc(sizeof(t_chain));
-//     if (new == NULL)
-//         return (NULL);
-//     new->value = content;
-//     new->next = NULL;
-//     return (new);
-// }
-
-// void	add_node(t_shell *shell, t_chain *new)
-// {
-// 	t_chain	*current;
-
-// 	if (new == NULL)
-// 		return ;
-// 	if (shell->tokken == NULL)
-// 	{
-// 		shell->tokken = new;
-// 		return ;
-// 	}
-// 	current = shell->tokken;
-// 	while (current->next != NULL)
-// 	{
-// 		current = current->next;
-// 	}
-// 	current->next = new;
-// 	return ;
-// }
-
-// void	print_chain(t_chain *head)
-// {
-// 	t_chain	*current;
-
-// 	current = head;
-// 	while (current)
-// 	{
-// 		printf("%s\n", (char *)current->value);
-// 		current = current->next;
-// 	}
-// }
-
-int	creat_tokken(char *input)
+t_chain *creat_node(char *content)
 {
-	int	i;
-	int	begin;
-	int	end;
-	char *content;
+    t_chain *new;
 
+    new = (t_chain *)malloc(sizeof(t_chain));
+    if (new == NULL)
+        return (NULL);
+    new->value = content;
+    new->prev = NULL;
+    new->next = NULL;
+    return (new);
+}
+
+void	add_node(t_shell *shell, t_chain *new)
+{
+	t_chain	*current;
+
+	if (new == NULL)
+		return ;
+	if (shell->tokken == NULL)
+	{
+		shell->tokken = new;
+		return ;
+	}
+	current = shell->tokken;
+	while (current->next != NULL)
+	{
+		current = current->next;
+	}
+	current->next = new;
+	new->prev = current;
+	return ;
+}
+
+void	print_chain(t_chain *head)
+{
+	t_chain	*current;
+	int i;
+
+	current = head;
+	i = 0;
+	while (current != NULL)
+	{
+		printf("node[%d] -> %s\n", i, current->value);
+		current = current->next;
+		i++;
+	}
+}
+
+int	creat_tokken(char *input, t_shell *shell)
+{
+	int		i;
+	int		begin;
+	int		end;
+	char	*content;
+	t_chain	*new;
+	
 	i = 0;
 	end = 0;
 	while (input[i] != '\0')
 	{
 		skip_space(input, &i);
 		begin = i;
-		if (double_quotes(input, &i) == 1)
+		if (double_quotes(input, &i) == VALID)
 			end = i;
-		else if (single_quotes(input, &i) == 1)
+		else if (single_quotes(input, &i) == VALID)
 			end = i;
 		else if (detect_redirections(input, &i) == ERROR)
 			return (ERROR);
-		else if (detect_redirections(input, &i) == 1)
+		else if (detect_redirections(input, &i) == VALID)
 			end = i + 1;
-		else if (detect_command(input, &i) == 1)
+		else if (detect_command(input, &i) == VALID)
 			end = i;
 		else if (detect_command(input, &i) == ERROR)
 			return (ERROR);
 		content = ft_substr(input, begin, end - begin);
+		new = creat_node(content);
+		add_node(shell, new);
 		printf("tokken : %s\n", content);
 		i++;
 	}
+	printf("\n---------------------\n");
+	print_chain(shell->tokken);
 	return (0);
 }
 
 int	main (void)
 {
 	char *input;
+	t_shell shell;
 
+	ft_memset(&shell, 0, sizeof(t_shell));
 	while (1)
 	{
 		input = readline("minishell$ ");
@@ -178,7 +190,7 @@ int	main (void)
 			free(input);
 			return (0);
 		}
-		if (creat_tokken(input) == ERROR)
+		if (creat_tokken(input, &shell) == ERROR)
 			printf("Error command not found\n");
 	}
 	return (0);
