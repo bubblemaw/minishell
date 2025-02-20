@@ -3,23 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   liste_chaine.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 21:17:50 by maw               #+#    #+#             */
-/*   Updated: 2025/02/13 15:24:13 by masase           ###   ########.fr       */
+/*   Updated: 2025/02/20 14:18:12 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "../inc/minishell.h"
 
 // Fonction pour créer un nouveau nœud de commande
-t_cmd *create_cmd(char **arg, char *infile, char *outfile, int append, int type)
+t_token *create_cmd(char **arg, char *infile, char *outfile, int append, int type)
 {
-    t_cmd *new_cmd = malloc(sizeof(t_cmd));
+    t_token *new_cmd = malloc(sizeof(t_token));
     if (!new_cmd)
         return NULL;
     new_cmd->arg = arg;
@@ -32,16 +28,16 @@ t_cmd *create_cmd(char **arg, char *infile, char *outfile, int append, int type)
 }
 
 // Fonction pour ajouter une commande à la liste
-void add_cmd(t_cmd **head, char **arg, char *infile, char *outfile, int append, int type)
+void add_cmd(t_token **head, char **arg, char *infile, char *outfile, int append, int type)
 {
-    t_cmd *new_cmd = create_cmd(arg, infile, outfile, append, type);
+    t_token *new_cmd = create_cmd(arg, infile, outfile, append, type);
     if (!new_cmd)
         return;
     if (!*head)
         *head = new_cmd;
     else
     {
-        t_cmd *tmp = *head;
+        t_token *tmp = *head;
         while (tmp->next)
             tmp = tmp->next;
         tmp->next = new_cmd;
@@ -49,7 +45,7 @@ void add_cmd(t_cmd **head, char **arg, char *infile, char *outfile, int append, 
 }
 
 // Fonction pour afficher les commandes stockées
-void print_cmds(t_cmd *head)
+void print_cmds(t_token *head)
 {
     while (head)
     {
@@ -67,9 +63,9 @@ void print_cmds(t_cmd *head)
 }
 
 // Fonction pour libérer la liste
-void free_cmds(t_cmd *head)
+void free_cmds(t_token *head)
 {
-    t_cmd *tmp;
+    t_token *tmp;
     while (head)
     {
         tmp = head;
@@ -79,4 +75,19 @@ void free_cmds(t_cmd *head)
         free(tmp->outfile);
         free(tmp);
     }
+}
+
+int lst_size(t_token *token)
+{
+    t_token *copy;
+    int i;
+
+    copy = token;
+    i = 0;
+    while (copy)
+    {
+        copy = copy->next;
+        i++;
+    }
+    return (i);
 }

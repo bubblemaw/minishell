@@ -1,3 +1,9 @@
 lire bash
 strace
 bash opensource
+couper la fonction piper
+liste de token -> liste de commande
+expansion
+builtin function
+
+

@@ -3,19 +3,22 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: masase <masase@student.42.fr>              +#+  +:+       +#+         #
+#    By: maw <maw@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/12 00:38:47 by maw               #+#    #+#              #
-#    Updated: 2025/02/13 14:19:08 by masase           ###   ########.fr        #
+#    Updated: 2025/02/20 14:20:16 by maw              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRCS = pseudo_code.c \
-		liste_chaine.c \
-		search_cmd.c \
-
+SRCS = srcs/pseudo_code.c \
+		srcs/liste_chaine.c \
+		srcs/search_cmd.c \
+		srcs/redirection.c \
+		srcs/error.c \
+		srcs/init_minishell.c \
+		
 OBJS = $(SRCS:%.c=%.o)
 
 FT_PRINTF = FT_PRINTF/
@@ -40,8 +43,4 @@ fclean: clean
 		$(RM) $(FT_PRINTF)LIBFT/libft.a
 
 re: fclean all
-
-
-
-
 

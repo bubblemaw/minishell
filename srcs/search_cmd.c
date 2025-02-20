@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   search_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 22:35:59 by maw               #+#    #+#             */
-/*   Updated: 2025/02/13 14:08:12 by masase           ###   ########.fr       */
+/*   Updated: 2025/02/20 14:18:35 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../inc/minishell.h"
 
 void	free_tab(char **tab)
 {
@@ -27,7 +27,7 @@ void	free_tab(char **tab)
 	tab = NULL;
 }
 
-char	*ft_parse(t_cmd *cmd)
+char	*ft_parse(t_token *cmd)
 {
 	//est-ce qu'on passe par un chemin absolu
 	//est-ce que on va chercher la commande dans
@@ -55,7 +55,7 @@ char	*ft_parse(t_cmd *cmd)
 	return (cmd_path);
 }
 
-char	*ft_cmd_path(t_cmd *cmd)
+char	*ft_cmd_path(t_token *cmd)
 {
 	char	**tab_path;
 	char	*path;
@@ -73,7 +73,7 @@ char	*ft_cmd_path(t_cmd *cmd)
 	return (path);
 }
 
-char	*join_path(char **tab_path, t_cmd *cmd)
+char	*join_path(char **tab_path, t_token *cmd)
 {
 	int		i;
 	char	*tmp;
