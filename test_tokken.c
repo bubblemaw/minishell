@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_tokken.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:02:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/02/21 16:12:20 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/02/22 00:56:38 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,26 @@ int	skip_space(char *str, int *i)
 			return (0);
 		(*i)++;
 	}
-	if (check_first == 0 && (str[*i] == '<'
-		|| str[*i] == '>' || str[*i] == '|' || str[*i] == '='))
+	if (check_first == 0 &&
+		(str[*i] == '=' || str[*i] == '|'))
+		return (ERROR);
+	return (0);
+}
+
+int quotes_conditions_1(char *str, int *i)
+{
+	if (str[*i - 1] != '=' && str[*i - 1] != ' '
+		&& str[*i - 1] != '<' && str[*i - 1] != '>'
+		&& str[*i - 1] != '|')
+		return (ERROR);
+	return (0);
+}
+
+int quotes_conditions_2(char *str, int *i)
+{
+	if (str[*i + 1] != ' '
+		&& str[*i + 1] != '<' && str[*i + 1] != '>'
+		&& str[*i + 1] != '|' && str[*i + 1] != '\0')
 		return (ERROR);
 	return (0);
 }
@@ -33,11 +51,15 @@ int	double_quotes(char *str, int *i)
 {
 	if (str[*i] == '"')
 	{
+		// if (quotes_conditions_1(str, i) == ERROR)
+		// 	return (ERROR);
 		(*i)++;
 		while (str[*i] != '"')
 			(*i)++;
 		if (str[*i] == '"')
 		{
+			// if (quotes_conditions_2(str, i) == ERROR)
+			// 	return (ERROR);
 			(*i)++;
 			return (VALID);
 		}
@@ -49,11 +71,15 @@ int	single_quotes(char *str, int *i)
 {
 	if (str[*i] == '\'')
 	{
+		// if (quotes_conditions_1(str, i) == ERROR)
+		// 	return (ERROR);
 		(*i)++;
 		while (str[*i] != '\'')
 			(*i)++;
 		if (str[*i] == '\'')
 		{
+			// if (quotes_conditions_2(str, i) == ERROR)
+			// 	return (ERROR);
 			(*i)++;
 			return (VALID);
 		}
@@ -74,13 +100,15 @@ int detect_redirections(char *str, int *i)
 			|| (str[*i] == '>' && str[next + 1] == '<')
 			|| (str[*i] == '<' && str[next + 1] == '>'))
 			return (ERROR);
-		return (1);
+		return (VALID);
 	}
 	else if (str[*i] == '|' || str[*i] == '=')
 	{
 		if (str[next +1] == '|')
 			return (ERROR);
-		if (str[*i + 1] == ' ' || str[*i - 1] == ' ')
+		else if (str[*i] == '=' && 
+			(str[*i + 1] == ' ' || str[*i - 1] == ' '
+			|| str[*i + 1] == '=' || str[*i - 1] == '='))
 			return (ERROR);
 		return (VALID);
 	}
@@ -91,15 +119,9 @@ int detect_command(char *input, int *i)
 {
 	while (input[*i] != ' ' && input[*i] != '>'
 		&& input[*i] != '<' && input[*i] != '|'
-		&& input[*i] != '"' && input[*i] != '\'' 
+		// && input[*i] != '"' && input[*i] != '\'' 
 		&& input[*i] != '=' && input[*i] != '\0')
 		(*i)++;
-	// if (input[*i] == '=')
-	// {
-	// 	printf("cible : %c\n", input[*i - 1]);
-	// 	if (input[*i + 1] == ' ' || input[*i - 1] == ' ')
-	// 		return (ERROR);
-	// }
 	if (input[*i] != ' ' && input[*i] != '>'
 		&& input[*i] != '<' && input[*i] != '|'
 		&& input[*i] != '=' && input[*i] != '\0')
@@ -141,18 +163,18 @@ void	add_node(t_shell *shell, t_chain *new)
 	return ;
 }
 
-// void free_list(t_chain *head)
-// {
-// 	t_chain *temp;
+void free_list(t_chain *head)
+{
+    t_chain *tmp;
 
-// 	while (head != NULL)
-// 	{
-// 		temp = head;
-// 		head = head->next;
-// 		free(temp);
-// 	}
-// 	return ;
-// }
+    while (head != NULL)
+    {
+        tmp = head;
+        free(head->value);
+        head = head->next;
+        free(tmp);
+    }
+}
 
 void	print_chain(t_chain *head)
 {
@@ -189,10 +211,12 @@ int	creat_tokken(char *input, t_shell *shell)
 		begin = i;
 		if (double_quotes(input, &i) == VALID)
 			end = i;
-		else if (double_quotes(input, &i) == ERROR)
-			return (ERROR);
+		// else if (double_quotes(input, &i) == ERROR)
+		// 	return (ERROR);
 		else if (single_quotes(input, &i) == VALID)
 			end = i;
+		// else if (single_quotes(input, &i) == ERROR)
+		// 	return (ERROR);
 		else if (detect_redirections(input, &i) == ERROR)
 			return (ERROR);
 		else if (detect_redirections(input, &i) == VALID)
@@ -205,7 +229,6 @@ int	creat_tokken(char *input, t_shell *shell)
 		else if (detect_command(input, &i) == ERROR)
 			return (ERROR);
 		content = ft_substr(input, begin, end - begin);
-		printf("tokken : %s\n", content);
 		new = creat_node(content);
 		add_node(shell, new);
 	}
@@ -213,7 +236,7 @@ int	creat_tokken(char *input, t_shell *shell)
 	if (last_token[0] == '<' || last_token[0] == '>'
 		|| last_token[0] == '|')
 		return (ERROR);
-	printf("\n---------------------\n");
+	printf("\n");
 	print_chain(shell->tokken);
 	return (0);
 }
@@ -226,12 +249,15 @@ int	main (void)
 	ft_memset(&shell, 0, sizeof(t_shell));
 	while (1)
 	{
-		// if (shell.tokken != NULL)
-			// free_list(shell.tokken);
+		if (shell.tokken != NULL)
+		{
+			free_list(shell.tokken);
+			shell.tokken = NULL;
+		}
 		input = readline("minishell$ ");
 		if (strncmp(input, "exit ", 4) == 0)
 		{
-			free(input);
+			free(input); 
 			return (0);
 		}
 		if (creat_tokken(input, &shell) == ERROR)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 22:12:05 by david             #+#    #+#             */
-/*   Updated: 2025/02/21 11:54:49 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/02/21 21:44:02 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,24 @@
 # define ERROR 2
 # define VALID 1
 
+# define COMMAND
+# define SINGLE_Q
+# define DOUBLE_Q
+# define RED_L
+# define RED_DL
+# define RED_R
+# define RED_DR
+# define EQUAL
+# define PIPE
+# define ARG
+# define OPTION
+
 typedef struct s_chain
 {
 	char 			*value;
 	struct s_chain	*prev;
 	struct s_chain	*next;
+	int				type;
 }	t_chain;
 
 typedef struct s_shell
