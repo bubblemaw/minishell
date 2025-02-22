@@ -1,4 +1,17 @@
+# Erreur
 
+# 1	
+	minishell$ echo 'c'e'st'
+
+	node[0] -> echo
+	node[1] -> 'c'
+	node[2] -> e'st'
+
+	doit etre
+	node[0] -> echo
+	node[1] -> 'c'
+	node[2] -> e
+	node[3] -> 'st'
 
 # A FAIRE OU A TESTER
 
