@@ -6,7 +6,7 @@
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 22:35:59 by maw               #+#    #+#             */
-/*   Updated: 2025/02/20 14:18:35 by maw              ###   ########.fr       */
+/*   Updated: 2025/02/21 10:54:41 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,18 @@ char	*ft_parse(t_token *cmd)
 	//est-ce qu'on passe par un chemin absolu
 	//est-ce que on va chercher la commande dans
 	//le PATH
-
 	char *cmd_path;
+	char	c;
 
+	c = '/';
 	cmd_path = NULL;
-	cmd_path = ft_cmd_path(cmd);
-	// char	c;
-
-	// c = ' ';
-	// if (ft_strnstr(cmd, "bin", 4) != NULL)
-	// 	cmd->arg = ft_split(cmd + 5, c);
+	if (ft_strnstr(cmd->arg[0], "bin", ft_strlen(cmd->arg[0])) != NULL)
+	{
+		cmd_path = cmd->arg[0];
+		cmd->arg = ft_split(ft_strnstr(cmd->arg[0], "bin", ft_strlen(cmd->arg[0])) + 4, c);
+	}
+	else
+			cmd_path = ft_cmd_path(cmd);		
 	// else
 	// 	cmd->arg = ft_split(cmd, c);
 	// cmd->cmd_path = ft_cmd_path(cmd);

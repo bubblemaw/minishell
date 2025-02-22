@@ -6,7 +6,7 @@
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:16:38 by maw               #+#    #+#             */
-/*   Updated: 2025/02/20 14:17:35 by maw              ###   ########.fr       */
+/*   Updated: 2025/02/21 20:44:58 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,24 +129,24 @@ int main(int ac, char **av, char **env)
 
 	// Simulation de commandes
 	char **cmd1 = malloc(3 * sizeof(char *));
-	cmd1[0] = strdup("grep");
-	cmd1[1] = strdup("a");
-	cmd1[2] = NULL;
+	cmd1[0] = strdup("lskokoko");
+	// cmd1[1] = strdup("a");
+	cmd1[1] = NULL;
 
-	char **cmd2 = malloc(3 * sizeof(char *));
-	cmd2[0] = strdup("cat");
-	// cmd2[1] = strdup("txt");
-	cmd2[1] = NULL;
+	// char **cmd2 = malloc(3 * sizeof(char *));
+	// cmd2[0] = strdup("cat");
+	// // cmd2[1] = strdup("txt");
+	// cmd2[1] = NULL;
 
-	char **cmd3 = malloc(3 * sizeof(char *));
-	cmd3[0] = strdup("sort");
-	// cmd3[1] = strdup("13");
-	cmd3[1] = NULL;
+	// char **cmd3 = malloc(3 * sizeof(char *));
+	// cmd3[0] = strdup("sort");
+	// // cmd3[1] = strdup("13");
+	// cmd3[1] = NULL;
 
 	// Ajout des commandes à la liste
-	add_cmd(&token_list, cmd1, "infile", NULL, 0, PIPE);   // ls -l > output.txt
-	add_cmd(&token_list, cmd2, NULL, NULL, 0, PIPE); // grep main < output.txt >> final.txt
-	add_cmd(&token_list, cmd3, NULL, "outfile8", 0, 0);
+	add_cmd(&token_list, cmd1, NULL, "outfile20", 0, 0);   // ls -l > output.txt
+	// add_cmd(&token_list, cmd2, NULL, "outfile9", 0, 0); // grep main < output.txt >> final.txt
+	// add_cmd(&token_list, cmd3, NULL, "outfile10", 0, 0);
 	
 	// execution de la liste de commande
 	ft_execute(token_list, &shell);

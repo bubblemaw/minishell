@@ -1,9 +1,13 @@
 lire bash
 strace
 bash opensource
-couper la fonction piper
+chemin abolu ou pas
+rajouter les here-doc
+et les appends
+et environnement
 liste de token -> liste de commande
 expansion
 builtin function
+
 
 
