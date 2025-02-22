@@ -6,7 +6,7 @@
 #    By: david <david@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 22:16:43 by david             #+#    #+#              #
-#    Updated: 2025/02/20 10:09:33 by david            ###   ########.fr        #
+#    Updated: 2025/02/22 12:54:51 by david            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,10 @@ NAME = minishell
 
 CC = gcc
 
-SRCS = test_tokken.c
+SRCS = main.c \
+	   creat_token.c \
+	   token_parse.c \
+	   creat_list.c
 
 FLAGS = -Wall -Wextra -Werror  -g
 

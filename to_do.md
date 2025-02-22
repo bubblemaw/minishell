@@ -39,6 +39,7 @@
 
 **variables**
 
+creations de variables
 ``` bash
 david@david-Vivobook$ var==test
 david@david-Vivobook$ echo $var
