@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/02/24 17:25:04 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/02/24 20:20:35 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	main (void)
 			return (0);
 		}
 		if (creat_tokken(shell.input, &shell) == ERROR)
-			printf("Error command not found\n");
+			printf("Syntaxe Error...\n");
 	}
 	return (0);
 }

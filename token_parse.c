@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_parse.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:53:52 by david             #+#    #+#             */
-/*   Updated: 2025/02/24 17:25:03 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/02/24 20:38:10 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,11 @@ int	single_quotes(char *str, int *i)
 		// if (quotes_conditions_1(str, i) == ERROR)
 		//  	return (ERROR);
 		(*i)++;
-		while (str[*i] != '\'')
+		while (str[*i] != '\0' && str[*i] != '\'')
 			(*i)++;
-		if (str[*i] == '\'')
+		if (str[*i] == '\0')
+			return (ERROR);
+		else if (str[*i] == '\'')
 		{
 			// if (quotes_conditions_2(str, i) == ERROR)
 			// 	return (ERROR);
@@ -64,7 +66,7 @@ int	single_quotes(char *str, int *i)
 			return (VALID);
 		}
 	}
-	return (ERROR);
+	return (0);
 }
 
 int	double_quotes(char *str, int *i)
