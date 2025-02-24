@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_parse.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:53:52 by david             #+#    #+#             */
-/*   Updated: 2025/02/22 16:53:10 by david            ###   ########.fr       */
+/*   Updated: 2025/02/24 17:25:03 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,31 +29,59 @@ int	skip_space(char *str, int *i)
 	return (0);
 }
 
-int	double_quotes(char *str, int *i)
-{
-	if (str[*i] == '"')
-	{
-		(*i)++;
-		while (str[*i] != '"')
-			(*i)++;
-		if (str[*i] == '"')
-		{
-			(*i)++;
-			return (VALID);
-		}
-	}
-	return (0);
-}
+// int quotes_conditions_1(char *str, int *i)
+// {
+// 	if (str[*i - 1] != '=' && str[*i - 1] != ' '
+// 		&& str[*i - 1] != '<' && str[*i - 1] != '>'
+// 		&& str[*i - 1] != '|')
+// 		return (ERROR);
+// 	return (0);
+// }
+
+// int quotes_conditions_2(char *str, int *i)
+// {
+// 	if (str[*i + 1] != ' '
+// 		&& str[*i + 1] != '<' && str[*i + 1] != '>'
+// 		&& str[*i + 1] != '|' && str[*i + 1] != '\0')
+// 		return (ERROR);
+// 	return (0);
+// }
 
 int	single_quotes(char *str, int *i)
 {
 	if (str[*i] == '\'')
 	{
+		// if (quotes_conditions_1(str, i) == ERROR)
+		//  	return (ERROR);
 		(*i)++;
 		while (str[*i] != '\'')
 			(*i)++;
 		if (str[*i] == '\'')
 		{
+			// if (quotes_conditions_2(str, i) == ERROR)
+			// 	return (ERROR);
+			(*i)++;
+			return (VALID);
+		}
+	}
+	return (ERROR);
+}
+
+int	double_quotes(char *str, int *i)
+{
+	if (str[*i] == '"')
+	{
+		// if (quotes_conditions_1(str, i) == ERROR)
+		//  	return (ERROR);
+		(*i)++;
+		while (str[*i] != '\0' && str[*i] != '"')
+			(*i)++;
+		if (str[*i] == '\0')
+			return (ERROR);
+		else if (str[*i] == '"')
+		{
+			// if (quotes_conditions_2(str, i) == ERROR)
+			// 	return (ERROR);
 			(*i)++;
 			return (VALID);
 		}
@@ -93,11 +121,12 @@ int	detect_command(char *input, int *i)
 {
 	while (input[*i] != ' ' && input[*i] != '>'
 		&& input[*i] != '<' && input[*i] != '|'
+		&& input[*i] != '\'' && input[*i] != '"'
 		&& input[*i] != '=' && input[*i] != '\0')
 		(*i)++;
-	if (input[*i] != ' ' && input[*i] != '>'
-		&& input[*i] != '<' && input[*i] != '|'
-		&& input[*i] != '=' && input[*i] != '\0')
-		return (ERROR);
+	// if (input[*i] != ' ' && input[*i] != '>'
+	// 	&& input[*i] != '<' && input[*i] != '|'
+	// 	&& input[*i] != '=' && input[*i] != '\0')
+	// 	return (ERROR);
 	return (VALID);
 }

@@ -62,6 +62,7 @@
     "minishell.h": "c",
     "history.h": "c",
     "readline.h": "c",
-    "initializer_list": "c"
+    "initializer_list": "c",
+    "libft.h": "c"
   }
 }

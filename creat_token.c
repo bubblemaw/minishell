@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   creat_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:02:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/02/22 16:53:03 by david            ###   ########.fr       */
+/*   Updated: 2025/02/24 17:24:49 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	creat_tokken(char *input, t_shell *shell)
 {
+	shell->creat.i = 0;
 	while (input[shell->creat.i] != '\0')
 	{
 		if (skip_space(input, &shell->creat.i) == ERROR)
@@ -21,7 +22,9 @@ int	creat_tokken(char *input, t_shell *shell)
 		if (input[shell->creat.i] == '\0')
 			break ;
 		shell->creat.begin = shell->creat.i;
-		if (double_quotes(input, &shell->creat.i) == VALID)
+		if (double_quotes(input, &shell->creat.i) == ERROR)
+			return (ERROR);
+		else if (double_quotes(input, &shell->creat.i) == VALID)
 			shell->creat.end = shell->creat.i;
 		else if (single_quotes(input, &shell->creat.i) == VALID)
 			shell->creat.end = shell->creat.i;
@@ -34,8 +37,8 @@ int	creat_tokken(char *input, t_shell *shell)
 		}
 		else if (detect_command(input, &shell->creat.i) == VALID)
 			shell->creat.end = shell->creat.i;
-		else if (detect_command(input, &shell->creat.i) == ERROR)
-			return (ERROR);
+		// else if (detect_command(input, &shell->creat.i) == ERROR)
+		// 	return (ERROR);
 		shell->creat.content = ft_substr(input, shell->creat.begin, shell->creat.end - shell->creat.begin);
 		shell->creat.new = creat_node(shell->creat.content);
 		add_node(shell, shell->creat.new);
