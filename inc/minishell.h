@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:17:30 by maw               #+#    #+#             */
-/*   Updated: 2025/02/21 22:03:45 by maw              ###   ########.fr       */
+/*   Updated: 2025/02/24 18:33:10 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,14 @@
 # include <string.h>
 # include <stdio.h>
 # include <errno.h>
+# include "../GNL/get_next_line.h"
 
 typedef struct s_token
 {
 	char **arg;
 	char *infile; 
 	char *outfile;
+	char *delimiter;
 	int	append;
 	int type;
 	struct s_token *next;
@@ -37,11 +39,14 @@ typedef struct s_shell
 	int STDOUT;
 	int STDERR;
 	int prev_pipefd;
+	int here_fd;
 }	t_shell;
 
 # define PARENT_PROCESS 1
 # define CHILD_PROCESS 2
-# define PIPE 1 
+# define PIPE 1
+# define DELIMITER 2
+
 // # define NOTHING 0
 // # define CMD 1
 // # define ARG 2
@@ -50,7 +55,7 @@ typedef struct s_shell
 
 
 t_token *create_cmd(char **arg, char *infile, char *outfile, int append, int type);
-void add_cmd(t_token **head, char **arg, char *infile, char *outfile, int append, int type);
+void add_cmd(t_token **head, char **arg, char *infile, char *outfile, char *delimiter, int append, int type);
 void print_cmds(t_token *head);
 void free_cmds(t_token *head);
 char	*ft_parse(t_token *cmd);
@@ -68,5 +73,6 @@ int lst_size(t_token *token);
 int		error(char *str);
 void init_execution(t_shell *shell);
 int child_processor(t_shell *shell, t_token *cmd, int *pipefd);
+int here_doc(t_token *token, t_shell *shell);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   liste_chaine.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 21:17:50 by maw               #+#    #+#             */
-/*   Updated: 2025/02/20 14:18:12 by maw              ###   ########.fr       */
+/*   Updated: 2025/02/24 18:34:49 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_token *create_cmd(char **arg, char *infile, char *outfile, int append, int typ
 }
 
 // Fonction pour ajouter une commande à la liste
-void add_cmd(t_token **head, char **arg, char *infile, char *outfile, int append, int type)
+void add_cmd(t_token **head, char **arg, char *infile, char *outfile, char *delimiter, int append, int type)
 {
     t_token *new_cmd = create_cmd(arg, infile, outfile, append, type);
     if (!new_cmd)

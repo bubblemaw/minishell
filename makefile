@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: maw <maw@student.42.fr>                    +#+  +:+       +#+         #
+#    By: masase <masase@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/12 00:38:47 by maw               #+#    #+#              #
-#    Updated: 2025/02/20 14:20:16 by maw              ###   ########.fr        #
+#    Updated: 2025/02/24 18:37:18 by masase           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,8 @@ SRCS = srcs/pseudo_code.c \
 		srcs/redirection.c \
 		srcs/error.c \
 		srcs/init_minishell.c \
+		GNL/get_next_line.c \
+		GNL/get_next_line_utils.c \
 		
 OBJS = $(SRCS:%.c=%.o)
 
