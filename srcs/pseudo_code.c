@@ -6,7 +6,7 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:16:38 by maw               #+#    #+#             */
-/*   Updated: 2025/02/24 18:40:45 by masase           ###   ########.fr       */
+/*   Updated: 2025/02/25 16:43:57 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ int ft_execute(t_token *token, t_shell *shell)
 			ft_exe(token);
 			token = token->next;
 		}
-		if (token->delimiter)
-			unlink("here_doc");
+		// if (token->delimiter)
+		// 	unlink("here_doc");
 	}
 	while (wait(NULL) > 0); // attente de tous les childs process 
 	reset_fd(shell);
@@ -148,7 +148,7 @@ int main(int ac, char **av, char **env)
 	// cmd3[1] = NULL;
 
 	// Ajout des commandes à la liste
-	add_cmd(&token_list, cmd1, NULL, "outfile20", "EOF",0, 0);   // ls -l > output.txt
+	add_cmd(&token_list, cmd1, NULL, "outfile20", "EOF", 1, 0);   // ls -l > output.txt
 	// add_cmd(&token_list, cmd2, NULL, "outfile9", 0, 0); // grep main < output.txt >> final.txt
 	// add_cmd(&token_list, cmd3, NULL, "outfile10", 0, 0);
 	

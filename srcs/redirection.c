@@ -6,7 +6,7 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:34:17 by maw               #+#    #+#             */
-/*   Updated: 2025/02/24 18:41:41 by masase           ###   ########.fr       */
+/*   Updated: 2025/02/25 16:43:56 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,15 @@ int ft_direction(t_token *token)
 		dup2(infd, STDIN_FILENO);
 		close(infd);
 	}
-	if (token->outfile)
+	if (token->append == 1)
+	{
+		outfd = open (token->outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		if (outfd == -1)
+			return(error("erreur open du fichier"));
+		dup2(outfd, STDOUT_FILENO);
+		close(outfd);
+	}
+	else if (token->outfile)
 	{
 		outfd = open (token->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (outfd == -1)
@@ -53,25 +61,27 @@ int here_doc(t_token *token, t_shell *shell)
 {
 	char *del;
 	char *line;
-	int here_fd;
+	int pipefd[2];
 
-	del = token->delimiter;
-	here_fd = open("here_doc", O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	if (here_fd == -1)
-		return(error("erreur open du fichier"));
+	del = ft_strjoin(token->delimiter, "\n");
+	if (pipe(pipefd) == -1)
+		return (error("error occurs during the pipe"));
 	while (1)
 	{
-		ft_printf("je lis \n");
 		line = get_next_line(shell->STDIN);
+		if (!line)
+			break ;
 		if (ft_strncmp(line, del, ft_strlen(del)) == 0)
 		{
 			free(line);
 			break ;
 		}	
-		ft_putstr_fd(line, here_fd);
+		ft_putstr_fd(line, pipefd[1]);
 		free(line);
 	}
-
-	dup2(here_fd, STDIN_FILENO);
+	free(del);
+	dup2(pipefd[0], STDIN_FILENO);
+	close (pipefd[0]);
+	close (pipefd[1]);
 	return (1);
 }

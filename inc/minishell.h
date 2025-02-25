@@ -6,7 +6,7 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:17:30 by maw               #+#    #+#             */
-/*   Updated: 2025/02/24 18:33:10 by masase           ###   ########.fr       */
+/*   Updated: 2025/02/25 16:37:57 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ typedef struct s_shell
 // # define INFD 4
 
 
-t_token *create_cmd(char **arg, char *infile, char *outfile, int append, int type);
+t_token *create_cmd(char **arg, char *infile, char *outfile, char *delimiter, int append, int type);
 void add_cmd(t_token **head, char **arg, char *infile, char *outfile, char *delimiter, int append, int type);
 void print_cmds(t_token *head);
 void free_cmds(t_token *head);

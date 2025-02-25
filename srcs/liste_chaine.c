@@ -6,14 +6,14 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 21:17:50 by maw               #+#    #+#             */
-/*   Updated: 2025/02/24 18:34:49 by masase           ###   ########.fr       */
+/*   Updated: 2025/02/25 16:25:28 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
 // Fonction pour créer un nouveau nœud de commande
-t_token *create_cmd(char **arg, char *infile, char *outfile, int append, int type)
+t_token *create_cmd(char **arg, char *infile, char *outfile, char *delimiter, int append, int type)
 {
     t_token *new_cmd = malloc(sizeof(t_token));
     if (!new_cmd)
@@ -21,6 +21,7 @@ t_token *create_cmd(char **arg, char *infile, char *outfile, int append, int typ
     new_cmd->arg = arg;
     new_cmd->infile = infile ? strdup(infile) : NULL;
     new_cmd->outfile = outfile ? strdup(outfile) : NULL;
+	new_cmd->delimiter = delimiter ? strdup(delimiter) : NULL;
     new_cmd->append = append;
     new_cmd->type = type;
     new_cmd->next = NULL;
@@ -30,7 +31,7 @@ t_token *create_cmd(char **arg, char *infile, char *outfile, int append, int typ
 // Fonction pour ajouter une commande à la liste
 void add_cmd(t_token **head, char **arg, char *infile, char *outfile, char *delimiter, int append, int type)
 {
-    t_token *new_cmd = create_cmd(arg, infile, outfile, append, type);
+    t_token *new_cmd = create_cmd(arg, infile, outfile, delimiter, append, type);
     if (!new_cmd)
         return;
     if (!*head)
@@ -73,6 +74,7 @@ void free_cmds(t_token *head)
         free(tmp->arg);  // Supposé alloué dynamiquement
         free(tmp->infile);
         free(tmp->outfile);
+		free(tmp->delimiter);
         free(tmp);
     }
 }
