@@ -6,10 +6,9 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 22:12:05 by david             #+#    #+#             */
-/*   Updated: 2025/02/25 16:06:02 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/02/25 18:11:14 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -56,6 +55,8 @@ typedef struct s_creat
 	int				end;
 	char			*content;
 	char			*last_token;
+	int				result_d;
+	int				result_s;
 	t_token			*new;
 }	t_creat;
 
@@ -69,12 +70,15 @@ typedef struct s_shell
 }	t_shell;
 
 // token's fonctions
+int		creat_tokken(char *input, t_shell *shell);
 int		skip_space(char *str, int *i);
 int		double_quotes(char *str, int *i);
 int		single_quotes(char *str, int *i);
 int		detect_redirections(char *str, int *i);
 int		detect_command(char *input, int *i);
-int		creat_tokken(char *input, t_shell *shell);
+
+// token's parsing
+int		creat_list(t_shell *shell, char *input);
 
 // fonctions to creat list
 t_token	*creat_node(char *content);

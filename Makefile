@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: david <david@student.42.fr>                +#+  +:+       +#+         #
+#    By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 22:16:43 by david             #+#    #+#              #
-#    Updated: 2025/02/22 16:53:14 by david            ###   ########.fr        #
+#    Updated: 2025/02/25 16:31:55 by dchellen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ CC = gcc
 
 SRCS = main.c \
 	   creat_token.c \
+	   token_detect.c \
 	   token_parse.c \
 	   creat_list.c
 
