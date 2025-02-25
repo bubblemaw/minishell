@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:02:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/02/25 12:37:46 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/02/25 16:03:23 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,18 @@ int	creat_tokken(char *input, t_shell *shell)
 		shell->creat.begin = shell->creat.i;
 
 		// gestion des doubles quotes
-		if (double_quotes(input, &shell->creat.i) == VALID)
-			shell->creat.end = shell->creat.i;
-
-		// gestion des single quotes
-		else if (single_quotes(input, &shell->creat.i) == VALID)
+		int result_d = double_quotes(input, &shell->creat.i);
+		int result_s = single_quotes(input, &shell->creat.i);
+		if (result_d == ERROR || result_s == ERROR)
+			return (ERROR);
+		else if (result_d == VALID || result_s == VALID)
 			shell->creat.end = shell->creat.i;
 
 		// gestion des redirections
 		else if (detect_redirections(input, &shell->creat.i) == ERROR)
 			return (ERROR);
 		else if (detect_redirections(input, &shell->creat.i) == VALID)
-		{ 
+		{
 			shell->creat.end = shell->creat.i + 1;
 			shell->creat.i++;
 		}
@@ -44,8 +44,6 @@ int	creat_tokken(char *input, t_shell *shell)
 		// gestion de la commande
 		else if (detect_command(input, &shell->creat.i) == VALID)
 			shell->creat.end = shell->creat.i;
-		// else if (detect_command(input, &shell->creat.i) == ERROR)
-		// 	return (ERROR);
 
 		//creation de la liste
 		shell->creat.content = ft_substr(input, shell->creat.begin, shell->creat.end - shell->creat.begin);

@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:53:52 by david             #+#    #+#             */
-/*   Updated: 2025/02/25 12:35:13 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:49:59 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@ int	single_quotes(char *str, int *i)
 {
 	if (str[*i] == '\'')
 	{
-		// if (quotes_conditions_1(str, i) == ERROR)
-		//  	return (ERROR);
 		(*i)++;
 		while (str[*i] != '\0' && str[*i] != '\'')
 			(*i)++;
@@ -60,8 +58,6 @@ int	single_quotes(char *str, int *i)
 			return (ERROR);
 		else if (str[*i] == '\'')
 		{
-			// if (quotes_conditions_2(str, i) == ERROR)
-			// 	return (ERROR);
 			(*i)++;
 			return (VALID);
 		}
