@@ -6,7 +6,7 @@
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:17:30 by maw               #+#    #+#             */
-/*   Updated: 2025/02/26 09:32:28 by maw              ###   ########.fr       */
+/*   Updated: 2025/02/26 17:45:26 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,14 @@
 # include <stdio.h>
 # include <errno.h>
 # include "../GNL/get_next_line.h"
+
+typedef struct s_tok
+{
+	char *str;
+	int type;
+	struct s_tok *next;
+	struct s_tok *prev;
+}	t_tok;
 
 typedef struct s_token
 {
@@ -40,18 +48,21 @@ typedef struct s_shell
 	int STDERR;
 	int prev_pipefd;
 	int here_fd;
+	
 }	t_shell;
 
 # define PARENT_PROCESS 1
 # define CHILD_PROCESS 2
 # define PIPE 1
 # define DELIMITER 2
-
-// # define NOTHING 0
-// # define CMD 1
-// # define ARG 2
-// # define OUTFD 3
-// # define INFD 4
+# define NOTHING 0
+# define CMD 1
+# define OPTION 2
+# define ARG 3
+# define OUTFD 3
+# define INFD 4
+# define SQ 5
+# define DQ 6
 
 
 t_token *create_cmd(char **arg, char *infile, char *outfile, char *delimiter, int append, int type);
@@ -74,5 +85,7 @@ int		error(char *str);
 void init_execution(t_shell *shell);
 int child_processor(t_shell *shell, t_token *cmd, int *pipefd);
 int here_doc(t_token *token, t_shell *shell);
+int	built_in(t_token *token);
+int	echo(t_token *token);
 
 #endif

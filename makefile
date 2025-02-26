@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: masase <masase@student.42.fr>              +#+  +:+       +#+         #
+#    By: maw <maw@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/12 00:38:47 by maw               #+#    #+#              #
-#    Updated: 2025/02/24 18:37:18 by masase           ###   ########.fr        #
+#    Updated: 2025/02/26 17:46:01 by maw              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,9 @@ SRCS = srcs/pseudo_code.c \
 		srcs/search_cmd.c \
 		srcs/redirection.c \
 		srcs/error.c \
+		srcs/cmd_lst.c \
+		srcs/echo.c \
+		srcs/built_in.c \
 		srcs/init_minishell.c \
 		GNL/get_next_line.c \
 		GNL/get_next_line_utils.c \
