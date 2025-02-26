@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:02:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/02/25 18:11:15 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/02/26 17:18:54 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,15 @@ int	creat_tokken(char *input, t_shell *shell)
 			break ;
 		shell->creat.begin = shell->creat.i;
 
-		// gestion des doubles quotes
-		shell->creat.result_d = double_quotes(input, &shell->creat.i);
-		shell->creat.result_s = single_quotes(input, &shell->creat.i);
-		if (shell->creat.result_d == ERROR || shell->creat.result_s == ERROR)
+		//gestion des quotes
+		shell->creat.result = handle_quotes(input, &shell->creat.i);
+		if(shell->creat.result == ERROR)
 			return (ERROR);
-		else if (shell->creat.result_d == VALID)
+		else if (shell->creat.result == VALID)
 			shell->creat.end = shell->creat.i;
-		else if (shell->creat.result_s == VALID)
-			shell->creat.end = shell->creat.i;			
 
 		// gestion des redirections
-		if (detect_redirections(input, &shell->creat.i) == ERROR)
+		else if (detect_redirections(input, &shell->creat.i) == ERROR)
 			return (ERROR);
 		else if (detect_redirections(input, &shell->creat.i) == VALID)
 		{

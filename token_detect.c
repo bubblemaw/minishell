@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:53:52 by david             #+#    #+#             */
-/*   Updated: 2025/02/25 18:11:17 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/02/26 16:44:49 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,18 @@ int	skip_space(char *str, int *i)
 // 		return (ERROR);
 // 	return (0);
 // }
+
+int	handle_quotes(char *input, int *i)
+{
+	int result;
+
+	result = 0;
+	if (input[*i] == '"')
+		result = double_quotes(input, i);
+	else if (input[*i] == '\'')
+		result = single_quotes(input, i);
+	return (result);
+}
 
 int	single_quotes(char *str, int *i)
 {
@@ -103,8 +115,7 @@ int	detect_redirections(char *str, int *i)
 		if (str[next +1] == '|')
 			return (ERROR);
 		else if (str[*i] == '=' && 
-			(str[*i + 1] == ' ' || str[*i - 1] == ' '
-			|| str[*i + 1] == '=' || str[*i - 1] == '='))
+			(str[*i + 1] == ' ' || str[*i - 1] == ' '))
 			return (ERROR);
 		return (VALID);
 	}

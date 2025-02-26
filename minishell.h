@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 22:12:05 by david             #+#    #+#             */
-/*   Updated: 2025/02/25 18:11:14 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/02/26 16:45:57 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,32 @@
 # define VALID 1
 
 // parsing's type data
-# define COMMAND
-# define SINGLE_Q
-# define DOUBLE_Q
-# define RED_L
-# define RED_DL
-# define RED_R
-# define RED_DR
-# define EQUAL
-# define PIPE
-# define ARG
-# define OPTION
+typedef enum 
+{
+	COMMAND,
+	SINGLE_Q,
+	DOUBLE_Q,
+	RED_L,
+	RED_DL,
+	RED_R,
+	RED_DR,
+	EQUAL,
+	PIPE,
+	ARG,
+	OPTION
+} type;
+
+// # define COMMAND
+// # define SINGLE_Q
+// # define DOUBLE_Q
+// # define RED_L
+// # define RED_DL
+// # define RED_R
+// # define RED_DR
+// # define EQUAL
+// # define PIPE
+// # define ARG
+// # define OPTION
 
 // structures
 // structure for the chain
@@ -55,8 +70,8 @@ typedef struct s_creat
 	int				end;
 	char			*content;
 	char			*last_token;
-	int				result_d;
-	int				result_s;
+	int				result;
+	type			test;
 	t_token			*new;
 }	t_creat;
 
@@ -72,6 +87,7 @@ typedef struct s_shell
 // token's fonctions
 int		creat_tokken(char *input, t_shell *shell);
 int		skip_space(char *str, int *i);
+int		handle_quotes(char *input, int *i);
 int		double_quotes(char *str, int *i);
 int		single_quotes(char *str, int *i);
 int		detect_redirections(char *str, int *i);

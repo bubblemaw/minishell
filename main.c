@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/02/25 18:11:12 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/02/26 16:41:59 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	main (void)
 	t_shell shell;
 
 	ft_memset(&shell, 0, sizeof(t_shell));
+	// shell.creat.test = PIPE;
+	// printf("result : %d\n", shell.creat.test);
 	while (1)
 	{
 		if (shell.tokken != NULL)
