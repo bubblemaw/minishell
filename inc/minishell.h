@@ -6,7 +6,7 @@
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:17:30 by maw               #+#    #+#             */
-/*   Updated: 2025/02/26 17:45:26 by maw              ###   ########.fr       */
+/*   Updated: 2025/02/26 19:43:08 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,18 @@ typedef struct s_tok
 	struct s_tok *next;
 	struct s_tok *prev;
 }	t_tok;
+
+typedef struct s_node {
+    char *str;
+    int type;
+    struct t_node *prev;
+    struct t_node *next;
+} t_node;
+
+typedef struct {
+    t_node *head;
+    t_node *tail;
+} DoublyLinkedList;
 
 typedef struct s_token
 {

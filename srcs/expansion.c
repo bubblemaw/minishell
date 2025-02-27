@@ -6,11 +6,16 @@
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:31:47 by maw               #+#    #+#             */
-/*   Updated: 2025/02/26 15:25:24 by maw              ###   ########.fr       */
+/*   Updated: 2025/02/26 19:07:31 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+int ft_expansion(t_tok *tok, t_shell *shell)
+{
+	while ()
+}
 
 int expansion(t_tok *tok, t_shell *shell)
 {

@@ -6,7 +6,7 @@
 #    By: maw <maw@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/12 00:38:47 by maw               #+#    #+#              #
-#    Updated: 2025/02/26 17:46:01 by maw              ###   ########.fr        #
+#    Updated: 2025/02/26 19:27:31 by maw              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ NAME = minishell
 
 SRCS = srcs/pseudo_code.c \
 		srcs/liste_chaine.c \
+		srcs/liste_chaine_double.c \
 		srcs/search_cmd.c \
 		srcs/redirection.c \
 		srcs/error.c \

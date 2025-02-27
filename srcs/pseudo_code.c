@@ -6,7 +6,7 @@
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:16:38 by maw               #+#    #+#             */
-/*   Updated: 2025/02/26 18:06:35 by maw              ###   ########.fr       */
+/*   Updated: 2025/02/26 19:27:34 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ int main(int ac, char **av, char **env)
 	cmd1[1] = strdup("-n");
 	cmd1[2] = strdup("you have to be confident");
 	cmd1[3] = strdup("for real");
+	cmd1[4] = strdup("$VAR");
 	cmd1[4] = NULL;
 
 	// char **cmd2 = malloc(3 * sizeof(char *));
@@ -155,6 +156,7 @@ int main(int ac, char **av, char **env)
 	// add_cmd(&token_list, cmd3, NULL, "outfile10", 0, 0);
 	
 	// execution de la liste de commande
+	expansion(&token_list, &shell);
 	ft_execute(token_list, &shell);
 
 	// Libération de la mémoire
