@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:02:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/02/26 17:18:54 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/02/27 18:27:57 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ int	creat_tokken(char *input, t_shell *shell)
 		shell->creat.begin = shell->creat.i;
 
 		//gestion des quotes
-		shell->creat.result = handle_quotes(input, &shell->creat.i);
+		if (shell->creat.var == false)
+			shell->creat.result = handle_quotes(input, &shell->creat.i);
 		if(shell->creat.result == ERROR)
 			return (ERROR);
 		else if (shell->creat.result == VALID)
@@ -39,6 +40,12 @@ int	creat_tokken(char *input, t_shell *shell)
 			shell->creat.end = shell->creat.i + 1;
 			shell->creat.i++;
 		}
+
+		// gestion des variables
+		else if (detect_variables(&shell->creat.var, input, &shell->creat.i) == VALID)
+			shell->creat.end = shell->creat.i;
+		else if (detect_variables(&shell->creat.var, input, &shell->creat.i) == ERROR)
+			return (ERROR);
 
 		// gestion de la commande
 		else if (detect_command(input, &shell->creat.i) == VALID)

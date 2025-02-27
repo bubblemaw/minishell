@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:53:52 by david             #+#    #+#             */
-/*   Updated: 2025/02/26 16:44:49 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/02/27 18:28:05 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,13 +110,34 @@ int	detect_redirections(char *str, int *i)
 			return (ERROR);
 		return (VALID);
 	}
-	else if (str[*i] == '|' || str[*i] == '=')
+	else if (str[*i] == '|')
 	{
 		if (str[next +1] == '|')
 			return (ERROR);
-		else if (str[*i] == '=' && 
-			(str[*i + 1] == ' ' || str[*i - 1] == ' '))
-			return (ERROR);
+		// else if (str[*i] == '=' && 
+		// 	(str[*i + 1] == ' ' || str[*i - 1] == ' '))
+		// 	return (ERROR);
+		return (VALID);
+	}
+	return (0);
+}
+
+int detect_variables(bool *var, char *str, int *i)
+{
+	if (str[*i] == '=' && (str[*i + 1] == ' ' || str[*i - 1] == ' '))
+		return (ERROR);
+	else if (str[*i - 1] == '=' && *var == true)
+	{
+		(*i)++;
+		while(str[*i] != ' ' && str[*i] != '\0')
+			(*i)++;
+		var = false;
+		return (VALID);
+	}
+	else if (str[*i] == '=')
+	{
+		(*i)++;
+		*var = true;
 		return (VALID);
 	}
 	return (0);
