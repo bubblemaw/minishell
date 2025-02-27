@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pseudo_code.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:16:38 by maw               #+#    #+#             */
-/*   Updated: 2025/02/26 19:27:34 by maw              ###   ########.fr       */
+/*   Updated: 2025/02/27 18:34:39 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,42 +124,42 @@ int ft_exe(t_token *token) // execution des commandes normales (sans pipe)
 	return (1);
 }
 
-int main(int ac, char **av, char **env)
-{
-	t_token *token_list = NULL;
-	t_shell shell;
+// int main(int ac, char **av, char **env)
+// {
+// 	t_token *token_list = NULL;
+// 	t_shell shell;
 
-	init_execution(&shell);
+// 	init_execution(&shell);
 
-	// Simulation de commandes
-	char **cmd1 = malloc(5 * sizeof(char *));
-	cmd1[0] = strdup("echo");
-	cmd1[1] = strdup("-n");
-	cmd1[2] = strdup("you have to be confident");
-	cmd1[3] = strdup("for real");
-	cmd1[4] = strdup("$VAR");
-	cmd1[4] = NULL;
+// 	// Simulation de commandes
+// 	char **cmd1 = malloc(5 * sizeof(char *));
+// 	cmd1[0] = strdup("echo");
+// 	cmd1[1] = strdup("-n");
+// 	cmd1[2] = strdup("you have to be confident");
+// 	cmd1[3] = strdup("for real");
+// 	cmd1[4] = strdup("$VAR");
+// 	cmd1[4] = NULL;
 
-	// char **cmd2 = malloc(3 * sizeof(char *));
-	// cmd2[0] = strdup("cat");
-	// // cmd2[1] = strdup("txt");
-	// cmd2[1] = NULL;
+// 	// char **cmd2 = malloc(3 * sizeof(char *));
+// 	// cmd2[0] = strdup("cat");
+// 	// // cmd2[1] = strdup("txt");
+// 	// cmd2[1] = NULL;
 
-	// char **cmd3 = malloc(3 * sizeof(char *));
-	// cmd3[0] = strdup("sort");
-	// // cmd3[1] = strdup("13");
-	// cmd3[1] = NULL;
+// 	// char **cmd3 = malloc(3 * sizeof(char *));
+// 	// cmd3[0] = strdup("sort");
+// 	// // cmd3[1] = strdup("13");
+// 	// cmd3[1] = NULL;
 
-	// Ajout des commandes à la liste
-	add_cmd(&token_list, cmd1, NULL, NULL, NULL, 0, 0);   // ls -l > output.txt
-	// add_cmd(&token_list, cmd2, NULL, "outfile9", 0, 0); // grep main < output.txt >> final.txt
-	// add_cmd(&token_list, cmd3, NULL, "outfile10", 0, 0);
+// 	// Ajout des commandes à la liste
+// 	add_cmd(&token_list, cmd1, NULL, NULL, NULL, 0, 0);   // ls -l > output.txt
+// 	// add_cmd(&token_list, cmd2, NULL, "outfile9", 0, 0); // grep main < output.txt >> final.txt
+// 	// add_cmd(&token_list, cmd3, NULL, "outfile10", 0, 0);
 	
-	// execution de la liste de commande
-	expansion(&token_list, &shell);
-	ft_execute(token_list, &shell);
+// 	// execution de la liste de commande
+// 	expansion(&token_list, &shell);
+// 	ft_execute(token_list, &shell);
 
-	// Libération de la mémoire
-	free_cmds(token_list);
-	return 0;
-}
+// 	// Libération de la mémoire
+// 	free_cmds(token_list);
+// 	return 0;
+// }

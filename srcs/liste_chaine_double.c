@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   liste_chaine_double.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 19:20:51 by maw               #+#    #+#             */
-/*   Updated: 2025/02/26 19:35:43 by maw              ###   ########.fr       */
+/*   Updated: 2025/02/27 17:35:57 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,72 +26,52 @@ t_node* createNode(char *str, int type) {
     return newNode;
 }
 
-// Fonction pour initialiser une liste chaînée
-DoublyLinkedList* createDoublyLinkedList() {
-    DoublyLinkedList *list = (DoublyLinkedList*)malloc(sizeof(DoublyLinkedList));
-    if (list == NULL) {
-        fprintf(stderr, "Erreur d'allocation mémoire\n");
-        exit(EXIT_FAILURE);
-    }
-    list->head = NULL;
-    list->tail = NULL;
-    return list;
-}
-
 // Fonction pour ajouter un nœud à la fin de la liste
-void appendNode(DoublyLinkedList *list, char *str, int type) {
+t_node* appendNode(t_node *head, char *str, int type) {
     t_node *newNode = createNode(str, type);
-    if (list->head == NULL) {
-        list->head = newNode;
-        list->tail = newNode;
+    if (head == NULL) {
+        return newNode;
     } else {
-        newNode->prev = list->tail;
-        list->tail->next = newNode;
-        list->tail = newNode;
+        t_node *current = head;
+        while (current->next != NULL) {
+            current = current->next;
+        }
+        current->next = newNode;
+        newNode->prev = current;
+        return head;
     }
 }
 
 // Fonction pour supprimer un nœud de la liste
-void deleteNode(DoublyLinkedList *list, t_node *node) {
-    if (node == NULL) return;
+t_node* deleteNode(t_node *head, t_node *node) {
+    if (node == NULL) return head;
 
     if (node->prev != NULL) {
         node->prev->next = node->next;
     } else {
-        list->head = node->next;
+        head = node->next;
     }
 
     if (node->next != NULL) {
         node->next->prev = node->prev;
-    } else {
-        list->tail = node->prev;
     }
 
     free(node->str);
     free(node);
+    return head;
 }
 
 // Fonction pour afficher la liste du début à la fin
-void printListForward(DoublyLinkedList *list) {
-    t_node *current = list->head;
+void printListForward(t_node *head) {
+    t_node *current = head;
     while (current != NULL) {
         printf("String: %s, Type: %d\n", current->str, current->type);
         current = current->next;
     }
 }
-
-// Fonction pour afficher la liste de la fin au début
-void printListBackward(DoublyLinkedList *list) {
-    t_node *current = list->tail;
-    while (current != NULL) {
-        printf("String: %s, Type: %d\n", current->str, current->type);
-        current = current->prev;
-    }
-}
-
 // Fonction pour libérer toute la liste
-void freeList(DoublyLinkedList *list) {
-    t_node *current = list->head;
+void freeList(t_node *head) {
+    t_node *current = head;
     t_node *nextNode;
     while (current != NULL) {
         nextNode = current->next;
@@ -99,34 +79,30 @@ void freeList(DoublyLinkedList *list) {
         free(current);
         current = nextNode;
     }
-    free(list);
 }
 
-int main() {
+int main(int ac, char **av, char **env) {
     // Exemple d'utilisation
-    DoublyLinkedList *list = createDoublyLinkedList();
+    t_shell shell;
+    t_node *head = NULL;
 
-    appendNode(list, "Hello", 1);
-    appendNode(list, "World", 2);
-    appendNode(list, "Doubly", 3);
-    appendNode(list, "Linked", 4);
-    appendNode(list, "List", 5);
+    init_execution(&shell, env);
+
+    head = appendNode(head, "echo", 1);
+    head = appendNode(head, "$var", DQ);
+    head = appendNode(head, "Doubly", 3);
+ 
 
     printf("Liste du début à la fin:\n");
-    printListForward(list);
+    printListForward(head);
 
-    printf("\nListe de la fin au début:\n");
-    printListBackward(list);
+    ft_expansion(head, &shell);
 
-    // Suppression d'un nœud (par exemple, le deuxième nœud)
-    t_node *nodeToDelete = list->head->next;
-    deleteNode(list, nodeToDelete);
-
-    printf("\nListe après suppression du deuxième nœud:\n");
-    printListForward(list);
+    printf("\nListe après l'expansion:\n");
+    printListForward(head);
 
     // Libération de la mémoire
-    freeList(list);
+    freeList(head);
 
     return 0;
 }

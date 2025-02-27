@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:17:30 by maw               #+#    #+#             */
-/*   Updated: 2025/02/26 19:43:08 by maw              ###   ########.fr       */
+/*   Updated: 2025/02/27 18:34:32 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,9 @@ typedef struct s_tok
 typedef struct s_node {
     char *str;
     int type;
-    struct t_node *prev;
-    struct t_node *next;
+    struct s_node *prev;
+    struct s_node *next;
 } t_node;
-
-typedef struct {
-    t_node *head;
-    t_node *tail;
-} DoublyLinkedList;
 
 typedef struct s_token
 {
@@ -55,6 +50,7 @@ typedef struct s_token
 
 typedef struct s_shell
 {
+	char **env;
 	int STDIN;
 	int STDOUT;
 	int STDERR;
@@ -94,10 +90,13 @@ int piper(t_token *cmd, t_shell *shell);
 int ft_exe_pipe(t_token *token);
 int lst_size(t_token *token);
 int		error(char *str);
-void init_execution(t_shell *shell);
+void init_execution(t_shell *shell, char **env);
 int child_processor(t_shell *shell, t_token *cmd, int *pipefd);
 int here_doc(t_token *token, t_shell *shell);
 int	built_in(t_token *token);
 int	echo(t_token *token);
+int ft_expansion(t_node *node, t_shell *shell);
+int expansion(t_node *node, t_shell *shell);
+char *ft_findvar(char *var_name, t_shell *shell);
 
 #endif
