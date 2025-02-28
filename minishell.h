@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 22:12:05 by david             #+#    #+#             */
-/*   Updated: 2025/02/27 18:28:04 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/02/28 14:19:00 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,7 @@ typedef enum
 	COMMAND,
 	SINGLE_Q,
 	DOUBLE_Q,
-	RED_L,
-	RED_DL,
-	RED_R,
-	RED_DR,
+	RED,
 	EQUAL,
 	PIPE,
 	ARG,
