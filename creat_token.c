@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   creat_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:02:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/02/27 18:27:57 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/01 23:13:15 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,14 @@ int	creat_tokken(char *input, t_shell *shell)
 			shell->creat.end = shell->creat.i;
 
 		//creation de la liste
-		shell->creat.content = ft_substr(input, shell->creat.begin, shell->creat.end - shell->creat.begin);
-		shell->creat.new = creat_node(shell->creat.content);
-		add_node(shell, shell->creat.new);
+		creat_list(shell, input);
 	}
 	shell->creat.last_token = shell->creat.content;
 	if (shell->creat.last_token[0] == '<' || shell->creat.last_token[0] == '>'
 		|| shell->creat.last_token[0] == '|')
 		return (ERROR);
-	printf("\n");
-	print_token(shell->tokken);
-	printf("\n");
+	// printf("\n");
+	// print_token(shell->tokken);
+	// printf("\n");
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/02/28 12:38:38 by david            ###   ########.fr       */
+/*   Updated: 2025/03/01 20:42:50 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@ int	main (void)
 		}
 		if (creat_tokken(shell.input, &shell) == ERROR)
 			printf("Syntaxe Error...\n");
+		printf("\n");
+		print_token(shell.tokken);
+		printf("\n");
 	}
 	return (0);
 }

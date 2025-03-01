@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 22:12:05 by david             #+#    #+#             */
-/*   Updated: 2025/02/28 14:19:00 by david            ###   ########.fr       */
+/*   Updated: 2025/03/01 23:13:16 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ typedef enum
 	COMMAND,
 	SINGLE_Q,
 	DOUBLE_Q,
-	RED,
-	EQUAL,
+	REDIRECTION,
+	EQUALITY,
 	PIPE,
-	ARG,
+	ARGUMENT,
 	OPTION
 } type;
 
@@ -45,7 +45,8 @@ typedef struct s_token
 	char 			*value;
 	struct s_token	*prev;
 	struct s_token	*next;
-	type			type; 
+	int				index;
+	type			type;
 }	t_token;
 
 //for the parse when the tokens are creat
@@ -58,7 +59,6 @@ typedef struct s_creat
 	char			*last_token;
 	int				result;
 	bool			var;
-	type			test;
 	t_token			*new;
 }	t_creat;
 
@@ -83,6 +83,7 @@ int		detect_command(char *input, int *i);
 
 // token's parsing
 int		creat_list(t_shell *shell, char *input);
+void	give_token_data(t_shell *shell);
 
 // fonctions to creat list
 t_token	*creat_node(char *content);

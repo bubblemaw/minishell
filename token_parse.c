@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:17:05 by dchellen          #+#    #+#             */
-/*   Updated: 2025/02/28 14:18:56 by david            ###   ########.fr       */
+/*   Updated: 2025/03/01 23:13:17 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,4 +18,20 @@ int creat_list(t_shell *shell, char *input)
 	shell->creat.new = creat_node(shell->creat.content);
 	add_node(shell, shell->creat.new);
     return (0);
+}
+
+// void give_token_data(t_shell *shell)
+// {
+// 	shell->creat.end = shell->creat.i + 1;
+// 	shell->tokken->type = REDIRECTION;
+// 	return ;
+// }
+
+void give_token_data(t_shell *shell)
+{
+	while (shell->tokken != NULL)
+	{
+		shell->tokken = shell->tokken->next;
+	}
+	return ;
 }

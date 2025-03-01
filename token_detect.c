@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:53:52 by david             #+#    #+#             */
-/*   Updated: 2025/02/28 14:11:47 by david            ###   ########.fr       */
+/*   Updated: 2025/03/01 20:22:42 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,5 +154,6 @@ int	detect_command(char *input, int *i)
 	// 	&& input[*i] != '<' && input[*i] != '|'
 	// 	&& input[*i] != '=' && input[*i] != '\0')
 	// 	return (ERROR);
+	
 	return (VALID);
 }
