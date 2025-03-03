@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   liste_chaine_double.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 19:20:51 by maw               #+#    #+#             */
-/*   Updated: 2025/02/27 17:35:57 by masase           ###   ########.fr       */
+/*   Updated: 2025/02/28 11:46:42 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int main(int ac, char **av, char **env) {
     init_execution(&shell, env);
 
     head = appendNode(head, "echo", 1);
-    head = appendNode(head, "$var", DQ);
+    head = appendNode(head, "$cool", DQ);
     head = appendNode(head, "Doubly", 3);
  
 

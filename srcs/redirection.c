@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:34:17 by maw               #+#    #+#             */
-/*   Updated: 2025/02/25 16:43:56 by masase           ###   ########.fr       */
+/*   Updated: 2025/03/03 15:50:01 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,30 +25,30 @@ void save_fd(t_shell *shell)
 	shell->STDOUT = dup(STDOUT_FILENO);
 	shell->STDERR = dup(STDERR_FILENO);
 }
-int ft_direction(t_token *token)
+int ft_direction(t_cmd *cmd)
 {
 	int infd;
 	int outfd;
 	
-	if (token->infile)
+	if (cmd->infile)
 	{
-		infd = open (token->infile, O_RDONLY);
+		infd = open (cmd->infile, O_RDONLY);
 		if (infd == -1)
 			return(error("erreur open du fichier"));
 		dup2(infd, STDIN_FILENO);
 		close(infd);
 	}
-	if (token->append == 1)
+	if (cmd->append == 1)
 	{
-		outfd = open (token->outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		outfd = open (cmd->outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (outfd == -1)
 			return(error("erreur open du fichier"));
 		dup2(outfd, STDOUT_FILENO);
 		close(outfd);
 	}
-	else if (token->outfile)
+	else if (cmd->outfile)
 	{
-		outfd = open (token->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		outfd = open (cmd->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (outfd == -1)
 			return(error("erreur open du fichier"));
 		dup2(outfd, STDOUT_FILENO);
@@ -57,13 +57,13 @@ int ft_direction(t_token *token)
 	return (1);
 }
 
-int here_doc(t_token *token, t_shell *shell)
+int here_doc(t_cmd *cmd, t_shell *shell)
 {
 	char *del;
 	char *line;
 	int pipefd[2];
 
-	del = ft_strjoin(token->delimiter, "\n");
+	del = ft_strjoin(cmd->delimiter, "\n");
 	if (pipe(pipefd) == -1)
 		return (error("error occurs during the pipe"));
 	while (1)

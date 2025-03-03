@@ -1,39 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   utlis1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/26 15:25:49 by maw               #+#    #+#             */
-/*   Updated: 2025/03/03 15:47:29 by maw              ###   ########.fr       */
+/*   Created: 2025/03/03 17:21:32 by maw               #+#    #+#             */
+/*   Updated: 2025/03/03 19:36:08 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	echo(t_cmd *cmd)
+void *ft_realloc(void *ptr, size_t new_size)
 {
-	int flag_n;
-	int i;
+	void *new_ptr;
 
-	i = 1;
-	flag_n = 0;
-	while (ft_strncmp(cmd->arg[i],"-n", 2) == 0)
+	if (new_size == 0)
 	{
-		flag_n = 1;
-		i++;
+		free (ptr);
+		return (NULL);
 	}
-	while (cmd->arg[i])
-	{
-		ft_putstr_fd(cmd->arg[i], STDOUT_FILENO);
-		if (cmd->arg[i + 1] != NULL)
-			ft_putchar_fd(' ', STDOUT_FILENO);
-		i++;
-	}	
-	if (flag_n == 0)
-		ft_putstr_fd("\n", STDOUT_FILENO);
-	return (0);
+	if (ptr == NULL)
+		return malloc(new_size);
+	new_ptr = malloc(new_size);
+	if (new_ptr == NULL)
+		return (NULL);	
+	new_ptr = ft_memcpy(new_ptr, ptr, new_size);
+	free(ptr);
+	return (new_ptr);
+
 }
-
-

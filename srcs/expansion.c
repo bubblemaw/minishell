@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:31:47 by maw               #+#    #+#             */
-/*   Updated: 2025/02/27 18:34:30 by masase           ###   ########.fr       */
+/*   Updated: 2025/02/28 11:49:48 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,15 @@ char *ft_findvar(char *var_name, t_shell *shell)
 	i = 0;
 	var_value = NULL;
 	var_lenth = ft_strlen(var_name) - 1;
-	while (ft_strncmp(var_name + 1, shell->env[i], var_lenth) != 0)
+	while (shell->env[i] && ft_strncmp(var_name + 1, shell->env[i], var_lenth) != 0)
 		i++;
-	printf("on va dans le strdup\n");
-	var_line = strdup(shell->env[i]);
-	printf("var line:%s\n", var_line);
-	var_value = ft_strdup(var_line + var_lenth + 1);
+	if (shell->env[i] == NULL)
+		var_value = ft_strdup("");
+	else
+	{
+		var_line = ft_strdup(shell->env[i]);
+		printf("var line:%s\n", var_line);
+		var_value = ft_strdup(var_line + var_lenth + 1);
+	}
 	return(var_value);
 }

@@ -2,12 +2,22 @@ lire bash
 strace
 bash opensource
 chemin abolu ou pas
-rajouter les here-doc
-et les appends
 et environnement
 liste de token -> liste de commande
 expansion
+	Pour implémenter cela :
+
+    Lors de l'assignation d'une variable d'environnement, supprimez la variable locale correspondante si elle existe.
+
+    Lors de l'assignation d'une variable locale, ne touchez pas à la variable d'environnement.
+
+changer execution avec nouvelle environnement
+
 builtin function
+
+comment gerer les affection de variable dans l'execution avec la structure de liste de commandes
+créer une liste chainée pour les variables locales
+
 
 
 

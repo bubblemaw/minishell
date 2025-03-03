@@ -3,38 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   pseudo_code.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:16:38 by maw               #+#    #+#             */
-/*   Updated: 2025/02/27 18:34:39 by masase           ###   ########.fr       */
+/*   Updated: 2025/03/03 15:50:28 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int ft_execute(t_token *token, t_shell *shell)
+int ft_execute(t_cmd *cmd, t_shell *shell)
 {
-	while (token)
+	while (cmd)
 	{
-		if (token->infile || token->outfile) // redirection infile outfile
-			ft_direction(token);
-		if (token->delimiter)
-			here_doc(token, shell);
-		if (token->type == PIPE) // si il ya des operations avec des pipes
+		if (cmd->infile || cmd->outfile) // redirection infile outfile
+			ft_direction(cmd);
+		if (cmd->delimiter)
+			here_doc(cmd, shell);
+		if (cmd->type == PIPE) // si il ya des operations avec des pipes
 		{
-			while (token)
+			while (cmd)
 			{
-				if (piper(token, shell) == CHILD_PROCESS)
-					ft_exe_pipe(token);
+				if (piper(cmd, shell) == CHILD_PROCESS)
+					ft_exe_pipe(cmd);
 				else // PARENT PROCESS
-					token = token->next;
+					cmd = cmd->next;
 			}
 		}
 		else // execution commande basique
 		{
 			// gérer cas fonctions builtin
-			ft_exe(token);
-			token = token->next;
+			ft_exe(cmd);
+			cmd = cmd->next;
 		}
 	}
 	while (wait(NULL) > 0); // attente de tous les childs process 
@@ -43,7 +43,7 @@ int ft_execute(t_token *token, t_shell *shell)
 	return (1);
 }
 
-int child_processor(t_shell *shell, t_token *cmd, int *pipefd) //gestion entree sortie du child process avant son execution
+int child_processor(t_shell *shell, t_cmd *cmd, int *pipefd) //gestion entree sortie du child process avant son execution
 {
 	if (shell->prev_pipefd != -1) // reprendre l'entrée du pipe précédent
 	{
@@ -69,7 +69,7 @@ int child_processor(t_shell *shell, t_token *cmd, int *pipefd) //gestion entree 
 	}
 }
 
-int piper(t_token *cmd, t_shell *shell) // creation du pipe et fork
+int piper(t_cmd *cmd, t_shell *shell) // creation du pipe et fork
 {
 	int pipefd[2];
 	pid_t pid;
@@ -91,17 +91,17 @@ int piper(t_token *cmd, t_shell *shell) // creation du pipe et fork
 		}
 }
 
-int ft_exe_pipe(t_token *token)// execution des fonctions qui precedé ou suivi d'un pipe
+int ft_exe_pipe(t_cmd *cmd)// execution des fonctions qui precedé ou suivi d'un pipe
 {
 	char *cmd_path;
 
-	cmd_path = ft_parse(token);
-	if(execve(cmd_path, token->arg, NULL) == -1)
+	cmd_path = ft_parse(cmd);
+	if(execve(cmd_path, cmd->arg, NULL) == -1)
 		return(error("Execution problem"));
 	return (1);
 }
 
-int ft_exe(t_token *token) // execution des commandes normales (sans pipe)
+int ft_exe(t_cmd *cmd) // execution des commandes normales (sans pipe)
 {
 	pid_t pid1;
 	char *cmd_path;
@@ -111,12 +111,12 @@ int ft_exe(t_token *token) // execution des commandes normales (sans pipe)
 	pid1 = fork();
 	if (pid1 == 0)
 	{
-		if (built_in(token) == 1)
+		if (built_in(cmd) == 1)
 			return (1);
-		cmd_path = ft_parse(token);
+		cmd_path = ft_parse(cmd);
 		if (cmd_path == NULL)
 			return(error("Command not found"));
-		if(execve(cmd_path, token->arg, NULL) == -1)
+		if(execve(cmd_path, cmd->arg, NULL) == -1)
 			return(error("Execution problem"));
 	}
 	else
@@ -126,7 +126,7 @@ int ft_exe(t_token *token) // execution des commandes normales (sans pipe)
 
 // int main(int ac, char **av, char **env)
 // {
-// 	t_token *token_list = NULL;
+// 	t_cmd *token_list = NULL;
 // 	t_shell shell;
 
 // 	init_execution(&shell);

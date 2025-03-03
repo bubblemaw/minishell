@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:17:30 by maw               #+#    #+#             */
-/*   Updated: 2025/02/27 18:34:32 by masase           ###   ########.fr       */
+/*   Updated: 2025/03/03 19:20:26 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,16 @@ typedef struct s_node {
     struct s_node *next;
 } t_node;
 
-typedef struct s_token
+typedef struct s_cmd
 {
 	char **arg;
 	char *infile; 
 	char *outfile;
 	char *delimiter;
 	int	append;
-	int type;
+	int type;// pipe or delimiter
 	struct s_token *next;
-}	t_token;
+}	t_cmd;
 
 typedef struct s_shell
 {
@@ -67,36 +67,37 @@ typedef struct s_shell
 # define CMD 1
 # define OPTION 2
 # define ARG 3
-# define OUTFD 3
-# define INFD 4
+# define REDIRECTION 4
 # define SQ 5
 # define DQ 6
 
 
-t_token *create_cmd(char **arg, char *infile, char *outfile, char *delimiter, int append, int type);
-void add_cmd(t_token **head, char **arg, char *infile, char *outfile, char *delimiter, int append, int type);
-void print_cmds(t_token *head);
-void free_cmds(t_token *head);
-char	*ft_parse(t_token *cmd);
-char	*ft_cmd_path(t_token *cmd);
-char	*join_path(char **tab_path, t_token *cmd);
+t_cmd *create_cmd(char **arg, char *infile, char *outfile, char *delimiter, int append, int type);
+void add_cmd(t_cmd **head, char **arg, char *infile, char *outfile, char *delimiter, int append, int type);
+void print_cmds(t_cmd *head);
+void free_cmds(t_cmd *head);
+char	*ft_parse(t_cmd *cmd);
+char	*ft_cmd_path(t_cmd *cmd);
+char	*join_path(char **tab_path, t_cmd *cmd);
 void	free_tab(char **tab);
-int ft_direction(t_token *token);
-int ft_execute(t_token *token, t_shell *shell);
-int ft_exe(t_token *token);
+int ft_direction(t_cmd *token);
+int ft_execute(t_cmd *token, t_shell *shell);
+int ft_exe(t_cmd *token);
 void reset_fd(t_shell *shell);
 void save_fd(t_shell *shell);
-int piper(t_token *cmd, t_shell *shell);
-int ft_exe_pipe(t_token *token);
-int lst_size(t_token *token);
+int piper(t_cmd *cmd, t_shell *shell);
+int ft_exe_pipe(t_cmd *token);
+int lst_size(t_cmd *token);
 int		error(char *str);
 void init_execution(t_shell *shell, char **env);
-int child_processor(t_shell *shell, t_token *cmd, int *pipefd);
-int here_doc(t_token *token, t_shell *shell);
-int	built_in(t_token *token);
-int	echo(t_token *token);
+int child_processor(t_shell *shell, t_cmd *cmd, int *pipefd);
+int here_doc(t_cmd *token, t_shell *shell);
+int	built_in(t_cmd *token);
+int	echo(t_cmd *token);
 int ft_expansion(t_node *node, t_shell *shell);
 int expansion(t_node *node, t_shell *shell);
 char *ft_findvar(char *var_name, t_shell *shell);
+void *ft_realloc(void *ptr, size_t new_size);
+
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 22:35:59 by maw               #+#    #+#             */
-/*   Updated: 2025/02/21 10:54:41 by maw              ###   ########.fr       */
+/*   Updated: 2025/03/03 15:50:15 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	free_tab(char **tab)
 	tab = NULL;
 }
 
-char	*ft_parse(t_token *cmd)
+char	*ft_parse(t_cmd *cmd)
 {
 	//est-ce qu'on passe par un chemin absolu
 	//est-ce que on va chercher la commande dans
@@ -57,7 +57,7 @@ char	*ft_parse(t_token *cmd)
 	return (cmd_path);
 }
 
-char	*ft_cmd_path(t_token *cmd)
+char	*ft_cmd_path(t_cmd *cmd)
 {
 	char	**tab_path;
 	char	*path;
@@ -75,7 +75,7 @@ char	*ft_cmd_path(t_token *cmd)
 	return (path);
 }
 
-char	*join_path(char **tab_path, t_token *cmd)
+char	*join_path(char **tab_path, t_cmd *cmd)
 {
 	int		i;
 	char	*tmp;
