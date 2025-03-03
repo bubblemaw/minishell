@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:53:52 by david             #+#    #+#             */
-/*   Updated: 2025/03/01 20:22:42 by david            ###   ########.fr       */
+/*   Updated: 2025/03/03 23:06:28 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,39 +61,63 @@ int	handle_quotes(char *input, int *i)
 
 int	single_quotes(char *str, int *i)
 {
+	int nb = 0;
 	if (str[*i] == '\'')
 	{
-		(*i)++;
-		while (str[*i] != '\0' && str[*i] != '\'')
-			(*i)++;
-		if (str[*i] == '\0')
-			return (ERROR);
-		else if (str[*i] == '\'')
+		while (str[*i] != ' ' && str[*i] != '>'
+			&& str[*i] != '<' && str[*i] != '|'
+			&& str[*i] != '=' && str[*i] != '\0')
 		{
+			if (str[*i] == '\'' || str[*i] == '"')
+				nb++;
 			(*i)++;
-			return (VALID);
 		}
+		if (nb % 2 != 0)
+			return (ERROR);
+		else
+			return (VALID);
 	}
 	return (0);
 }
 
 int	double_quotes(char *str, int *i)
 {
+	int nb = 0;
 	if (str[*i] == '"')
 	{
-		(*i)++;
-		while (str[*i] != '\0' && str[*i] != '"')
-			(*i)++;
-		if (str[*i] == '\0')
-			return (ERROR);
-		else if (str[*i] == '"')
+		while (str[*i] != ' ' && str[*i] != '>'
+			&& str[*i] != '<' && str[*i] != '|'
+			&& str[*i] != '=' && str[*i] != '\0')
 		{
+			if (str[*i] == '\'' || str[*i] == '"')
+				nb++;
 			(*i)++;
-			return (VALID);
 		}
+		if (nb % 2 != 0)
+			return (ERROR);
+		else
+			return (VALID);
 	}
 	return (0);
 }
+
+// int	double_quotes(char *str, int *i)
+// {
+// 	if (str[*i] == '"')
+// 	{
+// 		(*i)++;
+// 		while (str[*i] != '\0' && str[*i] != '"')
+// 			(*i)++;
+// 		if (str[*i] == '\0')
+// 			return (ERROR);
+// 		else if (str[*i] == '"')
+// 		{
+// 			(*i)++;
+// 			return (VALID);
+// 		}
+// 	}
+// 	return (0);
+// }
 
 int	detect_redirections(char *str, int *i)
 {
@@ -147,13 +171,7 @@ int	detect_command(char *input, int *i)
 {
 	while (input[*i] != ' ' && input[*i] != '>'
 		&& input[*i] != '<' && input[*i] != '|'
-		&& input[*i] != '\'' && input[*i] != '"'
 		&& input[*i] != '=' && input[*i] != '\0')
 		(*i)++;
-	// if (input[*i] != ' ' && input[*i] != '>'
-	// 	&& input[*i] != '<' && input[*i] != '|'
-	// 	&& input[*i] != '=' && input[*i] != '\0')
-	// 	return (ERROR);
-	
 	return (VALID);
 }

@@ -64,6 +64,7 @@
     "readline.h": "c",
     "initializer_list": "c",
     "libft.h": "c",
-    "type_traits": "c"
+    "type_traits": "c",
+    "utility": "c"
   }
 }

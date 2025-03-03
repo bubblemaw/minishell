@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:14:26 by david             #+#    #+#             */
-/*   Updated: 2025/03/01 21:03:02 by david            ###   ########.fr       */
+/*   Updated: 2025/03/03 23:22:08 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,14 @@ void	free_list(t_token *head)
 void	print_token(t_token *head)
 {
 	t_token	*current;
+	int		i;
 
 	current = head;
+	i = 0;
 	while (current != NULL)
 	{
 		printf("node[%d] -> %s -> type : [%d]\n",
-				current->index, current->value, current->type);
+				i, current->value, current->type);
 		current = current->next;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   creat_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:02:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/03/03 17:03:17 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/03 22:13:51 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,5 @@ int	creat_tokken(char *input, t_shell *shell)
 	if (shell->creat.last_token[0] == '<' || shell->creat.last_token[0] == '>'
 		|| shell->creat.last_token[0] == '|')
 		return (ERROR);
+	return (0);
 }

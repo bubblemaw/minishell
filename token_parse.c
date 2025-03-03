@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_parse.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:17:05 by dchellen          #+#    #+#             */
-/*   Updated: 2025/03/03 17:20:51 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/03 23:25:01 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,22 +29,25 @@ int creat_list(t_shell *shell, char *input)
 
 void give_token_data(t_shell *shell)
 {
-	while (shell->tokken != NULL)
+	t_token *temp;
+
+	temp = shell->tokken;
+	while (temp != NULL)
 	{
-		if (shell->tokken->value[0] == '\'')
-			shell->tokken->type = 1;
-		else if (shell->tokken->value[0] == '"')
-			shell->tokken->type = 2;
-		else if (shell->tokken->value[0] == '>' 
-				|| shell->tokken->value[0] == '<')
-			shell->tokken->type = 3;
-		else if (shell->tokken->value[0] == '=')
-			shell->tokken->type = 4;
-		else if (shell->tokken->value[0] == '|')
-			shell->tokken->type = 5;
+		if (temp->value[0] == '\'')
+			temp->type = 1;
+		else if (temp->value[0] == '"')
+			temp->type = 2;
+		else if (temp->value[0] == '>' 
+				|| temp->value[0] == '<')
+			temp->type = 3;
+		else if (temp->value[0] == '=')
+			temp->type = 4;
+		else if (temp->value[0] == '|')
+			temp->type = 5;
 		else
-			shell->tokken->type = 0;
-		shell->tokken = shell->tokken->next;
+			temp->type = 0;
+		temp = temp->next;
 	}
 	return ;
 }
