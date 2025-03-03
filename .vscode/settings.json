@@ -63,6 +63,7 @@
     "history.h": "c",
     "readline.h": "c",
     "initializer_list": "c",
-    "libft.h": "c"
+    "libft.h": "c",
+    "type_traits": "c"
   }
 }

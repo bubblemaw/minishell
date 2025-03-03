@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_parse.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:17:05 by dchellen          #+#    #+#             */
-/*   Updated: 2025/03/02 16:22:31 by david            ###   ########.fr       */
+/*   Updated: 2025/03/03 17:20:51 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,19 @@ void give_token_data(t_shell *shell)
 {
 	while (shell->tokken != NULL)
 	{
+		if (shell->tokken->value[0] == '\'')
+			shell->tokken->type = 1;
+		else if (shell->tokken->value[0] == '"')
+			shell->tokken->type = 2;
+		else if (shell->tokken->value[0] == '>' 
+				|| shell->tokken->value[0] == '<')
+			shell->tokken->type = 3;
+		else if (shell->tokken->value[0] == '=')
+			shell->tokken->type = 4;
+		else if (shell->tokken->value[0] == '|')
+			shell->tokken->type = 5;
+		else
+			shell->tokken->type = 0;
 		shell->tokken = shell->tokken->next;
 	}
 	return ;
