@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_parse.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:17:05 by dchellen          #+#    #+#             */
-/*   Updated: 2025/03/03 23:25:01 by david            ###   ########.fr       */
+/*   Updated: 2025/03/04 13:02:38 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,23 +30,43 @@ int creat_list(t_shell *shell, char *input)
 void give_token_data(t_shell *shell)
 {
 	t_token *temp;
+	char	*first;
 
 	temp = shell->tokken;
+	first = ft_strdup(temp->value);
+	if (first[0] == '<' || first[0] == '>')
+	{
+		temp->type = REDIRECTION;
+		temp = temp->next;
+		temp->type = ARGUMENT;
+		temp = temp->next;
+	}
+	free(first);
 	while (temp != NULL)
 	{
-		if (temp->value[0] == '\'')
-			temp->type = 1;
-		else if (temp->value[0] == '"')
-			temp->type = 2;
-		else if (temp->value[0] == '>' 
-				|| temp->value[0] == '<')
-			temp->type = 3;
+		if (temp->value[0] == '>' 
+			|| temp->value[0] == '<')
+			temp->type = REDIRECTION;
 		else if (temp->value[0] == '=')
-			temp->type = 4;
+			temp->type = EQUALITY;
 		else if (temp->value[0] == '|')
-			temp->type = 5;
+		{
+			temp->type = PIPE;
+			shell->creat.find = false;
+		}
+		else if (temp->value[0] == '-' 
+				&& temp->value[1] != ' ')
+			temp->type = OPTION;
 		else
-			temp->type = 0;
+		{
+			if (shell->creat.find == true)
+				temp->type = ARGUMENT;
+			else
+			{
+				temp->type = COMMAND;
+				shell->creat.find = true;
+			}
+		}
 		temp = temp->next;
 	}
 	return ;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 22:12:05 by david             #+#    #+#             */
-/*   Updated: 2025/03/03 23:08:19 by david            ###   ########.fr       */
+/*   Updated: 2025/03/04 13:02:41 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@
 typedef enum 
 {
 	COMMAND,
-	SINGLE_Q,
-	DOUBLE_Q,
 	REDIRECTION,
 	EQUALITY,
 	PIPE,
@@ -58,6 +56,7 @@ typedef struct s_creat
 	char			*last_token;
 	int				result;
 	bool			var;
+	bool			find;
 	t_token			*new;
 }	t_creat;
 
