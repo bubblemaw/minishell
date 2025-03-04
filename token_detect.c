@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_detect.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:53:52 by david             #+#    #+#             */
-/*   Updated: 2025/03/03 23:06:28 by david            ###   ########.fr       */
+/*   Updated: 2025/03/04 16:05:57 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,14 +148,25 @@ int	detect_redirections(char *str, int *i)
 
 int detect_variables(bool *var, char *str, int *i)
 {
+	int count;
+	int j;
+
+	count = 0;
+	j = *i;
 	if (str[*i] == '=' && (str[*i + 1] == ' ' || str[*i - 1] == ' '))
 		return (ERROR);
 	else if (str[*i - 1] == '=' && *var == true)
 	{
-		(*i)++;
-		while(str[*i] != ' ' && str[*i] != '\0')
-			(*i)++;
-		var = false;
+		while (str[j] != ' ' && str[j] != '\0')
+		{
+			if (str[j] == '\'' || str[j] == '"')
+				count++;
+			j++;
+		}
+		if (count % 2 != 0)
+			return (ERROR);
+		*i = j;
+		*var = false;
 		return (VALID);
 	}
 	else if (str[*i] == '=')

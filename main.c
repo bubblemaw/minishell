@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/03/04 10:49:40 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/04 16:05:49 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ int	main (void)
 			return (0);
 		}
 		if (creat_tokken(shell.input, &shell) == ERROR)
+		{
 			printf("Syntaxe Error...\n");
+			continue;
+		}
 		give_token_data(&shell);
 		printf("\n");
 		print_token(shell.tokken);

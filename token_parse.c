@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:17:05 by dchellen          #+#    #+#             */
-/*   Updated: 2025/03/04 13:02:38 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/04 16:06:00 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,19 @@ void give_token_data(t_shell *shell)
 		temp = temp->next;
 	}
 	free(first);
+	shell->creat.find = false;
 	while (temp != NULL)
 	{
 		if (temp->value[0] == '>' 
 			|| temp->value[0] == '<')
 			temp->type = REDIRECTION;
 		else if (temp->value[0] == '=')
+		{
 			temp->type = EQUALITY;
+			temp->prev->type = NAME;
+			temp->next->type = VALUE;
+			temp = temp->next;
+		}
 		else if (temp->value[0] == '|')
 		{
 			temp->type = PIPE;

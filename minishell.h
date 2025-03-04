@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 22:12:05 by david             #+#    #+#             */
-/*   Updated: 2025/03/04 13:02:41 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/04 16:05:51 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,14 @@
 // parsing's type data
 typedef enum 
 {
-	COMMAND,
-	REDIRECTION,
-	EQUALITY,
-	PIPE,
-	ARGUMENT,
-	OPTION
+	NAME,         // 0
+	EQUALITY,     // 1
+	VALUE,        // 2
+	COMMAND,      // 3
+	REDIRECTION,  // 4
+	PIPE,         // 5
+	ARGUMENT,	  // 6
+	OPTION		  // 7
 } type;
 
 // structures
