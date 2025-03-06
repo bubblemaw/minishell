@@ -6,7 +6,7 @@
 #    By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 22:16:43 by david             #+#    #+#              #
-#    Updated: 2025/02/25 16:31:55 by dchellen         ###   ########.fr        #
+#    Updated: 2025/03/06 17:16:43 by dchellen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,20 @@ SRCS = main.c \
 	   creat_token.c \
 	   token_detect.c \
 	   token_parse.c \
-	   creat_list.c
+	   creat_list.c \
+		srcs/pseudo_code.c \
+		srcs/liste_chaine.c \
+		srcs/search_cmd.c \
+		srcs/redirection.c \
+		srcs/error.c \
+		srcs/cmd_lst.c \
+		srcs/echo.c \
+		srcs/expansion.c \
+		srcs/built_in.c \
+		srcs/init_minishell.c \
+		srcs/token_cmd.c \
+		srcs/utils1.c \
+		GNL/get_next_line.c \
 
 FLAGS = -Wall -Wextra -Werror  -g
 
