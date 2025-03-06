@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:14:26 by david             #+#    #+#             */
-/*   Updated: 2025/03/04 16:05:56 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:46:26 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	print_token(t_token *head)
 	while (current != NULL)
 	{
 		printf("node[%d] -> %s -> type : [%d]\n",
-				i, current->value, current->type);
+			i, current->value, current->type);
 		current = current->next;
 		i++;
 	}

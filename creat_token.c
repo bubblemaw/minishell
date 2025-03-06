@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:02:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/03/04 16:05:54 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:46:09 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	creat_tokken(char *input, t_shell *shell)
 		//gestion des quotes
 		if (shell->creat.var == false)
 			shell->creat.result = handle_quotes(input, &shell->creat.i);
-		if(shell->creat.result == ERROR)
+		if (shell->creat.result == ERROR)
 			return (ERROR);
 		else if (shell->creat.result == VALID)
 			shell->creat.end = shell->creat.i;
