@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   creat_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:02:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/03/06 14:46:09 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/07 17:55:15 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,15 @@ int	creat_tokken(char *input, t_shell *shell)
 		shell->creat.begin = shell->creat.i;
 
 		//gestion des quotes
-		if (shell->creat.var == false)
-			shell->creat.result = handle_quotes(input, &shell->creat.i);
-		if (shell->creat.result == ERROR)
-			return (ERROR);
-		else if (shell->creat.result == VALID)
-			shell->creat.end = shell->creat.i;
+		// if (shell->creat.var == false)
+		// 	shell->creat.result = handle_quotes(input, &shell->creat.i);
+		// if (shell->creat.result == ERROR)
+		// 	return (ERROR);
+		// else if (shell->creat.result == VALID)
+		// 	shell->creat.end = shell->creat.i;
 
 		// gestion des redirections
-		else if (detect_redirections(input, &shell->creat.i) == ERROR)
+		if (detect_redirections(input, &shell->creat.i) == ERROR)
 			return (ERROR);
 		else if (detect_redirections(input, &shell->creat.i) == VALID)
 		{
@@ -48,8 +48,12 @@ int	creat_tokken(char *input, t_shell *shell)
 			return (ERROR);
 
 		// gestion de la commande
-		else if (detect_command(input, &shell->creat.i) == VALID)
+		else if (detect_command(input, &shell->creat.i) == ERROR)
+			return (ERROR);
+		else
 			shell->creat.end = shell->creat.i;
+		// else if (detect_command(input, &shell->creat.i) == VALID)
+		// 	shell->creat.end = shell->creat.i;
 
 		//creation de la liste
 		creat_list(shell, input);
