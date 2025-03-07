@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pseudo_code.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:16:38 by maw               #+#    #+#             */
-/*   Updated: 2025/03/06 17:19:03 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/07 12:13:47 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int ft_execute(t_shell *shell)
 	}
 	while (wait(NULL) > 0); // attente de tous les childs process 
 	reset_fd(shell);
-	printf("on a fini toutes les commande\n");
+	// printf("on a fini toutes les commande\n");
 	return (1);
 }
 

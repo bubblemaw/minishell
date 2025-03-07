@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_lst.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 12:29:51 by maw               #+#    #+#             */
-/*   Updated: 2025/03/06 17:37:30 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/07 12:09:39 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ void add_cmd_lst(t_cmd **head)
 	if (!new_cmd)
 		return;
 	if (!*head)
+	{
 		*head = new_cmd;
+		new_cmd->next = NULL;
+	}	
 	else
 	{
 		tmp = *head;

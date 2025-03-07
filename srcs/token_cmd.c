@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 12:00:01 by maw               #+#    #+#             */
-/*   Updated: 2025/03/06 17:29:57 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/07 12:11:53 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int create_cmd_lst(t_shell *shell)
 	t_cmd *current;
 
 	add_cmd_lst(&shell->cmd);
+	setup_cmd_lst(shell->cmd);
 	if (!shell->cmd)
 		return (0);
 	current = shell->cmd;
@@ -32,6 +33,7 @@ int create_cmd_lst(t_shell *shell)
 			shell->tokken = shell->tokken->next;
 			add_cmd_lst(&shell->cmd);
 			current = end_list(shell->cmd);
+			setup_cmd_lst(current);
 		}
 	}
 	return (1);
@@ -79,8 +81,6 @@ int ft_cmd_maker(t_shell *shell, t_cmd *cmd)
 	cmd->arg = NULL;
 	while (shell->tokken && (shell->tokken->type == OPTION || shell->tokken->type == ARGUMENT || shell->tokken->type == COMMAND))
 	{
-		printf("je suis dans le cmd maker \n");
-		printf("le token en question : %s \n", shell->tokken->value);
 		cmd->arg = ft_realloc(cmd->arg, i * sizeof(char *), (i + 1) * sizeof(char *));
 		cmd->arg[i] = ft_strdup(shell->tokken->value);
 		if (cmd->arg == NULL)
@@ -101,4 +101,12 @@ t_cmd *end_list(t_cmd *head)
 	while(head->next)
 		head = head->next;
 	return (head);
+}
+void setup_cmd_lst(t_cmd *cmd)
+{
+	cmd->arg = NULL;
+	cmd->infile = NULL;
+	cmd->outfile = NULL;
+	cmd->delimiter = NULL;
+	cmd->type = 0;
 }

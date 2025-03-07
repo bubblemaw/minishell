@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 22:12:05 by david             #+#    #+#             */
-/*   Updated: 2025/03/06 17:37:24 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/07 11:48:32 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,7 @@ t_cmd *end_list(t_cmd *head);
 void add_cmd_lst(t_cmd **head);
 int create_cmd_lst(t_shell *shell);
 int is_double_quote(t_token *tokken);
+void setup_cmd_lst(t_cmd *cmd);
 
 
 #endif
