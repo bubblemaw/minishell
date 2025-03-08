@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:02:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/03/07 17:55:15 by david            ###   ########.fr       */
+/*   Updated: 2025/03/08 16:14:21 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	creat_tokken(char *input, t_shell *shell)
 {
+	int	var_result;
 	shell->creat.i = 0;
 	while (input[shell->creat.i] != '\0')
 	{
@@ -25,15 +26,22 @@ int	creat_tokken(char *input, t_shell *shell)
 		shell->creat.begin = shell->creat.i;
 
 		//gestion des quotes
-		// if (shell->creat.var == false)
-		// 	shell->creat.result = handle_quotes(input, &shell->creat.i);
-		// if (shell->creat.result == ERROR)
-		// 	return (ERROR);
-		// else if (shell->creat.result == VALID)
-		// 	shell->creat.end = shell->creat.i;
+		if (shell->creat.var == false)
+			shell->creat.result = handle_quotes(input, &shell->creat.i);
+		if (shell->creat.result == ERROR)
+			return (ERROR);
+		else if (shell->creat.result == VALID)
+			shell->creat.end = shell->creat.i;
+
+		var_result = detect_variables(&shell->creat.var, input, &shell->creat.i);
+		if (var_result == ERROR)
+    		return (ERROR);
+		else if (var_result == VALID)
+    		shell->creat.end = shell->creat.i;
+
 
 		// gestion des redirections
-		if (detect_redirections(input, &shell->creat.i) == ERROR)
+		else if (detect_redirections(input, &shell->creat.i) == ERROR)
 			return (ERROR);
 		else if (detect_redirections(input, &shell->creat.i) == VALID)
 		{
@@ -42,21 +50,22 @@ int	creat_tokken(char *input, t_shell *shell)
 		}
 
 		// gestion des variables
-		else if (detect_variables(&shell->creat.var, input, &shell->creat.i) == VALID)
-			shell->creat.end = shell->creat.i;
-		else if (detect_variables(&shell->creat.var, input, &shell->creat.i) == ERROR)
-			return (ERROR);
+		// var_result = detect_variables(&shell->creat.var, input, &shell->creat.i);
+		// if (var_result == ERROR)
+    	// 	return (ERROR);
+		// else if (var_result == VALID)
+    	// 	shell->creat.end = shell->creat.i;
 
 		// gestion de la commande
 		else if (detect_command(input, &shell->creat.i) == ERROR)
 			return (ERROR);
 		else
 			shell->creat.end = shell->creat.i;
-		// else if (detect_command(input, &shell->creat.i) == VALID)
-		// 	shell->creat.end = shell->creat.i;
 
 		//creation de la liste
-		creat_list(shell, input);
+		if (shell->creat.begin < shell->creat.end)
+			creat_list(shell, input);
+	
 	}
 	shell->creat.last_token = shell->creat.content;
 	if (shell->creat.last_token[0] == '<' || shell->creat.last_token[0] == '>'

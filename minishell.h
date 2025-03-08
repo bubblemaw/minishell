@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 22:12:05 by david             #+#    #+#             */
-/*   Updated: 2025/03/06 17:37:24 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/08 16:14:21 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ int		double_quotes(char *str, int *i);
 int		single_quotes(char *str, int *i);
 int		detect_redirections(char *str, int *i);
 int		detect_variables(bool *var, char *str, int *i);
+int		detect_var_value(char *input, int *i);
 int		detect_command(char *input, int *i);
 
 // token's parsing
@@ -153,6 +154,5 @@ t_cmd *end_list(t_cmd *head);
 void add_cmd_lst(t_cmd **head);
 int create_cmd_lst(t_shell *shell);
 int is_double_quote(t_token *tokken);
-
 
 #endif
