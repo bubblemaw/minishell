@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:53:52 by david             #+#    #+#             */
-/*   Updated: 2025/03/08 16:14:20 by david            ###   ########.fr       */
+/*   Updated: 2025/03/09 17:13:05 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,6 @@ int detect_variables(bool *var, char *str, int *i)
 {
 	if (str[*i] == '=' && (str[*i + 1] == ' ' || str[*i - 1] == ' '))
 		return (ERROR);
-	if (str[*i] == '=')
-	{
-		(*i)++;
-		*var = true;
-		return (VALID);
-	}
 	else if (str[*i - 1] == '=' && *var == true)
 	{
 		while (str[*i] != ' ' && str[*i] != '\0'
@@ -94,6 +88,12 @@ int detect_variables(bool *var, char *str, int *i)
 			(*i)++;
 		}
 		*var = false;
+		return (VALID);
+	}
+	else if (str[*i] == '=')
+	{
+		(*i)++;
+		*var = true;
 		return (VALID);
 	}
 	return (0);
