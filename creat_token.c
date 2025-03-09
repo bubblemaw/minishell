@@ -6,11 +6,18 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:02:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/03/09 17:22:19 by david            ###   ########.fr       */
+/*   Updated: 2025/03/10 00:16:25 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int enter_input(t_shell *shell)
+{
+	if (shell->input == NULL)
+		return (VALID);
+	return (0);
+}
 
 int	creat_tokken(char *input, t_shell *shell)
 {

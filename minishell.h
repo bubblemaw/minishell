@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 22:12:05 by david             #+#    #+#             */
-/*   Updated: 2025/03/09 17:13:07 by david            ###   ########.fr       */
+/*   Updated: 2025/03/10 00:12:53 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ typedef struct s_shell
 }	t_shell;
 
 // token's fonctions
+int		enter_input(t_shell *shell);
 int		creat_tokken(char *input, t_shell *shell);
 int		skip_space(char *str, int *i);
 int		double_quotes(char *str, int *i);

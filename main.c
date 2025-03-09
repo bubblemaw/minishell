@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/03/07 22:33:34 by david            ###   ########.fr       */
+/*   Updated: 2025/03/10 00:16:26 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	main (int ac, char *av[], char **env)
 			shell.tokken = NULL;
 		}
 		shell.input = readline("minishell$ ");
+		if (enter_input(&shell) == VALID)
+			continue;
 		if (strncmp(shell.input, "exit ", 4) == 0)
 		{
 			free(shell.input); 
