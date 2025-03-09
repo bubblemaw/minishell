@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 22:12:05 by david             #+#    #+#             */
-/*   Updated: 2025/03/07 11:48:32 by maw              ###   ########.fr       */
+/*   Updated: 2025/03/09 17:43:09 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,11 +102,11 @@ typedef struct s_shell
 // token's fonctions
 int		creat_tokken(char *input, t_shell *shell);
 int		skip_space(char *str, int *i);
-int		handle_quotes(char *input, int *i);
 int		double_quotes(char *str, int *i);
 int		single_quotes(char *str, int *i);
 int		detect_redirections(char *str, int *i);
 int		detect_variables(bool *var, char *str, int *i);
+int		detect_var_value(char *input, int *i);
 int		detect_command(char *input, int *i);
 
 // token's parsing
@@ -153,7 +153,5 @@ t_cmd *end_list(t_cmd *head);
 void add_cmd_lst(t_cmd **head);
 int create_cmd_lst(t_shell *shell);
 int is_double_quote(t_token *tokken);
-void setup_cmd_lst(t_cmd *cmd);
-
 
 #endif

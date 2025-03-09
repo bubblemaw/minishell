@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/03/07 12:13:12 by maw              ###   ########.fr       */
+/*   Updated: 2025/03/09 17:42:39 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,7 @@ int	main (int ac, char *av[], char **env)
 	init_execution(&shell, env);
 	(void)av;
 	(void)ac;
-	
-	// shell.creat.test = PIPE;
-	// printf("result : %d\n", shell.creat.test);
+
 	while (1)
 	{
 		if (shell.tokken != NULL)
