@@ -6,7 +6,7 @@
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:16:38 by maw               #+#    #+#             */
-/*   Updated: 2025/03/07 12:13:47 by maw              ###   ########.fr       */
+/*   Updated: 2025/03/08 16:35:53 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,48 +14,52 @@
 
 int ft_execute(t_shell *shell)
 {
-	while (shell->cmd)
+	t_cmd *current;
+
+	current = shell->cmd;
+	while (current)
 	{
-		if (shell->cmd->infile || shell->cmd->outfile) // redirection infile outfile
-			ft_direction(shell->cmd);
-		if (shell->cmd->delimiter)
-			here_doc(shell);
-		if (shell->cmd->type == PIPE) // si il ya des operations avec des pipes
+		if (current->infile || current->outfile) // redirection infile outfile
+			ft_direction(current);
+		if (current->delimiter)
+			here_doc(current ,shell);
+		if (current->type == PIPE) // si il ya des operations avec des pipes
 		{
-			while (shell->cmd != NULL)
+			while (current)
 			{
-				if (piper(shell) == CHILD_PROCESS)
-					ft_exe_pipe(shell->cmd);
+				if (piper(current, shell) == CHILD_PROCESS)
+					ft_exe_pipe(current, shell);
 				else // PARENT PROCESS
-					shell->cmd = shell->cmd->next;
+					current = current->next;
 			}
 		}
 		else // execution commande basique
 		{
 			// gérer cas fonctions builtin
-			ft_exe(shell->cmd);
-			shell->cmd = shell->cmd->next;
+			ft_exe(current, shell);
+			current = current->next;
 		}
 	}
 	while (wait(NULL) > 0); // attente de tous les childs process 
 	reset_fd(shell);
+	// free_cmds(&shell->cmd);
 	// printf("on a fini toutes les commande\n");
-	return (1);
+	return (VALID);
 }
 
-int child_processor(t_shell *shell, int *pipefd) //gestion entree sortie du child process avant son execution
+int child_processor(t_cmd *cmd , t_shell *shell, int *pipefd) //gestion entree sortie du child process avant son execution
 {
 	if (shell->prev_pipefd != -1) // reprendre l'entrée du pipe précédent
 	{
 		dup2(shell->prev_pipefd, STDIN_FILENO);
 		close(shell->prev_pipefd);
 	}
-	if (shell->cmd->infile) // si la commande recoit l'entrée d'un fichier infile
-		ft_direction(shell->cmd);
-	if (shell->cmd->next == NULL) // si dernière commande -> redirection vers outfile ou terminal
+	if (cmd->infile) // si la commande recoit l'entrée d'un fichier infile
+		ft_direction(cmd);
+	if (cmd->next == NULL) // si dernière commande -> redirection vers outfile ou terminal
 	{
-		if (shell->cmd->outfile)
-			ft_direction(shell->cmd);
+		if (cmd->outfile)
+			ft_direction(cmd);
 		else
 			dup2(shell->STDOUT, STDOUT_FILENO);
 		return (CHILD_PROCESS); 
@@ -69,7 +73,7 @@ int child_processor(t_shell *shell, int *pipefd) //gestion entree sortie du chil
 	}
 }
 
-int piper(t_shell *shell) // creation du pipe et fork
+int piper(t_cmd *cmd, t_shell *shell) // creation du pipe et fork
 {
 	int pipefd[2];
 	pid_t pid;
@@ -80,7 +84,7 @@ int piper(t_shell *shell) // creation du pipe et fork
 		if (pid == -1)
 			return (error("error occurs during the fork"));
 		if (pid == 0)
-			return(child_processor(shell, pipefd));
+			return(child_processor(cmd ,shell, pipefd));
 		else
 		{
 			if (shell->prev_pipefd != -1) // fermeture du pipe de lecture dans le parent(pas besoin)
@@ -91,37 +95,37 @@ int piper(t_shell *shell) // creation du pipe et fork
 		}
 }
 
-int ft_exe_pipe(t_cmd *cmd)// execution des fonctions qui precedé ou suivi d'un pipe
+int ft_exe_pipe(t_cmd *cmd, t_shell *shell)// execution des fonctions qui precedé ou suivi d'un pipe
 {
 	char *cmd_path;
 
-	cmd_path = ft_parse(cmd);
-	if(execve(cmd_path, cmd->arg, NULL) == -1)
+	cmd_path = ft_parse(cmd, shell);
+	if(execve(cmd_path, cmd->arg, shell->env) == -1)
 		return(error("Execution problem"));
-	return (1);
+	return (VALID);
 }
 
-int ft_exe(t_cmd *cmd) // execution des commandes normales (sans pipe)
+int ft_exe(t_cmd *cmd, t_shell *shell) // execution des commandes normales (sans pipe)
 {
 	pid_t pid1;
 	char *cmd_path;
 	int status;
 
 	status = 0;
+	if (built_in(cmd) == VALID)
+		return (VALID);
 	pid1 = fork();
 	if (pid1 == 0)
 	{
-		if (built_in(cmd) == 1)
-			return (1);
-		cmd_path = ft_parse(cmd);
+		cmd_path = ft_parse(cmd, shell);
 		if (cmd_path == NULL)
-			return(error("Command not found"));
-		if(execve(cmd_path, cmd->arg, NULL) == -1)
+			return(error_cmd(cmd->arg[0], shell));
+		if(execve(cmd_path, cmd->arg, shell->env) == -1)
 			return(error("Execution problem"));
 	}
 	else
 		waitpid(pid1, &status, 0);
-	return (1);
+	return (VALID);
 }
 
 // int main(int ac, char **av, char **env)
