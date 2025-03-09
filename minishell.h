@@ -6,7 +6,7 @@
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 22:12:05 by david             #+#    #+#             */
-/*   Updated: 2025/03/07 11:48:32 by maw              ###   ########.fr       */
+/*   Updated: 2025/03/08 16:18:08 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,41 +119,58 @@ void	add_node(t_shell *shell, t_token *new);
 void	free_list(t_token *head);
 void	print_token(t_token *head);
 
-
-t_cmd *create_cmd(char **arg, char *infile, char *outfile, char *delimiter, int append, int type);
-void add_cmd(t_cmd **head, char **arg, char *infile, char *outfile, char *delimiter, int append, int type);
-void print_cmds(t_cmd *head);
-void free_cmds(t_cmd *head);
-char	*ft_parse(t_cmd *cmd);
-char	*ft_cmd_path(t_cmd *cmd);
+// recherche commande et chemin
+char	*ft_parse(t_cmd *cmd, t_shell *shell);
+char	*ft_cmd_path(t_cmd *cmd, t_shell *shell);
 char	*join_path(char **tab_path, t_cmd *cmd);
-void	free_tab(char **tab);
-int ft_direction(t_cmd *token);
-int ft_execute(t_shell *shell);
-int ft_exe(t_cmd *token);
-void reset_fd(t_shell *shell);
-void save_fd(t_shell *shell);
-int piper(t_shell *shell);
-int ft_exe_pipe(t_cmd *token);
-int lst_size(t_cmd *token);
-int		error(char *str);
-void init_execution(t_shell *shell, char **env);
-int child_processor(t_shell *shell, int *pipefd);
-int here_doc(t_shell *shell);
-int	built_in(t_cmd *token);
-int	echo(t_cmd *token);
-int ft_expansion(t_shell *shell);
-int expansion(t_token *tokken, t_shell *shell);
-char *ft_findvar(char *var_name, t_shell *shell);
-void *ft_realloc(void *ptr,size_t old_size, size_t new_size);
-int ft_cmd_redirection(t_shell *shell, t_cmd *cmd);
-int ft_cmd_maker(t_shell *shell, t_cmd *cmd);
-int ft_cmd_pipe(t_cmd *cmd);
-t_cmd *end_list(t_cmd *head);
-void add_cmd_lst(t_cmd **head);
-int create_cmd_lst(t_shell *shell);
-int is_double_quote(t_token *tokken);
-void setup_cmd_lst(t_cmd *cmd);
+// redirection
+int		ft_direction(t_cmd *token);
+void	reset_fd(t_shell *shell);
+void	save_fd(t_shell *shell);
 
+// execution
+int		ft_execute(t_shell *shell);
+int		ft_exe(t_cmd *token, t_shell *shell);
+int		built_in(t_cmd *token);
+int		echo(t_cmd *token);
+
+// token list -> cmd list
+t_cmd	*end_list(t_cmd *head);
+int		ft_cmd_maker(t_shell *shell, t_cmd *cmd);
+int		ft_cmd_pipe(t_cmd *cmd);
+int		ft_cmd_redirection(t_shell *shell, t_cmd *cmd);
+void	*ft_realloc(void *ptr,size_t old_size, size_t new_size);
+void	add_cmd_lst(t_cmd **head);
+int		create_cmd_lst(t_shell *shell);
+void	setup_cmd_lst(t_cmd *cmd);
+void	print_cmds(t_cmd *head);
+
+// pipe
+int		piper(t_cmd *cmd, t_shell *shell);
+int		ft_exe_pipe(t_cmd *token, t_shell *shell);
+int		lst_size(t_cmd *token);
+int		child_processor(t_cmd *cmd, t_shell *shell, int *pipefd);
+int		here_doc(t_cmd *cmd, t_shell *shell);
+
+// expansion
+int		ft_expansion(t_shell *shell);
+int		expansion(t_token *tokken, t_shell *shell);
+char	*ft_findvar(char *var_name, t_shell *shell);
+int		is_double_quote(t_token *tokken);
+
+
+//init_minishell
+void	init_execution(t_shell *shell, char **env);
+char	**copy_env(char **env);
+
+// free
+void	free_tab(char **tab);
+void	free_shell(t_shell *shell);
+void	free_cmds(t_cmd **head);
+void	free_tab(char **tab);
+
+// error
+int		error_cmd(char *str, t_shell *shell);
+int		error(char *str);
 
 #endif

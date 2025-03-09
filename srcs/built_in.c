@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 16:34:33 by maw               #+#    #+#             */
-/*   Updated: 2025/03/06 15:18:24 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/09 14:26:13 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 int	built_in(t_cmd *cmd)
 {
-	if(ft_strncmp(cmd->arg[0], "echo", 4) == 0)
+	if(ft_strlen(cmd->arg[0]) >= 4 && ft_strncmp(cmd->arg[0], "echo", 4) == 0)
+	{
 		echo(cmd);
-	return (1);	
+		return (VALID);
+	}
+	return (ERROR);	
 }

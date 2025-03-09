@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:34:17 by maw               #+#    #+#             */
-/*   Updated: 2025/03/06 16:16:53 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/08 15:59:21 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,13 @@ int ft_direction(t_cmd *cmd)
 	return (1);
 }
 
-int here_doc(t_shell *shell)
+int here_doc(t_cmd *cmd, t_shell *shell)
 {
 	char *del;
 	char *line;
 	int pipefd[2];
 
-	del = ft_strjoin(shell->cmd->delimiter, "\n");
+	del = ft_strjoin(cmd->delimiter, "\n");
 	if (pipe(pipefd) == -1)
 		return (error("error occurs during the pipe"));
 	while (1)
