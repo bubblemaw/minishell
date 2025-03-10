@@ -6,10 +6,9 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/03/10 11:12:30 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/10 12:34:46 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 
@@ -37,17 +36,17 @@ int	main (int ac, char *av[], char **env)
 		}
 		shell.input = readline("minishell$ ");
 		if (enter_input(&shell) == VALID)
-			continue;
-		if (strncmp(shell.input, "exit ", 4) == 0)
+			continue ;
+		else if (strncmp(shell.input, "exit ", 4) == 0)
 		{
 			free_shell(&shell);
 			free(shell.input); 
 			return (0);
 		}
-		if (creat_tokken(shell.input, &shell) == ERROR)
+		else if (creat_tokken(shell.input, &shell) == ERROR)
 		{
 			printf("Syntaxe Error...\n");
-			continue;
+			continue ;
 		}
 		give_token_data(&shell);
 		// printf("\n");
@@ -56,7 +55,7 @@ int	main (int ac, char *av[], char **env)
 		if (create_cmd_lst(&shell) == ERROR)
 		{
 			free_shell(&shell);
-			error("Error loadind commands\n");
+			error("loadind commands\n");
 		}
 		// print_cmds(shell.cmd);
 		ft_execute(&shell);

@@ -6,10 +6,11 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/03/10 11:14:13 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/10 12:34:45 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef MINISHELL_H
 # define MINISHELL_H
 
 # include "libft/libft.h"
@@ -123,6 +124,7 @@ void	print_token(t_token *head);
 char	*ft_parse(t_cmd *cmd, t_shell *shell);
 char	*ft_cmd_path(t_cmd *cmd, t_shell *shell);
 char	*join_path(char **tab_path, t_cmd *cmd);
+
 // redirection
 int		ft_direction(t_cmd *token);
 void	reset_fd(t_shell *shell);

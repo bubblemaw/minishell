@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   creat_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:02:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/03/10 00:16:25 by david            ###   ########.fr       */
+/*   Updated: 2025/03/10 12:34:32 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 
 int enter_input(t_shell *shell)
 {
-	if (shell->input == NULL)
+	if (shell->input[0] == '\0')
+	{
+    	free(shell->input);
 		return (VALID);
+	}
 	return (0);
 }
 
@@ -47,13 +50,6 @@ int	creat_tokken(char *input, t_shell *shell)
 			shell->creat.end = shell->creat.i + 1;
 			shell->creat.i++;
 		}
-
-		// gestion des variables
-		// var_result = detect_variables(&shell->creat.var, input, &shell->creat.i);
-		// if (var_result == ERROR)
-    	// 	return (ERROR);
-		// else if (var_result == VALID)
-    	// 	shell->creat.end = shell->creat.i;
 
 		// gestion de la commande
 		else if (detect_command(input, &shell->creat.i) == ERROR)
