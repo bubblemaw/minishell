@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   liste_chaine.c                                     :+:      :+:    :+:   */
+/*   utils_cmd_lst.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 21:17:50 by maw               #+#    #+#             */
-/*   Updated: 2025/03/08 16:20:13 by maw              ###   ########.fr       */
+/*   Updated: 2025/03/10 14:21:01 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../inc/minishell.h"
 
 // Fonction pour afficher les commandes stockées
 void print_cmds(t_cmd *head)
@@ -30,27 +30,6 @@ void print_cmds(t_cmd *head)
 			   current->append ? "Append" : "Truncate");
 		printf("----------------------\n");
 		current = current->next;
-	}
-}
-
-// Fonction pour libérer la liste
-void free_cmds(t_cmd **head)
-{
-	t_cmd *tmp;
-	while (*head)
-	{
-		tmp = *head;
-		*head = (*head)->next;
-		// if (tmp->arg)
-		free_tab(tmp->arg);
-		if (tmp->infile)
-			free(tmp->infile);
-		if (tmp->outfile)
-			free(tmp->outfile);
-		if (tmp->delimiter)
-			free(tmp->delimiter);
-		free(tmp);
-		tmp = NULL;
 	}
 }
 

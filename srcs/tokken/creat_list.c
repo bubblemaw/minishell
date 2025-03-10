@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   creat_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:14:26 by david             #+#    #+#             */
-/*   Updated: 2025/03/06 14:46:26 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/10 14:09:03 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../inc/minishell.h"
 
 t_token	*creat_node(char *content)
 {

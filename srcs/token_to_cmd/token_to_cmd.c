@@ -3,34 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   token_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 12:00:01 by maw               #+#    #+#             */
-/*   Updated: 2025/03/09 13:37:10 by maw              ###   ########.fr       */
+/*   Updated: 2025/03/10 14:09:04 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../inc/minishell.h"
 
 int create_cmd_lst(t_shell *shell)
 {
 	t_cmd *current;
+	t_token *tokken;
 
 	add_cmd_lst(&shell->cmd);
 	if (!shell->cmd)
 		return (ERROR);
 	setup_cmd_lst(shell->cmd);
 	current = shell->cmd;
-	while (shell->tokken)
+	tokken = shell->tokken;
+	while (tokken)
 	{
-		if (shell->tokken->type == REDIRECTION)
-			ft_cmd_redirection(shell, current);
-		else if (shell->tokken->type == COMMAND)
-			ft_cmd_maker(shell, current);
-		else if (shell->tokken->type == PIPE)
+		if (tokken->type == REDIRECTION)
+			ft_cmd_redirection(current, &tokken);
+		else if (tokken->type == COMMAND)
+			ft_cmd_maker(current, &tokken);
+		else if (tokken->type == PIPE)
 		{
 			ft_cmd_pipe(current);
-			shell->tokken = shell->tokken->next;
+			tokken = tokken->next;
 			add_cmd_lst(&shell->cmd);
 			if (!shell->cmd)
 				return (ERROR);
@@ -41,54 +43,54 @@ int create_cmd_lst(t_shell *shell)
 	return (VALID);
 }
 
-int ft_cmd_redirection(t_shell *shell, t_cmd *cmd)
+int ft_cmd_redirection(t_cmd *cmd, t_token **tokken)
 {
-	if (ft_strlen(shell->tokken->value) > 1)
+	if (ft_strlen((*tokken)->value) > 1)
 	{
-		if (shell->tokken->value[0] == '>' && shell->tokken->value[1] == '>')
+		if ((*tokken)->value[0] == '>' && (*tokken)->value[1] == '>')
 		{
-		shell->tokken = shell->tokken->next;
-		cmd->outfile = ft_strdup(shell->tokken->value);
+		*tokken = (*tokken)->next;
+		cmd->outfile = ft_strdup((*tokken)->value);
 		cmd->append = 1;
 		}	
-		if (shell->tokken->value[0] == '<' && shell->tokken->value[1] == '<')
+		if ((*tokken)->value[0] == '<' && (*tokken)->value[1] == '<')
 		{
-		shell->tokken = shell->tokken->next;
-		cmd->delimiter = ft_strdup(shell->tokken->value);
+		*tokken = (*tokken)->next;
+		cmd->delimiter = ft_strdup((*tokken)->value);
 		cmd->type = DELIMITER;
 		}
 	}
 	else
 	{
-		if (shell->tokken->value[0] == '>')
+		if ((*tokken)->value[0] == '>')
 		{
-			shell->tokken = shell->tokken->next;
-			cmd->outfile = ft_strdup(shell->tokken->value);
+			*tokken = (*tokken)->next;
+			cmd->outfile = ft_strdup((*tokken)->value);
 		}	
-		else if (shell->tokken->value[0] == '<')
+		else if ((*tokken)->value[0] == '<')
 		{
-			shell->tokken = shell->tokken->next;
-			cmd->infile = ft_strdup(shell->tokken->value);
+			*tokken = (*tokken)->next;
+			cmd->infile = ft_strdup((*tokken)->value);
 		}	
 	}
-	shell->tokken = shell->tokken->next;
+	*tokken = (*tokken)->next;
 	return (VALID);
 }
 
-int ft_cmd_maker(t_shell *shell, t_cmd *cmd)
+int ft_cmd_maker(t_cmd *cmd, t_token **tokken)
 {
 	int i;
 
 	i = 0;
 	cmd->arg = NULL;
-	while (shell->tokken && (shell->tokken->type == OPTION || shell->tokken->type == ARGUMENT || shell->tokken->type == COMMAND))
+	while (*tokken && ((*tokken)->type == OPTION || (*tokken)->type == ARGUMENT || (*tokken)->type == COMMAND))
 	{
 		cmd->arg = ft_realloc(cmd->arg, i * sizeof(char *), (i + 1) * sizeof(char *));
-		cmd->arg[i] = ft_strdup(shell->tokken->value);
+		cmd->arg[i] = ft_strdup((*tokken)->value);
 		if (cmd->arg[i] == NULL)
 			return (ERROR);
 		i++;
-		shell->tokken = shell->tokken->next;
+		*tokken = (*tokken)->next;
 	}
 	cmd->arg = ft_realloc(cmd->arg, i * sizeof(char *), (i + 1) * sizeof(char *));
 	cmd->arg[i] = NULL;

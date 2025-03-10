@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/03/10 12:44:09 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/10 14:09:10 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../inc/minishell.h"
 
 int	main (int ac, char *av[], char **env)
 {
@@ -31,7 +31,6 @@ int	main (int ac, char *av[], char **env)
 		if (shell.cmd != NULL)
 		{
 			free_cmds(&shell.cmd);
-			print_cmds(shell.cmd);
 			shell.cmd = NULL;
 		}
 		shell.input = readline("minishell$ ");

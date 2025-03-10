@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   search_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 22:35:59 by maw               #+#    #+#             */
-/*   Updated: 2025/03/08 16:13:43 by maw              ###   ########.fr       */
+/*   Updated: 2025/03/10 14:09:28 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../inc/minishell.h"
 
 char	*ft_parse(t_cmd *cmd, t_shell *shell)
 {
