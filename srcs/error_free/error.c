@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 12:00:12 by maw               #+#    #+#             */
-/*   Updated: 2025/03/08 16:15:08 by maw              ###   ########.fr       */
+/*   Updated: 2025/03/10 14:09:24 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../inc/minishell.h"
 
 int		error(char *str)
 {
@@ -32,31 +32,4 @@ int error_cmd(char *str, t_shell *shell)
 	free_shell(shell);
 	// (void)shell;
 	exit (EXIT_SUCCESS);
-}
-
-void free_shell(t_shell *shell)
-{
-	if (shell->env)
-		free_tab(shell->env);
-	if (shell->cmd)
-		free_cmds(&shell->cmd);
-	// if (shell->tokken)
-	// 	free_list(shell->tokken);
-	// if (shell->input)
-	// 	free(shell->input);
-}
-
-void	free_tab(char **tab)
-{
-	int	i;
-
-	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		tab[i] = NULL;
-		i++;
-	}
-	free(tab);
-	tab = NULL;
 }

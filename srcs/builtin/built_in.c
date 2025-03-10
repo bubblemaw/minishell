@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 16:34:33 by maw               #+#    #+#             */
-/*   Updated: 2025/03/09 14:26:13 by maw              ###   ########.fr       */
+/*   Updated: 2025/03/10 14:07:35 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../inc/minishell.h"
 
 int	built_in(t_cmd *cmd)
 {

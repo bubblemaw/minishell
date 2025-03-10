@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:31:21 by maw               #+#    #+#             */
-/*   Updated: 2025/03/08 16:15:25 by maw              ###   ########.fr       */
+/*   Updated: 2025/03/10 14:09:20 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../inc/minishell.h"
 
 void init_execution(t_shell *shell, char **env)
 {

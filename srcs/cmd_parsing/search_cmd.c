@@ -6,11 +6,11 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 22:35:59 by maw               #+#    #+#             */
-/*   Updated: 2025/03/10 15:43:39 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/10 15:55:39 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../inc/minishell.h"
 
 char	*ft_parse(t_cmd *cmd, t_shell *shell)
 {

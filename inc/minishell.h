@@ -6,15 +6,15 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/03/10 14:29:29 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/10 18:12:23 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "libft/libft.h"
-# include "GNL/get_next_line.h"
+# include "../libft/libft.h"
+# include "../GNL/get_next_line.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <stdbool.h>
@@ -138,9 +138,9 @@ int		echo(t_cmd *token);
 
 // token list -> cmd list
 t_cmd	*end_list(t_cmd *head);
-int		ft_cmd_maker(t_shell *shell, t_cmd *cmd);
+int		ft_cmd_maker(t_cmd *cmd, t_token **tokken);
 int		ft_cmd_pipe(t_cmd *cmd);
-int		ft_cmd_redirection(t_shell *shell, t_cmd *cmd);
+int		ft_cmd_redirection(t_cmd *cmd, t_token **tokken);
 void	*ft_realloc(void *ptr,size_t old_size, size_t new_size);
 void	add_cmd_lst(t_cmd **head);
 int		create_cmd_lst(t_shell *shell);
