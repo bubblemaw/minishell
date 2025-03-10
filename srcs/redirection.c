@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:34:17 by maw               #+#    #+#             */
-/*   Updated: 2025/03/08 15:59:21 by maw              ###   ########.fr       */
+/*   Updated: 2025/03/10 15:43:42 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void save_fd(t_shell *shell)
 	shell->STDOUT = dup(STDOUT_FILENO);
 	shell->STDERR = dup(STDERR_FILENO);
 }
+
 int ft_direction(t_cmd *cmd)
 {
 	int infd;

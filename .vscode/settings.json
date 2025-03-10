@@ -65,6 +65,8 @@
     "readline.h": "c",
     "errno.h": "c",
     "wait.h": "c",
-    "fcntl.h": "c"
+    "fcntl.h": "c",
+    "get_next_line.h": "c",
+    "stdio.h": "c"
   }
 }
