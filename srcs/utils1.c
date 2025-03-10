@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 17:21:32 by maw               #+#    #+#             */
-/*   Updated: 2025/03/06 15:27:06 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/07 14:09:35 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,6 @@ void *ft_realloc(void *ptr, size_t old_size, size_t new_size)
 		copy_size = new_size;	
 	new_ptr = ft_memcpy(new_ptr, ptr, copy_size);
 	free(ptr);
+	ptr = NULL;
 	return (new_ptr);
 }

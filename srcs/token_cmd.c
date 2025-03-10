@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 12:00:01 by maw               #+#    #+#             */
-/*   Updated: 2025/03/06 17:29:57 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/09 13:37:10 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int create_cmd_lst(t_shell *shell)
 
 	add_cmd_lst(&shell->cmd);
 	if (!shell->cmd)
-		return (0);
+		return (ERROR);
+	setup_cmd_lst(shell->cmd);
 	current = shell->cmd;
 	while (shell->tokken)
 	{
@@ -31,10 +32,13 @@ int create_cmd_lst(t_shell *shell)
 			ft_cmd_pipe(current);
 			shell->tokken = shell->tokken->next;
 			add_cmd_lst(&shell->cmd);
+			if (!shell->cmd)
+				return (ERROR);
 			current = end_list(shell->cmd);
+			setup_cmd_lst(current);
 		}
 	}
-	return (1);
+	return (VALID);
 }
 
 int ft_cmd_redirection(t_shell *shell, t_cmd *cmd)
@@ -68,7 +72,7 @@ int ft_cmd_redirection(t_shell *shell, t_cmd *cmd)
 		}	
 	}
 	shell->tokken = shell->tokken->next;
-	return (1);
+	return (VALID);
 }
 
 int ft_cmd_maker(t_shell *shell, t_cmd *cmd)
@@ -79,22 +83,21 @@ int ft_cmd_maker(t_shell *shell, t_cmd *cmd)
 	cmd->arg = NULL;
 	while (shell->tokken && (shell->tokken->type == OPTION || shell->tokken->type == ARGUMENT || shell->tokken->type == COMMAND))
 	{
-		printf("je suis dans le cmd maker \n");
-		printf("le token en question : %s \n", shell->tokken->value);
 		cmd->arg = ft_realloc(cmd->arg, i * sizeof(char *), (i + 1) * sizeof(char *));
 		cmd->arg[i] = ft_strdup(shell->tokken->value);
-		if (cmd->arg == NULL)
-			return (0);
+		if (cmd->arg[i] == NULL)
+			return (ERROR);
 		i++;
 		shell->tokken = shell->tokken->next;
 	}
+	cmd->arg = ft_realloc(cmd->arg, i * sizeof(char *), (i + 1) * sizeof(char *));
 	cmd->arg[i] = NULL;
-	return (1);
+	return (VALID);
 }
 int ft_cmd_pipe(t_cmd *cmd)
 {
 	cmd->type = PIPE;
-	return (0);
+	return (VALID);
 }
 t_cmd *end_list(t_cmd *head)
 {
@@ -102,3 +105,4 @@ t_cmd *end_list(t_cmd *head)
 		head = head->next;
 	return (head);
 }
+

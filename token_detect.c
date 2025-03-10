@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_detect.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:53:52 by david             #+#    #+#             */
-/*   Updated: 2025/03/09 17:20:41 by david            ###   ########.fr       */
+/*   Updated: 2025/03/10 12:08:47 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int detect_variables(bool *var, char *str, int *i)
 {
 	if (str[*i] == '=' && (str[*i + 1] == ' ' || str[*i - 1] == ' '))
 		return (ERROR);
-	else if (str[*i - 1] == '=' && *var == true)
+	else if (*i > 0 && str[*i - 1] == '=' && *var == true)
 	{
 		while (str[*i] != ' ' && str[*i] != '\0'
 				&& str[*i] != '>' && str[*i] != '<'
