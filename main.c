@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/03/10 00:16:26 by david            ###   ########.fr       */
+/*   Updated: 2025/03/10 11:12:30 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
@@ -20,9 +21,7 @@ int	main (int ac, char *av[], char **env)
 	init_execution(&shell, env);
 	(void)av;
 	(void)ac;
-	
-	// shell.creat.test = PIPE;
-	// printf("result : %d\n", shell.creat.test);
+
 	while (1)
 	{
 		if (shell.tokken != NULL)
@@ -30,11 +29,18 @@ int	main (int ac, char *av[], char **env)
 			free_list(shell.tokken);
 			shell.tokken = NULL;
 		}
+		if (shell.cmd != NULL)
+		{
+			free_cmds(&shell.cmd);
+			print_cmds(shell.cmd);
+			shell.cmd = NULL;
+		}
 		shell.input = readline("minishell$ ");
 		if (enter_input(&shell) == VALID)
 			continue;
 		if (strncmp(shell.input, "exit ", 4) == 0)
 		{
+			free_shell(&shell);
 			free(shell.input); 
 			return (0);
 		}
@@ -44,12 +50,16 @@ int	main (int ac, char *av[], char **env)
 			continue;
 		}
 		give_token_data(&shell);
-		printf("\n");
-		print_token(shell.tokken);
-		printf("\n");
-		// create_cmd_lst(&shell);
+		// printf("\n");
+		// print_token(shell.tokken);
+		// printf("\n");
+		if (create_cmd_lst(&shell) == ERROR)
+		{
+			free_shell(&shell);
+			error("Error loadind commands\n");
+		}
 		// print_cmds(shell.cmd);
-		// ft_execute(&shell);
+		ft_execute(&shell);
 	}
 	return (0);
 }
