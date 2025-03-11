@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   search_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 22:35:59 by maw               #+#    #+#             */
-/*   Updated: 2025/03/10 14:09:28 by masase           ###   ########.fr       */
+/*   Updated: 2025/03/11 17:21:08 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,12 @@
 char	*ft_parse(t_cmd *cmd, t_shell *shell)
 {
 	char *cmd_path;
-	char	c;
 
-	c = '/';
 	cmd_path = NULL;
 	if (ft_strnstr(cmd->arg[0], "bin", ft_strlen(cmd->arg[0])) != NULL)// check si chemin absolu vers cmd
-	{
 		cmd_path = cmd->arg[0];
-		cmd->arg = ft_split(ft_strnstr(cmd->arg[0], "bin", ft_strlen(cmd->arg[0])) + 4, c);
-	}
 	else
-			cmd_path = ft_cmd_path(cmd, shell);		
+		cmd_path = ft_cmd_path(cmd, shell);		
 	return (cmd_path);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/03/10 14:11:10 by masase           ###   ########.fr       */
+/*   Updated: 2025/03/11 17:04:43 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ int		ft_execute(t_shell *shell);
 int		ft_exe(t_cmd *token, t_shell *shell);
 int		built_in(t_cmd *token);
 int		echo(t_cmd *token);
+int		echo_option(t_cmd *cmd);
 
 // token list -> cmd list
 t_cmd	*end_list(t_cmd *head);
@@ -162,7 +163,7 @@ int		is_double_quote(t_token *tokken);
 
 
 //init_minishell
-void	init_execution(t_shell *shell, char **env);
+void	init_execution(t_shell *shell);
 char	**copy_env(char **env);
 
 // free
