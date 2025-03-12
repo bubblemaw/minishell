@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_cmd.c                                        :+:      :+:    :+:   */
+/*   token_to_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 12:00:01 by maw               #+#    #+#             */
-/*   Updated: 2025/03/10 14:09:04 by masase           ###   ########.fr       */
+/*   Updated: 2025/03/11 17:56:18 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ int create_cmd_lst(t_shell *shell)
 {
 	t_cmd *current;
 	t_token *tokken;
+	int		deli_flag;
 
+	deli_flag = 0;
 	add_cmd_lst(&shell->cmd);
 	if (!shell->cmd)
 		return (ERROR);
@@ -26,7 +28,21 @@ int create_cmd_lst(t_shell *shell)
 	while (tokken)
 	{
 		if (tokken->type == REDIRECTION)
+		{
+			if (deli_flag == 1)
+			{
+				add_cmd_lst(&shell->cmd);
+				if (!shell->cmd)
+				return (ERROR);
+				current = end_list(shell->cmd);
+				setup_cmd_lst(current);
+				deli_flag = 0;
+			}
+			else
+				deli_flag = 1;
 			ft_cmd_redirection(current, &tokken);
+
+		}
 		else if (tokken->type == COMMAND)
 			ft_cmd_maker(current, &tokken);
 		else if (tokken->type == PIPE)
