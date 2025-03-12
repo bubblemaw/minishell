@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/03/12 15:59:15 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/13 00:06:44 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,7 @@ int		ft_execute(t_shell *shell);
 int		ft_exe(t_cmd *token, t_shell *shell);
 int		built_in(t_cmd *token);
 int		echo(t_cmd *token);
+int		echo_option(t_cmd *cmd);
 
 // token list -> cmd list
 t_cmd	*end_list(t_cmd *head);
@@ -177,7 +178,7 @@ int		kill_quotes(t_shell *shell);
 int		size_to_kill(t_token *token);
 
 //init_minishell
-void	init_execution(t_shell *shell, char **env);
+void	init_execution(t_shell *shell);
 char	**copy_env(char **env);
 
 // free

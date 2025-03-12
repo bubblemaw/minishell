@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/03/12 12:18:33 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/13 00:06:55 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int	main (int ac, char *av[], char **env)
 	t_shell shell;
 
 	ft_memset(&shell, 0, sizeof(t_shell));
-	init_execution(&shell, env);
+	shell.env = copy_env(env);
+	init_execution(&shell);
 	(void)av;
 	(void)ac;
 
@@ -51,12 +52,13 @@ int	main (int ac, char *av[], char **env)
 		// printf("\n");
 		// print_token(shell.tokken);
 		// printf("\n");
+		init_execution(&shell);
 		if (create_cmd_lst(&shell) == ERROR)
 		{
 			free_shell(&shell);
 			error("loadind commands\n");
 		}
-		// print_cmds(shell.cmd);
+		// // print_cmds(shell.cmd);
 		ft_execute(&shell);
 	}
 	return (0);
