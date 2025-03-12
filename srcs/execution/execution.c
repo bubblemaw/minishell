@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:16:38 by maw               #+#    #+#             */
-/*   Updated: 2025/03/10 18:12:25 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/12 16:21:57 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int piper(t_cmd *cmd, t_shell *shell) // creation du pipe et fork
 {
 	int pipefd[2];
 	pid_t pid;
-	
+
 		if (pipe(pipefd) == -1)
 			return (error("error occurs during the pipe"));
 		pid = fork();

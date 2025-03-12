@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/03/10 18:12:23 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/12 15:59:15 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,20 @@ typedef enum
 } type;
 
 // structures
+// variables's struct without export
+typedef struct s_var
+{
+	char *var;
+	struct s_var *next;
+}	t_var;
+
+// size to kill quotes
+typedef struct s_kill
+{
+	int				start;
+	int				len;
+}	t_kill;
+
 // structure for the chain
 typedef struct s_token
 {
@@ -159,7 +173,8 @@ int		ft_expansion(t_shell *shell);
 int		expansion(t_token *tokken, t_shell *shell);
 char	*ft_findvar(char *var_name, t_shell *shell);
 int		is_double_quote(t_token *tokken);
-
+int		kill_quotes(t_shell *shell);
+int		size_to_kill(t_token *token);
 
 //init_minishell
 void	init_execution(t_shell *shell, char **env);
