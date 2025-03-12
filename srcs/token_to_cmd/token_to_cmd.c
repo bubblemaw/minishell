@@ -3,45 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   token_to_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 12:00:01 by maw               #+#    #+#             */
-/*   Updated: 2025/03/11 17:56:18 by maw              ###   ########.fr       */
+/*   Updated: 2025/03/12 17:54:13 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+int new_cmd(t_cmd **head_cmd, t_cmd **current, t_cmd *cmd)
+{
+	add_cmd_lst(head_cmd);
+	*current = *head_cmd;
+	if (!head_cmd)
+		return (ERROR);
+	while ((*current)->next)
+	{
+		*current = (*current)->next;
+		printf("lourdd \n");
+	}
+	(void)cmd;
+	setup_cmd_lst(current);
+	return (VALID);
+}
+
 int create_cmd_lst(t_shell *shell)
 {
 	t_cmd *current;
 	t_token *tokken;
-	int		deli_flag;
 
-	deli_flag = 0;
-	add_cmd_lst(&shell->cmd);
-	if (!shell->cmd)
-		return (ERROR);
-	setup_cmd_lst(shell->cmd);
 	current = shell->cmd;
 	tokken = shell->tokken;
+	new_cmd(&shell->cmd, &current, shell->cmd);
 	while (tokken)
 	{
 		if (tokken->type == REDIRECTION)
 		{
-			if (deli_flag == 1)
-			{
-				add_cmd_lst(&shell->cmd);
-				if (!shell->cmd)
-				return (ERROR);
-				current = end_list(shell->cmd);
-				setup_cmd_lst(current);
-				deli_flag = 0;
-			}
-			else
-				deli_flag = 1;
 			ft_cmd_redirection(current, &tokken);
-
 		}
 		else if (tokken->type == COMMAND)
 			ft_cmd_maker(current, &tokken);
@@ -49,15 +48,19 @@ int create_cmd_lst(t_shell *shell)
 		{
 			ft_cmd_pipe(current);
 			tokken = tokken->next;
-			add_cmd_lst(&shell->cmd);
-			if (!shell->cmd)
-				return (ERROR);
-			current = end_list(shell->cmd);
-			setup_cmd_lst(current);
+			new_cmd(&shell->cmd, &current, shell->cmd);
+		}
+		if (tokken)
+		{
+			printf("on cree une nouvelle commande \n");
+			new_cmd(&shell->cmd, &current, shell->cmd);
+			printf("j'ai fini ma nouvelle commande \n");
 		}
 	}
 	return (VALID);
 }
+
+
 
 int ft_cmd_redirection(t_cmd *cmd, t_token **tokken)
 {
@@ -119,8 +122,8 @@ int ft_cmd_pipe(t_cmd *cmd)
 }
 t_cmd *end_list(t_cmd *head)
 {
-	while(head->next)
-		head = head->next;
+	while((head)->next)
+		head = (head)->next;
 	return (head);
 }
 

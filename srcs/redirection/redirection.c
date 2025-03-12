@@ -6,7 +6,7 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:34:17 by maw               #+#    #+#             */
-/*   Updated: 2025/03/10 14:09:08 by masase           ###   ########.fr       */
+/*   Updated: 2025/03/12 17:32:01 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int here_doc(t_cmd *cmd, t_shell *shell)
 		return (error("error occurs during the pipe"));
 	while (1)
 	{
+		write(1, ">", 1);
 		line = get_next_line(shell->STDIN);
 		if (!line)
 			break ;

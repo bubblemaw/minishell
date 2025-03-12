@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pseudo_code.c                                      :+:      :+:    :+:   */
+/*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:16:38 by maw               #+#    #+#             */
-/*   Updated: 2025/03/10 14:09:22 by masase           ###   ########.fr       */
+/*   Updated: 2025/03/12 16:54:39 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ int ft_execute(t_shell *shell)
 		{
 			// gérer cas fonctions builtin
 			ft_exe(current, shell);
-			current = current->next;
 		}
+		current = current->next;
 	}
 	while (wait(NULL) > 0); // attente de tous les childs process 
 	reset_fd(shell);
@@ -112,6 +112,8 @@ int ft_exe(t_cmd *cmd, t_shell *shell) // execution des commandes normales (sans
 	int status;
 
 	status = 0;
+	if (cmd->arg == NULL)
+		return(ERROR);
 	if (built_in(cmd) == VALID)
 		return (VALID);
 	pid1 = fork();

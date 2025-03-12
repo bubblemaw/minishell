@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/03/11 17:04:43 by maw              ###   ########.fr       */
+/*   Updated: 2025/03/12 15:52:18 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ int		ft_cmd_redirection(t_cmd *cmd, t_token **tokken);
 void	*ft_realloc(void *ptr,size_t old_size, size_t new_size);
 void	add_cmd_lst(t_cmd **head);
 int		create_cmd_lst(t_shell *shell);
-void	setup_cmd_lst(t_cmd *cmd);
+void	setup_cmd_lst(t_cmd **cmd);
 void	print_cmds(t_cmd *head);
 
 // pipe

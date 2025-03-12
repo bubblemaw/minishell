@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_lst.c                                          :+:      :+:    :+:   */
+/*   add_cmd_lst.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 12:29:51 by maw               #+#    #+#             */
-/*   Updated: 2025/03/10 14:09:07 by masase           ###   ########.fr       */
+/*   Updated: 2025/03/12 16:03:27 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,13 @@ void add_cmd_lst(t_cmd **head)
 	}
 }
 
-void setup_cmd_lst(t_cmd *cmd)
+void setup_cmd_lst(t_cmd **cmd)
 {
-	cmd->arg = NULL;
-	cmd->infile = NULL;
-	cmd->outfile = NULL;
-	cmd->delimiter = NULL;
-	cmd->type = 0;
-	cmd->append = 0;
-	cmd->next = NULL;
+	(*cmd)->arg = NULL;
+	(*cmd)->infile = NULL;
+	(*cmd)->outfile = NULL;
+	(*cmd)->delimiter = NULL;
+	(*cmd)->type = 0;
+	(*cmd)->append = 0;
+	(*cmd)->next = NULL;
 }
