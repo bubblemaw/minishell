@@ -6,24 +6,20 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 12:00:01 by maw               #+#    #+#             */
-/*   Updated: 2025/03/12 17:54:13 by masase           ###   ########.fr       */
+/*   Updated: 2025/03/13 17:34:55 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int new_cmd(t_cmd **head_cmd, t_cmd **current, t_cmd *cmd)
+int new_cmd(t_cmd **head_cmd, t_cmd **current)
 {
 	add_cmd_lst(head_cmd);
 	*current = *head_cmd;
 	if (!head_cmd)
 		return (ERROR);
 	while ((*current)->next)
-	{
 		*current = (*current)->next;
-		printf("lourdd \n");
-	}
-	(void)cmd;
 	setup_cmd_lst(current);
 	return (VALID);
 }
@@ -35,32 +31,24 @@ int create_cmd_lst(t_shell *shell)
 
 	current = shell->cmd;
 	tokken = shell->tokken;
-	new_cmd(&shell->cmd, &current, shell->cmd);
+	new_cmd(&shell->cmd, &current);
 	while (tokken)
 	{
-		if (tokken->type == REDIRECTION)
-		{
-			ft_cmd_redirection(current, &tokken);
-		}
-		else if (tokken->type == COMMAND)
+		if (tokken->type == COMMAND)
 			ft_cmd_maker(current, &tokken);
 		else if (tokken->type == PIPE)
 		{
 			ft_cmd_pipe(current);
 			tokken = tokken->next;
-			new_cmd(&shell->cmd, &current, shell->cmd);
+			new_cmd(&shell->cmd, &current);
 		}
+		if (tokken->type == REDIRECTION)
+			ft_cmd_redirection(current, &tokken);
 		if (tokken)
-		{
-			printf("on cree une nouvelle commande \n");
-			new_cmd(&shell->cmd, &current, shell->cmd);
-			printf("j'ai fini ma nouvelle commande \n");
-		}
+			new_cmd(&shell->cmd, &current);				
 	}
 	return (VALID);
 }
-
-
 
 int ft_cmd_redirection(t_cmd *cmd, t_token **tokken)
 {

@@ -6,7 +6,7 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/03/12 15:52:18 by masase           ###   ########.fr       */
+/*   Updated: 2025/03/13 16:33:24 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,8 @@ void	add_cmd_lst(t_cmd **head);
 int		create_cmd_lst(t_shell *shell);
 void	setup_cmd_lst(t_cmd **cmd);
 void	print_cmds(t_cmd *head);
+int new_cmd(t_cmd **head_cmd, t_cmd **current);
+
 
 // pipe
 int		piper(t_cmd *cmd, t_shell *shell);
