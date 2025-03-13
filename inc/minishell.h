@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/03/13 00:06:44 by david            ###   ########.fr       */
+/*   Updated: 2025/03/13 17:35:32 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@
 # include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+
+#define true	1
+#define false	0
 
 // command's return
 # define ERROR 2
@@ -54,13 +57,6 @@ typedef struct s_var
 	char *var;
 	struct s_var *next;
 }	t_var;
-
-// size to kill quotes
-typedef struct s_kill
-{
-	int				start;
-	int				len;
-}	t_kill;
 
 // structure for the chain
 typedef struct s_token
@@ -94,6 +90,8 @@ typedef struct s_creat
 	int				result;
 	bool			var;
 	bool			find;
+	int				start;
+	int				len;
 	t_token			*new;
 }	t_creat;
 
@@ -175,7 +173,7 @@ int		expansion(t_token *tokken, t_shell *shell);
 char	*ft_findvar(char *var_name, t_shell *shell);
 int		is_double_quote(t_token *tokken);
 int		kill_quotes(t_shell *shell);
-int		size_to_kill(t_token *token);
+void		size_to_kill(t_token *token, t_shell *shell);
 
 //init_minishell
 void	init_execution(t_shell *shell);

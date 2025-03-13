@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:31:47 by maw               #+#    #+#             */
-/*   Updated: 2025/03/12 16:25:07 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/13 17:45:05 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,27 +45,37 @@ int kill_quotes(t_shell *shell)
 	while (temp != NULL)
 	{
 		if (temp->value[0] == '"' || temp->value[0] == '\'')
-			ft_substr(temp->value, 1, );
+		{
+			size_to_kill(temp, shell);
+			temp->value = ft_substr(temp->value, shell->creat.start, shell->creat.len -1);
+		}
 		temp = temp->next;
 	}
 	return (0);
 }
 
-int size_to_kill(t_token *token, t_kill size)
+void size_to_kill(t_token *token, t_shell *shell)
 {
 	int i;
 
 	i = 0;
 	if (token->value[i] == '\'')
-		i++;
-	else if (token->value[i] == '"')
-		i++;
-	size.start = i;
-	while (token->value[i] != '\0')
 	{
 		i++;
+		shell->creat.start = i;
+		while (token->value[i] != '\'')
+			i++;
+		shell->creat.len = i;
 	}
-	return (0);
+	else if (token->value[i] == '"')
+	{
+		i++;
+		shell->creat.start = i;
+		while (token->value[i] != '"')
+			i++;
+		shell->creat.len = i;
+	}
+	return ;
 }
 
 int expansion(t_token *tokken, t_shell *shell)
