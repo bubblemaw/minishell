@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:31:47 by maw               #+#    #+#             */
-/*   Updated: 2025/03/14 13:02:08 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/14 16:36:31 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,22 +41,47 @@ int kill_quotes(t_shell *shell)
 {
 	t_token *temp;
 	char	*stash;
-	char	buf[1000];
+	char	*new;
+	char	*tmp;
+	int i = 0;
 	
 	temp = shell->tokken;
-	memset(buf, 0, 1000);
-	buf[0] = '\0';
+	new = NULL;
 	while (temp != NULL)
 	{
-		while (temp->value[shell->creat.start] == '"' || temp->value[shell->creat.start] == '\'')
-		{
-			size_to_kill(temp, shell);
-			stash = ft_substr(temp->value, shell->creat.start, shell->creat.len);
-			if (buf[0] == '\0')
-				
-			ft_strjoin(buf, stash);
-			shell->creat.start = shell->creat.len + 1;
+		i = 0;
+		while (temp && temp->value[i] != '\0')
+		{		
+			if (temp->value[i] == '"' || temp->value[i] == '\'')
+			{
+				size_to_kill(temp, shell);
+				stash = ft_substr(temp->value, shell->creat.start, shell->creat.len);
+				if (new == NULL)
+				{
+					new = ft_strdup(stash);
+					if (new == NULL)
+						return (0);
+				}
+				else
+				{
+					tmp = ft_strjoin(new, stash);
+					free(new);
+					new = tmp;
+				}
+				i = shell->creat.len + 1;
+			}
+			i++;
+			// if (new)
+			// 	printf("%s\n", new);
 		}
+		if (new)
+		{
+			free(temp->value);
+			temp->value = ft_strdup(new);
+			free(new);
+			new = NULL;
+		}
+		// printf("%s\n", new);
 		temp = temp->next;
 	}
 	return (0);
