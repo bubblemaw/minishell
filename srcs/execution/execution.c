@@ -6,7 +6,7 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:16:38 by maw               #+#    #+#             */
-/*   Updated: 2025/03/14 15:00:24 by masase           ###   ########.fr       */
+/*   Updated: 2025/03/14 15:44:12 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int ft_execute(t_shell *shell)
 	while (current)
 	{
 		if (current->infile || current->outfile) // redirection infile outfile
-			ft_direction(current);
+			if (ft_direction(current) == 0)
+				return (ERROR);
 		if (current->delimiter)
 			here_doc(current ,shell);
 		if (current->type == PIPE) // si il ya des operations avec des pipes

@@ -6,7 +6,7 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 12:00:12 by maw               #+#    #+#             */
-/*   Updated: 2025/03/14 14:59:08 by masase           ###   ########.fr       */
+/*   Updated: 2025/03/14 15:41:19 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		error(char *str)
 	else
 		ft_putstr_fd(str, STDERR_FILENO);
 	ft_putchar_fd('\n', STDERR_FILENO);
-	exit (EXIT_FAILURE);
+	return (0);
 }
 
 int error_cmd(char *str, t_shell *shell)
@@ -31,5 +31,5 @@ int error_cmd(char *str, t_shell *shell)
 	ft_putchar_fd('\n', STDERR_FILENO);
 	free_shell(shell);
 	// (void)shell;
-	exit (EXIT_SUCCESS);
+	return (0);
 }

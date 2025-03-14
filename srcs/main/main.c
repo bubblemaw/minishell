@@ -6,7 +6,7 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/03/14 15:00:31 by masase           ###   ########.fr       */
+/*   Updated: 2025/03/14 15:40:57 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	main (int ac, char *av[], char **env)
 		}
 		give_token_data(&shell);
 		// printf("\n");
-		// print_token(shell.tokken);s
+		// print_token(shell.tokken);
 		// printf("\n");
 		init_execution(&shell);
 		if (create_cmd_lst(&shell) == ERROR)
