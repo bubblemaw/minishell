@@ -6,7 +6,7 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 21:17:50 by maw               #+#    #+#             */
-/*   Updated: 2025/03/12 16:34:59 by masase           ###   ########.fr       */
+/*   Updated: 2025/03/14 14:59:56 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void print_cmds(t_cmd *head)
 			   current->outfile ? current->outfile : "Aucun",
 			   current->append ? "Append" : "Truncate");
 		printf("Delimiter : %s\n", current->delimiter ? current->delimiter : "Aucun");
+		printf("Pipe : %d\n", current->type ? current->type : 0);
 		printf("----------------------\n");
 		current = current->next;
 	}

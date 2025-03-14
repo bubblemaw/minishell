@@ -6,7 +6,7 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:16:38 by maw               #+#    #+#             */
-/*   Updated: 2025/03/13 16:33:18 by masase           ###   ########.fr       */
+/*   Updated: 2025/03/14 15:00:24 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int ft_execute(t_shell *shell)
 				else // PARENT PROCESS
 					current = current->next;
 			}
+			break ;
 		}
 		else // execution commande basique
 		{
@@ -42,8 +43,6 @@ int ft_execute(t_shell *shell)
 	}
 	while (wait(NULL) > 0); // attente de tous les childs process 
 	reset_fd(shell);
-	// free_cmds(&shell->cmd);
-	// printf("on a fini toutes les commande\n");
 	return (VALID);
 }
 
@@ -129,42 +128,3 @@ int ft_exe(t_cmd *cmd, t_shell *shell) // execution des commandes normales (sans
 		waitpid(pid1, &status, 0);
 	return (VALID);
 }
-
-// int main(int ac, char **av, char **env)
-// {
-// 	t_shell shell;
-
-// 	init_execution(&shell, env);
-
-// 	// Simulation de commandes
-// 	char **cmd1 = malloc(3 * sizeof(char *));
-// 	cmd1[0] = strdup("ls");
-// 	cmd1[1] = strdup("-la");
-// 	// cmd1[2] = strdup("you have to be confident");
-// 	// cmd1[3] = strdup("for real");
-// 	// cmd1[4] = strdup("$VAR");
-// 	cmd1[2] = NULL;
-
-// 	char **cmd2 = malloc(3 * sizeof(char *));
-// 	cmd2[0] = strdup("cat");
-// 	// cmd2[1] = strdup("txt");
-// 	cmd2[1] = NULL;
-
-// 	// char **cmd3 = malloc(3 * sizeof(char *));
-// 	// cmd3[0] = strdup("sort");
-// 	// // cmd3[1] = strdup("13");
-// 	// cmd3[1] = NULL;
-
-// 	// Ajout des commandes à la liste
-// 	add_cmd(&shell.cmd, cmd1, NULL, NULL, NULL, 0, PIPE);   // ls -l > output.txt
-// 	add_cmd(&shell.cmd, cmd2, NULL, NULL, NULL, 0, 0); // grep main < output.txt >> final.txt
-// 	// add_cmd(&token_list, cmd3, NULL, "outfile10", 0, 0);
-	
-// 	// execution de la liste de commande
-// 	// expansion(&token_list, &shell);
-// 	ft_execute(&shell);
-
-// 	// Libération de la mémoire
-// 	free_cmds(shell.cmd);
-// 	return 0;
-// }
