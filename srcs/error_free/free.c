@@ -6,7 +6,7 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:49:23 by masase            #+#    #+#             */
-/*   Updated: 2025/03/10 14:09:23 by masase           ###   ########.fr       */
+/*   Updated: 2025/03/12 16:47:04 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ void free_cmds(t_cmd **head)
 	{
 		tmp = *head;
 		*head = (*head)->next;
-		// if (tmp->arg)
-		free_tab(tmp->arg);
+		if (tmp->arg)
+			free_tab(tmp->arg);
 		if (tmp->infile)
 			free(tmp->infile);
 		if (tmp->outfile)

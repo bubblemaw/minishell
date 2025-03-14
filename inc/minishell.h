@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/03/14 13:28:03 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/14 22:09:52 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,13 +153,17 @@ int		echo_option(t_cmd *cmd);
 // token list -> cmd list
 t_cmd	*end_list(t_cmd *head);
 int		ft_cmd_maker(t_cmd *cmd, t_token **tokken);
-int		ft_cmd_pipe(t_cmd *cmd);
+int		ft_cmd_pipe(t_cmd *cmd, t_token **tokken);
 int		ft_cmd_redirection(t_cmd *cmd, t_token **tokken);
+void	simple_redirection(t_cmd *cmd, t_token **tokken);
+void	double_redirection(t_cmd *cmd, t_token **tokken);
 void	*ft_realloc(void *ptr,size_t old_size, size_t new_size);
 void	add_cmd_lst(t_cmd **head);
 int		create_cmd_lst(t_shell *shell);
-void	setup_cmd_lst(t_cmd *cmd);
+void	setup_cmd_lst(t_cmd **cmd);
 void	print_cmds(t_cmd *head);
+int		new_cmd(t_cmd **head_cmd, t_cmd **current);
+
 
 // pipe
 int		piper(t_cmd *cmd, t_shell *shell);

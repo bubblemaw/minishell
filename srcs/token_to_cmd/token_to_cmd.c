@@ -3,78 +3,93 @@
 /*                                                        :::      ::::::::   */
 /*   token_to_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 12:00:01 by maw               #+#    #+#             */
-/*   Updated: 2025/03/10 15:52:23 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/14 22:11:46 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+int new_cmd(t_cmd **head_cmd, t_cmd **current)
+{
+	add_cmd_lst(head_cmd);
+	*current = *head_cmd;
+	if (!head_cmd)
+		return (ERROR);
+	while ((*current)->next)
+		*current = (*current)->next;
+	setup_cmd_lst(current);
+	return (VALID);
+}
 
 int create_cmd_lst(t_shell *shell)
 {
 	t_cmd *current;
 	t_token *tokken;
 
-	add_cmd_lst(&shell->cmd);
-	if (!shell->cmd)
-		return (ERROR);
-	setup_cmd_lst(shell->cmd);
 	current = shell->cmd;
 	tokken = shell->tokken;
+	new_cmd(&shell->cmd, &current);
 	while (tokken)
 	{
-		if (tokken->type == REDIRECTION)
-			ft_cmd_redirection(current, &tokken);
-		else if (tokken->type == COMMAND)
+		if (tokken->type == COMMAND)
 			ft_cmd_maker(current, &tokken);
 		else if (tokken->type == PIPE)
 		{
-			ft_cmd_pipe(current);
-			tokken = tokken->next;
-			add_cmd_lst(&shell->cmd);
-			if (!shell->cmd)
-				return (ERROR);
-			current = end_list(shell->cmd);
-			setup_cmd_lst(current);
+			ft_cmd_pipe(current, &tokken);
+			new_cmd(&shell->cmd, &current);
 		}
+		else if (tokken->type == REDIRECTION)
+		{
+			ft_cmd_redirection(current, &tokken);
+			if (tokken && tokken->type == REDIRECTION)
+				new_cmd(&shell->cmd, &current);	
+		}	
 	}
 	return (VALID);
 }
 
+
 int ft_cmd_redirection(t_cmd *cmd, t_token **tokken)
 {
 	if (ft_strlen((*tokken)->value) > 1)
+		double_redirection(cmd, tokken);
+	else
+		simple_redirection(cmd, tokken);
+	*tokken = (*tokken)->next;
+	return (VALID);
+}
+
+void double_redirection(t_cmd *cmd, t_token **tokken)
+{
+	if ((*tokken)->value[0] == '>' && (*tokken)->value[1] == '>')
 	{
-		if ((*tokken)->value[0] == '>' && (*tokken)->value[1] == '>')
-		{
 		*tokken = (*tokken)->next;
 		cmd->outfile = ft_strdup((*tokken)->value);
 		cmd->append = 1;
-		}	
-		if ((*tokken)->value[0] == '<' && (*tokken)->value[1] == '<')
-		{
+	}	
+	if ((*tokken)->value[0] == '<' && (*tokken)->value[1] == '<')
+	{
 		*tokken = (*tokken)->next;
 		cmd->delimiter = ft_strdup((*tokken)->value);
 		cmd->type = DELIMITER;
-		}
 	}
-	else
+}
+
+void simple_redirection(t_cmd *cmd, t_token **tokken)
+{
+	if ((*tokken)->value[0] == '>')
 	{
-		if ((*tokken)->value[0] == '>')
-		{
-			*tokken = (*tokken)->next;
-			cmd->outfile = ft_strdup((*tokken)->value);
-		}	
-		else if ((*tokken)->value[0] == '<')
-		{
-			*tokken = (*tokken)->next;
-			cmd->infile = ft_strdup((*tokken)->value);
-		}	
-	}
-	*tokken = (*tokken)->next;
-	return (VALID);
+		*tokken = (*tokken)->next;
+		cmd->outfile = ft_strdup((*tokken)->value);
+	}	
+	else if ((*tokken)->value[0] == '<')
+	{
+		*tokken = (*tokken)->next;
+		cmd->infile = ft_strdup((*tokken)->value);
+	}	
 }
 
 int ft_cmd_maker(t_cmd *cmd, t_token **tokken)
@@ -96,15 +111,16 @@ int ft_cmd_maker(t_cmd *cmd, t_token **tokken)
 	cmd->arg[i] = NULL;
 	return (VALID);
 }
-int ft_cmd_pipe(t_cmd *cmd)
+int ft_cmd_pipe(t_cmd *cmd, t_token **tokken)
 {
+	*tokken = (*tokken)->next;
 	cmd->type = PIPE;
 	return (VALID);
 }
 t_cmd *end_list(t_cmd *head)
 {
-	while(head->next)
-		head = head->next;
+	while((head)->next)
+		head = (head)->next;
 	return (head);
 }
 
