@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/03/13 17:35:32 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/14 11:59:05 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ typedef struct s_creat
 	bool			find;
 	int				start;
 	int				len;
+	size_t			size;
 	t_token			*new;
 }	t_creat;
 

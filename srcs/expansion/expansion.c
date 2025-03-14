@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:31:47 by maw               #+#    #+#             */
-/*   Updated: 2025/03/13 17:45:05 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/14 13:02:08 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,22 @@ int is_double_quote(t_token *tokken)
 int kill_quotes(t_shell *shell)
 {
 	t_token *temp;
+	char	*stash;
+	char	buf[1000];
 	
 	temp = shell->tokken;
+	memset(buf, 0, 1000);
+	buf[0] = '\0';
 	while (temp != NULL)
 	{
-		if (temp->value[0] == '"' || temp->value[0] == '\'')
+		while (temp->value[shell->creat.start] == '"' || temp->value[shell->creat.start] == '\'')
 		{
 			size_to_kill(temp, shell);
-			temp->value = ft_substr(temp->value, shell->creat.start, shell->creat.len -1);
+			stash = ft_substr(temp->value, shell->creat.start, shell->creat.len);
+			if (buf[0] == '\0')
+				
+			ft_strjoin(buf, stash);
+			shell->creat.start = shell->creat.len + 1;
 		}
 		temp = temp->next;
 	}
@@ -65,7 +73,7 @@ void size_to_kill(t_token *token, t_shell *shell)
 		shell->creat.start = i;
 		while (token->value[i] != '\'')
 			i++;
-		shell->creat.len = i;
+		shell->creat.len = i - 1;
 	}
 	else if (token->value[i] == '"')
 	{
@@ -73,7 +81,7 @@ void size_to_kill(t_token *token, t_shell *shell)
 		shell->creat.start = i;
 		while (token->value[i] != '"')
 			i++;
-		shell->creat.len = i;
+		shell->creat.len = i - 1;
 	}
 	return ;
 }
