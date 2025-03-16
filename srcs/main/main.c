@@ -6,7 +6,7 @@
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/03/16 20:42:03 by maw              ###   ########.fr       */
+/*   Updated: 2025/03/16 21:39:29 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	main (int ac, char *av[], char **env)
 		}
 		give_token_data(&shell);
 		// printf("\n");
-		// print_token(shell.tokken);
+		// print_token(shell.tokken);s
 		// printf("\n");
 		init_execution(&shell);
 		if (create_cmd_lst(&shell) == ERROR)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_to_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 12:00:01 by maw               #+#    #+#             */
-/*   Updated: 2025/03/14 13:36:31 by masase           ###   ########.fr       */
+/*   Updated: 2025/03/17 00:06:39 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,36 @@ int create_cmd_lst(t_shell *shell)
 		{
 			ft_cmd_redirection(current, &tokken);
 			if (tokken && tokken->type == REDIRECTION)
-				new_cmd(&shell->cmd, &current);	
-		}	
+			{
+				new_cmd(&shell->cmd, &current);
+				ft_cmd_redirection(current, &tokken);
+				ft_cmd_redirection_switch(shell->cmd, current);
+			}
+		}
+		else if (tokken && tokken->type == ARGUMENT)
+			ft_cmd_maker(current, &tokken);
 	}
 	return (VALID);
 }
+
+// int ft_cmd_redirection_switch(t_cmd *head , t_cmd *cmd)
+// {
+// 	char *temp;
+
+// 	temp = NULL;
+// 	if (cmd->outfile)
+// 	{
+// 		temp = ft_strdup(cmd->outfile);
+// 		free(cmd->outfile);
+// 		cmd->outfile = ft_strdup(cmd->);
+
+// 	}
+// 	if (cmd->infile)
+// 	{
+
+// 	}
+
+// }
 
 
 int ft_cmd_redirection(t_cmd *cmd, t_token **tokken)
@@ -97,7 +122,11 @@ int ft_cmd_maker(t_cmd *cmd, t_token **tokken)
 	int i;
 
 	i = 0;
-	cmd->arg = NULL;
+	if (cmd->arg)
+	{
+		while (cmd->arg[i] != NULL)
+			i++;
+	}
 	while (*tokken && ((*tokken)->type == OPTION || (*tokken)->type == ARGUMENT || (*tokken)->type == COMMAND))
 	{
 		cmd->arg = ft_realloc(cmd->arg, i * sizeof(char *), (i + 1) * sizeof(char *));
