@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 12:00:12 by maw               #+#    #+#             */
-/*   Updated: 2025/03/14 15:41:19 by masase           ###   ########.fr       */
+/*   Updated: 2025/03/16 19:43:27 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,22 @@ int		error(char *str)
 {
 	ft_putstr_fd("Error: ", STDERR_FILENO);
 	if(errno)
+	{
+		ft_putstr_fd(str, STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
 		ft_putstr_fd(strerror(errno), STDERR_FILENO);
+	}
 	else
 		ft_putstr_fd(str, STDERR_FILENO);
 	ft_putchar_fd('\n', STDERR_FILENO);
 	return (0);
 }
 
-int error_cmd(char *str, t_shell *shell)
+int error_cmd(char *str)
 {
 	ft_putstr_fd("Error: ", STDERR_FILENO);
 	ft_putstr_fd("Command not found: ", STDERR_FILENO);
 	ft_putstr_fd(str, STDERR_FILENO);
 	ft_putchar_fd('\n', STDERR_FILENO);
-	free_shell(shell);
-	// (void)shell;
 	return (0);
 }

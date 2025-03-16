@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/03/14 15:00:52 by masase           ###   ########.fr       */
+/*   Updated: 2025/03/16 19:40:27 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,7 @@ void	free_cmds(t_cmd **head);
 void	free_tab(char **tab);
 
 // error
-int		error_cmd(char *str, t_shell *shell);
+int		error_cmd(char *str);
 int		error(char *str);
 
 #endif

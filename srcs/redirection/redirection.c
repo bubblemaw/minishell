@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:34:17 by maw               #+#    #+#             */
-/*   Updated: 2025/03/14 15:00:04 by masase           ###   ########.fr       */
+/*   Updated: 2025/03/16 20:25:01 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int ft_direction(t_cmd *cmd)
 	{
 		infd = open (cmd->infile, O_RDONLY);
 		if (infd == -1)
-			return(error("erreur open du fichier"));
+			return(error(cmd->infile));
 		dup2(infd, STDIN_FILENO);
 		close(infd);
 	}
@@ -42,7 +42,7 @@ int ft_direction(t_cmd *cmd)
 	{
 		outfd = open (cmd->outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (outfd == -1)
-			return(error("erreur open du fichier"));
+			return(error(cmd->outfile));
 		dup2(outfd, STDOUT_FILENO);
 		close(outfd);
 	}
@@ -50,7 +50,7 @@ int ft_direction(t_cmd *cmd)
 	{
 		outfd = open (cmd->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (outfd == -1)
-			return(error("erreur open du fichier"));
+			return(error(cmd->outfile));
 		dup2(outfd, STDOUT_FILENO);
 		close(outfd);
 	}
