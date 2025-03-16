@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/03/16 18:57:53 by david            ###   ########.fr       */
+/*   Updated: 2025/03/16 20:42:03 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	main (int ac, char *av[], char **env)
 		}
 		give_token_data(&shell);
 		// printf("\n");
-		// print_token(shell.tokken);s
+		// print_token(shell.tokken);
 		// printf("\n");
 		init_execution(&shell);
 		if (create_cmd_lst(&shell) == ERROR)
