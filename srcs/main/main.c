@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/03/14 15:00:31 by masase           ###   ########.fr       */
+/*   Updated: 2025/03/16 18:57:53 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	main (int ac, char *av[], char **env)
 			shell.cmd = NULL;
 		}
 		shell.input = readline("minishell$ ");
+		add_history(shell.input);
 		if (enter_input(&shell) == VALID)
 			continue ;
 		else if (strncmp(shell.input, "exit ", 4) == 0)
