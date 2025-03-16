@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/03/14 22:09:52 by david            ###   ########.fr       */
+/*   Updated: 2025/03/16 16:39:10 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,7 @@ int		expansion(t_token *tokken, t_shell *shell);
 char	*ft_findvar(char *var_name, t_shell *shell);
 int		is_double_quote(t_token *tokken);
 int		kill_quotes(t_shell *shell);
-void		size_to_kill(t_token *token, t_shell *shell);
+void	size_to_kill(t_token *token, t_shell *shell, int *i);
 
 //init_minishell
 void	init_execution(t_shell *shell);

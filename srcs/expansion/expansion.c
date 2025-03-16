@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:31:47 by maw               #+#    #+#             */
-/*   Updated: 2025/03/14 16:36:31 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/16 18:45:25 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,22 +39,22 @@ int is_double_quote(t_token *tokken)
 
 int kill_quotes(t_shell *shell)
 {
-	t_token *temp;
+	t_token	*temp;
 	char	*stash;
 	char	*new;
 	char	*tmp;
-	int i = 0;
+	int		i;
 	
 	temp = shell->tokken;
 	new = NULL;
 	while (temp != NULL)
 	{
 		i = 0;
-		while (temp && temp->value[i] != '\0')
-		{		
+		while (temp->value[i] != '\0')
+		{
 			if (temp->value[i] == '"' || temp->value[i] == '\'')
 			{
-				size_to_kill(temp, shell);
+				size_to_kill(temp, shell, &i);
 				stash = ft_substr(temp->value, shell->creat.start, shell->creat.len);
 				if (new == NULL)
 				{
@@ -68,45 +68,38 @@ int kill_quotes(t_shell *shell)
 					free(new);
 					new = tmp;
 				}
-				i = shell->creat.len + 1;
 			}
 			i++;
-			// if (new)
-			// 	printf("%s\n", new);
 		}
-		if (new)
+		if (new != NULL)
 		{
 			free(temp->value);
 			temp->value = ft_strdup(new);
 			free(new);
 			new = NULL;
 		}
-		// printf("%s\n", new);
 		temp = temp->next;
 	}
 	return (0);
 }
 
-void size_to_kill(t_token *token, t_shell *shell)
+void size_to_kill(t_token *token, t_shell *shell, int *i)
 {
-	int i;
-
-	i = 0;
-	if (token->value[i] == '\'')
+	if (token->value[*i] == '\'')
 	{
-		i++;
-		shell->creat.start = i;
-		while (token->value[i] != '\'')
-			i++;
-		shell->creat.len = i - 1;
+		(*i)++;
+		shell->creat.start = *i;
+		while (token->value[*i] != '\'' && token->value[*i] != '\0')
+			(*i)++;
+		shell->creat.len = *i - 1;
 	}
-	else if (token->value[i] == '"')
+	else if (token->value[*i] == '"')
 	{
-		i++;
-		shell->creat.start = i;
-		while (token->value[i] != '"')
-			i++;
-		shell->creat.len = i - 1;
+		(*i)++;
+		shell->creat.start = *i;
+		while (token->value[*i] != '"' && token->value[*i] != '\0')
+			(*i)++;
+		shell->creat.len = *i - shell->creat.start;
 	}
 	return ;
 }
