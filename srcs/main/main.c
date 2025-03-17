@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/03/17 15:01:31 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/17 15:14:13 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	main (int ac, char *av[], char **env)
 		}
 		give_token_data(&shell);
 		// printf("\n");
-		// print_token(shell.tokken);s
+		// print_token(shell.tokken);
 		// printf("\n");
 		kill_quotes(&shell);
 		init_execution(&shell);

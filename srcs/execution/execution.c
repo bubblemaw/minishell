@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:16:38 by maw               #+#    #+#             */
-/*   Updated: 2025/03/14 22:10:37 by david            ###   ########.fr       */
+/*   Updated: 2025/03/17 15:13:15 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int ft_execute(t_shell *shell)
 	while (current)
 	{
 		if (current->infile || current->outfile) // redirection infile outfile
-			ft_direction(current);
+			if (ft_direction(current) == 0)
+				return (ERROR);
 		if (current->delimiter)
 			here_doc(current ,shell);
 		if (current->type == PIPE) // si il ya des operations avec des pipes
@@ -120,7 +121,7 @@ int ft_exe(t_cmd *cmd, t_shell *shell) // execution des commandes normales (sans
 	{
 		cmd_path = ft_parse(cmd, shell);
 		if (cmd_path == NULL)
-			return(error_cmd(cmd->arg[0], shell));
+			return(error_cmd(cmd->arg[0]));
 		if(execve(cmd_path, cmd->arg, shell->env) == -1)
 			return(error("Execution problem"));
 	}
