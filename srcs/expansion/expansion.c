@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:31:47 by maw               #+#    #+#             */
-/*   Updated: 2025/03/16 18:45:25 by david            ###   ########.fr       */
+/*   Updated: 2025/03/16 23:19:30 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void size_to_kill(t_token *token, t_shell *shell, int *i)
 		shell->creat.start = *i;
 		while (token->value[*i] != '\'' && token->value[*i] != '\0')
 			(*i)++;
-		shell->creat.len = *i - 1;
+		shell->creat.len = *i - shell->creat.start;
 	}
 	else if (token->value[*i] == '"')
 	{
