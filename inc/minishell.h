@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/03/16 16:39:10 by david            ###   ########.fr       */
+/*   Updated: 2025/03/17 15:01:35 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,10 @@ typedef struct s_creat
 	int				result;
 	bool			var;
 	bool			find;
+
 	int				start;
 	int				len;
-	size_t			size;
+
 	t_token			*new;
 }	t_creat;
 
