@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_to_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 12:00:01 by maw               #+#    #+#             */
-/*   Updated: 2025/03/17 00:06:39 by maw              ###   ########.fr       */
+/*   Updated: 2025/03/17 17:35:14 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,45 @@ int new_cmd(t_cmd **head_cmd, t_cmd **current)
 	while ((*current)->next)
 		*current = (*current)->next;
 	setup_cmd_lst(current);
+	return (VALID);
+}
+
+int free_new_direction(t_shell *shell)
+{
+	if (shell->redir.prev_infile)
+		free(shell->redir.prev_infile);
+	if (shell->redir.prev_outfile)
+		free(shell->redir.prev_outfile);
+	if (shell->redir.prev_delimiter)
+		free(shell->redir.prev_delimiter);
+	shell->redir.prev_infile = NULL;
+	shell->redir.prev_outfile = NULL;
+	shell->redir.prev_delimiter = NULL;
+	shell->redir.apppend = 0;
+	shell->redir.type = 0;
+	return (VALID);
+}
+
+int new_cmd_direction(t_cmd **head_cmd, t_shell *shell)
+{
+	t_cmd *current;
+	
+	add_cmd_lst(head_cmd);
+	current = *head_cmd;
+	if (!head_cmd)
+		return (ERROR);
+	while ((current)->next)
+		current = (current)->next;
+	setup_cmd_lst(&current);
+	if (shell->redir.prev_infile)
+		current->infile = ft_strdup(shell->redir.prev_infile);
+	if (shell->redir.prev_outfile)
+		current->outfile = ft_strdup(shell->redir.prev_outfile);
+	if (shell->redir.prev_delimiter)
+		current->delimiter = ft_strdup(shell->redir.prev_delimiter);
+	current->append = shell->redir.apppend;
+	current->type = shell->redir.type;
+	free_new_direction(shell);
 	return (VALID);
 }
 
@@ -43,46 +82,60 @@ int create_cmd_lst(t_shell *shell)
 		}
 		else if (tokken->type == REDIRECTION)
 		{
-			ft_cmd_redirection(current, &tokken);
-			if (tokken && tokken->type == REDIRECTION)
-			{
-				new_cmd(&shell->cmd, &current);
-				ft_cmd_redirection(current, &tokken);
-				ft_cmd_redirection_switch(shell->cmd, current);
-			}
+			ft_cmd_redirection(current, &tokken, shell);
 		}
 		else if (tokken && tokken->type == ARGUMENT)
 			ft_cmd_maker(current, &tokken);
+		print_cmds(shell->cmd);
+		printf("yooooooooooooooooooooooooo\n");
 	}
 	return (VALID);
 }
 
-// int ft_cmd_redirection_switch(t_cmd *head , t_cmd *cmd)
-// {
-// 	char *temp;
+int		save_redirection(t_shell *shell, t_cmd *cmd)
+{
+	if (cmd->infile)
+	{
+		shell->redir.prev_infile = ft_strdup(cmd->infile);
+		free (cmd->infile);
+	}
+	if (cmd->outfile)
+	{
+		shell->redir.prev_outfile = ft_strdup(cmd->outfile);
+		shell->redir.apppend = cmd->append;
+		cmd->append = 0;
+		free(cmd->outfile);
+	}
+	if (cmd->delimiter)
+	{
+		shell->redir.prev_delimiter = ft_strdup(cmd->delimiter);
+		shell->redir.type = cmd->type;
+		cmd->type = 0;
+		free (cmd->delimiter);
+	}
+	return (VALID);
+}
 
-// 	temp = NULL;
-// 	if (cmd->outfile)
-// 	{
-// 		temp = ft_strdup(cmd->outfile);
-// 		free(cmd->outfile);
-// 		cmd->outfile = ft_strdup(cmd->);
-
-// 	}
-// 	if (cmd->infile)
-// 	{
-
-// 	}
-
-// }
-
-
-int ft_cmd_redirection(t_cmd *cmd, t_token **tokken)
+int ft_cmd_redirection(t_cmd *cmd, t_token **tokken, t_shell *shell)
 {
 	if (ft_strlen((*tokken)->value) > 1)
+	{
+		if (cmd->infile || cmd->delimiter || cmd->outfile)
+		{
+			save_redirection(shell, cmd);
+			new_cmd_direction(&cmd, shell);
+		}
 		double_redirection(cmd, tokken);
+	}
 	else
+	{
+		if (cmd->infile || cmd->outfile)
+		{
+			save_redirection(shell, cmd);
+			new_cmd_direction(&cmd, shell);
+		}	
 		simple_redirection(cmd, tokken);
+	}	
 	*tokken = (*tokken)->next;
 	return (VALID);
 }

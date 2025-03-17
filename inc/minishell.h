@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/03/16 19:40:27 by maw              ###   ########.fr       */
+/*   Updated: 2025/03/17 15:58:27 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,15 @@ typedef struct s_creat
 	t_token			*new;
 }	t_creat;
 
+typedef struct s_redir
+{
+	char *prev_infile;
+	char *prev_outfile;
+	char *prev_delimiter;
+	int apppend;
+	int type;
+}	t_redir;
+
 // principal struct
 typedef struct s_shell
 {
@@ -91,6 +100,7 @@ typedef struct s_shell
 	int STDOUT;
 	int STDERR;
 	int prev_pipefd;
+	t_redir			redir;
 	int here_fd;
 	t_cmd *cmd;
 	char			*input;
@@ -141,7 +151,7 @@ int		echo_option(t_cmd *cmd);
 t_cmd	*end_list(t_cmd *head);
 int		ft_cmd_maker(t_cmd *cmd, t_token **tokken);
 int		ft_cmd_pipe(t_cmd *cmd, t_token **tokken);
-int		ft_cmd_redirection(t_cmd *cmd, t_token **tokken);
+int		ft_cmd_redirection(t_cmd *cmd, t_token **tokken, t_shell *shell);
 void	simple_redirection(t_cmd *cmd, t_token **tokken);
 void	double_redirection(t_cmd *cmd, t_token **tokken);
 void	*ft_realloc(void *ptr,size_t old_size, size_t new_size);
@@ -150,6 +160,9 @@ int		create_cmd_lst(t_shell *shell);
 void	setup_cmd_lst(t_cmd **cmd);
 void	print_cmds(t_cmd *head);
 int		new_cmd(t_cmd **head_cmd, t_cmd **current);
+int		save_redirection(t_shell *shell, t_cmd *cmd);
+int new_cmd_direction(t_cmd **head_cmd, t_shell *shell);
+int free_new_direction(t_shell *shell);
 
 
 // pipe

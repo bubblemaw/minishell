@@ -6,7 +6,7 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:31:21 by maw               #+#    #+#             */
-/*   Updated: 2025/03/14 15:43:14 by masase           ###   ########.fr       */
+/*   Updated: 2025/03/17 14:22:06 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,12 @@ void init_execution(t_shell *shell)
 	shell->prev_pipefd = -1;
 	save_fd(shell);
 	shell->cmd = NULL;
+	shell->redir.prev_infile = NULL;
+	shell->redir.prev_outfile = NULL;
+	shell->redir.prev_delimiter = NULL;
+	shell->redir.apppend = 0;
+	shell->redir.type = 0;
+
 }
 
 char **copy_env(char **env)
