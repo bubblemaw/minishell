@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_detect.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:53:52 by david             #+#    #+#             */
-/*   Updated: 2025/03/10 14:09:00 by masase           ###   ########.fr       */
+/*   Updated: 2025/03/17 16:14:39 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ int detect_variables(bool *var, char *str, int *i)
 		{
 			if (detect_var_value(str, i) == ERROR)
 				return (ERROR);
+			else if (str[*i] == '\\' || str[*i] == ';')
+				return (ERROR);
 			(*i)++;
 		}
 		*var = false;
@@ -126,7 +128,7 @@ int	detect_command(char *input, int *i)
 			result = double_quotes(input, i);
 		else if (input[*i] == '\'')
 			result = single_quotes(input, i);
-		if (result == ERROR)
+		if (result == ERROR || input[*i] == '\\' || input[*i] == ';')
 			return (ERROR);
 		(*i)++;
 	}
