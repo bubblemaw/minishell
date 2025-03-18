@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/03/17 15:14:13 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/18 18:05:13 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,18 +50,16 @@ int	main (int ac, char *av[], char **env)
 			continue ;
 		}
 		give_token_data(&shell);
-		// printf("\n");
-		// print_token(shell.tokken);
-		// printf("\n");
-		kill_quotes(&shell);
-		init_execution(&shell);
-		if (create_cmd_lst(&shell) == ERROR)
-		{
-			free_shell(&shell);
-			error("loading commands\n");
-		}
+		init_var_local(&shell);
+		// kill_quotes(&shell);
+		// init_execution(&shell);
+		// if (create_cmd_lst(&shell) == ERROR)
+		// {
+		// 	free_shell(&shell);
+		// 	error("loading commands\n");
+		// }
 		// print_cmds(shell.cmd);
-		ft_execute(&shell);
+		// ft_execute(&shell);
 		// printf("execution fini\n");
 	}
 	return (0);

@@ -6,7 +6,7 @@
 #    By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 22:16:43 by david             #+#    #+#              #
-#    Updated: 2025/03/17 15:00:12 by dchellen         ###   ########.fr        #
+#    Updated: 2025/03/18 14:52:54 by dchellen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRCS = srcs/main/main.c \
 		srcs/token_to_cmd/add_cmd_lst.c \
 		srcs/builtin/echo.c \
 		srcs/expansion/expansion.c \
+		srcs/expansion/var_local.c \
 		srcs/expansion/kill_quotes.c \
 		srcs/builtin/built_in.c \
 		srcs/main/init_minishell.c \

@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/03/17 15:11:53 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/18 18:05:14 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ typedef struct s_creat
 	int				len;
 
 	t_token			*new;
+	t_var			*new_var;
 }	t_creat;
 
 // principal struct
@@ -110,7 +111,7 @@ typedef struct s_shell
 	char			*input;
 	t_creat			creat;
 	t_token			*tokken;
-
+	t_var			*var;
 }	t_shell;
 
 // token's fonctions
@@ -165,7 +166,6 @@ void	setup_cmd_lst(t_cmd **cmd);
 void	print_cmds(t_cmd *head);
 int		new_cmd(t_cmd **head_cmd, t_cmd **current);
 
-
 // pipe
 int		piper(t_cmd *cmd, t_shell *shell);
 int		ft_exe_pipe(t_cmd *token, t_shell *shell);
@@ -174,6 +174,12 @@ int		child_processor(t_cmd *cmd, t_shell *shell, int *pipefd);
 int		here_doc(t_cmd *cmd, t_shell *shell);
 
 // expansion
+int		init_var_local(t_shell *shell);
+t_var	*creat_node_var(char *content);
+void	add_node_var(t_shell *shell, t_var *new);
+void	free_list_var(t_var *head);
+void	print_var_local(t_var *head);
+
 int		ft_expansion(t_shell *shell);
 int		expansion(t_token *tokken, t_shell *shell);
 char	*ft_findvar(char *var_name, t_shell *shell);
