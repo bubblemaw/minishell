@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_cmd_lst.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 12:29:51 by maw               #+#    #+#             */
-/*   Updated: 2025/03/13 16:33:22 by masase           ###   ########.fr       */
+/*   Updated: 2025/03/18 17:25:03 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,30 @@ void add_cmd_lst(t_cmd **head)
 			tmp = tmp->next;
 		tmp->next = new_cmd;
 		new_cmd->next = NULL;
+	}
+}
+void add_cmd_lst_debut(t_cmd **head)
+{
+	t_cmd *new_cmd;
+	// t_cmd *tmp;
+	
+	new_cmd = malloc(sizeof(t_cmd));
+	if (!new_cmd)
+		return;
+	if (!*head)
+	{
+		*head = new_cmd;
+		new_cmd->next = NULL;
+	}	
+	else
+	{
+		new_cmd->next = *head;
+		*head = new_cmd;
+		// tmp = *head;
+		// while (tmp->next)
+		// 	tmp = tmp->next;
+		// tmp->next = new_cmd;
+		// new_cmd->next = NULL;
 	}
 }
 

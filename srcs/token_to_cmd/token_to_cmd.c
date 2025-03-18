@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_to_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 12:00:01 by maw               #+#    #+#             */
-/*   Updated: 2025/03/17 17:35:14 by masase           ###   ########.fr       */
+/*   Updated: 2025/03/18 17:57:03 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int create_cmd_lst(t_shell *shell)
 	new_cmd(&shell->cmd, &current);
 	while (tokken)
 	{
+		current = shell->cmd;
 		if (tokken->type == COMMAND)
 			ft_cmd_maker(current, &tokken);
 		else if (tokken->type == PIPE)
@@ -92,80 +93,84 @@ int create_cmd_lst(t_shell *shell)
 	return (VALID);
 }
 
-int		save_redirection(t_shell *shell, t_cmd *cmd)
-{
-	if (cmd->infile)
-	{
-		shell->redir.prev_infile = ft_strdup(cmd->infile);
-		free (cmd->infile);
-	}
-	if (cmd->outfile)
-	{
-		shell->redir.prev_outfile = ft_strdup(cmd->outfile);
-		shell->redir.apppend = cmd->append;
-		cmd->append = 0;
-		free(cmd->outfile);
-	}
-	if (cmd->delimiter)
-	{
-		shell->redir.prev_delimiter = ft_strdup(cmd->delimiter);
-		shell->redir.type = cmd->type;
-		cmd->type = 0;
-		free (cmd->delimiter);
-	}
-	return (VALID);
-}
-
 int ft_cmd_redirection(t_cmd *cmd, t_token **tokken, t_shell *shell)
 {
 	if (ft_strlen((*tokken)->value) > 1)
-	{
-		if (cmd->infile || cmd->delimiter || cmd->outfile)
-		{
-			save_redirection(shell, cmd);
-			new_cmd_direction(&cmd, shell);
-		}
-		double_redirection(cmd, tokken);
-	}
+		double_redirection(cmd, tokken, shell);
 	else
-	{
-		if (cmd->infile || cmd->outfile)
-		{
-			save_redirection(shell, cmd);
-			new_cmd_direction(&cmd, shell);
-		}	
-		simple_redirection(cmd, tokken);
-	}	
+		simple_redirection(cmd, tokken, shell);
 	*tokken = (*tokken)->next;
 	return (VALID);
 }
 
-void double_redirection(t_cmd *cmd, t_token **tokken)
+void double_redirection(t_cmd *cmd, t_token **tokken, t_shell *shell)
 {
 	if ((*tokken)->value[0] == '>' && (*tokken)->value[1] == '>')
 	{
 		*tokken = (*tokken)->next;
+		if (cmd->outfile)
+		{
+			shell->redir.prev_outfile = ft_strdup(cmd->outfile);
+			shell->redir.apppend = cmd->append;
+			free(cmd->outfile);
+			new_cmd_direction(&shell->cmd, shell);
+		}
 		cmd->outfile = ft_strdup((*tokken)->value);
 		cmd->append = 1;
 	}	
-	if ((*tokken)->value[0] == '<' && (*tokken)->value[1] == '<')
+	else if ((*tokken)->value[0] == '<' && (*tokken)->value[1] == '<')
 	{
 		*tokken = (*tokken)->next;
+		if (cmd->infile)
+		{
+			shell->redir.prev_infile = ft_strdup(cmd->infile);
+			free(cmd->infile);
+			cmd->infile = NULL;
+			new_cmd_direction(&shell->cmd, shell);
+		}
+		else if (cmd->delimiter)
+		{
+			shell->redir.prev_delimiter = ft_strdup(cmd->delimiter);
+			free(cmd->delimiter);
+			cmd->delimiter = NULL;
+			shell->redir.type = cmd->type;
+			new_cmd_direction(&shell->cmd, shell);
+		}
 		cmd->delimiter = ft_strdup((*tokken)->value);
 		cmd->type = DELIMITER;
 	}
 }
 
-void simple_redirection(t_cmd *cmd, t_token **tokken)
+void simple_redirection(t_cmd *cmd, t_token **tokken, t_shell *shell)
 {
 	if ((*tokken)->value[0] == '>')
 	{
 		*tokken = (*tokken)->next;
+		if (cmd->outfile)
+		{
+			shell->redir.prev_outfile = ft_strdup(cmd->outfile);
+			free(cmd->outfile);
+			shell->redir.type = 0;
+			new_cmd_direction(&shell->cmd, shell);
+		}
 		cmd->outfile = ft_strdup((*tokken)->value);
 	}	
 	else if ((*tokken)->value[0] == '<')
 	{
 		*tokken = (*tokken)->next;
+		if (cmd->infile)
+		{
+			shell->redir.prev_infile = ft_strdup(cmd->infile);
+			free(cmd->infile);		
+			new_cmd_direction(&shell->cmd, shell);
+		}
+		else if (cmd->delimiter)
+		{
+			shell->redir.prev_delimiter = ft_strdup(cmd->delimiter);
+			free(cmd->delimiter);
+			shell->redir.type = 0;	
+			new_cmd_direction(&shell->cmd, shell);
+		}
 		cmd->infile = ft_strdup((*tokken)->value);
 	}	
 }
