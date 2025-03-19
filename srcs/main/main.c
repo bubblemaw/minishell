@@ -39,7 +39,8 @@ int	main (int ac, char *av[], char **env)
 		else if (strncmp(shell.input, "exit ", 4) == 0)
 		{
 			free_shell(&shell);
-			free(shell.input); 
+			free_list_var(shell.var);
+			free(shell.input);
 			return (0);
 		}
 		else if (creat_tokken(shell.input, &shell) == ERROR)
