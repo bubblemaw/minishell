@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_local.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:44:05 by dchellen          #+#    #+#             */
-/*   Updated: 2025/03/18 18:05:08 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/18 21:01:39 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int init_var_local(t_shell *shell)
 {
     t_token *temp;
-	t_token *check;
+	// t_token *check;
     bool    send;
 
     temp = shell->tokken;
