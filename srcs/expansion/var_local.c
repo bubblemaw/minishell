@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_local.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:44:05 by dchellen          #+#    #+#             */
-/*   Updated: 2025/03/18 21:01:39 by david            ###   ########.fr       */
+/*   Updated: 2025/03/19 17:45:03 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int init_var_local(t_shell *shell)
 {
     t_token *temp;
-	// t_token *check;
+    t_var   *exist_var;
     bool    send;
 
     temp = shell->tokken;
@@ -24,42 +24,57 @@ int init_var_local(t_shell *shell)
 		return (0);
     while (temp != NULL)
     {
-        if (send == true && temp->type == VALUE)
+        if (temp->type == NAME)
+            exist_var = check_doubles(shell->var, temp->value);
+        else if (send == true && temp->type == VALUE)
         {
-			// comparer toutes les values
-			// si elle existe deja ecraser avec la nouvelle
-			shell->creat.new_var = creat_node_var(temp->value);
-			add_node_var(shell, shell->creat.new_var);
+			if (exist_var != NULL)
+				replace_var(exist_var, temp);
+			else
+				creat_var_list(shell, temp);
 			send = false;
         }
         else if (temp->type == EQUALITY)
             send = true;
         temp = temp->next;
     }
-	print_var_local(shell->var);
     return (0);
 }
 
-int check_doubles(t_token *check, char *name)
+t_var *check_doubles(t_var *check, char *name)
 {
 	while (check != NULL)
 	{
-		if (check->type == NAME && ft_strncmp(check->value, name, strlen(name + 1)) == 0)
-		{
-		}
+		if (ft_strncmp(check->name, name, strlen(name)) == 0)
+			return(check);
 		check = check->next;
 	}
-	return (0);
+	return (NULL);
 }
 
-t_var	*creat_node_var(char *content)
+void	replace_var(t_var *exist_var, t_token *temp)
+{
+	free(exist_var->value);
+	exist_var->value = strdup(temp->value);
+	return ;
+}
+
+void	creat_var_list(t_shell *shell, t_token *temp)
+{
+	shell->creat.new_var = creat_node_var(temp->prev->prev->value, temp->value);
+	add_node_var(shell, shell->creat.new_var);
+	return ;
+}
+
+t_var	*creat_node_var(char *name, char *content)
 {
 	t_var	*new_var;
 
 	new_var = (t_var *)malloc(sizeof(t_var));
 	if (new_var == NULL)
 		return (NULL);
-	new_var->var = ft_strdup(content);
+	new_var->name = ft_strdup(name);
+	new_var->value = ft_strdup(content);
 	new_var->next = NULL;
 	return (new_var);
 }
@@ -91,7 +106,8 @@ void	free_list_var(t_var *head)
 	while (head != NULL)
 	{
 		tmp = head;
-		free(head->var);
+		free(head->value);
+		free(head->name);
 		head = head->next;
 		free(tmp);
 	}
@@ -107,7 +123,7 @@ void	print_var_local(t_var *head)
 	while (current != NULL)
 	{
 		printf("node[%d] -> %s\n",
-			i, current->var);
+			i, current->value);
 		current = current->next;
 		i++;
 	}

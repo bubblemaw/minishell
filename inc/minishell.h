@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/03/18 21:08:46 by david            ###   ########.fr       */
+/*   Updated: 2025/03/19 17:45:10 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 #define false	0
 
 // command's return
+# define DOUBLE 3
 # define ERROR 2
 # define VALID 1
 
@@ -54,7 +55,8 @@ typedef enum
 // variables's struct without export
 typedef struct s_var
 {
-	char *var;
+	char		*name;
+	char 		*value;
 	struct s_var *next;
 }	t_var;
 
@@ -175,7 +177,10 @@ int		here_doc(t_cmd *cmd, t_shell *shell);
 
 // expansion
 int		init_var_local(t_shell *shell);
-t_var	*creat_node_var(char *content);
+t_var	*check_doubles(t_var *check, char *name);
+void	replace_var(t_var *exist_var, t_token *temp);
+void	creat_var_list(t_shell *shell, t_token *temp);
+t_var	*creat_node_var(char *name, char *content);
 void	add_node_var(t_shell *shell, t_var *new);
 void	free_list_var(t_var *head);
 void	print_var_local(t_var *head);

@@ -52,6 +52,7 @@ int	main (int ac, char *av[], char **env)
 		// print_token(shell.tokken);s
 		// printf("\n");
 		init_var_local(&shell);
+		print_var_local(shell.var);
 		// kill_quotes(&shell);
 		// init_execution(&shell);
 		// if (create_cmd_lst(&shell) == ERROR)
