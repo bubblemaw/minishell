@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/03/20 13:44:52 by maw              ###   ########.fr       */
+/*   Updated: 2025/03/20 17:01:12 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,13 +157,17 @@ void	simple_redirection(t_cmd *cmd, t_token **tokken, t_shell *shell);
 void	double_redirection(t_cmd *cmd, t_token **tokken, t_shell *shell);
 void	*ft_realloc(void *ptr,size_t old_size, size_t new_size);
 void	add_cmd_lst(t_cmd **head);
-void	add_cmd_lst_debut(t_cmd **head);
+void	add_cmd_before_last(t_cmd **head);
 int		create_cmd_lst(t_shell *shell);
 void	setup_cmd_lst(t_cmd **cmd);
 void	print_cmds(t_cmd **head);
 int		new_cmd(t_cmd **head_cmd, t_cmd **current);
-int		new_cmd_direction(t_cmd **head_cmd, t_shell *shell);
-int		free_new_direction(t_shell *shell);
+int		new_cmd_redirection(t_cmd **head_cmd, t_shell *shell);
+int		free_new_redirection(t_shell *shell);
+void	save_outfile(t_shell *shell, t_cmd *cmd);
+void	save_infile(t_shell *shell, t_cmd  *cmd);
+void	save_delimiter(t_shell *shell, t_cmd *cmd);
+void	insert_node(t_cmd *current, t_cmd *new_cmd);
 
 // pipe
 int		piper(t_cmd *cmd, t_shell *shell);
@@ -188,6 +192,7 @@ void	free_tab(char **tab);
 void	free_shell(t_shell *shell);
 void	free_cmds(t_cmd **head);
 void	free_tab(char **tab);
+int		free_new_direction(t_shell *shell);
 
 // error
 int		error_cmd(char *str);

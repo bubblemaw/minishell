@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_cmd_lst.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 12:29:51 by maw               #+#    #+#             */
-/*   Updated: 2025/03/20 13:45:02 by maw              ###   ########.fr       */
+/*   Updated: 2025/03/20 17:13:37 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void add_cmd_lst(t_cmd **head)
 		new_cmd->next = NULL;
 	}
 }
-void add_cmd_lst_debut(t_cmd **head)
+void add_cmd_before_last(t_cmd **head)
 {
 	t_cmd *new_cmd;
 	t_cmd *current;
@@ -46,13 +46,7 @@ void add_cmd_lst_debut(t_cmd **head)
 	if (!new_cmd)
 		return;
 	if (!*head)
-	{
-		printf("liste bien vide\n");
 		*head = new_cmd;
-		new_cmd->next = NULL;
-		new_cmd->prev = NULL;
-		
-	}
 	else if (lst_size(current) == 1)
 	{
 		current->prev = new_cmd;
@@ -60,21 +54,21 @@ void add_cmd_lst_debut(t_cmd **head)
 		*head = new_cmd;
 	}
 	else if (lst_size(current) == 2)
-	{
-		new_cmd->next = current->next;
-		new_cmd->prev = current;
-		current->next->prev = new_cmd;
-		current->next = new_cmd;
-	}
+		insert_node(current, new_cmd);
 	else 
 	{
 		while (current->next->next)
 			current = current->next;
-		new_cmd->next = current->next;
-		new_cmd->prev = current;
-		current->next->prev = new_cmd;
-		current->next = new_cmd;
+		insert_node(current, new_cmd);
 	}
+}
+
+void insert_node(t_cmd *current, t_cmd *new_cmd)
+{
+	new_cmd->next = current->next;
+	new_cmd->prev = current;
+	current->next->prev = new_cmd;
+	current->next = new_cmd;
 }
 
 void setup_cmd_lst(t_cmd **cmd)
