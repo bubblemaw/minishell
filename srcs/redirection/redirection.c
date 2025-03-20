@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:34:17 by maw               #+#    #+#             */
-/*   Updated: 2025/03/17 15:14:20 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/20 21:06:14 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int here_doc(t_cmd *cmd, t_shell *shell)
 		return (error("error occurs during the pipe"));
 	while (1)
 	{
-		write(1, ">", 1);
+		write(shell->STDOUT, ">", 1);
 		line = get_next_line(shell->STDIN);
 		if (!line)
 			break ;

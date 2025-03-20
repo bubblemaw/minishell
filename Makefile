@@ -6,7 +6,7 @@
 #    By: david <david@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 22:16:43 by david             #+#    #+#              #
-#    Updated: 2025/03/19 23:48:50 by david            ###   ########.fr        #
+#    Updated: 2025/03/20 21:05:58 by david            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,8 @@ SRCS =  srcs/main/main.c \
 		srcs/builtin/built_in.c \
 		srcs/main/init_minishell.c \
 		srcs/token_to_cmd/token_to_cmd.c \
+		srcs/token_to_cmd/redirection_token_to_cmd.c \
+		srcs/token_to_cmd/save_redirection.c \
 		srcs/utils/utils1.c \
 		GNL/get_next_line.c \
 

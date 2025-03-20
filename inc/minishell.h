@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/03/20 17:14:29 by dchellen         ###   ########.fr       */
+/*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
+/*   Updated: 2025/03/20 21:03:35 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ typedef struct s_cmd
 	int	append;
 	int	type;// pipe or delimiter
 	struct s_cmd *next;
+	struct s_cmd *prev;
 }	t_cmd;
 
 //for the parse when the tokens are creat
@@ -100,6 +101,15 @@ typedef struct s_creat
 	t_var			*new_var;
 }	t_creat;
 
+typedef struct s_redir
+{
+	char *prev_infile;
+	char *prev_outfile;
+	char *prev_delimiter;
+	int apppend;
+	int type;
+}	t_redir;
+
 // principal struct
 typedef struct s_shell
 {
@@ -108,6 +118,7 @@ typedef struct s_shell
 	int STDOUT;
 	int STDERR;
 	int prev_pipefd;
+	t_redir			redir;
 	int here_fd;
 	t_cmd *cmd;
 	char			*input;
@@ -158,15 +169,22 @@ int		echo_option(t_cmd *cmd);
 t_cmd	*end_list(t_cmd *head);
 int		ft_cmd_maker(t_cmd *cmd, t_token **tokken);
 int		ft_cmd_pipe(t_cmd *cmd, t_token **tokken);
-int		ft_cmd_redirection(t_cmd *cmd, t_token **tokken);
-void	simple_redirection(t_cmd *cmd, t_token **tokken);
-void	double_redirection(t_cmd *cmd, t_token **tokken);
+int		ft_cmd_redirection(t_cmd *cmd, t_token **tokken, t_shell *shell);
+void	simple_redirection(t_cmd *cmd, t_token **tokken, t_shell *shell);
+void	double_redirection(t_cmd *cmd, t_token **tokken, t_shell *shell);
 void	*ft_realloc(void *ptr,size_t old_size, size_t new_size);
 void	add_cmd_lst(t_cmd **head);
+void	add_cmd_before_last(t_cmd **head);
 int		create_cmd_lst(t_shell *shell);
 void	setup_cmd_lst(t_cmd **cmd);
-void	print_cmds(t_cmd *head);
+void	print_cmds(t_cmd **head);
 int		new_cmd(t_cmd **head_cmd, t_cmd **current);
+int		new_cmd_redirection(t_cmd **head_cmd, t_shell *shell);
+int		free_new_redirection(t_shell *shell);
+void	save_outfile(t_shell *shell, t_cmd *cmd);
+void	save_infile(t_shell *shell, t_cmd  *cmd);
+void	save_delimiter(t_shell *shell, t_cmd *cmd);
+void	insert_node(t_cmd *current, t_cmd *new_cmd);
 
 // pipe
 int		piper(t_cmd *cmd, t_shell *shell);
@@ -202,6 +220,7 @@ void	free_tab(char **tab);
 void	free_shell(t_shell *shell);
 void	free_cmds(t_cmd **head);
 void	free_tab(char **tab);
+int		free_new_direction(t_shell *shell);
 
 // error
 int		error_cmd(char *str);

@@ -3,8 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
+/*   Updated: 2025/03/20 21:05:43 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +60,7 @@ int	main (int ac, char *av[], char **env)
 			free_shell(&shell);
 			error("loading commands\n");
 		}
+		// print_cmds(&shell.cmd);
 		init_var_local(&shell);
 		print_var_local(shell.var);
 		// print_cmds(shell.cmd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:49:23 by masase            #+#    #+#             */
-/*   Updated: 2025/03/12 16:47:04 by masase           ###   ########.fr       */
+/*   Updated: 2025/03/20 21:06:51 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	free_tab(char **tab)
 	tab = NULL;
 }
 
-// Fonction pour libérer la liste de cmd
 void free_cmds(t_cmd **head)
 {
 	t_cmd *tmp;
@@ -58,4 +57,20 @@ void free_cmds(t_cmd **head)
 		free(tmp);
 		tmp = NULL;
 	}
+}
+
+int free_new_direction(t_shell *shell)
+{
+	if (shell->redir.prev_infile)
+		free(shell->redir.prev_infile);
+	if (shell->redir.prev_outfile)
+		free(shell->redir.prev_outfile);
+	if (shell->redir.prev_delimiter)
+		free(shell->redir.prev_delimiter);
+	shell->redir.prev_infile = NULL;
+	shell->redir.prev_outfile = NULL;
+	shell->redir.prev_delimiter = NULL;
+	shell->redir.apppend = 0;
+	shell->redir.type = 0;
+	return (VALID);
 }
