@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:31:47 by maw               #+#    #+#             */
-/*   Updated: 2025/03/20 17:14:21 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/20 22:00:06 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,11 @@ int	find_local_var(t_shell  *shell, t_token *current)
 		}
 		temp = temp->next;
 	}
+	return (0);
+}
+
+int	change_var_local(t_shell  *shell, t_token *current)
+{
 	return (0);
 }
 
