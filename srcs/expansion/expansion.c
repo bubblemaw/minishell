@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:31:47 by maw               #+#    #+#             */
-/*   Updated: 2025/03/20 00:22:52 by david            ###   ########.fr       */
+/*   Updated: 2025/03/20 17:14:21 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int ft_expansion(t_shell *shell)
 	current = shell->tokken;
 	while (current != NULL)
 	{
-		if (current->value[0] == '$' && is_double_quote(current) == VALID)
-			expansion(current, shell);
+		if (current->value[1] == '$' && is_double_quote(current) == VALID)
+			find_local_var(shell, current);
 		current = current->next;
 	}
 	return (VALID);
@@ -31,11 +31,33 @@ int is_double_quote(t_token *tokken)
 	int last_char;
 
 	last_char = ft_strlen(tokken->value) - 1;
-	if (tokken->value[0] == '"' && tokken->value[last_char] == '"' )
-		return (VALID);
-	else 
-		return (0);
+	if (tokken->type == ARGUMENT)
+	{
+		if (tokken->value[0] == '"' && tokken->value[last_char] == '"')
+			return (VALID);
+	}
+	return (0);
 }
+
+int	find_local_var(t_shell  *shell, t_token *current)
+{
+	t_var *temp;
+
+	temp = shell->var;
+	while (temp != NULL)
+	{
+		if (ft_strncmp(current->value, temp->name, strlen(current->value)) == 0)
+		{
+			free(current->value);
+			current->value = ft_strdup(temp->value);
+			return (0);
+		}
+		temp = temp->next;
+	}
+	return (0);
+}
+
+//----------------------------------------------//
 
 int expansion(t_token *tokken, t_shell *shell)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_to_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 12:00:01 by maw               #+#    #+#             */
-/*   Updated: 2025/03/14 22:11:46 by david            ###   ########.fr       */
+/*   Updated: 2025/03/20 17:14:26 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ int create_cmd_lst(t_shell *shell)
 	new_cmd(&shell->cmd, &current);
 	while (tokken)
 	{
-		if (tokken->type == COMMAND)
+		if (tokken->type == NAME || tokken->type == EQUALITY
+			|| tokken->type == VALUE)
+			tokken = tokken->next;
+		else if (tokken->type == COMMAND)
 			ft_cmd_maker(current, &tokken);
 		else if (tokken->type == PIPE)
 		{
@@ -46,7 +49,7 @@ int create_cmd_lst(t_shell *shell)
 			ft_cmd_redirection(current, &tokken);
 			if (tokken && tokken->type == REDIRECTION)
 				new_cmd(&shell->cmd, &current);	
-		}	
+		}
 	}
 	return (VALID);
 }
@@ -111,12 +114,14 @@ int ft_cmd_maker(t_cmd *cmd, t_token **tokken)
 	cmd->arg[i] = NULL;
 	return (VALID);
 }
+
 int ft_cmd_pipe(t_cmd *cmd, t_token **tokken)
 {
 	*tokken = (*tokken)->next;
 	cmd->type = PIPE;
 	return (VALID);
 }
+
 t_cmd *end_list(t_cmd *head)
 {
 	while((head)->next)

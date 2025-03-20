@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/03/19 17:45:10 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/20 17:14:29 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,7 @@ void	free_list_var(t_var *head);
 void	print_var_local(t_var *head);
 
 int		ft_expansion(t_shell *shell);
+int		find_local_var(t_shell  *shell, t_token *current);
 int		expansion(t_token *tokken, t_shell *shell);
 char	*ft_findvar(char *var_name, t_shell *shell);
 int		is_double_quote(t_token *tokken);
