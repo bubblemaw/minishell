@@ -6,7 +6,7 @@
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 12:29:51 by maw               #+#    #+#             */
-/*   Updated: 2025/03/18 17:25:03 by maw              ###   ########.fr       */
+/*   Updated: 2025/03/20 13:45:02 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void add_cmd_lst(t_cmd **head)
 	{
 		*head = new_cmd;
 		new_cmd->next = NULL;
+		new_cmd->prev = NULL;
 	}	
 	else
 	{
@@ -31,31 +32,48 @@ void add_cmd_lst(t_cmd **head)
 		while (tmp->next)
 			tmp = tmp->next;
 		tmp->next = new_cmd;
+		new_cmd->prev = tmp;
 		new_cmd->next = NULL;
 	}
 }
 void add_cmd_lst_debut(t_cmd **head)
 {
 	t_cmd *new_cmd;
-	// t_cmd *tmp;
+	t_cmd *current;
 	
+	current = *head;
 	new_cmd = malloc(sizeof(t_cmd));
 	if (!new_cmd)
 		return;
 	if (!*head)
 	{
+		printf("liste bien vide\n");
 		*head = new_cmd;
 		new_cmd->next = NULL;
-	}	
-	else
+		new_cmd->prev = NULL;
+		
+	}
+	else if (lst_size(current) == 1)
 	{
-		new_cmd->next = *head;
+		current->prev = new_cmd;
+		new_cmd->next = current;
 		*head = new_cmd;
-		// tmp = *head;
-		// while (tmp->next)
-		// 	tmp = tmp->next;
-		// tmp->next = new_cmd;
-		// new_cmd->next = NULL;
+	}
+	else if (lst_size(current) == 2)
+	{
+		new_cmd->next = current->next;
+		new_cmd->prev = current;
+		current->next->prev = new_cmd;
+		current->next = new_cmd;
+	}
+	else 
+	{
+		while (current->next->next)
+			current = current->next;
+		new_cmd->next = current->next;
+		new_cmd->prev = current;
+		current->next->prev = new_cmd;
+		current->next = new_cmd;
 	}
 }
 
@@ -67,5 +85,4 @@ void setup_cmd_lst(t_cmd **cmd)
 	(*cmd)->delimiter = NULL;
 	(*cmd)->type = 0;
 	(*cmd)->append = 0;
-	(*cmd)->next = NULL;
 }

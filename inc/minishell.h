@@ -6,7 +6,7 @@
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/03/18 17:01:27 by maw              ###   ########.fr       */
+/*   Updated: 2025/03/20 13:44:52 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct s_cmd
 	int	append;
 	int	type;// pipe or delimiter
 	struct s_cmd *next;
+	struct s_cmd *prev;
 }	t_cmd;
 
 //for the parse when the tokens are creat
@@ -159,11 +160,10 @@ void	add_cmd_lst(t_cmd **head);
 void	add_cmd_lst_debut(t_cmd **head);
 int		create_cmd_lst(t_shell *shell);
 void	setup_cmd_lst(t_cmd **cmd);
-void	print_cmds(t_cmd *head);
+void	print_cmds(t_cmd **head);
 int		new_cmd(t_cmd **head_cmd, t_cmd **current);
 int		new_cmd_direction(t_cmd **head_cmd, t_shell *shell);
 int		free_new_direction(t_shell *shell);
-
 
 // pipe
 int		piper(t_cmd *cmd, t_shell *shell);

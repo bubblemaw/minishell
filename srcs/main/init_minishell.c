@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:31:21 by maw               #+#    #+#             */
-/*   Updated: 2025/03/17 14:22:06 by masase           ###   ########.fr       */
+/*   Updated: 2025/03/20 13:45:29 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,7 @@ void init_execution(t_shell *shell)
 	shell->prev_pipefd = -1;
 	save_fd(shell);
 	shell->cmd = NULL;
-	shell->redir.prev_infile = NULL;
-	shell->redir.prev_outfile = NULL;
-	shell->redir.prev_delimiter = NULL;
-	shell->redir.apppend = 0;
-	shell->redir.type = 0;
-
+	free_new_direction(shell);
 }
 
 char **copy_env(char **env)

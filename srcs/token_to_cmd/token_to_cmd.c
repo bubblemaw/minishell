@@ -6,7 +6,7 @@
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 12:00:01 by maw               #+#    #+#             */
-/*   Updated: 2025/03/18 17:57:03 by maw              ###   ########.fr       */
+/*   Updated: 2025/03/20 13:44:57 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,12 @@ int new_cmd_direction(t_cmd **head_cmd, t_shell *shell)
 {
 	t_cmd *current;
 	
-	add_cmd_lst(head_cmd);
+	add_cmd_lst_debut(head_cmd);
 	current = *head_cmd;
-	if (!head_cmd)
-		return (ERROR);
-	while ((current)->next)
-		current = (current)->next;
+	while (current->next->next)
+		current = current->next;
 	setup_cmd_lst(&current);
+	printf("setup fini\n");
 	if (shell->redir.prev_infile)
 		current->infile = ft_strdup(shell->redir.prev_infile);
 	if (shell->redir.prev_outfile)
@@ -73,7 +72,6 @@ int create_cmd_lst(t_shell *shell)
 	new_cmd(&shell->cmd, &current);
 	while (tokken)
 	{
-		current = shell->cmd;
 		if (tokken->type == COMMAND)
 			ft_cmd_maker(current, &tokken);
 		else if (tokken->type == PIPE)
@@ -87,7 +85,8 @@ int create_cmd_lst(t_shell *shell)
 		}
 		else if (tokken && tokken->type == ARGUMENT)
 			ft_cmd_maker(current, &tokken);
-		print_cmds(shell->cmd);
+		print_cmds(&shell->cmd);
+		printf("%d\n", lst_size(shell->cmd));
 		printf("yooooooooooooooooooooooooo\n");
 	}
 	return (VALID);
@@ -113,6 +112,7 @@ void double_redirection(t_cmd *cmd, t_token **tokken, t_shell *shell)
 			shell->redir.prev_outfile = ft_strdup(cmd->outfile);
 			shell->redir.apppend = cmd->append;
 			free(cmd->outfile);
+			cmd->outfile = NULL;
 			new_cmd_direction(&shell->cmd, shell);
 		}
 		cmd->outfile = ft_strdup((*tokken)->value);
@@ -150,6 +150,7 @@ void simple_redirection(t_cmd *cmd, t_token **tokken, t_shell *shell)
 		{
 			shell->redir.prev_outfile = ft_strdup(cmd->outfile);
 			free(cmd->outfile);
+			cmd->outfile = NULL;
 			shell->redir.type = 0;
 			new_cmd_direction(&shell->cmd, shell);
 		}
@@ -161,13 +162,15 @@ void simple_redirection(t_cmd *cmd, t_token **tokken, t_shell *shell)
 		if (cmd->infile)
 		{
 			shell->redir.prev_infile = ft_strdup(cmd->infile);
-			free(cmd->infile);		
+			free(cmd->infile);
+			cmd->infile = NULL;
 			new_cmd_direction(&shell->cmd, shell);
 		}
 		else if (cmd->delimiter)
 		{
 			shell->redir.prev_delimiter = ft_strdup(cmd->delimiter);
 			free(cmd->delimiter);
+			cmd->delimiter = NULL;
 			shell->redir.type = 0;	
 			new_cmd_direction(&shell->cmd, shell);
 		}
