@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:16:38 by maw               #+#    #+#             */
-/*   Updated: 2025/03/17 15:13:15 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/20 17:31:27 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,7 @@ int ft_execute(t_shell *shell)
 			break ;
 		}
 		else // execution commande basique
-		{
-			// gérer cas fonctions builtin
 			ft_exe(current, shell);
-		}
 		current = current->next;
 	}
 	while (wait(NULL) > 0); // attente de tous les childs process 

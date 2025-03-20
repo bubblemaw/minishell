@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/03/17 15:14:13 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/20 17:23:58 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	main (int ac, char *av[], char **env)
 			free_shell(&shell);
 			error("loading commands\n");
 		}
-		// print_cmds(shell.cmd);
+		// print_cmds(&shell.cmd);
 		ft_execute(&shell);
 		// printf("execution fini\n");
 	}

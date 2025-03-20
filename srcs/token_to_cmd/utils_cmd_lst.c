@@ -6,18 +6,18 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 21:17:50 by maw               #+#    #+#             */
-/*   Updated: 2025/03/14 14:59:56 by masase           ###   ########.fr       */
+/*   Updated: 2025/03/20 17:17:29 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 // Fonction pour afficher les commandes stockées
-void print_cmds(t_cmd *head)
+void print_cmds(t_cmd **head)
 {
 	t_cmd *current;
 
-	current = head;
+	current = *head;
 	while (current)
 	{
 		printf("Commande : ");

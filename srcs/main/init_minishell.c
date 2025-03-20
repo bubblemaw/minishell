@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:31:21 by maw               #+#    #+#             */
-/*   Updated: 2025/03/17 15:13:31 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/20 17:31:38 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void init_execution(t_shell *shell)
 	shell->prev_pipefd = -1;
 	save_fd(shell);
 	shell->cmd = NULL;
+	free_new_direction(shell);
 }
 
 char **copy_env(char **env)

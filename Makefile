@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+         #
+#    By: masase <masase@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 22:16:43 by david             #+#    #+#              #
-#    Updated: 2025/03/17 15:00:12 by dchellen         ###   ########.fr        #
+#    Updated: 2025/03/20 17:23:56 by masase           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,8 @@ SRCS = srcs/main/main.c \
 		srcs/builtin/built_in.c \
 		srcs/main/init_minishell.c \
 		srcs/token_to_cmd/token_to_cmd.c \
+		srcs/token_to_cmd/redirection_token_to_cmd.c \
+		srcs/token_to_cmd/save_redirection.c \
 		srcs/utils/utils1.c \
 		GNL/get_next_line.c \
 
