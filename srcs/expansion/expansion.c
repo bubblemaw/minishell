@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:31:47 by maw               #+#    #+#             */
-/*   Updated: 2025/03/20 22:00:06 by david            ###   ########.fr       */
+/*   Updated: 2025/03/23 21:39:27 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,23 @@ int is_double_quote(t_token *tokken)
 
 int	find_local_var(t_shell  *shell, t_token *current)
 {
-	t_var *temp;
+	t_var 	*temp;
+	int		i;
+	char	*new_arg;
 
 	temp = shell->var;
-	while (temp != NULL)
+	i = 0;
+	new_arg = (char *)malloc(sizeof(char) * (ft_strlen(current->value) + 1));
+	while (current->value[i] != '\0')
 	{
-		if (ft_strncmp(current->value, temp->name, strlen(current->value)) == 0)
+		while (temp != NULL)
 		{
-			free(current->value);
-			current->value = ft_strdup(temp->value);
-			return (0);
+			if (ft_strncmp(current->value[i], temp->name, strlen(temp->name)) == 0)
+			{
+				return (0);
+			}
+			temp = temp->next;
 		}
-		temp = temp->next;
 	}
 	return (0);
 }
