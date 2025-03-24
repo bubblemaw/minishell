@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:31:47 by maw               #+#    #+#             */
-/*   Updated: 2025/03/24 17:01:00 by david            ###   ########.fr       */
+/*   Updated: 2025/03/24 23:27:23 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	find_local_var(t_shell  *shell, t_token *current)
 	char	*new_arg;
 	int		new_size;
 	int		old_size;
+	int 	test = 0;
 
 	i = 0;
 	j = 0;
@@ -71,10 +72,11 @@ int	find_local_var(t_shell  *shell, t_token *current)
 					i += ft_strlen(temp->name);
 					break ;
 				}
+				test++;
 				temp = temp->next;
 			}
 		}
-		if (temp == NULL)
+		if (temp == NULL && test > 0)
 		{
 			while (current->value[i] != ' ' && current->value[i] != '\0')
 				i++;
