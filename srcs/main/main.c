@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/03/23 22:51:53 by david            ###   ########.fr       */
+/*   Updated: 2025/03/24 14:41:54 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	main (int ac, char *av[], char **env)
 		}
 		// print_cmds(&shell.cmd);
 		init_var_local(&shell);
-		print_var_local(shell.var);
+		// print_var_local(shell.var);
 		// print_cmds(shell.cmd);
 		ft_execute(&shell);
 		// printf("execution fini\n");

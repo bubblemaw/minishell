@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:31:47 by maw               #+#    #+#             */
-/*   Updated: 2025/03/23 21:39:27 by david            ###   ########.fr       */
+/*   Updated: 2025/03/24 14:41:51 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int ft_expansion(t_shell *shell)
 	current = shell->tokken;
 	while (current != NULL)
 	{
-		if (current->value[1] == '$' && is_double_quote(current) == VALID)
+		if (is_double_quote(current) == VALID)
 			find_local_var(shell, current);
 		current = current->next;
 	}
@@ -43,29 +43,60 @@ int	find_local_var(t_shell  *shell, t_token *current)
 {
 	t_var 	*temp;
 	int		i;
+	int		j;
 	char	*new_arg;
+	int		new_size;
+	int		old_size;
 
-	temp = shell->var;
 	i = 0;
+	j = 0;
 	new_arg = (char *)malloc(sizeof(char) * (ft_strlen(current->value) + 1));
+	old_size = ft_strlen(current->value) + 1;
+	new_size = ft_strlen(current->value) + 1;
 	while (current->value[i] != '\0')
 	{
-		while (temp != NULL)
+		temp = shell->var;
+		if (current->value[i] == '$')
 		{
-			if (ft_strncmp(current->value[i], temp->name, strlen(temp->name)) == 0)
+			i++;
+			while (temp != NULL)
 			{
-				return (0);
+				if (ft_strncmp(current->value + i, temp->name, strlen(temp->name)) == 0)
+				{
+					new_size += ft_strlen(temp->value) - ft_strlen(temp->name);
+					new_arg = ft_realloc(new_arg, old_size, new_size);
+					old_size = new_size;
+					ft_strlcpy(new_arg + j, temp->value, ft_strlen(temp->value) + 1);
+					j += ft_strlen(temp->value);
+					i += ft_strlen(temp->name);
+					break ;
+				}
+				temp = temp->next;
 			}
-			temp = temp->next;
+		}
+		if (temp == NULL)
+		{
+			new_arg[j] = current->value[i];
+			j++;
+			i++;
+		}
+		else
+		{
+			new_arg[j] = current->value[i];
+			j++;
+			i++;
 		}
 	}
+	new_arg[j] = '\0';
+	free(current->value);
+	current->value = new_arg;
 	return (0);
 }
 
-int	change_var_local(t_shell  *shell, t_token *current)
-{
-	return (0);
-}
+// int	change_var_local(t_shell  *shell, t_token *current)
+// {
+// 	return (0);
+// }
 
 //----------------------------------------------//
 
