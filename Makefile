@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: masase <masase@student.42.fr>              +#+  +:+       +#+         #
+#    By: maw <maw@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 22:16:43 by david             #+#    #+#              #
-#    Updated: 2025/03/20 17:23:56 by masase           ###   ########.fr        #
+#    Updated: 2025/03/24 13:13:44 by maw              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,11 @@ SRCS = srcs/main/main.c \
 		srcs/error_free/free.c \
 		srcs/token_to_cmd/add_cmd_lst.c \
 		srcs/builtin/echo.c \
+		srcs/builtin/cd.c \
+		srcs/builtin/env.c \
+		srcs/builtin/pwd.c \
+		srcs/builtin/unset.c \
+		srcs/builtin/exit.c \
 		srcs/expansion/expansion.c \
 		srcs/expansion/kill_quotes.c \
 		srcs/builtin/built_in.c \

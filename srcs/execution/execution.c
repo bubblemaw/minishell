@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:16:38 by maw               #+#    #+#             */
-/*   Updated: 2025/03/20 17:31:27 by masase           ###   ########.fr       */
+/*   Updated: 2025/03/24 16:07:24 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int ft_execute(t_shell *shell)
 			ft_exe(current, shell);
 		current = current->next;
 	}
-	while (wait(NULL) > 0); // attente de tous les childs process 
+	while (wait(&shell->exit_status) > 0); // attente de tous les childs process 
 	reset_fd(shell);
 	return (VALID);
 }
@@ -106,12 +106,10 @@ int ft_exe(t_cmd *cmd, t_shell *shell) // execution des commandes normales (sans
 {
 	pid_t pid1;
 	char *cmd_path;
-	int status;
 
-	status = 0;
 	if (cmd->arg == NULL)
 		return(ERROR);
-	if (built_in(cmd) == VALID)
+	if (built_in(cmd, shell) == VALID)
 		return (VALID);
 	pid1 = fork();
 	if (pid1 == 0)
@@ -123,6 +121,6 @@ int ft_exe(t_cmd *cmd, t_shell *shell) // execution des commandes normales (sans
 			return(error("Execution problem"));
 	}
 	else
-		waitpid(pid1, &status, 0);
+		waitpid(pid1, &shell->exit_status, 0);
 	return (VALID);
 }

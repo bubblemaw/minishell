@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_token_to_cmd.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 16:32:11 by masase            #+#    #+#             */
-/*   Updated: 2025/03/20 16:44:14 by masase           ###   ########.fr       */
+/*   Updated: 2025/03/21 16:02:08 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,6 @@ int new_cmd_redirection(t_cmd **head_cmd, t_shell *shell)
 		current->delimiter = ft_strdup(shell->redir.prev_delimiter);
 	current->append = shell->redir.apppend;
 	current->type = shell->redir.type;
-	free_new_direction(shell);
+	free_new_redirection(shell);
 	return (VALID);
 }

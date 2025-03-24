@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/03/20 17:23:58 by masase           ###   ########.fr       */
+/*   Updated: 2025/03/24 16:00:35 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ int	main (int ac, char *av[], char **env)
 		add_history(shell.input);
 		if (enter_input(&shell) == VALID)
 			continue ;
-		else if (strncmp(shell.input, "exit ", 4) == 0)
-		{
-			free_shell(&shell);
-			free(shell.input); 
-			return (0);
-		}
+		// else if (strncmp(shell.input, "exit ", 4) == 0)
+		// {
+		// 	free_shell(&shell);
+		// 	free(shell.input); 
+		// 	return (0);
+		// }
 		else if (creat_tokken(shell.input, &shell) == ERROR)
 		{
 			printf("Syntaxe Error...\n");
