@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:31:47 by maw               #+#    #+#             */
-/*   Updated: 2025/03/24 14:41:51 by david            ###   ########.fr       */
+/*   Updated: 2025/03/24 17:01:00 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ int is_double_quote(t_token *tokken)
 	int last_char;
 
 	last_char = ft_strlen(tokken->value) - 1;
-	if (tokken->type == ARGUMENT)
-	{
-		if (tokken->value[0] == '"' && tokken->value[last_char] == '"')
+	if (tokken->type == ARGUMENT
+		&& tokken->value[0] == '"' && tokken->value[last_char] == '"')
 			return (VALID);
-	}
+	else if (tokken->type == ARGUMENT && tokken->value[0] != '\'')
+		return (VALID);
 	return (0);
 }
 
@@ -76,6 +76,8 @@ int	find_local_var(t_shell  *shell, t_token *current)
 		}
 		if (temp == NULL)
 		{
+			while (current->value[i] != ' ' && current->value[i] != '\0')
+				i++;
 			new_arg[j] = current->value[i];
 			j++;
 			i++;
@@ -93,10 +95,12 @@ int	find_local_var(t_shell  *shell, t_token *current)
 	return (0);
 }
 
-// int	change_var_local(t_shell  *shell, t_token *current)
-// {
-// 	return (0);
-// }
+void skip_var(t_token *current, int *i)
+{
+	while (current->value[*i] != ' ')
+		(*i)++;
+	return ;
+}
 
 //----------------------------------------------//
 
