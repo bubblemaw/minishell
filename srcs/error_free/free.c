@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:49:23 by masase            #+#    #+#             */
-/*   Updated: 2025/03/20 21:06:51 by david            ###   ########.fr       */
+/*   Updated: 2025/03/25 13:02:42 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void free_shell(t_shell *shell)
 {
-	if (shell->env)
-		free_tab(shell->env);
+	// if (shell->env)
+	// 	free_tab(shell->env);
 	if (shell->cmd)
 		free_cmds(&shell->cmd);
 	// if (shell->tokken)
@@ -59,7 +59,7 @@ void free_cmds(t_cmd **head)
 	}
 }
 
-int free_new_direction(t_shell *shell)
+int free_new_redirection(t_shell *shell)
 {
 	if (shell->redir.prev_infile)
 		free(shell->redir.prev_infile);
