@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:31:47 by maw               #+#    #+#             */
-/*   Updated: 2025/03/25 10:57:35 by david            ###   ########.fr       */
+/*   Updated: 2025/03/25 12:05:20 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,12 @@ int is_double_quote(t_token *tokken)
 
 	last_char = ft_strlen(tokken->value) - 1;
 	if (tokken->type == ARGUMENT
+		&& ft_strlen(tokken->value) == 3 && tokken->value[1] == '$')
+		return (0);
+	else if (tokken->type == ARGUMENT
+		&& ft_strlen(tokken->value) == 1 && tokken->value[0] == '$')
+		return (0);
+	else if (tokken->type == ARGUMENT
 		&& tokken->value[0] == '"' && tokken->value[last_char] == '"')
 			return (VALID);
 	else if (tokken->type == ARGUMENT && tokken->value[0] != '\'')
@@ -60,9 +66,18 @@ int	find_local_var(t_shell  *shell, t_token *current)
 		if (current->value[i] == '$')
 		{
 			i++;
+			if (current->value[i] == ' ')
+				return (0);
+			else if (temp == NULL)
+			{
+				while (current->value[i] != ' ' && current->value[i] != '\0')
+					i++;
+				new_arg[j] = current->value[i];
+				j++;
+				i++;
+			}
 			while (temp != NULL)
 			{
-				// if (ft_strncmp(current->value + i, temp->name, strlen(temp->name)) == 0)
 				if (ft_strncmp(current->value + i, temp->name, var_size(current->value + i)) == 0)
 				{
 					new_size += ft_strlen(temp->value) - ft_strlen(temp->name);
