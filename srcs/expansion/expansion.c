@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:31:47 by maw               #+#    #+#             */
-/*   Updated: 2025/03/24 23:27:23 by david            ###   ########.fr       */
+/*   Updated: 2025/03/25 10:57:35 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ int	find_local_var(t_shell  *shell, t_token *current)
 			i++;
 			while (temp != NULL)
 			{
-				if (ft_strncmp(current->value + i, temp->name, strlen(temp->name)) == 0)
+				// if (ft_strncmp(current->value + i, temp->name, strlen(temp->name)) == 0)
+				if (ft_strncmp(current->value + i, temp->name, var_size(current->value + i)) == 0)
 				{
 					new_size += ft_strlen(temp->value) - ft_strlen(temp->name);
 					new_arg = ft_realloc(new_arg, old_size, new_size);
@@ -97,11 +98,14 @@ int	find_local_var(t_shell  *shell, t_token *current)
 	return (0);
 }
 
-void skip_var(t_token *current, int *i)
+int var_size(char *str)
 {
-	while (current->value[*i] != ' ')
-		(*i)++;
-	return ;
+	int i;
+
+	i = 0;
+	while (str[i] != ' ' && str[i] != '\0' && str[i] != '"')
+		i++;
+	return (i);
 }
 
 //----------------------------------------------//
