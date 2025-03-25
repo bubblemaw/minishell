@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/03/25 10:52:16 by david            ###   ########.fr       */
+/*   Updated: 2025/03/25 12:24:35 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,8 +162,11 @@ void	save_fd(t_shell *shell);
 int		ft_execute(t_shell *shell);
 int		ft_exe(t_cmd *token, t_shell *shell);
 int		built_in(t_cmd *token);
+
+// built in fonctions
 int		echo(t_cmd *token);
 int		echo_option(t_cmd *cmd);
+int		export(t_cmd *token);
 
 // token list -> cmd list
 t_cmd	*end_list(t_cmd *head);

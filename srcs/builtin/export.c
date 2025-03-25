@@ -1,28 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   built_in.c                                         :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/26 16:34:33 by maw               #+#    #+#             */
-/*   Updated: 2025/03/25 12:58:29 by david            ###   ########.fr       */
+/*   Created: 2025/03/25 12:19:16 by david             #+#    #+#             */
+/*   Updated: 2025/03/25 13:10:24 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	built_in(t_cmd *cmd)
+int export(t_shell *shell, t_cmd *token)
 {
-	if(ft_strlen(cmd->arg[0]) >= 4 && ft_strncmp(cmd->arg[0], "echo", 4) == 0)
-	{
-		echo(cmd);
-		return (VALID);
-	}
-	else if (ft_strlen(cmd->arg[0]) == 6 && ft_strncmp(cmd->arg[0], "export", 6) == 0)
-	{
-		export(cmd);
-		return (VALID);
-	}
-	return (ERROR);	
+    return (0);
 }
