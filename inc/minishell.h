@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/03/25 13:49:11 by david            ###   ########.fr       */
+/*   Updated: 2025/03/25 15:28:13 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,8 @@ void	save_fd(t_shell *shell);
 int		ft_execute(t_shell *shell);
 int		ft_exe(t_cmd *token, t_shell *shell);
 int		built_in(t_cmd *cmd, t_shell *shell);
+
+// built in fonctions
 int		echo(t_cmd *cmd);
 int		echo_option(t_cmd *cmd);
 int		cd(t_cmd *cmd, t_shell *shell);
@@ -173,6 +175,8 @@ int		unset(t_cmd *cmd, t_shell *shell);
 int		ft_strlen_to_equal(char *str);
 int		slide_tab(char **tab, int i);
 void	ft_exit(t_cmd *cmd, t_shell *shell);
+int		export(t_cmd *token, t_shell *shell);
+int		new_path_size(t_cmd *token, t_shell *shell);
 
 // token list -> cmd list
 t_cmd	*end_list(t_cmd *head);
