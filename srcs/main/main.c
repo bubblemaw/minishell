@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/03/25 12:17:54 by david            ###   ########.fr       */
+/*   Updated: 2025/03/25 13:48:55 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,13 @@ int	main (int ac, char *av[], char **env)
 		add_history(shell.input);
 		if (enter_input(&shell) == VALID)
 			continue ;
-		else if (strncmp(shell.input, "exit ", 4) == 0)
-		{
-			free_shell(&shell);
-			free_list_var(shell.var);
-			free(shell.input);
-			return (0);
-		}
+		// else if (strncmp(shell.input, "exit ", 4) == 0)
+		// {
+		// 	free_shell(&shell);
+		// 	free_list_var(shell.var);
+		// 	free(shell.input);
+		// 	return (0);
+		// }
 		else if (creat_tokken(shell.input, &shell) == ERROR)
 		{
 			printf("Syntaxe Error...\n");

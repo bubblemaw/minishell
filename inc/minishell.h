@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/03/25 12:24:35 by david            ###   ########.fr       */
+/*   Updated: 2025/03/25 13:46:46 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <dirent.h>
 
 #define true	1
 #define false	0
@@ -118,6 +119,7 @@ typedef struct s_shell
 	int STDOUT;
 	int STDERR;
 	int prev_pipefd;
+	int	exit_status;
 	t_redir			redir;
 	int here_fd;
 	t_cmd *cmd;
@@ -161,12 +163,16 @@ void	save_fd(t_shell *shell);
 // execution
 int		ft_execute(t_shell *shell);
 int		ft_exe(t_cmd *token, t_shell *shell);
-int		built_in(t_cmd *token);
-
-// built in fonctions
-int		echo(t_cmd *token);
+int		built_in(t_cmd *cmd, t_shell *shell);
+int		echo(t_cmd *cmd);
 int		echo_option(t_cmd *cmd);
-int		export(t_cmd *token);
+int		cd(t_cmd *cmd, t_shell *shell);
+int		ft_env(t_cmd *cmd, t_shell *shell);
+int		pwd(void);
+int		unset(t_cmd *cmd, t_shell *shell);
+int		ft_strlen_to_equal(char *str);
+int		slide_tab(char **tab, int i);
+void	ft_exit(t_cmd *cmd, t_shell *shell);
 
 // token list -> cmd list
 t_cmd	*end_list(t_cmd *head);
@@ -183,7 +189,6 @@ void	setup_cmd_lst(t_cmd **cmd);
 void	print_cmds(t_cmd **head);
 int		new_cmd(t_cmd **head_cmd, t_cmd **current);
 int		new_cmd_redirection(t_cmd **head_cmd, t_shell *shell);
-int		free_new_redirection(t_shell *shell);
 void	save_outfile(t_shell *shell, t_cmd *cmd);
 void	save_infile(t_shell *shell, t_cmd  *cmd);
 void	save_delimiter(t_shell *shell, t_cmd *cmd);
@@ -224,7 +229,7 @@ void	free_tab(char **tab);
 void	free_shell(t_shell *shell);
 void	free_cmds(t_cmd **head);
 void	free_tab(char **tab);
-int		free_new_direction(t_shell *shell);
+int		free_new_redirection(t_shell *shell);
 
 // error
 int		error_cmd(char *str);

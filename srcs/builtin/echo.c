@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 15:25:49 by maw               #+#    #+#             */
-/*   Updated: 2025/03/25 12:18:07 by david            ###   ########.fr       */
+/*   Updated: 2025/03/25 13:47:48 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	echo(t_cmd *cmd)
 	}	
 	if (flag_n == 0)
 		ft_putstr_fd("\n", STDOUT_FILENO);
-	return (0);
+	return (VALID);
 }
 
 int echo_option(t_cmd *cmd)
