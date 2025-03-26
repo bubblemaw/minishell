@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/03/25 15:28:13 by david            ###   ########.fr       */
+/*   Updated: 2025/03/26 17:39:29 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,6 +183,7 @@ t_cmd	*end_list(t_cmd *head);
 int		ft_cmd_maker(t_cmd *cmd, t_token **tokken);
 int		ft_cmd_pipe(t_cmd *cmd, t_token **tokken);
 int		ft_cmd_redirection(t_cmd *cmd, t_token **tokken, t_shell *shell);
+int		join_var(t_token **token);
 void	simple_redirection(t_cmd *cmd, t_token **tokken, t_shell *shell);
 void	double_redirection(t_cmd *cmd, t_token **tokken, t_shell *shell);
 void	*ft_realloc(void *ptr,size_t old_size, size_t new_size);

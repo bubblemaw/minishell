@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:31:47 by maw               #+#    #+#             */
-/*   Updated: 2025/03/25 12:12:26 by david            ###   ########.fr       */
+/*   Updated: 2025/03/26 16:54:59 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ int	find_local_var(t_shell  *shell, t_token *current)
 					new_arg = ft_realloc(new_arg, old_size, new_size);
 					old_size = new_size;
 					ft_strlcpy(new_arg + j, temp->value, ft_strlen(temp->value) + 1);
+					if (i + 1 == '$')
+						break ;
 					j += ft_strlen(temp->value);
 					i += ft_strlen(temp->name);
 					break ;
@@ -118,7 +120,8 @@ int var_size(char *str)
 	int i;
 
 	i = 0;
-	while (str[i] != ' ' && str[i] != '\0' && str[i] != '"')
+	while (str[i] != ' ' && str[i] != '\0'
+			&& str[i] != '"' && str[i] != '$')
 		i++;
 	return (i);
 }
