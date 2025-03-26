@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:19:16 by david             #+#    #+#             */
-/*   Updated: 2025/03/26 17:39:27 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/27 00:03:27 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int new_path_size(t_cmd *token, t_shell *shell)
     while (token->arg[j] != NULL)
     {
         if (j != 0)
-            printf("%s\n", token->arg[j]);
+            printf("[%d] %s\n", j, token->arg[j]);
         j++;
     }
     j--;
@@ -55,19 +55,19 @@ int new_path_size(t_cmd *token, t_shell *shell)
 
 int join_var(t_token **token)
 {
-    int     new_len;
     t_token *temp;
 
-    new_len = ft_strlen((*token)->value) 
-                            + ft_strlen((*token)->next->value)
-                            + ft_strlen((*token)->next->next->value
-                            + 1);
-    (*token)->value = ft_realloc((*token)->value, ft_strlen((*token)->value), new_len);
-    ft_strlcat((*token)->value, (*token)->next->value, new_len);
-    ft_strlcat((*token)->value, (*token)->next->next->value, new_len);
+    (*token)->value = ft_strjoin((*token)->value, (*token)->next->value);
+    (*token)->value = ft_strjoin((*token)->value, (*token)->next->next->value);
     temp = (*token)->next;
-    (*token)->next = (*token)->next->next;
+    (*token)->next = (*token)->next->next->next;
+    free(temp->next->value);
+    free(temp->next);
     free(temp->value);
     free(temp);
     return (0);
+}
+
+int check_double_export()
+{
 }
