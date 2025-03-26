@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:19:16 by david             #+#    #+#             */
-/*   Updated: 2025/03/25 16:24:29 by david            ###   ########.fr       */
+/*   Updated: 2025/03/25 21:14:04 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int export(t_cmd *token, t_shell *shell)
     while (temp->env[old_size] != NULL)
         old_size++;
     temp->env = ft_realloc(temp->env, old_size, new_path_size(current, temp));
-    while (i < old_size)
+    while (i <= old_size)
         i++;
     // while ()
     // {
@@ -46,5 +46,17 @@ int new_path_size(t_cmd *token, t_shell *shell)
         i++;
     while (token->arg[j] != NULL)
         j++;
+    j--;
     return (i + j);
+}
+
+int join_var(t_cmd *token)
+{
+    int i;
+
+    i = 0;
+    while (token != NULL && (token->type))
+    {
+    }
+    return (0);
 }
