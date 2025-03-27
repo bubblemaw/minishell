@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:19:16 by david             #+#    #+#             */
-/*   Updated: 2025/03/27 09:50:17 by david            ###   ########.fr       */
+/*   Updated: 2025/03/27 10:38:18 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,20 @@ int join_var(t_token **token)
     return (0);
 }
 
-int check_double_export()
+int check_double_export(t_cmd *token)
 {
+    int i;
+    int j;
+
+    i = 0;
+    while (token->arg[i] != NULL)
+    {
+        j = i + 1;
+        while (token->arg[j] != NULL)
+        {
+            if (ft_strncmp(token->arg[i], token->arg[j], ft_strlen(token->arg[i])) == 0)
+            j++;
+        }
+    }
+    return (0);
 }

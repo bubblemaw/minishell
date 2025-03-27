@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/03/26 23:07:06 by david            ###   ########.fr       */
+/*   Updated: 2025/03/27 09:54:25 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,14 +176,12 @@ int		ft_strlen_to_equal(char *str);
 int		slide_tab(char **tab, int i);
 void	ft_exit(t_cmd *cmd, t_shell *shell);
 int		export(t_cmd *token, t_shell *shell);
-int		new_path_size(t_cmd *token, t_shell *shell);
 
 // token list -> cmd list
 t_cmd	*end_list(t_cmd *head);
 int		ft_cmd_maker(t_cmd *cmd, t_token **tokken);
 int		ft_cmd_pipe(t_cmd *cmd, t_token **tokken);
 int		ft_cmd_redirection(t_cmd *cmd, t_token **tokken, t_shell *shell);
-int		join_var(t_token **token);
 void	simple_redirection(t_cmd *cmd, t_token **tokken, t_shell *shell);
 void	double_redirection(t_cmd *cmd, t_token **tokken, t_shell *shell);
 void	*ft_realloc(void *ptr,size_t old_size, size_t new_size);
@@ -207,6 +205,7 @@ int		child_processor(t_cmd *cmd, t_shell *shell, int *pipefd);
 int		here_doc(t_cmd *cmd, t_shell *shell);
 
 // expansion
+// local gestion
 int		init_var_local(t_shell *shell);
 t_var	*check_doubles(t_var *check, char *name);
 void	replace_var(t_var *exist_var, t_token *temp);
@@ -215,6 +214,10 @@ t_var	*creat_node_var(char *name, char *content);
 void	add_node_var(t_shell *shell, t_var *new);
 void	free_list_var(t_var *head);
 void	print_var_local(t_var *head);
+// export gestion
+int		join_var(t_token **token);
+int		new_path_size(t_cmd *token, t_shell *shell);
+
 
 int		ft_expansion(t_shell *shell);
 int		find_local_var(t_shell  *shell, t_token *current);
