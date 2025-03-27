@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/03/27 17:39:47 by david            ###   ########.fr       */
+/*   Updated: 2025/03/27 22:22:37 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,6 +218,7 @@ void	print_var_local(t_var *head);
 int		join_var(t_token **token);
 int		new_path_size(t_cmd *token, t_shell *shell);
 int		add_var_env(t_cmd *token, t_shell *shell, int *i);
+int		check_double_export(char *var, t_shell *shell);
 
 int		ft_expansion(t_shell *shell);
 int		find_local_var(t_shell  *shell, t_token *current);

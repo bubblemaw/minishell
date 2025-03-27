@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:44:05 by dchellen          #+#    #+#             */
-/*   Updated: 2025/03/27 17:28:15 by david            ###   ########.fr       */
+/*   Updated: 2025/03/27 20:48:44 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int init_var_local(t_shell *shell)
     send = false;
 	if (temp->type == COMMAND && ft_strncmp(temp->value, "export", 6) != 0)
 		return (0);
-    printf("ENTER\n");
     while (temp != NULL)
     {
         if (temp->type == NAME)

@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:19:16 by david             #+#    #+#             */
-/*   Updated: 2025/03/27 17:29:58 by david            ###   ########.fr       */
+/*   Updated: 2025/03/27 22:27:17 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ int new_path_size(t_cmd *token, t_shell *shell)
         i++;
     while (token->arg[j] != NULL)
     {
-        if (j != 0)
-            printf("[%d] %s\n", j, token->arg[j]);
         j++;
     }
     j--;
@@ -73,12 +71,30 @@ int add_var_env(t_cmd *token, t_shell *shell, int *i)
     j = 1;
     while (token->arg[j] != NULL)
     {
-        shell->env[*i] = ft_strdup(token->arg[j]);
-        printf("NEW LINE : %s\n", shell->env[*i]);
+        if (check_double_export(token->arg[j], shell) == VALID)
+            shell->env[*i] = ft_strdup(token->arg[j]);
+        // printf("NEW LINE : %s -> %d\n", shell->env[*i], *i);
         (*i)++;
-        printf("i : %d\n", (*i));
         j++;
     }
     shell->env[*i] = NULL;
     return (0);
+}
+
+int check_double_export(char *var, t_shell *shell)
+{
+    int i;
+    int j;
+
+    i = 0;
+    while (shell->env[i] != NULL)
+    {
+        j = 0;
+        while (shell->env[i][j] != '=')
+            j++;
+        if (strncmp(var, shell->env[i], j) == 0)
+            return (ERROR);
+        i++;
+    }
+    return (VALID);
 }
