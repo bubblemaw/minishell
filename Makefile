@@ -6,7 +6,7 @@
 #    By: maw <maw@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 22:16:43 by david             #+#    #+#              #
-#    Updated: 2025/03/25 13:02:01 by maw              ###   ########.fr        #
+#    Updated: 2025/03/25 22:40:58 by maw              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ SRCS =  srcs/main/main.c \
 		srcs/token_to_cmd/redirection_token_to_cmd.c \
 		srcs/token_to_cmd/save_redirection.c \
 		srcs/utils/utils1.c \
+		srcs/utils/signal.c \
 		GNL/get_next_line.c \
 
 FLAGS = -Wall -Wextra -Werror  -g

@@ -6,7 +6,7 @@
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/03/25 13:02:30 by maw              ###   ########.fr       */
+/*   Updated: 2025/03/27 17:36:38 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <dirent.h>
+# include <signal.h>
 
 #define true	1
 #define false	0
@@ -157,8 +158,11 @@ char	*join_path(char **tab_path, t_cmd *cmd);
 
 // redirection
 int		ft_direction(t_cmd *token);
+int		outfile_direction(t_cmd *cmd);
 void	reset_fd(t_shell *shell);
 void	save_fd(t_shell *shell);
+int		here_doc(t_cmd *cmd, t_shell *shell);
+void	here_doc_child_process(int *pipefd, t_cmd *cmd);
 
 // execution
 int		ft_execute(t_shell *shell);
@@ -167,12 +171,15 @@ int		built_in(t_cmd *cmd, t_shell *shell);
 int		echo(t_cmd *cmd);
 int		echo_option(t_cmd *cmd);
 int		cd(t_cmd *cmd, t_shell *shell);
+char	*path_finder(t_cmd *cmd, char *buffer);
+void	findvar_replace(t_shell *shell, char *buffer);
 int		ft_env(t_cmd *cmd, t_shell *shell);
 int		pwd(void);
 int		unset(t_cmd *cmd, t_shell *shell);
 int		ft_strlen_to_equal(char *str);
 int		slide_tab(char **tab, int i);
 void	ft_exit(t_cmd *cmd, t_shell *shell);
+int		is_arguments_digit(char **tab);
 
 // token list -> cmd list
 t_cmd	*end_list(t_cmd *head);
@@ -196,10 +203,10 @@ void	insert_node(t_cmd *current, t_cmd *new_cmd);
 
 // pipe
 int		piper(t_cmd *cmd, t_shell *shell);
+void	pipex_loop(t_cmd *current, t_shell *shell);
 int		ft_exe_pipe(t_cmd *token, t_shell *shell);
 int		lst_size(t_cmd *token);
 int		child_processor(t_cmd *cmd, t_shell *shell, int *pipefd);
-int		here_doc(t_cmd *cmd, t_shell *shell);
 
 // expansion
 int		init_var_local(t_shell *shell);
@@ -223,6 +230,11 @@ void	size_to_kill(t_token *token, t_shell *shell, int *i);
 //init_minishell
 void	init_execution(t_shell *shell);
 char	**copy_env(char **env);
+
+// signal
+void	signalhandler(int signal);
+void	signalhandler_heredoc(int signal);
+void	ft_exit_void(int n,t_shell *shell);
 
 // free
 void	free_tab(char **tab);

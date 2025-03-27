@@ -1,22 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/23 23:24:52 by maw               #+#    #+#             */
-/*   Updated: 2025/03/27 16:10:34 by maw              ###   ########.fr       */
+/*   Created: 2025/03/25 22:31:22 by maw               #+#    #+#             */
+/*   Updated: 2025/03/26 13:54:02 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int pwd(void)
+void	signalhandler(int signal)
 {
-	char buffer[1024];
-	
-	getcwd(buffer, 1024);
-	printf("%s\n", buffer);
-	return (VALID);
+	if (signal == SIGINT)
+	{
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
+	return ;
+}
+void	signalhandler_heredoc(int signal)
+{
+	if (signal == SIGINT)
+	{
+		write(STDOUT_FILENO, "\n", 1);
+		exit(130);
+	}
+	return ;
 }
