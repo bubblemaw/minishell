@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mawuli <mawuli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:19:16 by david             #+#    #+#             */
-/*   Updated: 2025/03/27 22:27:17 by david            ###   ########.fr       */
+/*   Updated: 2025/03/27 23:08:18 by mawuli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,11 @@ int add_var_env(t_cmd *token, t_shell *shell, int *i)
     while (token->arg[j] != NULL)
     {
         if (check_double_export(token->arg[j], shell) == VALID)
-            shell->env[*i] = ft_strdup(token->arg[j]);
-        // printf("NEW LINE : %s -> %d\n", shell->env[*i], *i);
+        {
+            j++;
+            continue ;
+        }
+        shell->env[*i] = ft_strdup(token->arg[j]);
         (*i)++;
         j++;
     }
@@ -93,8 +96,11 @@ int check_double_export(char *var, t_shell *shell)
         while (shell->env[i][j] != '=')
             j++;
         if (strncmp(var, shell->env[i], j) == 0)
-            return (ERROR);
+        {
+            shell->env[i] = ft_strdup(var);
+            return (VALID);
+        }
         i++;
     }
-    return (VALID);
+    return (0);
 }
