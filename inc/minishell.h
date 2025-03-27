@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/03/27 09:54:25 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/27 11:43:00 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,7 +217,6 @@ void	print_var_local(t_var *head);
 // export gestion
 int		join_var(t_token **token);
 int		new_path_size(t_cmd *token, t_shell *shell);
-
 
 int		ft_expansion(t_shell *shell);
 int		find_local_var(t_shell  *shell, t_token *current);

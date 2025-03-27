@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_local.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:44:05 by dchellen          #+#    #+#             */
-/*   Updated: 2025/03/26 22:43:51 by david            ###   ########.fr       */
+/*   Updated: 2025/03/27 11:46:18 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@ int init_var_local(t_shell *shell)
 
     temp = shell->tokken;
     send = false;
-	if (temp->type == COMMAND)
+	if (temp->type == COMMAND && ft_strncmp(temp->value, "export", 6) != 0)
 		return (0);
+    printf("ENTER\n");
     while (temp != NULL)
     {
         if (temp->type == NAME)
