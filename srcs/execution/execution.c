@@ -6,7 +6,7 @@
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:16:38 by maw               #+#    #+#             */
-/*   Updated: 2025/03/27 17:38:30 by maw              ###   ########.fr       */
+/*   Updated: 2025/03/28 00:51:44 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,10 @@ int ft_exe_pipe(t_cmd *cmd, t_shell *shell)// execution des fonctions qui preced
 	char *cmd_path;
 
 	cmd_path = ft_parse(cmd, shell);
+	if (cmd_path == NULL)
+		return(error_cmd(cmd->arg[0]));
 	if(execve(cmd_path, cmd->arg, shell->env) == -1)
-		return(error("Execution problem"));
+		return(error_exit("execve failed"));
 	return (VALID);
 }
 
@@ -123,10 +125,16 @@ int ft_exe(t_cmd *cmd, t_shell *shell) // execution des commandes normales (sans
 		if (cmd_path == NULL)
 			return(error_cmd(cmd->arg[0]));
 		if(execve(cmd_path, cmd->arg, shell->env) == -1)
-			return(error("Execution problem"));
+			return(error_exit("execve failed"));
 	}
 	else
+	{
 		waitpid(pid1, &shell->exit_status, 0);
+		if (WIFEXITED(shell->exit_status))
+		{
+			shell->exit_status = WEXITSTATUS(shell->exit_status);
+		}
+	}
 	return (VALID);
 }
 

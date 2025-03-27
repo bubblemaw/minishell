@@ -6,7 +6,7 @@
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/03/27 18:30:41 by maw              ###   ########.fr       */
+/*   Updated: 2025/03/27 18:53:37 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	main (int ac, char *av[], char **env)
 		// print_var_local(shell.var);
 		// print_cmds(shell.cmd);
 		ft_execute(&shell);
+		printf("%d\n", shell.exit_status);
 		// printf("execution fini\n");
 	}
 	return (0);

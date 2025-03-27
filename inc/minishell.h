@@ -6,7 +6,7 @@
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/03/27 17:36:38 by maw              ###   ########.fr       */
+/*   Updated: 2025/03/27 19:07:44 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,5 +246,6 @@ int		free_new_redirection(t_shell *shell);
 // error
 int		error_cmd(char *str);
 int		error(char *str);
+int		error_exit(char *str);
 
 #endif
