@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/03/27 22:22:37 by david            ###   ########.fr       */
+/*   Updated: 2025/03/28 15:36:36 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,11 @@ typedef struct s_redir
 	int type;
 }	t_redir;
 
+typedef struct s_utils
+{
+	bool	empty;
+}	t_utils;
+
 // principal struct
 typedef struct s_shell
 {
@@ -127,6 +132,7 @@ typedef struct s_shell
 	t_creat			creat;
 	t_token			*tokken;
 	t_var			*var;
+	t_utils			utils;
 }	t_shell;
 
 // token's fonctions

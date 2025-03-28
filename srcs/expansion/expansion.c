@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:31:47 by maw               #+#    #+#             */
-/*   Updated: 2025/03/26 16:54:59 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/28 15:54:52 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,14 @@ int	find_local_var(t_shell  *shell, t_token *current)
 	char	*new_arg;
 	int		new_size;
 	int		old_size;
-	int 	test = 0;
 
 	i = 0;
 	j = 0;
 	new_arg = (char *)malloc(sizeof(char) * (ft_strlen(current->value) + 1));
 	old_size = ft_strlen(current->value) + 1;
 	new_size = ft_strlen(current->value) + 1;
+	if (shell->var == NULL)
+		shell->utils.empty = true;
 	while (current->value[i] != '\0')
 	{
 		temp = shell->var;
@@ -68,13 +69,10 @@ int	find_local_var(t_shell  *shell, t_token *current)
 			i++;
 			if (current->value[i] == ' ')
 				return (0);
-			else if (temp == NULL)
+			else if (shell->utils.empty == true)
 			{
 				while (current->value[i] != ' ' && current->value[i] != '\0')
 					i++;
-				new_arg[j] = current->value[i];
-				j++;
-				i++;
 			}
 			while (temp != NULL)
 			{
@@ -84,23 +82,12 @@ int	find_local_var(t_shell  *shell, t_token *current)
 					new_arg = ft_realloc(new_arg, old_size, new_size);
 					old_size = new_size;
 					ft_strlcpy(new_arg + j, temp->value, ft_strlen(temp->value) + 1);
-					if (i + 1 == '$')
-						break ;
 					j += ft_strlen(temp->value);
 					i += ft_strlen(temp->name);
 					break ;
 				}
-				test++;
 				temp = temp->next;
 			}
-		}
-		if (temp == NULL && test > 0)
-		{
-			while (current->value[i] != ' ' && current->value[i] != '\0')
-				i++;
-			new_arg[j] = current->value[i];
-			j++;
-			i++;
 		}
 		else
 		{
@@ -124,41 +111,4 @@ int var_size(char *str)
 			&& str[i] != '"' && str[i] != '$')
 		i++;
 	return (i);
-}
-
-//----------------------------------------------//
-
-int expansion(t_token *tokken, t_shell *shell)
-{
-	char *var_value;
-
-	var_value = ft_findvar(tokken->value, shell);
-	free(tokken->value);
-	tokken->value = ft_strdup(var_value);
-	free (var_value);
-	var_value = NULL;
-	return (1);
-}
-
-char *ft_findvar(char *var_name, t_shell *shell)
-{
-	char *var_line;
-	char *var_value;
-	int var_lenth;
-	int	i;
-
-	i = 0;
-	var_value = NULL;
-	var_lenth = ft_strlen(var_name) - 1;
-	while (shell->env[i] && ft_strncmp(var_name + 1, shell->env[i], var_lenth) != 0)
-		i++;
-	if (shell->env[i] == NULL)
-		var_value = ft_strdup("");
-	else
-	{
-		var_line = ft_strdup(shell->env[i]);
-		printf("var line:%s\n", var_line);
-		var_value = ft_strdup(var_line + var_lenth + 1);
-	}
-	return(var_value);
 }
