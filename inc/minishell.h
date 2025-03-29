@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/03/29 16:12:18 by david            ###   ########.fr       */
+/*   Updated: 2025/03/29 17:32:28 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,8 @@ typedef struct s_redir
 
 typedef struct s_utils
 {
-	int	size_var;
+	int		size_var;
+	char	*new_arg;
 }	t_utils;
 
 // principal struct
@@ -229,7 +230,7 @@ int		check_double_export(char *var, t_shell *shell);
 int		ft_expansion(t_shell *shell);
 int		find_local_var(t_shell  *shell, t_token *current);
 int		expansion(t_token *tokken, t_shell *shell);
-int		search_local_var(t_shell *temp, t_var *current);
+int		search_local_var(t_token *current, t_var *temp);
 char	*ft_findvar(char *var_name, t_shell *shell);
 int		var_size(char *str);
 int		is_double_quote(t_token *tokken);

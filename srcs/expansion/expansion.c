@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:31:47 by maw               #+#    #+#             */
-/*   Updated: 2025/03/29 16:22:17 by david            ###   ########.fr       */
+/*   Updated: 2025/03/29 17:41:17 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,26 +48,25 @@ int is_double_quote(t_token *tokken)
 int	find_local_var(t_shell  *shell, t_token *current)
 {
 	t_var *temp;
-	char *new_arg;
 	int i;
 
 	temp = shell->var;
-	new_arg = NULL;
+	shell->utils.new_arg = NULL;
 	i = 0;
 	while (current->value[i] != '\0')
 	{
-		if (current->value[i] == '$' && new_arg == NULL)
+		if (current->value[i] == '$' && shell->utils.new_arg == NULL)
 		{
-			new_arg = ft_substr(current->value, 0, i);
+			shell->utils.new_arg = ft_substr(current->value, 0, i);
 			i++;
 			shell->utils.size_var = var_size(current->value + i);
 		}
 		i++;
 	}
-	if (current->value[i] == '\0' && new_arg == NULL)
-		new_arg = ft_substr(current->value, 0, i);
+	if (current->value[i] == '\0' && shell->utils.new_arg == NULL)
+		shell->utils.new_arg = ft_substr(current->value, 0, i);
 	free(current->value);
-	current->value = new_arg;
+	current->value = shell->utils.new_arg;
 	return (0);
 }
 
@@ -81,11 +80,14 @@ int var_size(char *str)
 	return (i);
 }
 
-int search_local_var(t_shell *current, t_var *temp)
+int search_local_var(t_shell *shell, t_token *current, t_var *temp)
 {
 	while (temp != NULL)
 	{
-		if (strncmp())
+		if (strncmp(current->value, temp->name, shell->utils.size_var) == 0)
+		{
+			shell->utils.new_arg = ft_strjoin(shell->utils.new_arg, current->);
+		}
 		temp = temp->next;
 	}
 	return (0);
