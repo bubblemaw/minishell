@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:31:47 by maw               #+#    #+#             */
-/*   Updated: 2025/03/28 15:54:52 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/29 16:22:17 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,56 +47,25 @@ int is_double_quote(t_token *tokken)
 
 int	find_local_var(t_shell  *shell, t_token *current)
 {
-	t_var 	*temp;
-	int		i;
-	int		j;
-	char	*new_arg;
-	int		new_size;
-	int		old_size;
+	t_var *temp;
+	char *new_arg;
+	int i;
 
+	temp = shell->var;
+	new_arg = NULL;
 	i = 0;
-	j = 0;
-	new_arg = (char *)malloc(sizeof(char) * (ft_strlen(current->value) + 1));
-	old_size = ft_strlen(current->value) + 1;
-	new_size = ft_strlen(current->value) + 1;
-	if (shell->var == NULL)
-		shell->utils.empty = true;
 	while (current->value[i] != '\0')
 	{
-		temp = shell->var;
-		if (current->value[i] == '$')
+		if (current->value[i] == '$' && new_arg == NULL)
 		{
+			new_arg = ft_substr(current->value, 0, i);
 			i++;
-			if (current->value[i] == ' ')
-				return (0);
-			else if (shell->utils.empty == true)
-			{
-				while (current->value[i] != ' ' && current->value[i] != '\0')
-					i++;
-			}
-			while (temp != NULL)
-			{
-				if (ft_strncmp(current->value + i, temp->name, var_size(current->value + i)) == 0)
-				{
-					new_size += ft_strlen(temp->value) - ft_strlen(temp->name);
-					new_arg = ft_realloc(new_arg, old_size, new_size);
-					old_size = new_size;
-					ft_strlcpy(new_arg + j, temp->value, ft_strlen(temp->value) + 1);
-					j += ft_strlen(temp->value);
-					i += ft_strlen(temp->name);
-					break ;
-				}
-				temp = temp->next;
-			}
+			shell->utils.size_var = var_size(current->value + i);
 		}
-		else
-		{
-			new_arg[j] = current->value[i];
-			j++;
-			i++;
-		}
+		i++;
 	}
-	new_arg[j] = '\0';
+	if (current->value[i] == '\0' && new_arg == NULL)
+		new_arg = ft_substr(current->value, 0, i);
 	free(current->value);
 	current->value = new_arg;
 	return (0);
@@ -107,8 +76,17 @@ int var_size(char *str)
 	int i;
 
 	i = 0;
-	while (str[i] != ' ' && str[i] != '\0'
-			&& str[i] != '"' && str[i] != '$')
+	while (str[i] != ' ' && str[i] != '\0' && str[i] != '$')
 		i++;
 	return (i);
+}
+
+int search_local_var(t_shell *current, t_var *temp)
+{
+	while (temp != NULL)
+	{
+		if (strncmp())
+		temp = temp->next;
+	}
+	return (0);
 }
