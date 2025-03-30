@@ -6,7 +6,7 @@
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:16:38 by maw               #+#    #+#             */
-/*   Updated: 2025/03/28 00:51:44 by maw              ###   ########.fr       */
+/*   Updated: 2025/03/30 23:45:32 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int ft_execute(t_shell *shell)
 			ft_exe(current, shell);
 		current = current->next;
 	}
-	while (wait(&shell->exit_status) > 0); // attente de tous les childs process 
+	while (wait(&g_exit_status) > 0); // attente de tous les childs process 
+	printf("apres waitall%d\n", g_exit_status);
 	reset_fd(shell);
 	return (VALID);
 }
@@ -129,10 +130,10 @@ int ft_exe(t_cmd *cmd, t_shell *shell) // execution des commandes normales (sans
 	}
 	else
 	{
-		waitpid(pid1, &shell->exit_status, 0);
-		if (WIFEXITED(shell->exit_status))
+		waitpid(pid1, &g_exit_status, 0);
+		if (WIFEXITED(g_exit_status))
 		{
-			shell->exit_status = WEXITSTATUS(shell->exit_status);
+			g_exit_status = WEXITSTATUS(g_exit_status);
 		}
 	}
 	return (VALID);

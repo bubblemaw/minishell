@@ -6,11 +6,13 @@
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/03/27 18:53:37 by maw              ###   ########.fr       */
+/*   Updated: 2025/03/30 23:24:47 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+int g_exit_status = 0;
 
 int	main (int ac, char *av[], char **env)
 {
@@ -60,9 +62,9 @@ int	main (int ac, char *av[], char **env)
 		// print_cmds(&shell.cmd);
 		init_var_local(&shell);
 		// print_var_local(shell.var);
-		// print_cmds(shell.cmd);
+		// print_cmds(&shell.cmd);
 		ft_execute(&shell);
-		printf("%d\n", shell.exit_status);
+		printf("%d\n", g_exit_status);
 		// printf("execution fini\n");
 	}
 	return (0);

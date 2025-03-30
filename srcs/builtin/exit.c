@@ -6,7 +6,7 @@
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:12:55 by maw               #+#    #+#             */
-/*   Updated: 2025/03/26 16:10:50 by maw              ###   ########.fr       */
+/*   Updated: 2025/03/30 22:48:55 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ void ft_exit(t_cmd *cmd, t_shell *shell)
 	free_shell(shell);
 	free(shell->input); 
 	printf("exit\n");
+	g_exit_status = n;
 	exit(n);
 }
 
 void ft_exit_void(int n,t_shell *shell)
 {
 	free_shell(shell);
-	free(shell->input); 
 	printf("exit\n");
 	exit(n);
 }

@@ -6,7 +6,7 @@
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/03/27 19:07:44 by maw              ###   ########.fr       */
+/*   Updated: 2025/03/30 21:39:21 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@
 # define PARENT_PROCESS 1
 # define CHILD_PROCESS 2
 # define DELIMITER 20
+
+// global variable
+extern int g_exit_status;
 
 // parsing's type data
 typedef enum 
@@ -173,6 +176,7 @@ int		echo_option(t_cmd *cmd);
 int		cd(t_cmd *cmd, t_shell *shell);
 char	*path_finder(t_cmd *cmd, char *buffer);
 void	findvar_replace(t_shell *shell, char *buffer);
+char	*find_user_name(char **tab);
 int		ft_env(t_cmd *cmd, t_shell *shell);
 int		pwd(void);
 int		unset(t_cmd *cmd, t_shell *shell);

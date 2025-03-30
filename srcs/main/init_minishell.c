@@ -6,7 +6,7 @@
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:31:21 by maw               #+#    #+#             */
-/*   Updated: 2025/03/27 18:24:13 by maw              ###   ########.fr       */
+/*   Updated: 2025/03/30 22:40:02 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void init_execution(t_shell *shell)
 	shell->prev_pipefd = -1;
 	save_fd(shell);
 	shell->cmd = NULL;
-	shell->exit_status = 0;
+	g_exit_status = 0;
 	free_new_redirection(shell);
 }
 

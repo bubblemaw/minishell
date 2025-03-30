@@ -6,7 +6,7 @@
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 17:14:29 by maw               #+#    #+#             */
-/*   Updated: 2025/03/27 17:35:04 by maw              ###   ########.fr       */
+/*   Updated: 2025/03/30 23:20:48 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,12 @@ int	ft_env(t_cmd *cmd, t_shell *shell)
 	int i;
 
 	i = 0;
-	(void)cmd;
+	if (cmd->arg[1])
+	{
+		error("too much arguments");
+		g_exit_status = 1;
+		return (VALID);
+	}
 	if (!shell->env)
 	{
 		printf("env vide\n");
