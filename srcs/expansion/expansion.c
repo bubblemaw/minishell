@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:31:47 by maw               #+#    #+#             */
-/*   Updated: 2025/03/30 17:00:10 by david            ###   ########.fr       */
+/*   Updated: 2025/03/30 20:56:07 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	find_local_var(t_shell  *shell, t_token *current)
 			i++;
 			shell->utils.size_var = var_size(current->value + i);
 			search_local_var(shell, current->value + i, temp);
+			search_export_var(shell, current->value + i);
 			i += shell->utils.size_var;
 			start = i;
 		}
@@ -107,12 +108,22 @@ int search_local_var(t_shell *shell, char* str, t_var *temp)
 int search_export_var(t_shell *shell, char* str)
 {
 	int i;
+	int j;
 
 	i = 0;
 	while (shell->env[i] != NULL)
 	{
-		if (ft_strncmp(str, shell->env[i], shell->utils.size_var) == 0)
-		shell->utils.new_arg = ft_strjoin(shell->utils.new_arg, shell->env[i]);
+		j = 0;
+		while (shell->env[i][j] != '=')
+			j++;
+		shell->utils.sub_env = ft_substr(shell->env[i], 0, j);
+		if (ft_strncmp(str, shell->utils.sub_env, shell->utils.size_var) == 0)
+		{
+			j++;
+			shell->utils.new_arg = ft_strjoin(shell->utils.new_arg, shell->env[i] + j);
+			free(shell->utils.sub_env);
+			return (0);
+		}
 		i++;
 	}
 	return (0);

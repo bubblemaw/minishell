@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:19:16 by david             #+#    #+#             */
-/*   Updated: 2025/03/28 13:26:41 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/30 21:29:54 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,7 @@ int add_var_env(t_cmd *token, t_shell *shell, int *i)
     while (token->arg[j] != NULL)
     {
         if (check_double_export(token->arg[j], shell) == VALID)
-        {
             j++;
-            continue ;
-        }
         shell->env[*i] = ft_strdup(token->arg[j]);
         (*i)++;
         j++;

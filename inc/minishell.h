@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/03/30 16:57:40 by david            ###   ########.fr       */
+/*   Updated: 2025/03/30 21:04:09 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ typedef struct s_utils
 {
 	int		size_var;
 	char	*new_arg;
+	char	*sub_env;
 }	t_utils;
 
 // principal struct
@@ -235,6 +236,9 @@ int		var_size(char *str);
 int		is_double_quote(t_token *tokken);
 int		kill_quotes(t_shell *shell);
 void	size_to_kill(t_token *token, t_shell *shell, int *i);
+
+// variables priorities
+void	crush_var(t_shell *shell);
 
 //init_minishell
 void	init_execution(t_shell *shell);

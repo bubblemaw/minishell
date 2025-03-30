@@ -6,7 +6,7 @@
 #    By: david <david@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 22:16:43 by david             #+#    #+#              #
-#    Updated: 2025/03/27 17:39:45 by david            ###   ########.fr        #
+#    Updated: 2025/03/30 20:56:04 by david            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ SRCS =  srcs/main/main.c \
 		srcs/expansion/var_local.c \
 		srcs/expansion/creat_var_list.c \
 		srcs/expansion/kill_quotes.c \
+		srcs/expansion/var_priorities.c \
 		srcs/builtin/built_in.c \
 		srcs/main/init_minishell.c \
 		srcs/token_to_cmd/token_to_cmd.c \
