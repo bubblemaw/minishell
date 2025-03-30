@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:31:47 by maw               #+#    #+#             */
-/*   Updated: 2025/03/29 17:41:17 by david            ###   ########.fr       */
+/*   Updated: 2025/03/30 17:00:10 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,22 +49,32 @@ int	find_local_var(t_shell  *shell, t_token *current)
 {
 	t_var *temp;
 	int i;
+	int start;
 
 	temp = shell->var;
 	shell->utils.new_arg = NULL;
 	i = 0;
 	while (current->value[i] != '\0')
 	{
-		if (current->value[i] == '$' && shell->utils.new_arg == NULL)
+		if (current->value[i] == '$')
 		{
-			shell->utils.new_arg = ft_substr(current->value, 0, i);
+			if (shell->utils.new_arg == NULL)
+				shell->utils.new_arg = ft_substr(current->value, 0, i);
+			else
+				shell->utils.new_arg = ft_strjoin(shell->utils.new_arg, ft_substr(current->value, start, i - start));
 			i++;
 			shell->utils.size_var = var_size(current->value + i);
+			search_local_var(shell, current->value + i, temp);
+			i += shell->utils.size_var;
+			start = i;
 		}
-		i++;
+		else
+			i++;
 	}
 	if (current->value[i] == '\0' && shell->utils.new_arg == NULL)
-		shell->utils.new_arg = ft_substr(current->value, 0, i);
+		return (0);
+	else if (current->value[start] != '\0')
+		shell->utils.new_arg = ft_strjoin(shell->utils.new_arg, current->value + start);
 	free(current->value);
 	current->value = shell->utils.new_arg;
 	return (0);
@@ -75,20 +85,35 @@ int var_size(char *str)
 	int i;
 
 	i = 0;
-	while (str[i] != ' ' && str[i] != '\0' && str[i] != '$')
+	while (str[i] != ' ' && str[i] != '\0' && str[i] != '$' && str[i] != '"')
 		i++;
 	return (i);
 }
 
-int search_local_var(t_shell *shell, t_token *current, t_var *temp)
+int search_local_var(t_shell *shell, char* str, t_var *temp)
 {
 	while (temp != NULL)
 	{
-		if (strncmp(current->value, temp->name, shell->utils.size_var) == 0)
+		if (ft_strncmp(str, temp->name, shell->utils.size_var) == 0)
 		{
-			shell->utils.new_arg = ft_strjoin(shell->utils.new_arg, current->);
+			shell->utils.new_arg = ft_strjoin(shell->utils.new_arg, temp->value);
+			return (0);
 		}
 		temp = temp->next;
+	}
+	return (0);
+}
+
+int search_export_var(t_shell *shell, char* str)
+{
+	int i;
+
+	i = 0;
+	while (shell->env[i] != NULL)
+	{
+		if (ft_strncmp(str, shell->env[i], shell->utils.size_var) == 0)
+		shell->utils.new_arg = ft_strjoin(shell->utils.new_arg, shell->env[i]);
+		i++;
 	}
 	return (0);
 }
