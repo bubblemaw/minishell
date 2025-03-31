@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:19:16 by david             #+#    #+#             */
-/*   Updated: 2025/03/31 13:25:11 by david            ###   ########.fr       */
+/*   Updated: 2025/03/31 16:40:44 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int check_double_export(char *var, t_shell *shell)
         j = 0;
         while (shell->env[i][j] != '=')
             j++;
-        if (strncmp(var, shell->env[i], j) == 0 && var[j] == '=' && shell->env[i][j] == '=')
+        if (ft_strncmp(var, shell->env[i], j) == 0 && var[j] == '=' && shell->env[i][j] == '=')
         {
             shell->env[i] = ft_strdup(var);
             crush_local_var(shell, shell->env[i]);

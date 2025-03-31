@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:44:05 by dchellen          #+#    #+#             */
-/*   Updated: 2025/03/31 14:42:38 by david            ###   ########.fr       */
+/*   Updated: 2025/03/31 17:03:07 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int init_var_local(t_shell *shell)
 
     temp = shell->tokken;
     send = false;
-	if (temp->type == COMMAND && ft_strncmp(temp->value, "export", 6) != 0)
+	if (temp->type == COMMAND)
 		return (0);
     while (temp != NULL)
     {
@@ -45,9 +45,14 @@ int init_var_local(t_shell *shell)
 
 t_var *check_doubles(t_var *check, char *name)
 {
+    int len;
+
+    len = 0;
 	while (check != NULL)
 	{
-		if (ft_strncmp(check->name, name, strlen(name)) == 0)
+        len = ft_strlen(name);
+		if (ft_strncmp(check->name, name, len) == 0
+            && check->name[len] == '\0')
 			return(check);
 		check = check->next;
 	}
@@ -57,7 +62,7 @@ t_var *check_doubles(t_var *check, char *name)
 void	replace_var(t_var *exist_var, t_token *temp)
 {
 	free(exist_var->value);
-	exist_var->value = strdup(temp->value);
+	exist_var->value = ft_strdup(temp->value);
 	return ;
 }
 
@@ -73,7 +78,7 @@ int crush_export_var(t_shell *shell, char *name, char *value)
     while (temp->env[i] != NULL)
     {
         len = ft_strlen(name);
-        if (strncmp(name, temp->env[i], len) == 0
+        if (ft_strncmp(name, temp->env[i], len) == 0
             && temp->env[i][len] == '=')
         {
             temp->env[i] = ft_strdup(name);
