@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:19:16 by david             #+#    #+#             */
-/*   Updated: 2025/03/30 21:29:54 by david            ###   ########.fr       */
+/*   Updated: 2025/03/31 13:25:11 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,39 +14,22 @@
 
 int export(t_cmd *token, t_shell *shell)
 {
+    int i;
+    int j;
     t_cmd   *current;
     t_shell *temp;
-    int old_size;
-    int i;
 
+    i = 0;
+    j = 1;
     current = token;
     temp = shell;
-    old_size = 0;
-    i = 0;
-    while (temp->env[old_size] != NULL)
-        old_size++;
-    temp->env = ft_realloc(temp->env, sizeof(char *) * old_size, sizeof(char *) * (new_path_size(current, temp) + 1));
-    while (i < old_size)
-        i++;
-    add_var_env(current, temp, &i);
-    return (0);
-}
-
-int new_path_size(t_cmd *token, t_shell *shell)
-{
-    int     i;
-    int     j;
-
-    i = 0;
-    j = 0;
-    while (shell->env[i] != NULL)
-        i++;
-    while (token->arg[j] != NULL)
+    while (current->arg[j] != NULL)
     {
+        check_double_export(current->arg[j], temp);
+        i++;
         j++;
     }
-    j--;
-    return (i + j);
+    return (0);
 }
 
 int join_var(t_token **token)
@@ -64,40 +47,62 @@ int join_var(t_token **token)
     return (0);
 }
 
-int add_var_env(t_cmd *token, t_shell *shell, int *i)
-{
-    int j;
-
-    j = 1;
-    while (token->arg[j] != NULL)
-    {
-        if (check_double_export(token->arg[j], shell) == VALID)
-            j++;
-        shell->env[*i] = ft_strdup(token->arg[j]);
-        (*i)++;
-        j++;
-    }
-    shell->env[*i] = NULL;
-    return (0);
-}
-
 int check_double_export(char *var, t_shell *shell)
 {
     int i;
     int j;
+    int old_size;
 
     i = 0;
+    old_size = 0;
     while (shell->env[i] != NULL)
     {
         j = 0;
         while (shell->env[i][j] != '=')
             j++;
-        if (strncmp(var, shell->env[i], j) == 0)
+        if (strncmp(var, shell->env[i], j) == 0 && var[j] == '=' && shell->env[i][j] == '=')
         {
             shell->env[i] = ft_strdup(var);
-            return (VALID);
+            crush_local_var(shell, shell->env[i]);
+            return (0);
         }
         i++;
+    }
+    while (shell->env[old_size] != NULL)
+        old_size++;
+    shell->env = ft_realloc(shell->env, sizeof(char *) * old_size, sizeof(char *) * ( old_size + 1));
+    shell->env[i] = ft_strdup(var);
+    crush_local_var(shell, shell->env[i]);
+    i++;
+    shell->env[i] = NULL;
+    return (0);
+}
+
+int crush_local_var(t_shell *shell, char *var)
+{
+    t_var *temp;
+    t_var *prev = NULL;
+    int    len;
+
+    temp = shell->var;
+    len = 0;
+    while (var[len] != '=')
+        len++;
+    while (temp != NULL)
+    {
+        if (ft_strncmp(temp->name, var, len) == 0 && temp->name[len] == '\0')
+        {
+            if (prev == NULL)
+                shell->var = temp->next;
+            else
+                prev->next = temp->next;
+            free(temp->name);  
+            free(temp->value);
+            free(temp);
+            return (0);
+        }
+        prev = temp;
+        temp = temp->next;
     }
     return (0);
 }

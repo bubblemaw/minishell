@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/03/30 21:04:09 by david            ###   ########.fr       */
+/*   Updated: 2025/03/31 14:41:08 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,6 +217,7 @@ int		here_doc(t_cmd *cmd, t_shell *shell);
 int		init_var_local(t_shell *shell);
 t_var	*check_doubles(t_var *check, char *name);
 void	replace_var(t_var *exist_var, t_token *temp);
+int		crush_export_var(t_shell *shell, char *name, char *value);
 void	creat_var_list(t_shell *shell, t_token *temp);
 t_var	*creat_node_var(char *name, char *content);
 void	add_node_var(t_shell *shell, t_var *new);
@@ -224,12 +225,11 @@ void	free_list_var(t_var *head);
 void	print_var_local(t_var *head);
 // export gestion
 int		join_var(t_token **token);
-int		new_path_size(t_cmd *token, t_shell *shell);
-int		add_var_env(t_cmd *token, t_shell *shell, int *i);
 int		check_double_export(char *var, t_shell *shell);
+int		crush_local_var(t_shell *shell, char *var);
 
 int		ft_expansion(t_shell *shell);
-int		find_local_var(t_shell  *shell, t_token *current);
+int		find_var(t_shell  *shell, t_token *current);
 int		search_export_var(t_shell *shell, char* str);
 int		search_local_var(t_shell *shell, char* str, t_var *temp);
 int		var_size(char *str);

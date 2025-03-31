@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:31:47 by maw               #+#    #+#             */
-/*   Updated: 2025/03/30 20:56:07 by david            ###   ########.fr       */
+/*   Updated: 2025/03/31 12:23:46 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int ft_expansion(t_shell *shell)
 	while (current != NULL)
 	{
 		if (is_double_quote(current) == VALID)
-			find_local_var(shell, current);
+			find_var(shell, current);
 		current = current->next;
 	}
 	return (VALID);
@@ -45,7 +45,7 @@ int is_double_quote(t_token *tokken)
 	return (0);
 }
 
-int	find_local_var(t_shell  *shell, t_token *current)
+int	find_var(t_shell  *shell, t_token *current)
 {
 	t_var *temp;
 	int i;

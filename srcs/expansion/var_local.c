@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:44:05 by dchellen          #+#    #+#             */
-/*   Updated: 2025/03/30 21:14:47 by david            ###   ########.fr       */
+/*   Updated: 2025/03/31 14:42:38 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int init_var_local(t_shell *shell)
         }
         else if (temp->type == EQUALITY)
             send = true;
+        if (temp->type == NAME)
+            crush_export_var(shell, temp->value, temp->next->next->value);
         temp = temp->next;
     }
     return (0);
@@ -57,4 +59,28 @@ void	replace_var(t_var *exist_var, t_token *temp)
 	free(exist_var->value);
 	exist_var->value = strdup(temp->value);
 	return ;
+}
+
+int crush_export_var(t_shell *shell, char *name, char *value)
+{
+    t_shell *temp;
+    int len;
+    int i;
+
+    temp = shell;
+    len = 0;
+    i = 0;
+    while (temp->env[i] != NULL)
+    {
+        len = ft_strlen(name);
+        if (strncmp(name, temp->env[i], len) == 0
+            && temp->env[i][len] == '=')
+        {
+            temp->env[i] = ft_strdup(name);
+            temp->env[i] = ft_strjoin(temp->env[i], "=");
+            temp->env[i] = ft_strjoin(temp->env[i], value); 
+        }
+        i++;
+    }
+    return (0);
 }

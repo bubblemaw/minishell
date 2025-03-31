@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/03/28 13:26:26 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/03/31 12:52:01 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	main (int ac, char *av[], char **env)
 		}
 		// print_cmds(&shell.cmd);
 		init_var_local(&shell);
-		// print_var_local(shell.var);
+		print_var_local(shell.var);
 		// print_cmds(shell.cmd);
 		ft_execute(&shell);
 		// printf("execution fini\n");
