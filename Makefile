@@ -6,7 +6,7 @@
 #    By: david <david@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 22:16:43 by david             #+#    #+#              #
-#    Updated: 2025/03/31 13:25:44 by david            ###   ########.fr        #
+#    Updated: 2025/03/31 17:39:42 by david            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ SRCS =  srcs/main/main.c \
 		srcs/token_to_cmd/redirection_token_to_cmd.c \
 		srcs/token_to_cmd/save_redirection.c \
 		srcs/utils/utils1.c \
+		srcs/utils/signal.c \
 		GNL/get_next_line.c \
 
 FLAGS = -Wall -Wextra -Werror  -g

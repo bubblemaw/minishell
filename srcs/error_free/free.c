@@ -6,7 +6,7 @@
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:49:23 by masase            #+#    #+#             */
-/*   Updated: 2025/03/25 13:02:42 by maw              ###   ########.fr       */
+/*   Updated: 2025/03/27 18:17:03 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void free_shell(t_shell *shell)
 {
-	// if (shell->env)
-	// 	free_tab(shell->env);
+	if (shell->env)
+		free_tab(shell->env);
 	if (shell->cmd)
 		free_cmds(&shell->cmd);
 	// if (shell->tokken)

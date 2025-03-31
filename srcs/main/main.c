@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/03/31 17:04:04 by david            ###   ########.fr       */
+/*   Updated: 2025/03/31 17:40:34 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	main (int ac, char *av[], char **env)
 	ft_memset(&shell, 0, sizeof(t_shell));
 	shell.env = copy_env(env);
 	init_execution(&shell);
+	signal(SIGINT, signalhandler);
+	signal(SIGQUIT, SIG_IGN);
 	(void)av;
 	(void)ac;
 
@@ -35,16 +37,11 @@ int	main (int ac, char *av[], char **env)
 			shell.cmd = NULL;
 		}
 		shell.input = readline("minishell$ ");
+		if (shell.input == NULL)
+			ft_exit_void(0, &shell);
 		add_history(shell.input);
 		if (enter_input(&shell) == VALID)
 			continue ;
-		// else if (strncmp(shell.input, "exit ", 4) == 0)
-		// {
-		// 	free_shell(&shell);
-		// 	free_list_var(shell.var);
-		// 	free(shell.input);
-		// 	return (0);
-		// }
 		else if (creat_tokken(shell.input, &shell) == ERROR)
 		{
 			printf("Syntaxe Error...\n");

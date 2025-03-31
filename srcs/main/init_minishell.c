@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:31:21 by maw               #+#    #+#             */
-/*   Updated: 2025/03/25 13:48:24 by david            ###   ########.fr       */
+/*   Updated: 2025/03/31 17:40:13 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void init_execution(t_shell *shell)
 	shell->prev_pipefd = -1;
 	save_fd(shell);
 	shell->cmd = NULL;
+	shell->exit_status = 0;
 	free_new_redirection(shell);
 }
 

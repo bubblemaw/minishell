@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:34:17 by maw               #+#    #+#             */
-/*   Updated: 2025/03/20 21:06:14 by david            ###   ########.fr       */
+/*   Updated: 2025/03/27 17:42:31 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void save_fd(t_shell *shell)
 int ft_direction(t_cmd *cmd)
 {
 	int infd;
-	int outfd;
 	
 	if (cmd->infile != NULL)
 	{
@@ -39,11 +38,20 @@ int ft_direction(t_cmd *cmd)
 		dup2(infd, STDIN_FILENO);
 		close(infd);
 	}
+	if (outfile_direction(cmd) == 0)
+		return(error(cmd->infile));
+	return (1);
+}
+
+int outfile_direction(t_cmd *cmd)
+{
+	int outfd;
+
 	if (cmd->append == 1)
 	{
 		outfd = open (cmd->outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (outfd == -1)
-			return(error(cmd->outfile));
+			return(0);
 		dup2(outfd, STDOUT_FILENO);
 		close(outfd);
 	}
@@ -51,7 +59,7 @@ int ft_direction(t_cmd *cmd)
 	{
 		outfd = open (cmd->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (outfd == -1)
-			return(error(cmd->outfile));
+			return(0);
 		dup2(outfd, STDOUT_FILENO);
 		close(outfd);
 	}
@@ -60,30 +68,54 @@ int ft_direction(t_cmd *cmd)
 
 int here_doc(t_cmd *cmd, t_shell *shell)
 {
-	char *del;
-	char *line;
 	int pipefd[2];
+	pid_t pid;
 
-	del = ft_strjoin(cmd->delimiter, "\n");
 	if (pipe(pipefd) == -1)
 		return (error("error occurs during the pipe"));
+	pid = fork();
+	if (pid == 0)
+		here_doc_child_process(pipefd, cmd);
+	else
+	{
+		close (pipefd[1]);
+		signal(SIGINT, SIG_IGN);
+		waitpid(pid, &shell->exit_status, 0);
+		signal(SIGINT, signalhandler);
+		if (WEXITSTATUS(shell->exit_status) == 130)
+		{
+			close (pipefd[0]);
+			return 130;
+		}
+		dup2(pipefd[0], STDIN_FILENO);
+		close (pipefd[0]);
+	}
+	return (1);
+}
+
+void here_doc_child_process(int *pipefd, t_cmd *cmd)
+{
+	char *del;
+	char *line;
+	
+	signal(SIGINT, signalhandler_heredoc);
+	del = ft_strdup(cmd->delimiter);
 	while (1)
 	{
-		write(shell->STDOUT, ">", 1);
-		line = get_next_line(shell->STDIN);
+		line = readline(">");
 		if (!line)
 			break ;
 		if (ft_strncmp(line, del, ft_strlen(del)) == 0)
 		{
 			free(line);
 			break ;
-		}	
+		}
+		line = ft_strjoin(line, "\n");
 		ft_putstr_fd(line, pipefd[1]);
 		free(line);
 	}
 	free(del);
-	dup2(pipefd[0], STDIN_FILENO);
 	close (pipefd[0]);
 	close (pipefd[1]);
-	return (1);
+	exit(0);
 }

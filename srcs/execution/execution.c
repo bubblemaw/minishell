@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:16:38 by maw               #+#    #+#             */
-/*   Updated: 2025/03/25 13:49:04 by david            ###   ########.fr       */
+/*   Updated: 2025/03/31 17:40:05 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,8 @@ int ft_execute(t_shell *shell)
 			here_doc(current ,shell);
 		if (current->type == PIPE) // si il ya des operations avec des pipes
 		{
-			while (current)
-			{
-				if (piper(current, shell) == CHILD_PROCESS)
-					ft_exe_pipe(current, shell);
-				else // PARENT PROCESS
-					current = current->next;
-			}
-			break ;
+			pipex_loop(current, shell);
+				break ;
 		}
 		else // execution commande basique
 			ft_exe(current, shell);
@@ -42,6 +36,17 @@ int ft_execute(t_shell *shell)
 	while (wait(&shell->exit_status) > 0); // attente de tous les childs process 
 	reset_fd(shell);
 	return (VALID);
+}
+
+void pipex_loop(t_cmd *current, t_shell *shell)
+{
+	while (current)
+	{
+		if (piper(current, shell) == CHILD_PROCESS)
+			ft_exe_pipe(current, shell);
+		else // PARENT PROCESS
+			current = current->next;
+	}
 }
 
 int child_processor(t_cmd *cmd , t_shell *shell, int *pipefd) //gestion entree sortie du child process avant son execution
@@ -124,3 +129,4 @@ int ft_exe(t_cmd *cmd, t_shell *shell) // execution des commandes normales (sans
 		waitpid(pid1, &shell->exit_status, 0);
 	return (VALID);
 }
+

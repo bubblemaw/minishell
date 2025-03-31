@@ -1,32 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/21 17:14:29 by maw               #+#    #+#             */
-/*   Updated: 2025/03/31 17:39:55 by david            ###   ########.fr       */
+/*   Created: 2025/03/25 22:31:22 by maw               #+#    #+#             */
+/*   Updated: 2025/03/26 13:54:02 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	ft_env(t_cmd *cmd, t_shell *shell)
+void	signalhandler(int signal)
 {
-	int i;
-
-	i = 0;
-	(void)cmd;
-	if (!shell->env)
+	if (signal == SIGINT)
 	{
-		printf("env vide\n");
-		return (ERROR);
-	}	
-	while (shell->env[i])
-	{
-		printf("%s\n", shell->env[i]);
-		i++;
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
 	}
-	return (VALID);
+	return ;
+}
+void	signalhandler_heredoc(int signal)
+{
+	if (signal == SIGINT)
+	{
+		write(STDOUT_FILENO, "\n", 1);
+		exit(130);
+	}
+	return ;
 }
