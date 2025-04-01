@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:31:47 by maw               #+#    #+#             */
-/*   Updated: 2025/03/31 17:13:01 by david            ###   ########.fr       */
+/*   Updated: 2025/03/31 20:01:14 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,12 @@ int	find_var(t_shell  *shell, t_token *current)
 		{
 			if (shell->utils.new_arg == NULL)
 				shell->utils.new_arg = ft_substr(current->value, 0, i);
+			// if (current->value[i] == '$' && (current->value[i + 1] == ' ' || current->value[i + 1] == '$'))
+			// {
+			// 	shell->utils.new_arg = ft_strjoin(shell->utils.new_arg, "$");
+			// 	i++;
+			// 	continue;
+			// }
 			else
 				shell->utils.new_arg = ft_strjoin(shell->utils.new_arg, ft_substr(current->value, start, i - start));
 			i++;

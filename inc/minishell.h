@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/03/31 17:37:02 by david            ###   ########.fr       */
+/*   Updated: 2025/03/31 19:47:50 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,7 @@ int		ft_exe(t_cmd *token, t_shell *shell);
 int		built_in(t_cmd *cmd, t_shell *shell);
 
 // built in fonctions
+int		export(t_cmd *token, t_shell *shell);
 int		echo(t_cmd *cmd);
 int		echo_option(t_cmd *cmd);
 int		cd(t_cmd *cmd, t_shell *shell);
