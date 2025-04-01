@@ -6,7 +6,7 @@
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 12:00:01 by maw               #+#    #+#             */
-/*   Updated: 2025/03/31 16:39:56 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/01 14:59:18 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,11 @@ int ft_cmd_maker(t_cmd *cmd, t_token **tokken)
 		while (cmd->arg[i] != NULL)
 			i++;
 	}
-	while (*tokken && ((*tokken)->type == OPTION || (*tokken)->type == ARGUMENT || (*tokken)->type == COMMAND))
+	while (*tokken && ((*tokken)->type == OPTION || (*tokken)->type == ARGUMENT || (*tokken)->type == COMMAND
+			|| (*tokken)->type == NAME || (*tokken)->type == EQUALITY || (*tokken)->type == VALUE))
 	{
+		if ((*tokken)->type == NAME)
+			join_var(tokken);
 		cmd->arg = ft_realloc(cmd->arg, i * sizeof(char *), (i + 1) * sizeof(char *));
 		cmd->arg[i] = ft_strdup((*tokken)->value);
 		if (cmd->arg[i] == NULL)
@@ -89,4 +92,3 @@ t_cmd *end_list(t_cmd *head)
 		head = (head)->next;
 	return (head);
 }
-

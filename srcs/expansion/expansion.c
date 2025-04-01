@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:31:47 by maw               #+#    #+#             */
-/*   Updated: 2025/03/25 12:05:20 by david            ###   ########.fr       */
+/*   Updated: 2025/03/31 17:13:01 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int ft_expansion(t_shell *shell)
 	while (current != NULL)
 	{
 		if (is_double_quote(current) == VALID)
-			find_local_var(shell, current);
+			find_var(shell, current);
 		current = current->next;
 	}
 	return (VALID);
@@ -45,71 +45,39 @@ int is_double_quote(t_token *tokken)
 	return (0);
 }
 
-int	find_local_var(t_shell  *shell, t_token *current)
+int	find_var(t_shell  *shell, t_token *current)
 {
-	t_var 	*temp;
-	int		i;
-	int		j;
-	char	*new_arg;
-	int		new_size;
-	int		old_size;
-	int 	test = 0;
+	t_var *temp;
+	int i;
+	int start;
 
+	temp = shell->var;
+	shell->utils.new_arg = NULL;
 	i = 0;
-	j = 0;
-	new_arg = (char *)malloc(sizeof(char) * (ft_strlen(current->value) + 1));
-	old_size = ft_strlen(current->value) + 1;
-	new_size = ft_strlen(current->value) + 1;
 	while (current->value[i] != '\0')
 	{
-		temp = shell->var;
 		if (current->value[i] == '$')
 		{
+			if (shell->utils.new_arg == NULL)
+				shell->utils.new_arg = ft_substr(current->value, 0, i);
+			else
+				shell->utils.new_arg = ft_strjoin(shell->utils.new_arg, ft_substr(current->value, start, i - start));
 			i++;
-			if (current->value[i] == ' ')
-				return (0);
-			else if (temp == NULL)
-			{
-				while (current->value[i] != ' ' && current->value[i] != '\0')
-					i++;
-				new_arg[j] = current->value[i];
-				j++;
-				i++;
-			}
-			while (temp != NULL)
-			{
-				if (ft_strncmp(current->value + i, temp->name, var_size(current->value + i)) == 0)
-				{
-					new_size += ft_strlen(temp->value) - ft_strlen(temp->name);
-					new_arg = ft_realloc(new_arg, old_size, new_size);
-					old_size = new_size;
-					ft_strlcpy(new_arg + j, temp->value, ft_strlen(temp->value) + 1);
-					j += ft_strlen(temp->value);
-					i += ft_strlen(temp->name);
-					break ;
-				}
-				test++;
-				temp = temp->next;
-			}
-		}
-		if (temp == NULL && test > 0)
-		{
-			while (current->value[i] != ' ' && current->value[i] != '\0')
-				i++;
-			new_arg[j] = current->value[i];
-			j++;
-			i++;
+			shell->utils.size_var = var_size(current->value + i);
+			if (search_local_var(shell, current->value + i, temp) != VALID)
+				search_export_var(shell, current->value + i);
+			i += shell->utils.size_var;
+			start = i;
 		}
 		else
-		{
-			new_arg[j] = current->value[i];
-			j++;
 			i++;
-		}
 	}
-	new_arg[j] = '\0';
+	if (current->value[i] == '\0' && shell->utils.new_arg == NULL)
+		return (0);
+	else if (current->value[start] != '\0')
+		shell->utils.new_arg = ft_strjoin(shell->utils.new_arg, current->value + start);
 	free(current->value);
-	current->value = new_arg;
+	current->value = shell->utils.new_arg;
 	return (0);
 }
 
@@ -118,44 +86,47 @@ int var_size(char *str)
 	int i;
 
 	i = 0;
-	while (str[i] != ' ' && str[i] != '\0' && str[i] != '"')
+	while (str[i] != ' ' && str[i] != '\0' && str[i] != '$' && str[i] != '"')
 		i++;
 	return (i);
 }
 
-//----------------------------------------------//
-
-int expansion(t_token *tokken, t_shell *shell)
+int search_local_var(t_shell *shell, char* str, t_var *temp)
 {
-	char *var_value;
-
-	var_value = ft_findvar(tokken->value, shell);
-	free(tokken->value);
-	tokken->value = ft_strdup(var_value);
-	free (var_value);
-	var_value = NULL;
-	return (1);
+	while (temp != NULL)
+	{
+		if (ft_strncmp(str, temp->name, shell->utils.size_var) == 0
+			&& temp->name[shell->utils.size_var] == '\0')
+		{
+			shell->utils.new_arg = ft_strjoin(shell->utils.new_arg, temp->value);
+			return (VALID);
+		}
+		temp = temp->next;
+	}
+	return (0);
 }
 
-char *ft_findvar(char *var_name, t_shell *shell)
+int search_export_var(t_shell *shell, char* str)
 {
-	char *var_line;
-	char *var_value;
-	int var_lenth;
-	int	i;
+	int i;
+	int j;
 
 	i = 0;
-	var_value = NULL;
-	var_lenth = ft_strlen(var_name) - 1;
-	while (shell->env[i] && ft_strncmp(var_name + 1, shell->env[i], var_lenth) != 0)
-		i++;
-	if (shell->env[i] == NULL)
-		var_value = ft_strdup("");
-	else
+	while (shell->env[i] != NULL)
 	{
-		var_line = ft_strdup(shell->env[i]);
-		printf("var line:%s\n", var_line);
-		var_value = ft_strdup(var_line + var_lenth + 1);
+		j = 0;
+		while (shell->env[i][j] != '=')
+			j++;
+		shell->utils.sub_env = ft_substr(shell->env[i], 0, j);
+		if (ft_strncmp(str, shell->utils.sub_env, shell->utils.size_var) == 0 
+			&& shell->utils.sub_env[shell->utils.size_var] == '\0')
+		{
+			j++;
+			shell->utils.new_arg = ft_strjoin(shell->utils.new_arg, shell->env[i] + j);
+			free(shell->utils.sub_env);
+			return (0);
+		}
+		i++;
 	}
-	return(var_value);
+	return (0);
 }

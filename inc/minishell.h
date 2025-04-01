@@ -6,7 +6,7 @@
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/03/30 21:39:21 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/01 15:00:00 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,13 @@ typedef struct s_redir
 	int type;
 }	t_redir;
 
+typedef struct s_utils
+{
+	int		size_var;
+	char	*new_arg;
+	char	*sub_env;
+}	t_utils;
+
 // principal struct
 typedef struct s_shell
 {
@@ -131,6 +138,7 @@ typedef struct s_shell
 	t_creat			creat;
 	t_token			*tokken;
 	t_var			*var;
+	t_utils			utils;
 }	t_shell;
 
 // token's fonctions
@@ -171,6 +179,8 @@ void	here_doc_child_process(int *pipefd, t_cmd *cmd);
 int		ft_execute(t_shell *shell);
 int		ft_exe(t_cmd *token, t_shell *shell);
 int		built_in(t_cmd *cmd, t_shell *shell);
+
+// built in fonctions
 int		echo(t_cmd *cmd);
 int		echo_option(t_cmd *cmd);
 int		cd(t_cmd *cmd, t_shell *shell);
@@ -213,23 +223,32 @@ int		lst_size(t_cmd *token);
 int		child_processor(t_cmd *cmd, t_shell *shell, int *pipefd);
 
 // expansion
+// local gestion
 int		init_var_local(t_shell *shell);
 t_var	*check_doubles(t_var *check, char *name);
 void	replace_var(t_var *exist_var, t_token *temp);
+int		crush_export_var(t_shell *shell, char *name, char *value);
 void	creat_var_list(t_shell *shell, t_token *temp);
 t_var	*creat_node_var(char *name, char *content);
 void	add_node_var(t_shell *shell, t_var *new);
 void	free_list_var(t_var *head);
 void	print_var_local(t_var *head);
+// export gestion
+int		join_var(t_token **token);
+int		check_double_export(char *var, t_shell *shell);
+int		crush_local_var(t_shell *shell, char *var);
 
 int		ft_expansion(t_shell *shell);
-int		find_local_var(t_shell  *shell, t_token *current);
-int		expansion(t_token *tokken, t_shell *shell);
-char	*ft_findvar(char *var_name, t_shell *shell);
+int		find_var(t_shell  *shell, t_token *current);
+int		search_export_var(t_shell *shell, char* str);
+int		search_local_var(t_shell *shell, char* str, t_var *temp);
 int		var_size(char *str);
 int		is_double_quote(t_token *tokken);
 int		kill_quotes(t_shell *shell);
 void	size_to_kill(t_token *token, t_shell *shell, int *i);
+
+// variables priorities
+void	crush_var(t_shell *shell);
 
 //init_minishell
 void	init_execution(t_shell *shell);

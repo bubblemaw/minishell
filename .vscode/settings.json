@@ -72,6 +72,7 @@
     "string.h": "c",
     "libft.h": "c",
     "type_traits": "c",
-    "utility": "c"
+    "utility": "c",
+    "typeinfo": "c"
   }
 }
