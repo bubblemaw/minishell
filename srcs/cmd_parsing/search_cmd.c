@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   search_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/03/20 21:03:27 by david            ###   ########.fr       */
+/*   Updated: 2025/03/31 17:27:04 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../../inc/minishell.h"
 
@@ -20,6 +19,11 @@ char	*ft_parse(t_cmd *cmd, t_shell *shell)
 	cmd_path = NULL;
 	if (ft_strnstr(cmd->arg[0], "bin", ft_strlen(cmd->arg[0])) != NULL)// check si chemin absolu vers cmd
 		cmd_path = cmd->arg[0];
+	else if (ft_strncmp("./", cmd->arg[0], 2) == 0)
+	{
+		cmd_path = ft_strjoin(getcwd(NULL, 0), "/");
+		cmd_path = ft_strjoin(cmd_path, cmd->arg[0]);
+	}
 	else
 		cmd_path = ft_cmd_path(cmd, shell);		
 	return (cmd_path);

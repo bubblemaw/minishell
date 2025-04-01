@@ -6,7 +6,7 @@
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:16:38 by maw               #+#    #+#             */
-/*   Updated: 2025/03/30 23:45:32 by maw              ###   ########.fr       */
+/*   Updated: 2025/03/31 17:27:31 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int ft_execute(t_shell *shell)
 {
 	t_cmd *current;
-
+	
 	current = shell->cmd;
 	while (current)
 	{
