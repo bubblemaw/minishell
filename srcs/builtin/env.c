@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 17:14:29 by maw               #+#    #+#             */
-/*   Updated: 2025/03/31 17:39:55 by david            ###   ########.fr       */
+/*   Updated: 2025/04/01 14:59:42 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,12 @@ int	ft_env(t_cmd *cmd, t_shell *shell)
 	int i;
 
 	i = 0;
-	(void)cmd;
+	if (cmd->arg[1])
+	{
+		error("too much arguments");
+		g_exit_status = 1;
+		return (VALID);
+	}
 	if (!shell->env)
 	{
 		printf("env vide\n");

@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/03/31 17:40:34 by david            ###   ########.fr       */
+/*   Updated: 2025/04/01 16:01:33 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+int g_exit_status = 0;
 
 int	main (int ac, char *av[], char **env)
 {
@@ -59,8 +61,8 @@ int	main (int ac, char *av[], char **env)
 		}
 		// print_cmds(&shell.cmd);
 		init_var_local(&shell);
-		print_var_local(shell.var);
-		// print_cmds(shell.cmd);
+		// print_var_local(shell.var);
+		// print_cmds(&shell.cmd);
 		ft_execute(&shell);
 		// printf("execution fini\n");
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:16:38 by maw               #+#    #+#             */
-/*   Updated: 2025/03/31 17:40:05 by david            ###   ########.fr       */
+/*   Updated: 2025/04/01 15:57:42 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int ft_execute(t_shell *shell)
 {
 	t_cmd *current;
-
+	
 	current = shell->cmd;
 	while (current)
 	{
@@ -33,7 +33,8 @@ int ft_execute(t_shell *shell)
 			ft_exe(current, shell);
 		current = current->next;
 	}
-	while (wait(&shell->exit_status) > 0); // attente de tous les childs process 
+	while (wait(&g_exit_status) > 0); // attente de tous les childs process 
+	// printf("apres waitall%d\n", g_exit_status);
 	reset_fd(shell);
 	return (VALID);
 }
@@ -102,8 +103,10 @@ int ft_exe_pipe(t_cmd *cmd, t_shell *shell)// execution des fonctions qui preced
 	char *cmd_path;
 
 	cmd_path = ft_parse(cmd, shell);
+	if (cmd_path == NULL)
+		return(error_cmd(cmd->arg[0]));
 	if(execve(cmd_path, cmd->arg, shell->env) == -1)
-		return(error("Execution problem"));
+		return(error_exit("execve failed"));
 	return (VALID);
 }
 
@@ -123,10 +126,15 @@ int ft_exe(t_cmd *cmd, t_shell *shell) // execution des commandes normales (sans
 		if (cmd_path == NULL)
 			return(error_cmd(cmd->arg[0]));
 		if(execve(cmd_path, cmd->arg, shell->env) == -1)
-			return(error("Execution problem"));
+			return(error_exit("execve failed"));
 	}
 	else
-		waitpid(pid1, &shell->exit_status, 0);
+	{
+		waitpid(pid1, &g_exit_status, 0);
+		if (WIFEXITED(g_exit_status))
+		{
+			g_exit_status = WEXITSTATUS(g_exit_status);
+		}
+	}
 	return (VALID);
 }
-

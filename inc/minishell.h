@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/01 14:45:47 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/01 16:18:53 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@
 # define PARENT_PROCESS 1
 # define CHILD_PROCESS 2
 # define DELIMITER 20
+
+// global variable
+extern int g_exit_status;
 
 // parsing's type data
 typedef enum 
@@ -184,6 +187,7 @@ int		echo_option(t_cmd *cmd);
 int		cd(t_cmd *cmd, t_shell *shell);
 char	*path_finder(t_cmd *cmd, char *buffer);
 void	findvar_replace(t_shell *shell, char *buffer);
+char	*find_user_name(char **tab);
 int		ft_env(t_cmd *cmd, t_shell *shell);
 int		pwd(void);
 int		unset(t_cmd *cmd, t_shell *shell);
@@ -236,6 +240,7 @@ int		check_double_export(char *var, t_shell *shell);
 int		crush_local_var(t_shell *shell, char *var);
 
 int		specials_case(t_shell  *shell, char *current);
+int		pid_dolls(t_shell  *shell, char *current);
 int		ft_expansion(t_shell *shell);
 int		find_var(t_shell  *shell, t_token *current);
 int		search_export_var(t_shell *shell, char* str);
@@ -267,5 +272,6 @@ int		free_new_redirection(t_shell *shell);
 // error
 int		error_cmd(char *str);
 int		error(char *str);
+int		error_exit(char *str);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_to_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 12:00:01 by maw               #+#    #+#             */
-/*   Updated: 2025/03/27 17:15:23 by david            ###   ########.fr       */
+/*   Updated: 2025/04/01 14:59:18 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,7 @@ int create_cmd_lst(t_shell *shell)
 			new_cmd(&shell->cmd, &current);
 		}
 		else if (tokken->type == REDIRECTION)
-		{
 			ft_cmd_redirection(current, &tokken, shell);
-		}
 		else if (tokken && tokken->type == ARGUMENT)
 			ft_cmd_maker(current, &tokken);
 	}
