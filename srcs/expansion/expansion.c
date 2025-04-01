@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:31:47 by maw               #+#    #+#             */
-/*   Updated: 2025/04/01 16:28:17 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/01 17:36:24 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	find_var(t_shell  *shell, t_token *current)
 				shell->utils.new_arg = ft_strjoin(shell->utils.new_arg, ft_substr(current->value, start, i - start));
 			if (specials_case(shell, current->value + i) == VALID)
 			{
-				i+= 2;
+				i += 2;
 				start = i;
 				continue ;
 			}
