@@ -73,6 +73,8 @@
     "libft.h": "c",
     "type_traits": "c",
     "utility": "c",
-    "typeinfo": "c"
+    "typeinfo": "c",
+    "dirent.h": "c",
+    "signal.h": "c"
   }
 }

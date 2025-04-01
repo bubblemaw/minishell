@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: david <david@student.42.fr>                +#+  +:+       +#+         #
+#    By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 22:16:43 by david             #+#    #+#              #
-#    Updated: 2025/03/31 17:39:42 by david            ###   ########.fr        #
+#    Updated: 2025/04/01 14:13:56 by dchellen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ SRCS =  srcs/main/main.c \
 		srcs/builtin/unset.c \
 		srcs/builtin/exit.c \
 		srcs/expansion/expansion.c \
+		srcs/expansion/expansion_spe.c \
 		srcs/expansion/var_local.c \
 		srcs/expansion/creat_var_list.c \
 		srcs/expansion/kill_quotes.c \

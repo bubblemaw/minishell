@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:31:47 by maw               #+#    #+#             */
-/*   Updated: 2025/03/31 20:01:14 by david            ###   ########.fr       */
+/*   Updated: 2025/04/01 15:46:48 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,16 +60,18 @@ int	find_var(t_shell  *shell, t_token *current)
 		{
 			if (shell->utils.new_arg == NULL)
 				shell->utils.new_arg = ft_substr(current->value, 0, i);
-			// if (current->value[i] == '$' && (current->value[i + 1] == ' ' || current->value[i + 1] == '$'))
-			// {
-			// 	shell->utils.new_arg = ft_strjoin(shell->utils.new_arg, "$");
-			// 	i++;
-			// 	continue;
-			// }
 			else
 				shell->utils.new_arg = ft_strjoin(shell->utils.new_arg, ft_substr(current->value, start, i - start));
+			if (specials_case(shell, current->value + i) == VALID)
+			{
+				i+= 2;
+				start = i;
+				continue ;
+			}
 			i++;
 			shell->utils.size_var = var_size(current->value + i);
+			if (shell->utils.size_var == 0)
+				shell->utils.new_arg = ft_strjoin(shell->utils.new_arg, "$");
 			if (search_local_var(shell, current->value + i, temp) != VALID)
 				search_export_var(shell, current->value + i);
 			i += shell->utils.size_var;

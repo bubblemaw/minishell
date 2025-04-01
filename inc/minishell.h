@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/03/31 19:47:50 by david            ###   ########.fr       */
+/*   Updated: 2025/04/01 14:45:47 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,6 +235,7 @@ int		join_var(t_token **token);
 int		check_double_export(char *var, t_shell *shell);
 int		crush_local_var(t_shell *shell, char *var);
 
+int		specials_case(t_shell  *shell, char *current);
 int		ft_expansion(t_shell *shell);
 int		find_var(t_shell  *shell, t_token *current);
 int		search_export_var(t_shell *shell, char* str);
