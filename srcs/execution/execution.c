@@ -6,7 +6,7 @@
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:16:38 by maw               #+#    #+#             */
-/*   Updated: 2025/04/01 14:56:34 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/01 18:02:50 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 int ft_execute(t_shell *shell)
 {
 	t_cmd *current;
+	int	last_status;
+	int	pipe_exit_flag;
 	
 	current = shell->cmd;
 	while (current)
@@ -33,11 +35,41 @@ int ft_execute(t_shell *shell)
 			ft_exe(current, shell);
 		current = current->next;
 	}
-	while (wait(&g_exit_status) > 0); // attente de tous les childs process 
-	printf("apres waitall%d\n", g_exit_status);
+	while (wait(&g_exit_status) > 0) // attente de tous les childs process
+	{
+		// last_status = wait_exit_status(shell, &pipe_exit_flag);
+		if (WIFEXITED(g_exit_status))
+			g_exit_status = WEXITSTATUS(g_exit_status);
+		else if (WIFSIGNALED(g_exit_status))
+			g_exit_status = 128 + WTERMSIG(g_exit_status);
+		if (shell->cmd->type == PIPE && pipe_exit_flag != 1)
+		{
+			last_status = g_exit_status;
+			pipe_exit_flag = 1;
+		}
+	}
+	if (pipe_exit_flag == 1)
+		g_exit_status = last_status;
 	reset_fd(shell);
 	return (VALID);
 }
+// int wait_exit_status(t_shell *shell, int *pipe_exit_flag)
+// {
+// 	int	last_status;
+
+// 	if (WIFEXITED(g_exit_status))
+// 		g_exit_status = WEXITSTATUS(g_exit_status);
+// 	else if (WIFSIGNALED(g_exit_status))
+// 		g_exit_status = 128 + WTERMSIG(g_exit_status);
+// 	if (shell->cmd->type == PIPE && *pipe_exit_flag != 1)
+// 	{
+// 		last_status = g_exit_status;
+// 		*pipe_exit_flag = 1;
+// 	}
+// 	return (last_status);
+// 	// if (pipe_exit_flag == 1)
+// 	// 	g_exit_status = last_status;
+// }
 
 void pipex_loop(t_cmd *current, t_shell *shell)
 {
@@ -132,9 +164,10 @@ int ft_exe(t_cmd *cmd, t_shell *shell) // execution des commandes normales (sans
 	{
 		waitpid(pid1, &g_exit_status, 0);
 		if (WIFEXITED(g_exit_status))
-		{
 			g_exit_status = WEXITSTATUS(g_exit_status);
-		}
+		else if (WIFSIGNALED(g_exit_status))
+			g_exit_status = 128 + WTERMSIG(g_exit_status);
+		printf("apres waitPID%d\n", g_exit_status);
 	}
 	return (VALID);
 }
