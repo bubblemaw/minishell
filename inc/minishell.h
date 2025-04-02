@@ -6,7 +6,7 @@
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/01 18:02:33 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/02 13:18:34 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,6 @@
 # include <dirent.h>
 # include <signal.h>
 
-#define true	1
-#define false	0
-
 // command's return
 # define DOUBLE 3
 # define ERROR 2
@@ -46,14 +43,14 @@ extern int g_exit_status;
 // parsing's type data
 typedef enum 
 {
-	NAME,         // 0
-	EQUALITY,     // 1
-	VALUE,        // 2
-	COMMAND,      // 3
-	REDIRECTION,  // 4
-	PIPE,         // 5
-	ARGUMENT,	  // 6
-	OPTION		  // 7
+	NAME,
+	EQUALITY,
+	VALUE,
+	COMMAND,
+	REDIRECTION,
+	PIPE,
+	ARGUMENT,
+	OPTION
 } type;
 
 // structures
@@ -240,6 +237,8 @@ int		join_var(t_token **token);
 int		check_double_export(char *var, t_shell *shell);
 int		crush_local_var(t_shell *shell, char *var);
 
+int		specials_case(t_shell  *shell, char *current);
+int		pid_dolls(t_shell  *shell, char *current);
 int		ft_expansion(t_shell *shell);
 int		find_var(t_shell  *shell, t_token *current);
 int		search_export_var(t_shell *shell, char* str);

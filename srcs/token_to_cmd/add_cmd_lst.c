@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   add_cmd_lst.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 12:29:51 by maw               #+#    #+#             */
-/*   Updated: 2025/03/20 21:06:15 by david            ###   ########.fr       */
+/*   Updated: 2025/04/02 11:57:25 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void add_cmd_lst(t_cmd **head)
+void	add_cmd_lst(t_cmd **head)
 {
-	t_cmd *new_cmd;
-	t_cmd *tmp;
+	t_cmd	*new_cmd;
+	t_cmd	*tmp;
 	
 	new_cmd = malloc(sizeof(t_cmd));
 	if (!new_cmd)
@@ -36,10 +36,10 @@ void add_cmd_lst(t_cmd **head)
 		new_cmd->next = NULL;
 	}
 }
-void add_cmd_before_last(t_cmd **head)
+void	add_cmd_before_last(t_cmd **head)
 {
-	t_cmd *new_cmd;
-	t_cmd *current;
+	t_cmd	*new_cmd;
+	t_cmd	*current;
 	
 	current = *head;
 	new_cmd = malloc(sizeof(t_cmd));
@@ -63,7 +63,7 @@ void add_cmd_before_last(t_cmd **head)
 	}
 }
 
-void insert_node(t_cmd *current, t_cmd *new_cmd)
+void	insert_node(t_cmd *current, t_cmd *new_cmd)
 {
 	new_cmd->next = current->next;
 	new_cmd->prev = current;
@@ -71,7 +71,7 @@ void insert_node(t_cmd *current, t_cmd *new_cmd)
 	current->next = new_cmd;
 }
 
-void setup_cmd_lst(t_cmd **cmd)
+void	setup_cmd_lst(t_cmd **cmd)
 {
 	(*cmd)->arg = NULL;
 	(*cmd)->infile = NULL;

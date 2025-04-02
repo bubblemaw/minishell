@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   init_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:31:21 by maw               #+#    #+#             */
-/*   Updated: 2025/04/01 14:58:12 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/02 11:55:38 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void init_execution(t_shell *shell)
+void	init_execution(t_shell *shell)
 {
 	shell->prev_pipefd = -1;
 	save_fd(shell);
@@ -21,11 +21,11 @@ void init_execution(t_shell *shell)
 	free_new_redirection(shell);
 }
 
-char **copy_env(char **env)
+char	**copy_env(char **env)
 {
-	int	env_size;
-	int i;
-	char **copy_env;
+	int		env_size;
+	int		i;
+	char	**copy_env;
 
 	env_size = 0;
 	while (env[env_size])

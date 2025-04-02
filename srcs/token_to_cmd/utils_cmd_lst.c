@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   utils_cmd_lst.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 21:17:50 by maw               #+#    #+#             */
-/*   Updated: 2025/03/20 21:06:16 by david            ###   ########.fr       */
+/*   Updated: 2025/04/02 11:58:38 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 // Fonction pour afficher les commandes stockées
-void print_cmds(t_cmd **head)
+void	print_cmds(t_cmd **head)
 {
-	t_cmd *current;
+	t_cmd	*current;
 
 	current = *head;
 	while (current)
@@ -38,7 +38,7 @@ void print_cmds(t_cmd **head)
 	}
 }
 
-int lst_size(t_cmd *cmd)
+int	lst_size(t_cmd *cmd)
 {
 	t_cmd *copy;
 	int i;

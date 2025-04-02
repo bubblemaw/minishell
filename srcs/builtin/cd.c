@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 15:28:31 by maw               #+#    #+#             */
-/*   Updated: 2025/03/31 16:41:09 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/02 11:44:28 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int cd(t_cmd *cmd, t_shell *shell)
+int	cd(t_cmd *cmd, t_shell *shell)
 {
-	DIR *d;
-	char *path;
-	char *buffer;
+	DIR		*d;
+	char	*path;
+	char	*buffer;
 	
 	buffer = NULL;
 	if (cmd->arg[1] == NULL || (ft_strncmp(cmd->arg[1], "~", 1) == 0 && ft_strlen(cmd->arg[1]) == 1))
@@ -46,9 +46,9 @@ int cd(t_cmd *cmd, t_shell *shell)
 	return (VALID);
 }
 
-char *path_finder(t_cmd *cmd, char *buffer)
+char	*path_finder(t_cmd *cmd, char *buffer)
 {
-	char *path;
+	char	*path;
 
 	path = NULL;
 	if (cmd->arg[1][0] == '/')
@@ -64,7 +64,7 @@ char *path_finder(t_cmd *cmd, char *buffer)
 
 void	findvar_replace(t_shell *shell, char *buffer)
 {
-	char *temp;
+	char	*temp;
 	int		i;
 
 	temp = NULL;
@@ -90,10 +90,10 @@ void	findvar_replace(t_shell *shell, char *buffer)
 	free(temp);
 }
 
-char *find_user_name(char **tab)
+char	*find_user_name(char **tab)
 {
-	int i;
-	char *path;
+	int		i;
+	char	*path;
 
 	i = 0;
 	while(tab[i] && strncmp(tab[i], "USER=", 5))

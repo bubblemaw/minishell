@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:31:47 by maw               #+#    #+#             */
-/*   Updated: 2025/03/31 17:13:01 by david            ###   ########.fr       */
+/*   Updated: 2025/04/02 11:54:24 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int ft_expansion(t_shell *shell)
+int	ft_expansion(t_shell *shell)
 {
-	t_token *current;
+	t_token	*current;
 
 	current = shell->tokken;
 	while (current != NULL)
@@ -26,9 +26,9 @@ int ft_expansion(t_shell *shell)
 	return (VALID);
 }
 
-int is_double_quote(t_token *tokken)
+int	is_double_quote(t_token *tokken)
 {
-	int last_char;
+	int	last_char;
 
 	last_char = ft_strlen(tokken->value) - 1;
 	if (tokken->type == ARGUMENT
@@ -47,9 +47,9 @@ int is_double_quote(t_token *tokken)
 
 int	find_var(t_shell  *shell, t_token *current)
 {
-	t_var *temp;
-	int i;
-	int start;
+	t_var	*temp;
+	int		i;
+	int		start;
 
 	temp = shell->var;
 	shell->utils.new_arg = NULL;
@@ -62,8 +62,22 @@ int	find_var(t_shell  *shell, t_token *current)
 				shell->utils.new_arg = ft_substr(current->value, 0, i);
 			else
 				shell->utils.new_arg = ft_strjoin(shell->utils.new_arg, ft_substr(current->value, start, i - start));
+			if (specials_case(shell, current->value + i) == VALID)
+			{
+				i += 2;
+				start = i;
+				continue ;
+			}
+			if (pid_dolls(shell,  current->value + i) == VALID)
+			{
+				i+= 2;
+				start = i;
+				continue ;
+			}
 			i++;
 			shell->utils.size_var = var_size(current->value + i);
+			if (shell->utils.size_var == 0)
+				shell->utils.new_arg = ft_strjoin(shell->utils.new_arg, "$");
 			if (search_local_var(shell, current->value + i, temp) != VALID)
 				search_export_var(shell, current->value + i);
 			i += shell->utils.size_var;
@@ -81,9 +95,9 @@ int	find_var(t_shell  *shell, t_token *current)
 	return (0);
 }
 
-int var_size(char *str)
+int	var_size(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i] != ' ' && str[i] != '\0' && str[i] != '$' && str[i] != '"')
@@ -91,7 +105,7 @@ int var_size(char *str)
 	return (i);
 }
 
-int search_local_var(t_shell *shell, char* str, t_var *temp)
+int	search_local_var(t_shell *shell, char* str, t_var *temp)
 {
 	while (temp != NULL)
 	{
@@ -106,10 +120,10 @@ int search_local_var(t_shell *shell, char* str, t_var *temp)
 	return (0);
 }
 
-int search_export_var(t_shell *shell, char* str)
+int	search_export_var(t_shell *shell, char* str)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (shell->env[i] != NULL)

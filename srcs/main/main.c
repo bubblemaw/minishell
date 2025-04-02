@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/04/01 14:58:54 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/02 11:55:57 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int g_exit_status = 0;
+int	g_exit_status = 0;
 
 int	main (int ac, char *av[], char **env)
 {
-	t_shell shell;
+	t_shell	shell;
 
 	ft_memset(&shell, 0, sizeof(t_shell));
 	shell.env = copy_env(env);
@@ -64,7 +64,6 @@ int	main (int ac, char *av[], char **env)
 		// print_var_local(shell.var);
 		// print_cmds(&shell.cmd);
 		ft_execute(&shell);
-		printf("%d\n", g_exit_status);
 		// printf("execution fini\n");
 	}
 	return (0);

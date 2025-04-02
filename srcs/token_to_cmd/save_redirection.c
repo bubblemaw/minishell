@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   save_redirection.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 16:36:45 by masase            #+#    #+#             */
-/*   Updated: 2025/03/20 16:54:59 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/02 11:57:54 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	save_infile(t_shell *shell, t_cmd  *cmd)
 	
 }
 
-void save_delimiter(t_shell *shell, t_cmd *cmd)
+void	save_delimiter(t_shell *shell, t_cmd *cmd)
 {
 	shell->redir.prev_delimiter = ft_strdup(cmd->delimiter);
 	free(cmd->delimiter);

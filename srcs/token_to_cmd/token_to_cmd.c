@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   token_to_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 12:00:01 by maw               #+#    #+#             */
-/*   Updated: 2025/04/01 14:59:18 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/02 11:58:21 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int create_cmd_lst(t_shell *shell)
+int	create_cmd_lst(t_shell *shell)
 {
-	t_cmd *current;
-	t_token *tokken;
+	t_cmd	*current;
+	t_token	*tokken;
 
 	current = shell->cmd;
 	tokken = shell->tokken;
@@ -40,9 +40,9 @@ int create_cmd_lst(t_shell *shell)
 	return (VALID);
 }
 
-int ft_cmd_maker(t_cmd *cmd, t_token **tokken)
+int	ft_cmd_maker(t_cmd *cmd, t_token **tokken)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (cmd->arg)
@@ -67,7 +67,7 @@ int ft_cmd_maker(t_cmd *cmd, t_token **tokken)
 	return (VALID);
 }
 
-int new_cmd(t_cmd **head_cmd, t_cmd **current)
+int	new_cmd(t_cmd **head_cmd, t_cmd **current)
 {
 	add_cmd_lst(head_cmd);
 	*current = *head_cmd;
@@ -79,14 +79,14 @@ int new_cmd(t_cmd **head_cmd, t_cmd **current)
 	return (VALID);
 }
 
-int ft_cmd_pipe(t_cmd *cmd, t_token **tokken)
+int	ft_cmd_pipe(t_cmd *cmd, t_token **tokken)
 {
 	*tokken = (*tokken)->next;
 	cmd->type = PIPE;
 	return (VALID);
 }
 
-t_cmd *end_list(t_cmd *head)
+t_cmd	*end_list(t_cmd *head)
 {
 	while((head)->next)
 		head = (head)->next;

@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   creat_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:02:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/03/20 21:06:42 by david            ###   ########.fr       */
+/*   Updated: 2025/04/02 11:59:23 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int enter_input(t_shell *shell)
+int	enter_input(t_shell *shell)
 {
 	if (shell->input[0] == '\0')
 	{
-    	free(shell->input);
+		free(shell->input);
 		return (VALID);
 	}
 	return (0);
@@ -25,6 +25,7 @@ int enter_input(t_shell *shell)
 int	creat_tokken(char *input, t_shell *shell)
 {
 	int	var_result;
+
 	shell->creat.i = 0;
 	while (input[shell->creat.i] != '\0')
 	{
@@ -38,9 +39,9 @@ int	creat_tokken(char *input, t_shell *shell)
 		// gestion des variables
 		var_result = detect_variables(&shell->creat.var, input, &shell->creat.i);
 		if (var_result == ERROR)
-    		return (ERROR);
+			return (ERROR);
 		else if (var_result == VALID)
-    		shell->creat.end = shell->creat.i;
+			shell->creat.end = shell->creat.i;
 
 		// gestion des redirections
 		else if (detect_redirections(input, &shell->creat.i) == ERROR)
