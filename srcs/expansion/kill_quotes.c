@@ -6,13 +6,13 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 14:56:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/01 17:36:17 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/02 11:54:39 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int kill_quotes(t_shell *shell)
+int	kill_quotes(t_shell *shell)
 {
 	t_token	*temp;
 	char	*stash;
@@ -47,6 +47,9 @@ int kill_quotes(t_shell *shell)
 					free(new);
 					new = tmp;
 				}
+				free(stash);
+				if (temp->value[i] == '\0')
+					break;
 			}
 			if (temp->value[i] == '"' || temp->value[i] == '\'')
 			{
@@ -64,6 +67,7 @@ int kill_quotes(t_shell *shell)
 					free(new);
 					new = tmp;
 				}
+				free(stash);
 			}
 			i++;
 		}
@@ -79,7 +83,7 @@ int kill_quotes(t_shell *shell)
 	return (0);
 }
 
-void size_to_kill(t_token *token, t_shell *shell, int *i)
+void	size_to_kill(t_token *token, t_shell *shell, int *i)
 {
 	if (token->value[*i] == '\'')
 	{

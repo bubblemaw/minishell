@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_token_to_cmd.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 16:32:11 by masase            #+#    #+#             */
-/*   Updated: 2025/03/21 16:02:08 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/02 11:57:45 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int ft_cmd_redirection(t_cmd *cmd, t_token **tokken, t_shell *shell)
+int	ft_cmd_redirection(t_cmd *cmd, t_token **tokken, t_shell *shell)
 {
 	if (ft_strlen((*tokken)->value) > 1)
 		double_redirection(cmd, tokken, shell);
@@ -22,7 +22,7 @@ int ft_cmd_redirection(t_cmd *cmd, t_token **tokken, t_shell *shell)
 	return (VALID);
 }
 
-void double_redirection(t_cmd *cmd, t_token **tokken, t_shell *shell)
+void	double_redirection(t_cmd *cmd, t_token **tokken, t_shell *shell)
 {
 	if ((*tokken)->value[0] == '>' && (*tokken)->value[1] == '>')
 	{
@@ -46,7 +46,7 @@ void double_redirection(t_cmd *cmd, t_token **tokken, t_shell *shell)
 	}
 }
 
-void simple_redirection(t_cmd *cmd, t_token **tokken, t_shell *shell)
+void	simple_redirection(t_cmd *cmd, t_token **tokken, t_shell *shell)
 {
 	if ((*tokken)->value[0] == '>')
 	{
@@ -66,9 +66,9 @@ void simple_redirection(t_cmd *cmd, t_token **tokken, t_shell *shell)
 	}	
 }
 
-int new_cmd_redirection(t_cmd **head_cmd, t_shell *shell)
+int	new_cmd_redirection(t_cmd **head_cmd, t_shell *shell)
 {
-	t_cmd *current;
+	t_cmd	*current;
 	
 	add_cmd_before_last(head_cmd);
 	current = *head_cmd;

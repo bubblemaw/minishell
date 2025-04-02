@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:12:55 by maw               #+#    #+#             */
-/*   Updated: 2025/03/30 22:48:55 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/02 11:46:49 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void ft_exit(t_cmd *cmd, t_shell *shell)
+void	ft_exit(t_cmd *cmd, t_shell *shell)
 {
-	int n;
+	int	n;
 	int	i;
 
 	i = is_arguments_digit(cmd->arg);
@@ -26,7 +26,7 @@ void ft_exit(t_cmd *cmd, t_shell *shell)
 		printf("exit\n");
 		error("too much argument");
 		return ;
-	}	
+	}
 	if (i == 2)
 		n = ft_atoi(cmd->arg[1]);
 	free_shell(shell);
@@ -36,13 +36,13 @@ void ft_exit(t_cmd *cmd, t_shell *shell)
 	exit(n);
 }
 
-void ft_exit_void(int n,t_shell *shell)
+void	ft_exit_void(int n,t_shell *shell)
 {
 	free_shell(shell);
 	printf("exit\n");
 	exit(n);
 }
-int is_arguments_digit(char **tab)
+int	is_arguments_digit(char **tab)
 {
 	int	i;
 	int	j;

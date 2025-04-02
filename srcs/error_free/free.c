@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:49:23 by masase            #+#    #+#             */
-/*   Updated: 2025/03/31 16:59:22 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/02 11:52:03 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void free_shell(t_shell *shell)
+void	free_shell(t_shell *shell)
 {
 	if (shell->env)
 		free_tab(shell->env);
@@ -37,7 +37,7 @@ void	free_tab(char **tab)
 	tab = NULL;
 }
 
-void free_cmds(t_cmd **head)
+void	free_cmds(t_cmd **head)
 {
 	t_cmd *tmp;
 	while (*head)
@@ -57,7 +57,7 @@ void free_cmds(t_cmd **head)
 	}
 }
 
-int free_new_redirection(t_shell *shell)
+int	free_new_redirection(t_shell *shell)
 {
 	if (shell->redir.prev_infile)
 		free(shell->redir.prev_infile);

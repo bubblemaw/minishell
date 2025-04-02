@@ -6,16 +6,16 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:16:38 by maw               #+#    #+#             */
-/*   Updated: 2025/04/01 15:57:42 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/02 12:05:19 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int ft_execute(t_shell *shell)
+int	ft_execute(t_shell *shell)
 {
-	t_cmd *current;
-	
+	t_cmd	*current;
+
 	current = shell->cmd;
 	while (current)
 	{
@@ -39,7 +39,7 @@ int ft_execute(t_shell *shell)
 	return (VALID);
 }
 
-void pipex_loop(t_cmd *current, t_shell *shell)
+void	pipex_loop(t_cmd *current, t_shell *shell)
 {
 	while (current)
 	{
@@ -50,7 +50,7 @@ void pipex_loop(t_cmd *current, t_shell *shell)
 	}
 }
 
-int child_processor(t_cmd *cmd , t_shell *shell, int *pipefd) //gestion entree sortie du child process avant son execution
+int	child_processor(t_cmd *cmd , t_shell *shell, int *pipefd) //gestion entree sortie du child process avant son execution
 {
 	if (shell->prev_pipefd != -1) // reprendre l'entrée du pipe précédent
 	{
@@ -76,10 +76,10 @@ int child_processor(t_cmd *cmd , t_shell *shell, int *pipefd) //gestion entree s
 	}
 }
 
-int piper(t_cmd *cmd, t_shell *shell) // creation du pipe et fork
+int	piper(t_cmd *cmd, t_shell *shell) // creation du pipe et fork
 {
-	int pipefd[2];
-	pid_t pid;
+	int		pipefd[2];
+	pid_t	pid;
 
 		if (pipe(pipefd) == -1)
 			return (error("error occurs during the pipe"));
@@ -98,9 +98,9 @@ int piper(t_cmd *cmd, t_shell *shell) // creation du pipe et fork
 		}
 }
 
-int ft_exe_pipe(t_cmd *cmd, t_shell *shell)// execution des fonctions qui precedé ou suivi d'un pipe
+int	ft_exe_pipe(t_cmd *cmd, t_shell *shell)// execution des fonctions qui precedé ou suivi d'un pipe
 {
-	char *cmd_path;
+	char	*cmd_path;
 
 	cmd_path = ft_parse(cmd, shell);
 	if (cmd_path == NULL)
@@ -110,10 +110,10 @@ int ft_exe_pipe(t_cmd *cmd, t_shell *shell)// execution des fonctions qui preced
 	return (VALID);
 }
 
-int ft_exe(t_cmd *cmd, t_shell *shell) // execution des commandes normales (sans pipe)
+int	ft_exe(t_cmd *cmd, t_shell *shell) // execution des commandes normales (sans pipe)
 {
-	pid_t pid1;
-	char *cmd_path;
+	pid_t	pid1;
+	char	*cmd_path;
 
 	if (cmd->arg == NULL)
 		return(ERROR);

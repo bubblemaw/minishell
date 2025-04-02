@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/01 17:36:25 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/02 12:02:23 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,6 @@
 # include <dirent.h>
 # include <signal.h>
 
-#define true	1
-#define false	0
-
 // command's return
 # define DOUBLE 3
 # define ERROR 2
@@ -46,14 +43,14 @@ extern int g_exit_status;
 // parsing's type data
 typedef enum 
 {
-	NAME,         // 0
-	EQUALITY,     // 1
-	VALUE,        // 2
-	COMMAND,      // 3
-	REDIRECTION,  // 4
-	PIPE,         // 5
-	ARGUMENT,	  // 6
-	OPTION		  // 7
+	NAME,
+	EQUALITY,
+	VALUE,
+	COMMAND,
+	REDIRECTION,
+	PIPE,
+	ARGUMENT,
+	OPTION
 } type;
 
 // structures

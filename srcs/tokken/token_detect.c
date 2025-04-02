@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_detect.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:53:52 by david             #+#    #+#             */
-/*   Updated: 2025/03/20 21:06:47 by david            ###   ########.fr       */
+/*   Updated: 2025/04/02 12:00:15 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	skip_space(char *str, int *i)
 {
-	int check_first;
+	int	check_first;
 
 	check_first = *i;
 	while ((str[*i] >= 9 && str[*i] <= 13) || str[*i] == 32)
@@ -51,7 +51,7 @@ int	double_quotes(char *str, int *i)
 
 int	detect_redirections(char *str, int *i)
 {
-	int next;
+	int	next;
 
 	next = *i;
 	if (str[*i] == '>' || str[*i] == '<')
@@ -73,7 +73,7 @@ int	detect_redirections(char *str, int *i)
 	return (0);
 }
 
-int detect_variables(bool *var, char *str, int *i)
+int	detect_variables(bool *var, char *str, int *i)
 {
 	if (str[*i] == '=' && (str[*i + 1] == ' ' || str[*i - 1] == ' '))
 		return (ERROR);
@@ -103,7 +103,7 @@ int detect_variables(bool *var, char *str, int *i)
 
 int	detect_var_value(char *input, int *i)
 {
-	int result;
+	int	result;
 
 	result = 0;
 	if (input[*i] == '"')
@@ -117,7 +117,7 @@ int	detect_var_value(char *input, int *i)
 
 int	detect_command(char *input, int *i)
 {
-	int result;
+	int	result;
 
 	result = 0;
 	while (input[*i] != ' ' && input[*i] != '>'

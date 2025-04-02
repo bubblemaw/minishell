@@ -6,17 +6,17 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/04/01 16:01:33 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/02 11:55:57 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int g_exit_status = 0;
+int	g_exit_status = 0;
 
 int	main (int ac, char *av[], char **env)
 {
-	t_shell shell;
+	t_shell	shell;
 
 	ft_memset(&shell, 0, sizeof(t_shell));
 	shell.env = copy_env(env);

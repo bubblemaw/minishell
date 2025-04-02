@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 15:25:49 by maw               #+#    #+#             */
-/*   Updated: 2025/03/25 13:49:01 by david            ###   ########.fr       */
+/*   Updated: 2025/04/02 11:45:04 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	echo(t_cmd *cmd)
 {
-	int flag_n;
-	int i;
+	int	flag_n;
+	int	i;
 
 	flag_n = 0;
 	i = echo_option(cmd);
@@ -33,11 +33,11 @@ int	echo(t_cmd *cmd)
 	return (VALID);
 }
 
-int echo_option(t_cmd *cmd)
+int	echo_option(t_cmd *cmd)
 {
-	int i;
-	int j;
-	int flag_n;
+	int	i;
+	int	j;
+	int	flag_n;
 
 	i = 1;
 	while (cmd->arg[i] && cmd->arg[i][0] == '-')
@@ -51,7 +51,7 @@ int echo_option(t_cmd *cmd)
 				flag_n = 0;
 				break;
 			}
-			j++;	
+			j++;
 		}
 		if (flag_n == 0)
 			break;
@@ -59,5 +59,3 @@ int echo_option(t_cmd *cmd)
 	}
 	return (i);
 }
-
-
