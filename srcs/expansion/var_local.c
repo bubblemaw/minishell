@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:44:05 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/02 11:55:20 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/02 15:49:46 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,19 +71,23 @@ int	crush_export_var(t_shell *shell, char *name, char *value)
 	t_shell	*temp;
 	int		len;
 	int		i;
+	char	*new_var;
 
 	temp = shell;
 	len = 0;
 	i = 0;
+	new_var = NULL;
 	while (temp->env[i] != NULL)
 	{
 		len = ft_strlen(name);
 		if (ft_strncmp(name, temp->env[i], len) == 0
 			&& temp->env[i][len] == '=')
 		{
-			temp->env[i] = ft_strdup(name);
-			temp->env[i] = ft_strjoin(temp->env[i], "=");
-			temp->env[i] = ft_strjoin(temp->env[i], value); 
+			new_var = ft_strdup(name);
+			new_var = ft_strjoin(new_var, "=");
+			new_var = ft_strjoin(new_var, value);
+			free(temp->env[i]);
+			temp->env[i] = ft_strdup(new_var);
 		}
 		i++;
 	}

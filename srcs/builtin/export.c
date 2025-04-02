@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:19:16 by david             #+#    #+#             */
-/*   Updated: 2025/04/02 11:49:18 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/02 12:24:19 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ int	check_double_export(char *var, t_shell *shell)
 	shell->env[i] = ft_strdup(var);
 	crush_local_var(shell, shell->env[i]);
 	i++;
-	shell->env[i] = NULL;
 	return (0);
 }
 
