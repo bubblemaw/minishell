@@ -6,7 +6,7 @@
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/02 13:18:34 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/02 14:20:53 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ void	here_doc_child_process(int *pipefd, t_cmd *cmd);
 // execution
 int		ft_execute(t_shell *shell);
 int		ft_exe(t_cmd *token, t_shell *shell);
-// int		wait_exit_status(t_shell *shell, int *pipe_exit_flag);
+int		wait_exit_status(t_shell *shell, int *pipe_exit_flag);
 int		built_in(t_cmd *cmd, t_shell *shell);
 
 // built in fonctions

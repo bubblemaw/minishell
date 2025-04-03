@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 15:28:31 by maw               #+#    #+#             */
-/*   Updated: 2025/04/02 11:44:28 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/02 14:00:26 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	cd(t_cmd *cmd, t_shell *shell)
 char	*path_finder(t_cmd *cmd, char *buffer)
 {
 	char	*path;
+	char	*temp;
 
 	path = NULL;
 	if (cmd->arg[1][0] == '/')
@@ -56,8 +57,10 @@ char	*path_finder(t_cmd *cmd, char *buffer)
 	else
 	{		
 		buffer = getcwd(NULL, 0);
-		path = ft_strjoin(buffer, "/");
-		path = ft_strjoin(path, cmd->arg[1]);
+		temp = ft_strjoin(buffer, "/");
+		path = ft_strjoin(temp, cmd->arg[1]);
+		free (temp);
+		free (buffer);
 	}
 	return (path);
 }
@@ -84,10 +87,15 @@ void	findvar_replace(t_shell *shell, char *buffer)
 		free(shell->env[i]);
 		shell->env[i] = NULL;
 	}
-	shell->env[i] = ft_strjoin("OLD" ,temp);
-	i++;
-	shell->env[i] = NULL;
+	else
+	{
+		shell->env = ft_realloc(shell->env, i * sizeof(char *), (i + 1) * sizeof(char *));
+		shell->env[i] = ft_strjoin("OLD" ,temp);
+		i++;
+		shell->env[i] = NULL;
+	}
 	free(temp);
+	free(buffer);
 }
 
 char	*find_user_name(char **tab)

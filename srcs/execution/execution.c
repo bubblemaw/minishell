@@ -6,7 +6,7 @@
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:16:38 by maw               #+#    #+#             */
-/*   Updated: 2025/04/02 13:19:29 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/02 14:59:00 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,40 +36,28 @@ int	ft_execute(t_shell *shell)
 		current = current->next;
 	}
 	while (wait(&g_exit_status) > 0) // attente de tous les childs process
-	{
-		// last_status = wait_exit_status(shell, &pipe_exit_flag);
-		if (WIFEXITED(g_exit_status))
-			g_exit_status = WEXITSTATUS(g_exit_status);
-		else if (WIFSIGNALED(g_exit_status))
-			g_exit_status = 128 + WTERMSIG(g_exit_status);
-		if (shell->cmd->type == PIPE && pipe_exit_flag != 1)
-		{
-			last_status = g_exit_status;
-			pipe_exit_flag = 1;
-		}
-	}
+		last_status = wait_exit_status(shell, &pipe_exit_flag);
 	if (pipe_exit_flag == 1)
 		g_exit_status = last_status;
 	reset_fd(shell);
 	return (VALID);
 }
-// int wait_exit_status(t_shell *shell, int *pipe_exit_flag)
-// {
-// 	int	last_status;
+int wait_exit_status(t_shell *shell, int *pipe_exit_flag)
+{
+	int	last_status;
 
-// 	if (WIFEXITED(g_exit_status))
-// 		g_exit_status = WEXITSTATUS(g_exit_status);
-// 	else if (WIFSIGNALED(g_exit_status))
-// 		g_exit_status = 128 + WTERMSIG(g_exit_status);
-// 	if (shell->cmd->type == PIPE && *pipe_exit_flag != 1)
-// 	{
-// 		last_status = g_exit_status;
-// 		*pipe_exit_flag = 1;
-// 	}
-// 	return (last_status);
-// 	// if (pipe_exit_flag == 1)
-// 	// 	g_exit_status = last_status;
-// }
+	last_status = 0;
+	if (WIFEXITED(g_exit_status))
+		g_exit_status = WEXITSTATUS(g_exit_status);
+	else if (WIFSIGNALED(g_exit_status))
+		g_exit_status = 128 + WTERMSIG(g_exit_status);
+	if (shell->cmd->type == PIPE && *pipe_exit_flag != 1)
+	{
+		last_status = g_exit_status;
+		*pipe_exit_flag = 1;
+	}
+	return (last_status);
+}
 
 void	pipex_loop(t_cmd *current, t_shell *shell)
 {
@@ -82,6 +70,32 @@ void	pipex_loop(t_cmd *current, t_shell *shell)
 	}
 }
 
+// int	child_processor(t_cmd *cmd , t_shell *shell, int *pipefd) //gestion entree sortie du child process avant son execution
+// {
+// 	if (shell->prev_pipefd != -1) // reprendre l'entrée du pipe précédent
+// 	{
+// 		dup2(shell->prev_pipefd, STDIN_FILENO);
+// 		close(shell->prev_pipefd);
+// 	}
+// 	if (cmd->infile) // si la commande recoit l'entrée d'un fichier infile
+// 		ft_direction(cmd);
+// 	if (cmd->next == NULL) // si dernière commande -> redirection vers outfile ou terminal
+// 	{
+// 		if (cmd->outfile)
+// 			ft_direction(cmd);
+// 		else
+// 			dup2(shell->STDOUT, STDOUT_FILENO);
+// 		return (CHILD_PROCESS); 
+// 	}
+// 	else // sinon redirection vers pipe
+// 	{
+// 		close(pipefd[0]);
+// 		dup2(pipefd[1], STDOUT_FILENO);
+// 		close (pipefd[1]);
+// 		return (CHILD_PROCESS);
+// 	}
+// }
+
 int	child_processor(t_cmd *cmd , t_shell *shell, int *pipefd) //gestion entree sortie du child process avant son execution
 {
 	if (shell->prev_pipefd != -1) // reprendre l'entrée du pipe précédent
@@ -91,21 +105,17 @@ int	child_processor(t_cmd *cmd , t_shell *shell, int *pipefd) //gestion entree s
 	}
 	if (cmd->infile) // si la commande recoit l'entrée d'un fichier infile
 		ft_direction(cmd);
-	if (cmd->next == NULL) // si dernière commande -> redirection vers outfile ou terminal
-	{
-		if (cmd->outfile)
-			ft_direction(cmd);
-		else
-			dup2(shell->STDOUT, STDOUT_FILENO);
-		return (CHILD_PROCESS); 
-	}
+	if (cmd->outfile) // si dernière commande -> redirection vers outfile ou terminal
+		ft_direction(cmd);
+	else if (cmd->next == NULL)
+		dup2(shell->STDOUT, STDOUT_FILENO); 
 	else // sinon redirection vers pipe
 	{
 		close(pipefd[0]);
 		dup2(pipefd[1], STDOUT_FILENO);
 		close (pipefd[1]);
-		return (CHILD_PROCESS);
 	}
+	return (CHILD_PROCESS);
 }
 
 int	piper(t_cmd *cmd, t_shell *shell) // creation du pipe et fork
@@ -163,11 +173,11 @@ int	ft_exe(t_cmd *cmd, t_shell *shell) // execution des commandes normales (sans
 	else
 	{
 		waitpid(pid1, &g_exit_status, 0);
-		if (WIFEXITED(g_exit_status))
-			g_exit_status = WEXITSTATUS(g_exit_status);
-		else if (WIFSIGNALED(g_exit_status))
-			g_exit_status = 128 + WTERMSIG(g_exit_status);
-		printf("apres waitPID%d\n", g_exit_status);
+	// 	if (WIFEXITED(g_exit_status))
+	// 		g_exit_status = WEXITSTATUS(g_exit_status);
+	// 	else if (WIFSIGNALED(g_exit_status))
+	// 		g_exit_status = 128 + WTERMSIG(g_exit_status);
+	// 	printf("apres waitPID%d\n", g_exit_status);
 	}
 	return (VALID);
 }
