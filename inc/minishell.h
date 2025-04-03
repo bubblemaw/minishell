@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/02 14:20:53 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/03 13:55:52 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,9 +176,10 @@ void	here_doc_child_process(int *pipefd, t_cmd *cmd);
 int		ft_execute(t_shell *shell);
 int		ft_exe(t_cmd *token, t_shell *shell);
 int		wait_exit_status(t_shell *shell, int *pipe_exit_flag);
-int		built_in(t_cmd *cmd, t_shell *shell);
 
 // built in fonctions
+int		built_in(t_cmd *cmd, t_shell *shell);
+int		built_in_pipe(t_cmd *cmd, t_shell *shell);
 int		export(t_cmd *token, t_shell *shell);
 int		echo(t_cmd *cmd);
 int		echo_option(t_cmd *cmd);

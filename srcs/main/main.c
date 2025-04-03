@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/04/02 14:28:18 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/03 14:05:05 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ int	main (int ac, char *av[], char **env)
 		else if (creat_tokken(shell.input, &shell) == ERROR)
 		{
 			printf("Syntaxe Error...\n");
+			g_exit_status = 2;
+			printf("%d\n", g_exit_status);
 			continue ;
 		}
 		give_token_data(&shell);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:19:16 by david             #+#    #+#             */
-/*   Updated: 2025/04/02 11:49:18 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/03 14:33:22 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	export(t_cmd *token, t_shell *shell)
 		i++;
 		j++;
 	}
-	return (0);
+	return (VALID);
 }
 
 int	join_var(t_token **token)
