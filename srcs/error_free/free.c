@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:49:23 by masase            #+#    #+#             */
-/*   Updated: 2025/04/02 12:27:26 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/03 13:06:03 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	free_shell(t_shell *shell)
 		free_cmds(&shell->cmd);
 	if (shell->tokken)
 		free_list(shell->tokken);
+	if (shell->var)
+		free_list_var(shell->var);
 }
 
 void	free_tab(char **tab)

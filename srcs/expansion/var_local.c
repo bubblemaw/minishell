@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:44:05 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/02 15:49:46 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/03 12:27:13 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,22 +72,32 @@ int	crush_export_var(t_shell *shell, char *name, char *value)
 	int		len;
 	int		i;
 	char	*new_var;
+	char	*tmp;
 
 	temp = shell;
-	len = 0;
+	len = ft_strlen(name);
 	i = 0;
-	new_var = NULL;
 	while (temp->env[i] != NULL)
 	{
-		len = ft_strlen(name);
-		if (ft_strncmp(name, temp->env[i], len) == 0
-			&& temp->env[i][len] == '=')
+		if (ft_strncmp(name, temp->env[i], len) == 0 && temp->env[i][len] == '=')
 		{
 			new_var = ft_strdup(name);
-			new_var = ft_strjoin(new_var, "=");
-			new_var = ft_strjoin(new_var, value);
-			free(temp->env[i]);
-			temp->env[i] = ft_strdup(new_var);
+			if (!new_var)
+				return (-1);
+			
+			tmp = ft_strjoin(new_var, "=");
+			free(new_var);
+			if (!tmp)
+				return (-1);
+			
+			new_var = ft_strjoin(tmp, value);
+			free(tmp);
+			if (!new_var)
+				return (-1);
+			if (temp->env[i] != NULL)
+				free(temp->env[i]);
+			temp->env[i] = new_var;
+			return (0);
 		}
 		i++;
 	}
