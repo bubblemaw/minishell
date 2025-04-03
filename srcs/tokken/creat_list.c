@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   creat_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:14:26 by david             #+#    #+#             */
-/*   Updated: 2025/04/03 16:26:13 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/03 23:56:05 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_token	*creat_node(char *content)
 	new = (t_token *)malloc(sizeof(t_token));
 	if (new == NULL)
 		return (NULL);
-	new->value = ft_strdup(content);
+	new->value = content;
 	new->prev = NULL;
 	new->next = NULL;
 	return (new);
@@ -52,12 +52,10 @@ void	free_list(t_token *head)
 
 	while (head != NULL)
 	{
-		printf("ue ue ue ca free\n");
 		tmp = head;
 		free(head->value);
 		head = head->next;
 		free(tmp);
-		tmp = NULL;
 	}
 }
 

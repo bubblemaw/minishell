@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   creat_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:02:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/03 16:16:22 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/04 01:19:13 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,25 +59,20 @@ int	creat_tokken(char *input, t_shell *shell)
 			shell->creat.end = shell->creat.i;
 		if (shell->creat.begin < shell->creat.end)
 			creat_list(shell, input);
-		if (shell->creat.content)
-		{
-			printf("on free le content \n");
-			if (input[shell->creat.i + 1] != '\0')
-				free(shell->creat.content);
-		}
+		// if (shell->creat.content)
+		// {
+		// 	if (input[shell->creat.i + 1] != '\0')
+		// 		free(shell->creat.content);
+		// }
 	}
-	shell->creat.last_token = shell->creat.content;
-	if (shell->creat.last_token[0] == '<' || shell->creat.last_token[0] == '>'
-		|| shell->creat.last_token[0] == '|')
+	if (shell->creat.content[0] == '<' || shell->creat.content[0] == '>'
+		|| shell->creat.content[0] == '|')
 	{
-		free(shell->creat.last_token);
+		// free(shell->creat.content);
 		return (ERROR);
 	}
-	if (shell->creat.content)
-	{
-		printf("on free le last \n");
-		free(shell->creat.last_token);
-	}
+	// if (shell->creat.content)
+	// 	free(shell->creat.content);
 	
 	return (0);
 }

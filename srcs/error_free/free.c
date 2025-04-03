@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:49:23 by masase            #+#    #+#             */
-/*   Updated: 2025/04/03 16:26:25 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/03 23:52:32 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	free_shell(t_shell *shell)
 		free_list(shell->tokken);
 	if (shell->var)
 		free_list_var(shell->var);
+	if (shell->input)
+		free(shell->input);
 }
 
 void	free_tab(char **tab)

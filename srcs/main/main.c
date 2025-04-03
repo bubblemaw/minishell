@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/04/03 16:22:50 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/04 01:18:32 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,9 @@ int	main (int ac, char *av[], char **env)
 
 	while (1)
 	{
-		if (shell.tokken != NULL)
+		if (shell.tokken != NULL || shell.input)
 		{
+			free(shell.input);
 			free_list(shell.tokken);
 			shell.tokken = NULL;
 		}
@@ -49,22 +50,17 @@ int	main (int ac, char *av[], char **env)
 			printf("Syntaxe Error...\n");
 			continue ;
 		}
-		give_token_data(&shell);
-		// print_token(shell.tokken);
-		ft_expansion(&shell);
-		kill_quotes(&shell);
-		init_execution(&shell);
-		if (create_cmd_lst(&shell) == ERROR)
-		{
-			free_shell(&shell);
-			error("loading commands\n");
-		}
-		// print_cmds(&shell.cmd);
-		init_var_local(&shell);
-		// print_var_local(shell.var);
-		// print_cmds(&shell.cmd);
-		ft_execute(&shell);
-		// printf("execution fini\n");
+		// give_token_data(&shell);
+		// ft_expansion(&shell);
+		// kill_quotes(&shell);
+		// init_execution(&shell);
+		// if (create_cmd_lst(&shell) == ERROR)
+		// {
+		// 	free_shell(&shell);
+		// 	error("loading commands\n");
+		// }
+		// init_var_local(&shell);
+		// ft_execute(&shell);
 	}
 	return (0);
 }
