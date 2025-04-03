@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:02:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/02 11:59:23 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/03 16:16:22 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,27 @@ int	creat_tokken(char *input, t_shell *shell)
 			return (ERROR);
 		else
 			shell->creat.end = shell->creat.i;
-
-		//creation de la liste
 		if (shell->creat.begin < shell->creat.end)
 			creat_list(shell, input);
-	
+		if (shell->creat.content)
+		{
+			printf("on free le content \n");
+			if (input[shell->creat.i + 1] != '\0')
+				free(shell->creat.content);
+		}
 	}
 	shell->creat.last_token = shell->creat.content;
 	if (shell->creat.last_token[0] == '<' || shell->creat.last_token[0] == '>'
 		|| shell->creat.last_token[0] == '|')
+	{
+		free(shell->creat.last_token);
 		return (ERROR);
+	}
+	if (shell->creat.content)
+	{
+		printf("on free le last \n");
+		free(shell->creat.last_token);
+	}
+	
 	return (0);
 }

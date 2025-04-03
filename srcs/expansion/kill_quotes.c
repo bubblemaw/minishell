@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 14:56:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/03 12:44:50 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/03 14:38:18 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	kill_quotes(t_shell *shell)
 		}
 		if (new != NULL)
 		{
-			free(temp->value);
+			// free(temp->value);
 			temp->value = ft_strdup(new);
 			free(new);
 			new = NULL;
