@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: masase <masase@student.42.fr>              +#+  +:+       +#+         #
+#    By: maw <maw@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 22:16:43 by david             #+#    #+#              #
-#    Updated: 2025/04/03 13:21:52 by masase           ###   ########.fr        #
+#    Updated: 2025/04/04 12:03:05 by maw              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRCS =  srcs/main/main.c \
 		srcs/builtin/echo.c \
 		srcs/builtin/export.c \
 		srcs/builtin/cd.c \
+		srcs/builtin/cd_utils.c \
 		srcs/builtin/env.c \
 		srcs/builtin/pwd.c \
 		srcs/builtin/unset.c \

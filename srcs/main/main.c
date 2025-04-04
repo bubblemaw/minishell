@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/04/03 14:05:05 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/04 12:06:10 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	main (int ac, char *av[], char **env)
 	{
 		if (shell.tokken != NULL)
 		{
+			free(shell.input);
 			free_list(shell.tokken);
 			shell.tokken = NULL;
 		}
@@ -48,7 +49,6 @@ int	main (int ac, char *av[], char **env)
 		{
 			printf("Syntaxe Error...\n");
 			g_exit_status = 2;
-			printf("%d\n", g_exit_status);
 			continue ;
 		}
 		give_token_data(&shell);
@@ -67,7 +67,7 @@ int	main (int ac, char *av[], char **env)
 		// print_cmds(&shell.cmd);
 		ft_execute(&shell);
 		// printf("execution fini\n");
-		printf("%d\n", g_exit_status);
+		// printf("%d\n", g_exit_status);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:49:23 by masase            #+#    #+#             */
-/*   Updated: 2025/04/02 14:24:53 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/04 12:12:47 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	free_shell(t_shell *shell)
 		free_cmds(&shell->cmd);
 	if (shell->tokken)
 		free_list(shell->tokken);
+	if (shell->input)
+		free(shell->input);
 }
 
 void	free_tab(char **tab)

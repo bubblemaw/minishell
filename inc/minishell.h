@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/03 13:55:52 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/04 11:51:02 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,8 +184,10 @@ int		export(t_cmd *token, t_shell *shell);
 int		echo(t_cmd *cmd);
 int		echo_option(t_cmd *cmd);
 int		cd(t_cmd *cmd, t_shell *shell);
+int		move_into_dir(t_cmd *cmd, t_shell *shell, char *path);
 char	*path_finder(t_cmd *cmd, char *buffer);
 void	findvar_replace(t_shell *shell, char *buffer);
+void	put_oldpwd(int i, t_shell *shell, char *temp);
 char	*find_user_name(char **tab);
 int		ft_env(t_cmd *cmd, t_shell *shell);
 int		pwd(void);
