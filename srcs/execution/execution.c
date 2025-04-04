@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:16:38 by maw               #+#    #+#             */
-/*   Updated: 2025/04/03 13:30:22 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/04 17:07:33 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,16 @@ int	ft_execute(t_shell *shell)
 	current = shell->cmd;
 	while (current)
 	{
-		if (current->infile || current->outfile) // redirection infile outfile
-			if (ft_direction(current) == 0)
-				return (ERROR);
-		if (current->delimiter)
-			here_doc(current ,shell);
 		if (current->type == PIPE) // si il ya des operations avec des pipes
 		{
 			pipex_loop(current, shell);
 				break ;
 		}
+		if (current->infile || current->outfile) // redirection infile outfile
+			if (ft_direction(current) == 0)
+				return (ERROR);
+		if (current->delimiter)
+			here_doc(current ,shell);
 		else // execution commande basique
 			ft_exe(current, shell);
 		current = current->next;
@@ -75,7 +75,13 @@ int	ft_exe(t_cmd *cmd, t_shell *shell) // execution des commandes normales (sans
 		if (cmd_path == NULL)
 			return(error_cmd(cmd->arg[0]));
 		if(execve(cmd_path, cmd->arg, shell->env) == -1)
+		{
+			if (errno == 13)
+				g_exit_status = 126;
+			else if (errno == 2)
+				g_exit_status = 127;
 			return(error_exit("execve failed"));
+		}
 	}
 	else
 	{
