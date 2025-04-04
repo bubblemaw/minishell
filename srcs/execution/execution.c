@@ -6,7 +6,7 @@
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:16:38 by maw               #+#    #+#             */
-/*   Updated: 2025/04/04 17:07:33 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/04 17:09:55 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_execute(t_shell *shell)
 				return (ERROR);
 		if (current->delimiter)
 			here_doc(current ,shell);
-		else // execution commande basique
+		else // execution commande basiquee 
 			ft_exe(current, shell);
 		current = current->next;
 	}
