@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:02:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/04 01:19:13 by david            ###   ########.fr       */
+/*   Updated: 2025/04/04 11:41:00 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,7 @@
 int	enter_input(t_shell *shell)
 {
 	if (shell->input[0] == '\0')
-	{
-		free(shell->input);
 		return (VALID);
-	}
 	return (0);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:19:16 by david             #+#    #+#             */
-/*   Updated: 2025/04/02 12:24:19 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/04 12:31:11 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	join_var(t_token **token)
 {
 	t_token	*temp;
 
+	printf("ENTER\n");
 	(*token)->value = ft_strjoin((*token)->value, (*token)->next->value);
 	(*token)->value = ft_strjoin((*token)->value, (*token)->next->next->value);
 	temp = (*token)->next;

@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:53:52 by david             #+#    #+#             */
-/*   Updated: 2025/04/03 23:47:56 by david            ###   ########.fr       */
+/*   Updated: 2025/04/04 11:30:21 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,19 +54,20 @@ int	detect_redirections(char *str, int *i)
 	int	next;
 
 	next = *i;
-	if (str[*i] == '>' || str[*i] == '<')
+	if ((str[*i] == '>' || str[*i] == '<'))
 	{
-		if (str[next + 1] == str[*i])
+		if (str[next + 1] != '\0' && str[next + 1] == str[*i])
 			(*i)++;
-		if (str[next + 2] == '>' || str[next + 2] == '<' 
+		if (str[next + 1] != '\0' && str[next + 2] != '\0' &&
+			(str[next + 2] == '>' || str[next + 2] == '<' 
 			|| (str[*i] == '>' && str[next + 1] == '<')
-			|| (str[*i] == '<' && str[next + 1] == '>'))
+			|| (str[*i] == '<' && str[next + 1] == '>')))
 			return (ERROR);
 		return (VALID);
 	}
 	else if (str[*i] == '|')
 	{
-		if (str[next +1] == '|')
+		if (str[next + 1] != '\0' && str[next +1] == '|')
 			return (ERROR);
 		return (VALID);
 	}

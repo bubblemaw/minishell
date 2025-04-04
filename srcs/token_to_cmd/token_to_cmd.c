@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_to_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 12:00:01 by maw               #+#    #+#             */
-/*   Updated: 2025/04/02 11:58:21 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/04 13:26:29 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	create_cmd_lst(t_shell *shell)
 			|| tokken->type == VALUE)
 			tokken = tokken->next;
 		else if (tokken->type == COMMAND)
-			ft_cmd_maker(current, &tokken);
+			ft_cmd_maker(shell, current, &tokken);
 		else if (tokken->type == PIPE)
 		{
 			ft_cmd_pipe(current, &tokken);
@@ -35,12 +35,12 @@ int	create_cmd_lst(t_shell *shell)
 		else if (tokken->type == REDIRECTION)
 			ft_cmd_redirection(current, &tokken, shell);
 		else if (tokken && tokken->type == ARGUMENT)
-			ft_cmd_maker(current, &tokken);
+			ft_cmd_maker(shell, current, &tokken);
 	}
 	return (VALID);
 }
 
-int	ft_cmd_maker(t_cmd *cmd, t_token **tokken)
+int	ft_cmd_maker(t_shell *shell, t_cmd *cmd, t_token **tokken)
 {
 	int	i;
 
@@ -48,12 +48,14 @@ int	ft_cmd_maker(t_cmd *cmd, t_token **tokken)
 	if (cmd->arg)
 	{
 		while (cmd->arg[i] != NULL)
-			i++;
+		i++;	
 	}
+	if (ft_strlen((*tokken)->value) == 6 && ft_strncmp((*tokken)->value, "export", 6) == 0)
+		shell->utils.valid = 1;
 	while (*tokken && ((*tokken)->type == OPTION || (*tokken)->type == ARGUMENT || (*tokken)->type == COMMAND
 			|| (*tokken)->type == NAME || (*tokken)->type == EQUALITY || (*tokken)->type == VALUE))
 	{
-		if ((*tokken)->type == NAME)
+		if ((*tokken)->type == NAME && shell->utils.valid == 1)
 			join_var(tokken);
 		cmd->arg = ft_realloc(cmd->arg, i * sizeof(char *), (i + 1) * sizeof(char *));
 		cmd->arg[i] = ft_strdup((*tokken)->value);

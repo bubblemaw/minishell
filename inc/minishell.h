@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/03 23:15:11 by david            ###   ########.fr       */
+/*   Updated: 2025/04/04 13:10:03 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ typedef struct s_utils
 	int		size_var;
 	char	*new_arg;
 	char	*sub_env;
+	int		valid;
 }	t_utils;
 
 // principal struct
@@ -195,7 +196,7 @@ int		is_arguments_digit(char **tab);
 
 // token list -> cmd list
 t_cmd	*end_list(t_cmd *head);
-int		ft_cmd_maker(t_cmd *cmd, t_token **tokken);
+int		ft_cmd_maker(t_shell *shell, t_cmd *cmd, t_token **tokken);
 int		ft_cmd_pipe(t_cmd *cmd, t_token **tokken);
 int		ft_cmd_redirection(t_cmd *cmd, t_token **tokken, t_shell *shell);
 void	simple_redirection(t_cmd *cmd, t_token **tokken, t_shell *shell);
@@ -224,7 +225,7 @@ int		child_processor(t_cmd *cmd, t_shell *shell, int *pipefd);
 // local gestion
 int		init_var_local(t_shell *shell);
 t_var	*check_doubles(t_var *check, char *name);
-void	replace_var(t_var *exist_var, t_token *temp);
+int		replace_var(t_var *exist_var, t_token *temp);
 int		crush_export_var(t_shell *shell, char *name, char *value);
 void	creat_var_list(t_shell *shell, t_token *temp);
 t_var	*creat_node_var(char *name, char *content);
@@ -246,9 +247,6 @@ int		var_size(char *str);
 int		is_double_quote(t_token *tokken);
 int		kill_quotes(t_shell *shell);
 void	size_to_kill(t_token *token, t_shell *shell, int *i);
-
-// variables priorities
-void	crush_var(t_shell *shell);
 
 //init_minishell
 void	init_execution(t_shell *shell);

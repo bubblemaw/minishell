@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/04/04 01:18:32 by david            ###   ########.fr       */
+/*   Updated: 2025/04/04 13:16:31 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,17 @@ int	main (int ac, char *av[], char **env)
 			printf("Syntaxe Error...\n");
 			continue ;
 		}
-		// give_token_data(&shell);
+		give_token_data(&shell);
 		// ft_expansion(&shell);
 		// kill_quotes(&shell);
 		// init_execution(&shell);
-		// if (create_cmd_lst(&shell) == ERROR)
-		// {
-		// 	free_shell(&shell);
-		// 	error("loading commands\n");
-		// }
+		if (create_cmd_lst(&shell) == ERROR)
+		{
+			free_shell(&shell);
+			error("loading commands\n");
+		}
 		// init_var_local(&shell);
+		// print_var_local(shell.var);
 		// ft_execute(&shell);
 	}
 	return (0);

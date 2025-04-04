@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_local.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:44:05 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/03 12:27:13 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/04 12:19:22 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,7 @@ int	init_var_local(t_shell *shell)
 			exist_var = check_doubles(shell->var, temp->value);
 		else if (send == true && temp->type == VALUE)
 		{
-			if (exist_var != NULL)
-				replace_var(exist_var, temp);
-			else
+			if (replace_var(exist_var, temp) != VALID)
 				creat_var_list(shell, temp);
 			send = false;
 		}
@@ -59,11 +57,15 @@ t_var	*check_doubles(t_var *check, char *name)
 	return (NULL);
 }
 
-void	replace_var(t_var *exist_var, t_token *temp)
+int	replace_var(t_var *exist_var, t_token *temp)
 {
-	free(exist_var->value);
-	exist_var->value = ft_strdup(temp->value);
-	return ;
+	if (exist_var != NULL)
+	{
+		free(exist_var->value);
+		exist_var->value = ft_strdup(temp->value);
+		return (VALID);	
+	}
+	return (0);
 }
 
 int	crush_export_var(t_shell *shell, char *name, char *value)
