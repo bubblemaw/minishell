@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 12:00:01 by maw               #+#    #+#             */
-/*   Updated: 2025/04/04 13:26:29 by david            ###   ########.fr       */
+/*   Updated: 2025/04/04 15:24:16 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int	ft_cmd_maker(t_shell *shell, t_cmd *cmd, t_token **tokken)
 		while (cmd->arg[i] != NULL)
 		i++;	
 	}
+	shell->utils.valid = 0;
 	if (ft_strlen((*tokken)->value) == 6 && ft_strncmp((*tokken)->value, "export", 6) == 0)
 		shell->utils.valid = 1;
 	while (*tokken && ((*tokken)->type == OPTION || (*tokken)->type == ARGUMENT || (*tokken)->type == COMMAND
@@ -57,6 +58,7 @@ int	ft_cmd_maker(t_shell *shell, t_cmd *cmd, t_token **tokken)
 	{
 		if ((*tokken)->type == NAME && shell->utils.valid == 1)
 			join_var(tokken);
+
 		cmd->arg = ft_realloc(cmd->arg, i * sizeof(char *), (i + 1) * sizeof(char *));
 		cmd->arg[i] = ft_strdup((*tokken)->value);
 		if (cmd->arg[i] == NULL)

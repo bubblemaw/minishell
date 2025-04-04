@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/04 13:10:03 by david            ###   ########.fr       */
+/*   Updated: 2025/04/04 16:40:22 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,6 +236,7 @@ void	print_var_local(t_var *head);
 int		join_var(t_token **token);
 int		check_double_export(char *var, t_shell *shell);
 int		crush_local_var(t_shell *shell, char *var);
+// int		add_var_env();
 
 int		specials_case(t_shell  *shell, char *current);
 int		pid_dolls(t_shell  *shell, char *current);

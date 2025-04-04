@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:19:16 by david             #+#    #+#             */
-/*   Updated: 2025/04/04 12:31:11 by david            ###   ########.fr       */
+/*   Updated: 2025/04/04 17:06:25 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,25 +26,10 @@ int	export(t_cmd *token, t_shell *shell)
 	while (current->arg[j] != NULL)
 	{
 		check_double_export(current->arg[j], temp);
+		// add_var_env();
 		i++;
 		j++;
 	}
-	return (0);
-}
-
-int	join_var(t_token **token)
-{
-	t_token	*temp;
-
-	printf("ENTER\n");
-	(*token)->value = ft_strjoin((*token)->value, (*token)->next->value);
-	(*token)->value = ft_strjoin((*token)->value, (*token)->next->next->value);
-	temp = (*token)->next;
-	(*token)->next = (*token)->next->next->next;
-	free(temp->next->value);
-	free(temp->next);
-	free(temp->value);
-	free(temp);
 	return (0);
 }
 
@@ -71,8 +56,9 @@ int	check_double_export(char *var, t_shell *shell)
 	}
 	while (shell->env[old_size] != NULL)
 		old_size++;
-	shell->env = ft_realloc(shell->env, sizeof(char *) * old_size, sizeof(char *) * ( old_size + 1));
+	shell->env = ft_realloc(shell->env, sizeof(char *) * old_size, sizeof(char *) * ( old_size + 2));
 	shell->env[i] = ft_strdup(var);
+	shell->env[i + 1] = NULL;
 	crush_local_var(shell, shell->env[i]);
 	i++;
 	return (0);
@@ -105,5 +91,25 @@ int	crush_local_var(t_shell *shell, char *var)
 		prev = temp;
 		temp = temp->next;
 	}
+	return (0);
+}
+
+int	join_var(t_token **token)
+{
+	t_token	*temp;
+	char	*str;
+
+	str = (*token)->value;
+	(*token)->value = ft_strjoin((*token)->value, (*token)->next->value);
+	free(str);
+	str = (*token)->value;
+	(*token)->value = ft_strjoin((*token)->value, (*token)->next->next->value);
+	free(str);
+	temp = (*token)->next;
+	(*token)->next = (*token)->next->next->next;
+	free(temp->next->value);
+	free(temp->next);
+	free(temp->value);
+	free(temp);
 	return (0);
 }
