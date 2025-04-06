@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/04/04 23:41:59 by david            ###   ########.fr       */
+/*   Updated: 2025/04/06 13:48:05 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	main (int ac, char *av[], char **env)
 			continue ;
 		}
 		give_token_data(&shell);
-		// ft_expansion(&shell);
+		ft_expansion(&shell);
 		// kill_quotes(&shell);
 		init_execution(&shell);
 		if (create_cmd_lst(&shell) == ERROR)
