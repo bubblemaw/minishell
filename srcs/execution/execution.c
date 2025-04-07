@@ -6,7 +6,7 @@
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:16:38 by maw               #+#    #+#             */
-/*   Updated: 2025/04/04 17:09:55 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/05 17:18:42 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,33 @@ int	ft_execute(t_shell *shell)
 	t_cmd *current;
 	int	last_status;
 	int	pipe_exit_flag;
+	int redirection_flag;
 	
+	redirection_flag = 0;
 	current = shell->cmd;
 	while (current)
 	{
+		if (redirection_flag == 1)
+		{
+			while(current && current->type != PIPE)
+				current = current->next;
+			if (current)
+			{
+				if (current->next)
+					current = current->next;
+			}
+			redirection_flag = 0;
+		}
 		if (current->type == PIPE) // si il ya des operations avec des pipes
 		{
 			pipex_loop(current, shell);
 				break ;
 		}
-		if (current->infile || current->outfile) // redirection infile outfile
+		if ((redirection_flag == 0 && current->infile) || current->outfile) // redirection infile outfile
+		{
 			if (ft_direction(current) == 0)
-				return (ERROR);
+				redirection_flag = 1;
+		}
 		if (current->delimiter)
 			here_doc(current ,shell);
 		else // execution commande basiquee 
