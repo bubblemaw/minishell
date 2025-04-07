@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   creat_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:02:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/04 11:41:00 by david            ###   ########.fr       */
+/*   Updated: 2025/04/07 17:19:39 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	creat_tokken(char *input, t_shell *shell)
 			break ;
 		shell->creat.begin = shell->creat.i;
 
-		// gestion des variables
 		var_result = detect_variables(&shell->creat.var, input, &shell->creat.i);
 		if (var_result == ERROR)
 			return (ERROR);
@@ -56,20 +55,9 @@ int	creat_tokken(char *input, t_shell *shell)
 			shell->creat.end = shell->creat.i;
 		if (shell->creat.begin < shell->creat.end)
 			creat_list(shell, input);
-		// if (shell->creat.content)
-		// {
-		// 	if (input[shell->creat.i + 1] != '\0')
-		// 		free(shell->creat.content);
-		// }
 	}
 	if (shell->creat.content[0] == '<' || shell->creat.content[0] == '>'
 		|| shell->creat.content[0] == '|')
-	{
-		// free(shell->creat.content);
 		return (ERROR);
-	}
-	// if (shell->creat.content)
-	// 	free(shell->creat.content);
-	
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_parse.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:17:05 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/04 11:53:15 by david            ###   ########.fr       */
+/*   Updated: 2025/04/07 17:30:10 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,50 +23,57 @@ int	creat_list(t_shell *shell, char *input)
 void	give_token_data(t_shell *shell)
 {
 	t_token	*temp;
-	char	*first;
 
 	temp = shell->tokken;
-	first = ft_strdup(temp->value);
-	if (first[0] == '<' || first[0] == '>')
-	{
-		temp->type = REDIRECTION;
-		temp = temp->next;
-		temp->type = ARGUMENT;
-		temp = temp->next;
-	}
-	free(first);
+	first_case(shell, &temp);
 	shell->creat.find = false;
 	while (temp != NULL)
 	{
-		if (temp->value[0] == '>' 
-			|| temp->value[0] == '<')
-			temp->type = REDIRECTION;
-		else if (temp->value[0] == '=')
-		{
-			temp->type = EQUALITY;
-			temp->prev->type = NAME;
-			temp->next->type = VALUE;
-			temp = temp->next;
-		}
-		else if (temp->value[0] == '|')
-		{
-			temp->type = PIPE;
-			shell->creat.find = false;
-		}
-		else if (temp->value[0] == '-' 
-				&& temp->value[1] != ' ')
-			temp->type = OPTION;
-		else
-		{
-			if (shell->creat.find == true)
-				temp->type = ARGUMENT;
-			else
-			{
-				temp->type = COMMAND;
-				shell->creat.find = true;
-			}
-		}
+		give(&temp, &shell->creat.find);
 		temp = temp->next;
+	}
+	return ;
+}
+
+void	first_case(t_shell *shell, t_token **temp)
+{
+	shell->creat.first = ft_strdup((*temp)->value);
+	if (shell->creat.first[0] == '<' || shell->creat.first[0] == '>')
+	{
+		(*temp)->type = REDIRECTION;
+		*temp = (*temp)->next;
+		(*temp)->type = ARGUMENT;
+		*temp = (*temp)->next;
+	}
+	free(shell->creat.first);
+	return ;
+}
+
+void	give(t_token **temp, bool *find)
+{
+	if ((*temp)->value[0] == '>' || (*temp)->value[0] == '<')
+	(*temp)->type = REDIRECTION;
+	else if ((*temp)->value[0] == '=')
+	{
+		(*temp)->type = EQUALITY;
+		(*temp)->prev->type = NAME;
+		(*temp)->next->type = VALUE;
+		*temp = (*temp)->next;
+	}
+	else if ((*temp)->value[0] == '|')
+	{
+		(*temp)->type = PIPE;
+		*find = false;
+	}
+	else if ((*temp)->value[0] == '-' 
+			&& (*temp)->value[1] != ' ')
+			(*temp)->type = OPTION;
+	else if (*find == true)
+		(*temp)->type = ARGUMENT;
+	else
+	{
+		(*temp)->type = COMMAND;
+		*find = true;
 	}
 	return ;
 }

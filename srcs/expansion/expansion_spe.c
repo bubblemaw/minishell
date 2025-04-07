@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion_spe.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 14:14:55 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/06 21:47:33 by david            ###   ########.fr       */
+/*   Updated: 2025/04/07 17:48:20 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,17 @@ int	error_case(t_shell  *shell, char *current)
 	tmp_2 = NULL;
 	if (current[1] == '?')
 	{
-		if (shell->utils.new_arg == NULL)
+		if (shell->exp.new == NULL)
 		{
 			tmp = ft_itoa(g_exit_status);
-			shell->utils.new_arg = ft_strdup(tmp);
+			shell->exp.new = ft_strdup(tmp);
 			free(tmp);
 		}
 		else
 		{
-			tmp = shell->utils.new_arg;
+			tmp = shell->exp.new;
 			tmp_2 = ft_itoa(g_exit_status);
-			shell->utils.new_arg = ft_strjoin(shell->utils.new_arg, tmp_2);
+			shell->exp.new = ft_strjoin(shell->exp.new, tmp_2);
 			free(tmp);
 			free(tmp_2);
 		}
@@ -43,29 +43,26 @@ int	error_case(t_shell  *shell, char *current)
 int	pid_dolls(t_shell  *shell, char *current)
 {
 	int		fd;
-	char	*line;
-	char	**tab;
-	char	*tmp;
 
 	if (current[1] == '$')
 	{
 		fd = open("/proc/self/stat", O_RDONLY);
 		if (fd == -1)
 			return (0);
-		line = get_next_line(fd);
-		if (line == NULL)
+		shell->exp.line = get_next_line(fd);
+		if (shell->exp.line == NULL)
 			return (0);
-		tab = ft_split(line, ' ');
-		if (shell->utils.new_arg == NULL)
-			shell->utils.new_arg = ft_strdup(tab[3]);
+		shell->exp.tab = ft_split(shell->exp.line, ' ');
+		if (shell->exp.new == NULL)
+			shell->exp.new = ft_strdup(shell->exp.tab[3]);
 		else
 		{
-			tmp = shell->utils.new_arg;
-			shell->utils.new_arg = ft_strjoin(shell->utils.new_arg, tab[3]);	
+			shell->exp.temp = shell->exp.new;
+			shell->exp.new = ft_strjoin(shell->exp.new, shell->exp.tab[3]);	
 		}
-		free(tmp);
-		free_split(tab);
-		free(line);
+		free(shell->exp.temp);
+		free_split(shell->exp.tab);
+		free(shell->exp.line);
 		return (VALID);
 	}
 	return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_local.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:44:05 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/05 17:45:11 by david            ###   ########.fr       */
+/*   Updated: 2025/04/07 17:19:18 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,6 @@ int	crush_export_var(t_shell *shell, char *name, char *value)
 	t_shell	*temp;
 	int		len;
 	int		i;
-	char	*new_var;
-	char	*tmp;
 
 	temp = shell;
 	len = ft_strlen(name);
@@ -83,22 +81,14 @@ int	crush_export_var(t_shell *shell, char *name, char *value)
 	{
 		if (ft_strncmp(name, temp->env[i], len) == 0 && temp->env[i][len] == '=')
 		{
-			new_var = ft_strdup(name);
-			if (!new_var)
-				return (-1);
-			
-			tmp = ft_strjoin(new_var, "=");
-			free(new_var);
-			if (!tmp)
-				return (-1);
-			
-			new_var = ft_strjoin(tmp, value);
-			free(tmp);
-			if (!new_var)
-				return (-1);
+			shell->crash.new_var = ft_strdup(name);
+			shell->crash.tmp = ft_strjoin(shell->crash.new_var, "=");
+			free(shell->crash.new_var);
+			shell->crash.new_var = ft_strjoin(shell->crash.tmp, value);
+			free(shell->crash.tmp);
 			if (temp->env[i] != NULL)
 				free(temp->env[i]);
-			temp->env[i] = new_var;
+			temp->env[i] = shell->crash.new_var;
 			return (0);
 		}
 		i++;

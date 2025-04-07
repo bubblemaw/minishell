@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/04/07 13:42:38 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/07 17:19:40 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	main (int ac, char *av[], char **env)
 	ft_memset(&shell, 0, sizeof(t_shell));
 	shell.env = copy_env(env);
 	init_execution(&shell);
+	init_shell(&shell);
 	signal(SIGINT, signalhandler);
 	signal(SIGQUIT, SIG_IGN);
 	(void)av;
@@ -39,6 +40,7 @@ int	main (int ac, char *av[], char **env)
 			free_cmds(&shell.cmd);
 			shell.cmd = NULL;
 		}
+		init_shell(&shell);
 		shell.input = readline("minishell$ ");
 		if (shell.input == NULL)
 			ft_exit_void(0, &shell);
@@ -52,7 +54,7 @@ int	main (int ac, char *av[], char **env)
 		}
 		give_token_data(&shell);
 		ft_expansion(&shell);
-		kill_quotes(&shell);
+		// kill_quotes(&shell);
 		init_execution(&shell);
 		if (create_cmd_lst(&shell) == ERROR)
 		{
