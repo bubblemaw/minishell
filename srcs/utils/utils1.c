@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 17:21:32 by maw               #+#    #+#             */
-/*   Updated: 2025/04/07 17:48:18 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/07 20:52:31 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ void	init_shell(t_shell *shell)
 	shell->exp.new = NULL;
 	shell->exp.sub_env = NULL;
 	shell->exp.tmp = NULL;
+	shell->exp.tmp_2 = NULL;
+	shell->exp.tmp_3 = NULL;
 	shell->exp.add = NULL;
 	shell->exp.line = NULL;
 	shell->exp.tab = NULL;

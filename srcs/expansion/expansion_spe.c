@@ -3,53 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   expansion_spe.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 14:14:55 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/07 18:22:21 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/07 21:06:44 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	error_case(t_shell  *shell, char *current)
+int	error_case(t_shell  *shell, char *current, int *i)
 {
-	char	*tmp;
-	char	*tmp_2;
-
-	tmp = NULL;
-	tmp_2 = NULL;
 	if (current[1] == '?')
 	{
 		if (shell->exp.new == NULL)
 		{
-			tmp = ft_itoa(g_exit_status);
-			shell->exp.new = ft_strdup(tmp);
-			free(tmp);
+			shell->exp.tmp_2 = ft_itoa(g_exit_status);
+			shell->exp.new = ft_strdup(shell->exp.tmp_2);
+			free(shell->exp.tmp_2);
 		}
 		else
 		{
-			tmp = shell->exp.new;
-			tmp_2 = ft_itoa(g_exit_status);
-			shell->exp.new = ft_strjoin(shell->exp.new, tmp_2);
-			free(tmp);
-			free(tmp_2);
+			shell->exp.tmp_2 = shell->exp.new;
+			shell->exp.tmp_3 = ft_itoa(g_exit_status);
+			shell->exp.new = ft_strjoin(shell->exp.new, shell->exp.tmp_3);
+			free(shell->exp.tmp_2);
+			free(shell->exp.tmp_3);
 		}
+		*i += 2;
+		shell->exp.start = *i;
 		return (VALID);
 	}
 	return (0);
 } 
 
-int	pid_dolls(t_shell  *shell, char *current)
+int	pid_dolls(t_shell  *shell, char *current, int *i)
 {
-	int		fd;
-
 	if (current[1] == '$')
 	{
-		fd = open("/proc/self/stat", O_RDONLY);
-		if (fd == -1)
+		shell->exp.fd = open("/proc/self/stat", O_RDONLY);
+		if (shell->exp.fd == -1)
 			return (0);
-		shell->exp.line = get_next_line(fd);
+		shell->exp.line = get_next_line(shell->exp.fd);
 		if (shell->exp.line == NULL)
 			return (0);
 		shell->exp.tab = ft_split(shell->exp.line, ' ');
@@ -63,7 +58,27 @@ int	pid_dolls(t_shell  *shell, char *current)
 		free(shell->exp.temp);
 		free_split(shell->exp.tab);
 		free(shell->exp.line);
+		*i += 2;
+		shell->exp.start = *i;
 		return (VALID);
+	}
+	return (0);
+}
+
+int	result(t_shell *shell, t_token *current)
+{
+	if (current->value[shell->exp.start] != '\0')
+	{
+		shell->exp.tmp = shell->exp.new;
+		shell->exp.new = ft_strjoin(shell->exp.new, current->value + shell->exp.start);
+		free(shell->exp.tmp);
+	}
+	if (shell->exp.new)
+	{
+		free(current->value);
+		current->value = ft_strdup(shell->exp.new);
+		free(shell->exp.new);
+		shell->exp.new = NULL;
 	}
 	return (0);
 }
