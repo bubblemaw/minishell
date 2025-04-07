@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/07 17:47:08 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/07 18:20:43 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ typedef struct s_exp
 	char			*temp;
 	int				valid;
 	int				size_var;
+	int				start;
 }	t_exp;
 
 typedef struct s_kill
@@ -262,10 +263,11 @@ int		check_double_export(char *var, t_shell *shell);
 int		crush_local_var(t_shell *shell, char *var);
 int		add_var_env(t_shell *shell, int *i, char *var);
 
-int		error_case(t_shell *shell, char *current);
-int		pid_dolls(t_shell *shell, char *current);
 int		ft_expansion(t_shell *shell);
 int		find_var(t_shell *shell, t_token *current);
+int		new_arg(t_shell *shell, char *value, int *i);
+int		error_case(t_shell *shell, char *current);
+int		pid_dolls(t_shell *shell, char *current);
 int		search_export_var(t_shell *shell, char *str);
 int		search_local_var(t_shell *shell, char *str, t_var *temp);
 int		var_size(char *str);

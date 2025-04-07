@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:31:47 by maw               #+#    #+#             */
-/*   Updated: 2025/04/07 17:48:30 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/07 18:24:50 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int	find_var(t_shell *shell, t_token *current)
 {
 	t_var	*temp;
 	int		i;
-	int		start;
 
 	temp = shell->var;
 	i = 0;
@@ -52,26 +51,17 @@ int	find_var(t_shell *shell, t_token *current)
 	{
 		if (current->value[i] == '$')
 		{
-			if (shell->exp.new == NULL)
-				shell->exp.new = ft_substr(current->value, 0, i);
-			else
-			{
-				shell->exp.add = ft_substr(current->value, start, i - start);
-				shell->exp.tmp = shell->exp.new;
-				shell->exp.new = ft_strjoin(shell->exp.new, shell->exp.add);
-				free(shell->exp.tmp);
-				free(shell->exp.add);
-			}
+			new_arg(shell, current->value, &i);
 			if (error_case(shell, current->value + i) == VALID)
 			{
 				i += 2;
-				start = i;
+				shell->exp.start = i;
 				continue ;
 			}
 			if (pid_dolls(shell, current->value + i) == VALID)
 			{
 				i += 2;
-				start = i;
+				shell->exp.start = i;
 				continue ;
 			}
 			shell->exp.size_var = var_size(current->value + i);
@@ -84,17 +74,17 @@ int	find_var(t_shell *shell, t_token *current)
 			if (search_local_var(shell, current->value + i, temp) != VALID)
 				search_export_var(shell, current->value + i);
 			i += shell->exp.size_var + 1;
-			start = i;
+			shell->exp.start = i;
 		}
 		else
 			i++;
 	}
 	if (current->value[i] == '\0' && shell->exp.new == NULL)
 		return (0);
-	else if (current->value[start] != '\0')
+	else if (current->value[shell->exp.start] != '\0')
 	{
 		shell->exp.tmp = shell->exp.new;
-		shell->exp.new = ft_strjoin(shell->exp.new, current->value + start);
+		shell->exp.new = ft_strjoin(shell->exp.new, current->value + shell->exp.start);
 		free(shell->exp.tmp);
 	}
 	if (shell->exp.new)
@@ -103,6 +93,21 @@ int	find_var(t_shell *shell, t_token *current)
 		current->value = ft_strdup(shell->exp.new);
 		free(shell->exp.new);
 		shell->exp.new = NULL;
+	}
+	return (0);
+}
+
+int	new_arg(t_shell *shell, char *value, int *i)
+{
+	if (shell->exp.new == NULL)
+		shell->exp.new = ft_substr(value, 0, *i);
+	else
+	{
+		shell->exp.add = ft_substr(value, shell->exp.start, *i - shell->exp.start);
+		shell->exp.tmp = shell->exp.new;
+		shell->exp.new = ft_strjoin(shell->exp.new, shell->exp.add);
+		free(shell->exp.tmp);
+		free(shell->exp.add);
 	}
 	return (0);
 }
