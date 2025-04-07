@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/07 09:29:39 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/07 14:14:05 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,16 @@ typedef struct s_utils
 	int		valid;
 }	t_utils;
 
+typedef struct s_kill
+{
+	t_token		*temp;
+	int			start;
+	int			len;
+	char		*new;
+	char		*tmp;
+	char		*stash;
+}	t_kill;
+
 // principal struct
 typedef struct s_shell
 {
@@ -137,6 +147,7 @@ typedef struct s_shell
 	t_token			*tokken;
 	t_var			*var;
 	t_utils			utils;
+	t_kill			kill;
 }	t_shell;
 
 // token's fonctions
@@ -246,11 +257,17 @@ int		search_export_var(t_shell *shell, char* str);
 int		search_local_var(t_shell *shell, char* str, t_var *temp);
 int		var_size(char *str);
 int		is_double_quote(t_token *tokken);
+
+// kill quotes
 int		kill_quotes(t_shell *shell);
-void	size_to_kill(t_token *token, t_shell *shell, int *i);
+int		check_double_quotes(t_shell *shell, char *value, int *i);
+int		check_single_quotes(t_shell *shell, char *value, int *i);
+int		check_out_quotes(t_shell *shell, char *value, int *i);
+int		creat_new_str(t_shell *shell);
 
 //init_minishell
 void	init_execution(t_shell *shell);
+void	init_shell(t_shell *shell);
 char	**copy_env(char **env);
 
 // signal

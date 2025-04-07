@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 17:21:32 by maw               #+#    #+#             */
-/*   Updated: 2025/04/02 12:01:00 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/07 14:14:40 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,12 @@ void	*ft_realloc(void *ptr, size_t old_size, size_t new_size)
 	free(ptr);
 	ptr = NULL;
 	return (new_ptr);
+}
+
+void	init_shell(t_shell *shell)
+{
+	shell->kill.new = NULL;
+	shell->kill.tmp = NULL;
+	shell->kill.stash = NULL;
+	return ;
 }

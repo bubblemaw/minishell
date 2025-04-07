@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:31:47 by maw               #+#    #+#             */
-/*   Updated: 2025/04/07 11:23:17 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/07 11:49:07 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int	var_size(char *str)
 	i = 0;
 	if (str[0] == '$' && str[1] != '\0')
 		str++;
-	while (str[i] != ' ' && str[i] != '\0' && str[i] != '$' && str[i] != '"')
+	while (str[i] != ' ' && str[i] != '\0' && str[i] != '$' && str[i] != '"' && str[i] != '\'')
 		i++;
 	return (i);
 }
