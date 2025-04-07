@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:31:47 by maw               #+#    #+#             */
-/*   Updated: 2025/04/06 16:05:05 by david            ###   ########.fr       */
+/*   Updated: 2025/04/06 21:51:03 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,13 @@ int	is_double_quote(t_token *tokken)
 
 int	find_var(t_shell  *shell, t_token *current)
 {
-	// t_var	*temp;
+	t_var	*temp;
 	int		i;
 	int		start;
 	char	*tmp;
 	char	*add;
 
-	// temp = shell->var;
+	temp = shell->var;
 	shell->utils.new_arg = NULL;
 	i = 0;
 	while (current->value[i] != '\0')
@@ -70,45 +70,41 @@ int	find_var(t_shell  *shell, t_token *current)
 				free(tmp);
 				free(add);
 			}
-	// 		if (specials_case(shell, current->value + i) == VALID)
-	// 		{
-	// 			i += 2;
-	// 			start = i;
-	// 			continue ;
-	// 		}
-	// 		if (pid_dolls(shell,  current->value + i) == VALID)
-	// 		{
-	// 			i+= 2;
-	// 			start = i;
-	// 			continue ;
-	// 		}
+			if (error_case(shell, current->value + i) == VALID)
+			{
+				i += 2;
+				start = i;
+				continue ;
+			}
+			if (pid_dolls(shell,  current->value + i) == VALID)
+			{
+				i+= 2;
+				start = i;
+				continue ;
+			}
 			shell->utils.size_var = var_size(current->value + i);
-			printf("var size : %d\n", shell->utils.size_var);
-	// 		if (shell->utils.size_var == 0)
-	// 		{
-	// 			tmp = shell->utils.new_arg;
-	// 			shell->utils.new_arg = ft_strjoin(shell->utils.new_arg, "$");
-	// 			free(tmp);
-	// 		}
-			// search_local_var(shell, current->value + i, temp);
-	// 		search_export_var(shell, current->value + i);
+			if (shell->utils.size_var == 0)
+			{
+				tmp = shell->utils.new_arg;
+				shell->utils.new_arg = ft_strjoin(shell->utils.new_arg, "$");
+				free(tmp);
+			}
+			search_local_var(shell, current->value + i, temp);
+			search_export_var(shell, current->value + i);
 			i += shell->utils.size_var + 1;
 			start = i;
 		}
-	// 	else
-			// i++;
+		else
+			i++;
 	}
-	// if (current->value[i] == '\0' && shell->utils.new_arg == NULL)
-	// 	return (0);
-	// else if (current->value[start] != '\0')
-	// {->utils.new_arg == NULL)
-	// 	return (0);
-	// else if (current->value[start] != '\0')
-	// {
-	// 	tmp = shell->utils.new_arg;
-	// 	shell->utils.new_arg = ft_strjoin(shell->utils.new_arg, current->value + start);
-	// 	free(tmp);
-	// }
+	if (current->value[i] == '\0' && shell->utils.new_arg == NULL)
+		return (0);
+	else if (current->value[start] != '\0')
+	{
+		tmp = shell->utils.new_arg;
+		shell->utils.new_arg = ft_strjoin(shell->utils.new_arg, current->value + start);
+		free(tmp);
+	}
 	if (shell->utils.new_arg)
 	{
 		free(current->value);
@@ -133,12 +129,18 @@ int	var_size(char *str)
 
 int	search_local_var(t_shell *shell, char* str, t_var *temp)
 {
+	char	*tmp;
+
+	if (str[0] == '$' && str[1] != '\0')
+		str++;
 	while (temp != NULL)
 	{
 		if (ft_strncmp(str, temp->name, shell->utils.size_var) == 0
 			&& temp->name[shell->utils.size_var] == '\0')
 		{
+			tmp = shell->utils.new_arg;
 			shell->utils.new_arg = ft_strjoin(shell->utils.new_arg, temp->value);
+			free(tmp);
 			return (VALID);
 		}
 		temp = temp->next;
@@ -148,10 +150,13 @@ int	search_local_var(t_shell *shell, char* str, t_var *temp)
 
 int	search_export_var(t_shell *shell, char* str)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
+	char	*tmp;
 
 	i = 0;
+	if (str[0] == '$' && str[1] != '\0')
+		str++;
 	while (shell->env[i] != NULL)
 	{
 		j = 0;
@@ -162,10 +167,13 @@ int	search_export_var(t_shell *shell, char* str)
 			&& shell->utils.sub_env[shell->utils.size_var] == '\0')
 		{
 			j++;
+			tmp = shell->utils.new_arg; 
 			shell->utils.new_arg = ft_strjoin(shell->utils.new_arg, shell->env[i] + j);
 			free(shell->utils.sub_env);
+			free(tmp);
 			return (0);
 		}
+		free(shell->utils.sub_env);
 		i++;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/04 16:40:22 by david            ###   ########.fr       */
+/*   Updated: 2025/04/06 21:39:26 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,7 +238,7 @@ int		check_double_export(char *var, t_shell *shell);
 int		crush_local_var(t_shell *shell, char *var);
 // int		add_var_env();
 
-int		specials_case(t_shell  *shell, char *current);
+int		error_case(t_shell  *shell, char *current);
 int		pid_dolls(t_shell  *shell, char *current);
 int		ft_expansion(t_shell *shell);
 int		find_var(t_shell  *shell, t_token *current);
@@ -264,6 +264,7 @@ void	free_shell(t_shell *shell);
 void	free_cmds(t_cmd **head);
 void	free_tab(char **tab);
 int		free_new_redirection(t_shell *shell);
+void	free_split(char **str);
 
 // error
 int		error_cmd(char *str);

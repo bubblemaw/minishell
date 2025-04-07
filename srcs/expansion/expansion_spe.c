@@ -6,30 +6,46 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 14:14:55 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/04 11:54:35 by david            ###   ########.fr       */
+/*   Updated: 2025/04/06 21:47:33 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	specials_case(t_shell  *shell, char *current)
+int	error_case(t_shell  *shell, char *current)
 {
+	char	*tmp;
+	char	*tmp_2;
+
+	tmp = NULL;
+	tmp_2 = NULL;
 	if (current[1] == '?')
 	{
 		if (shell->utils.new_arg == NULL)
-			shell->utils.new_arg = ft_strdup(ft_itoa(g_exit_status));
+		{
+			tmp = ft_itoa(g_exit_status);
+			shell->utils.new_arg = ft_strdup(tmp);
+			free(tmp);
+		}
 		else
-			shell->utils.new_arg = ft_strjoin(shell->utils.new_arg, ft_itoa(g_exit_status));
+		{
+			tmp = shell->utils.new_arg;
+			tmp_2 = ft_itoa(g_exit_status);
+			shell->utils.new_arg = ft_strjoin(shell->utils.new_arg, tmp_2);
+			free(tmp);
+			free(tmp_2);
+		}
 		return (VALID);
 	}
 	return (0);
-}
+} 
 
 int	pid_dolls(t_shell  *shell, char *current)
 {
 	int		fd;
 	char	*line;
 	char	**tab;
+	char	*tmp;
 
 	if (current[1] == '$')
 	{
@@ -43,8 +59,30 @@ int	pid_dolls(t_shell  *shell, char *current)
 		if (shell->utils.new_arg == NULL)
 			shell->utils.new_arg = ft_strdup(tab[3]);
 		else
-			shell->utils.new_arg = ft_strjoin(shell->utils.new_arg, tab[3]);
+		{
+			tmp = shell->utils.new_arg;
+			shell->utils.new_arg = ft_strjoin(shell->utils.new_arg, tab[3]);	
+		}
+		free(tmp);
+		free_split(tab);
+		free(line);
 		return (VALID);
 	}
 	return (0);
+}
+
+void	free_split(char **str)
+{
+	int	i;
+
+	if (str == NULL)
+		return ;
+	i = 0;
+	while (str[i] != NULL)
+	{
+		free(str[i]);
+		i++;
+	}
+	free(str);
+	return ;
 }

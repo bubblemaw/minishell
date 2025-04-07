@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 14:56:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/03 22:56:10 by david            ###   ########.fr       */
+/*   Updated: 2025/04/06 22:32:07 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,17 @@ int	kill_quotes(t_shell *shell)
 				if (new == NULL)
 				{
 					new = ft_strdup(stash);
+					free(stash);
 					if (new == NULL)
 						return (0);
 				}
 				else
 				{
 					tmp = ft_strjoin(new, stash);
-					free(new);
 					new = tmp;
+					free(new);
+					free(stash);
 				}
-				free(stash);
 				if (temp->value[i] == '\0')
 					break;
 			}
@@ -58,6 +59,7 @@ int	kill_quotes(t_shell *shell)
 				if (new == NULL)
 				{
 					new = ft_strdup(stash);
+					free(stash);
 					if (new == NULL)
 						return (0);
 				}
@@ -65,15 +67,14 @@ int	kill_quotes(t_shell *shell)
 				{
 					tmp = ft_strjoin(new, stash);
 					free(new);
+					free(stash);
 					new = tmp;
 				}
-				free(stash);
 			}
 			i++;
 		}
 		if (new != NULL)
 		{
-			// free(temp->value);
 			temp->value = ft_strdup(new);
 			free(new);
 			new = NULL;
