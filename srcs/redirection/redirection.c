@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:34:17 by maw               #+#    #+#             */
-/*   Updated: 2025/04/04 15:57:28 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/07 17:08:40 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,11 @@ int	ft_direction(t_cmd *cmd)
 		if (infd == -1)
 		{
 			if (errno == 13)
-				g_exit_status = 139;
+				g_exit_status = 1;
 			else if (errno == 2)
 				g_exit_status = 1;
-			return (error(cmd->infile));
+			perror(cmd->infile);
+			return (0);
 		}
 		dup2(infd, STDIN_FILENO);
 		close(infd);
@@ -47,10 +48,11 @@ int	ft_direction(t_cmd *cmd)
 	if (outfile_direction(cmd) == 0)
 	{
 		if (errno == 13)
-			g_exit_status = 139;
+			g_exit_status = 1;
 		else if (errno == 2)
 			g_exit_status = 1;
-		return (error(cmd->outfile));
+		perror(cmd->infile);
+		return (0);
 	}
 	return (1);
 }

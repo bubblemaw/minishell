@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 13:20:25 by masase            #+#    #+#             */
-/*   Updated: 2025/04/04 17:06:10 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/07 17:00:42 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,11 @@ void	pipex_loop(t_cmd *current, t_shell *shell)
 	while (current)
 	{
 		if (piper(current, shell) == CHILD_PROCESS)
+		{
 			ft_exe_pipe(current, shell);
-		else // PARENT PROCESS
+		}
+		else
+		 // PARENT PROCESS
 			current = current->next;
 	}
 }
@@ -32,11 +35,24 @@ int	child_processor(t_cmd *cmd , t_shell *shell, int *pipefd) //gestion entree s
 	}
 	if (cmd->infile) // si la commande recoit l'entrée d'un fichier infile
 		if (ft_direction(cmd) == 0)
+		{
+			close (pipefd[1]);
+			close(pipefd[0]);
+			if (shell->prev_pipefd != -1)
+				close (shell->prev_pipefd);
 			exit(g_exit_status);
+		}
+
 	if (cmd->outfile) // si dernière commande -> redirection vers outfile ou terminal
 	{
 		if (ft_direction(cmd) == 0)
+		{
+			close (pipefd[1]);
+			close(pipefd[0]);
+			if (shell->prev_pipefd != -1)
+				close (shell->prev_pipefd);
 			exit(g_exit_status);
+		}
 	}
 	else if (cmd->next == NULL)
 		dup2(shell->STDOUT, STDOUT_FILENO); 

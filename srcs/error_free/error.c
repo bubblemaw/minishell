@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 12:00:12 by maw               #+#    #+#             */
-/*   Updated: 2025/04/04 16:16:13 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/07 16:38:21 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,17 @@
 
 int		error(char *str)
 {
+	char *error;
+
 	ft_putstr_fd("Error: ", STDERR_FILENO);
 	if(errno)
 	{
-		ft_putstr_fd(str, STDERR_FILENO);
-		ft_putstr_fd(": ", STDERR_FILENO);
-		ft_putstr_fd(strerror(errno), STDERR_FILENO);
+		error = malloc((ft_strlen(str) + ft_strlen(strerror(errno)) + 3) * sizeof(char));
+		error = ft_strjoin(error, str);
+		error = ft_strjoin(error, ": ");
+		error = ft_strjoin(error , strerror(errno));
+		ft_putstr_fd(error, STDERR_FILENO);
+		free(error);
 	}
 	else 
 		ft_putstr_fd(str, STDERR_FILENO);
