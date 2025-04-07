@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:31:47 by maw               #+#    #+#             */
-/*   Updated: 2025/04/06 21:51:03 by david            ###   ########.fr       */
+/*   Updated: 2025/04/07 11:23:17 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_expansion(t_shell *shell)
 	current = shell->tokken;
 	while (current != NULL)
 	{
-		if (is_double_quote(current) == VALID)
+		if (is_double_quote(current) == VALID && current->type == ARGUMENT)
 			find_var(shell, current);
 		current = current->next;
 	}
@@ -31,16 +31,13 @@ int	is_double_quote(t_token *tokken)
 	int	last_char;
 
 	last_char = ft_strlen(tokken->value) - 1;
-	if (tokken->type == ARGUMENT
-		&& ft_strlen(tokken->value) == 3 && tokken->value[1] == '$')
+	// if (ft_strlen(tokken->value) == 3 && tokken->value[1] == '$')
+	// 	return (0);
+	if (ft_strlen(tokken->value) == 1 && tokken->value[0] == '$')
 		return (0);
-	else if (tokken->type == ARGUMENT
-		&& ft_strlen(tokken->value) == 1 && tokken->value[0] == '$')
-		return (0);
-	else if (tokken->type == ARGUMENT
-		&& tokken->value[0] == '"' && tokken->value[last_char] == '"')
+	else if (tokken->value[0] == '"' && tokken->value[last_char] == '"')
 			return (VALID);
-	else if (tokken->type == ARGUMENT && tokken->value[0] != '\'')
+	else if (ft_strlen(tokken->value) > 1 && tokken->value[0] != '\'')
 		return (VALID);
 	return (0);
 }
