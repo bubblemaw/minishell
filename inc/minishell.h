@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/07 21:06:23 by david            ###   ########.fr       */
+/*   Updated: 2025/04/08 10:55:48 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -273,9 +273,10 @@ int		new_arg(t_shell *shell, char *value, int *i);
 int		error_case(t_shell *shell, char *current, int *i);
 int		pid_dolls(t_shell *shell, char *current, int *i);
 int		var_size(char *str);
+int		only_dolls(t_shell *shell, t_token *current, int *i);
 int		search_export_var(t_shell *shell, char *str);
 int		search_local_var(t_shell *shell, char *str, t_var *temp);
-int		result(t_shell *shell, t_token *current);
+int		result(t_shell *shell, t_token *current, int *i);
 
 // kill quotes
 int		kill_quotes(t_shell *shell);

@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 14:14:55 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/07 21:06:44 by david            ###   ########.fr       */
+/*   Updated: 2025/04/08 10:55:31 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,23 @@ int	pid_dolls(t_shell  *shell, char *current, int *i)
 	return (0);
 }
 
-int	result(t_shell *shell, t_token *current)
+int only_dolls(t_shell *shell, t_token *current, int *i)
 {
-	if (current->value[shell->exp.start] != '\0')
+	shell->exp.size_var = var_size(current->value + *i);
+	if (shell->exp.size_var == 0)
+	{
+		shell->exp.tmp = shell->exp.new;
+		shell->exp.new = ft_strjoin(shell->exp.new, "$");
+		free(shell->exp.tmp);
+	}
+	return (0);
+}
+
+int	result(t_shell *shell, t_token *current, int *i)
+{
+	if (current->value[*i] == '\0' && shell->exp.new == NULL)
+		return (0);
+	else if (current->value[shell->exp.start] != '\0')
 	{
 		shell->exp.tmp = shell->exp.new;
 		shell->exp.new = ft_strjoin(shell->exp.new, current->value + shell->exp.start);

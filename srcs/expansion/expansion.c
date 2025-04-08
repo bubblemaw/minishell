@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:31:47 by maw               #+#    #+#             */
-/*   Updated: 2025/04/07 21:11:23 by david            ###   ########.fr       */
+/*   Updated: 2025/04/08 10:57:20 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,7 @@ int	find_var(t_shell *shell, t_token *current)
 				continue ;
 			if (pid_dolls(shell, current->value + i, &i) == VALID)
 				continue ;
-			shell->exp.size_var = var_size(current->value + i);
-			if (shell->exp.size_var == 0)
-			{
-				shell->exp.tmp = shell->exp.new;
-				shell->exp.new = ft_strjoin(shell->exp.new, "$");
-				free(shell->exp.tmp);
-			}
+			only_dolls(shell, current, &i);
 			if (search_local_var(shell, current->value + i, temp) != VALID)
 				search_export_var(shell, current->value + i);
 			i += shell->exp.size_var + 1;
@@ -71,9 +65,7 @@ int	find_var(t_shell *shell, t_token *current)
 		else
 			i++;
 	}
-	if (current->value[i] == '\0' && shell->exp.new == NULL)
-		return (0);
-	result(shell, current);
+	result(shell, current, &i);
 	return (0);
 }
 
