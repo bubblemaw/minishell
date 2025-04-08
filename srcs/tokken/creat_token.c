@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:02:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/07 17:19:39 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/08 11:17:05 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,43 +21,41 @@ int	enter_input(t_shell *shell)
 
 int	creat_tokken(char *input, t_shell *shell)
 {
-	int	var_result;
-
 	shell->creat.i = 0;
 	while (input[shell->creat.i] != '\0')
 	{
-		// debut
 		if (skip_space(input, &shell->creat.i) == ERROR)
 			return (ERROR);
 		if (input[shell->creat.i] == '\0')
 			break ;
-		shell->creat.begin = shell->creat.i;
-
-		var_result = detect_variables(&shell->creat.var, input, &shell->creat.i);
-		if (var_result == ERROR)
-			return (ERROR);
-		else if (var_result == VALID)
-			shell->creat.end = shell->creat.i;
-
-		// gestion des redirections
-		else if (detect_redirections(input, &shell->creat.i) == ERROR)
-			return (ERROR);
-		else if (detect_redirections(input, &shell->creat.i) == VALID)
-		{
-			shell->creat.end = shell->creat.i + 1;
-			shell->creat.i++;
-		}
-
-		// gestion de la commande
-		else if (detect_command(input, &shell->creat.i) == ERROR)
-			return (ERROR);
-		else
-			shell->creat.end = shell->creat.i;
-		if (shell->creat.begin < shell->creat.end)
-			creat_list(shell, input);
+		parsing(input, shell);
 	}
 	if (shell->creat.content[0] == '<' || shell->creat.content[0] == '>'
 		|| shell->creat.content[0] == '|')
 		return (ERROR);
+	return (0);
+}
+
+int parsing(char *input, t_shell *shell)
+{
+	shell->creat.begin = shell->creat.i;
+	shell->creat.var_result = detect_variables(&shell->creat.var, input, &shell->creat.i);
+	if (shell->creat.var_result == ERROR)
+		return (ERROR);
+	else if (shell->creat.var_result == VALID)
+		shell->creat.end = shell->creat.i;
+	else if (detect_redirections(input, &shell->creat.i) == ERROR) // gestion des redirections
+		return (ERROR);
+	else if (detect_redirections(input, &shell->creat.i) == VALID)
+	{
+		shell->creat.end = shell->creat.i + 1;
+		shell->creat.i++;
+	}
+	else if (detect_command(input, &shell->creat.i) == ERROR) // gestion de la commande
+		return (ERROR);
+	else
+		shell->creat.end = shell->creat.i;
+	if (shell->creat.begin < shell->creat.end)
+		creat_list(shell, input);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   kill_quotes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 14:56:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/07 20:34:09 by david            ###   ########.fr       */
+/*   Updated: 2025/04/08 12:47:56 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int kill_quotes(t_shell *shell)
 {
 	int i;
 
-	i = 0;
 	shell->kill.temp = shell->tokken;
 	while (shell->kill.temp != NULL)
 	{
@@ -35,6 +34,7 @@ int kill_quotes(t_shell *shell)
 			free(shell->kill.temp->value);
 			shell->kill.temp->value = ft_strdup(shell->kill.new);
 			free(shell->kill.new);
+			shell->kill.new = NULL;
 		}
 		shell->kill.temp = shell->kill.temp->next;
 	}
@@ -167,6 +167,7 @@ int	creat_new_str(t_shell *shell)
 // 			free(temp->value);
 // 			temp->value = ft_strdup(new);
 // 			free(new);
+// 			new = NULL;
 // 		}
 // 		temp = temp->next;
 // 	}

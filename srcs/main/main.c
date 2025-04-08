@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/04/07 17:19:40 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/08 12:47:58 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	main (int ac, char *av[], char **env)
 		}
 		give_token_data(&shell);
 		ft_expansion(&shell);
-		// kill_quotes(&shell);
+		kill_quotes(&shell);
 		init_execution(&shell);
 		if (create_cmd_lst(&shell) == ERROR)
 		{

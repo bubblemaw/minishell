@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/08 10:55:48 by david            ###   ########.fr       */
+/*   Updated: 2025/04/08 11:12:59 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ typedef struct s_creat
 	int				start;
 	int				len;
 	int				result;
+	int				var_result;
 	char			*content;
 	char			*first;
 	bool			var;
@@ -167,6 +168,7 @@ typedef struct s_shell
 
 // token's fonctions
 int		enter_input(t_shell *shell);
+int		parsing(char *input, t_shell *shell);
 int		creat_tokken(char *input, t_shell *shell);
 int		skip_space(char *str, int *i);
 int		double_quotes(char *str, int *i);
