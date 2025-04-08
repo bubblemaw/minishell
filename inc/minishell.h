@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/08 11:12:59 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/08 16:09:33 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef enum s_type
 	COMMAND,
 	REDIRECTION,
 	PIPE,
-	ARGUMENT,
+	ARG,
 	OPTION
 }	t_type;
 
@@ -93,7 +93,7 @@ typedef struct s_creat
 	int				start;
 	int				len;
 	int				result;
-	int				var_result;
+	int				v_res;
 	char			*content;
 	char			*first;
 	bool			var;
@@ -274,6 +274,7 @@ int		find_var(t_shell *shell, t_token *current);
 int		new_arg(t_shell *shell, char *value, int *i);
 int		error_case(t_shell *shell, char *current, int *i);
 int		pid_dolls(t_shell *shell, char *current, int *i);
+int		wave(t_shell *shell, char *current, int *i);
 int		var_size(char *str);
 int		only_dolls(t_shell *shell, t_token *current, int *i);
 int		search_export_var(t_shell *shell, char *str);
@@ -282,8 +283,8 @@ int		result(t_shell *shell, t_token *current, int *i);
 
 // kill quotes
 int		kill_quotes(t_shell *shell);
-int		check_double_quotes(t_shell *shell, char *value, int *i);
-int		check_single_quotes(t_shell *shell, char *value, int *i);
+int		is_double(t_shell *shell, char *value, int *i);
+int		is_single(t_shell *shell, char *value, int *i);
 int		check_out_quotes(t_shell *shell, char *value, int *i);
 int		creat_new_str(t_shell *shell);
 

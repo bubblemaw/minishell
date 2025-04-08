@@ -6,13 +6,13 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 14:14:55 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/08 11:05:42 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/08 16:11:01 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	error_case(t_shell  *shell, char *current, int *i)
+int	error_case(t_shell *shell, char *current, int *i)
 {
 	if (current[1] == '?')
 	{
@@ -35,9 +35,9 @@ int	error_case(t_shell  *shell, char *current, int *i)
 		return (VALID);
 	}
 	return (0);
-} 
+}
 
-int	pid_dolls(t_shell  *shell, char *current, int *i)
+int	pid_dolls(t_shell *shell, char *current, int *i)
 {
 	if (current[1] == '$')
 	{
@@ -53,7 +53,7 @@ int	pid_dolls(t_shell  *shell, char *current, int *i)
 		else
 		{
 			shell->exp.temp = shell->exp.new;
-			shell->exp.new = ft_strjoin(shell->exp.new, shell->exp.tab[3]);	
+			shell->exp.new = ft_strjoin(shell->exp.new, shell->exp.tab[3]);
 		}
 		free(shell->exp.temp);
 		free_split(shell->exp.tab);
@@ -65,7 +65,41 @@ int	pid_dolls(t_shell  *shell, char *current, int *i)
 	return (0);
 }
 
-int only_dolls(t_shell *shell, t_token *current, int *i)
+int	wave(t_shell *shell, char *current, int *i)
+{
+	int	j;
+	int	k;
+
+	j = 0;
+	k = 0;
+	if (current[1] == ' ' || current[1] == '\0')
+	{
+		while (shell->env[j] != NULL)
+		{
+			while (shell->env[j][k] != '=')
+				k++;
+			k++;
+			if (ft_strncmp(shell->env[j + k], "HOME", 4) == 0)
+			{
+				printf("YES\n");
+				if (shell->exp.new == NULL)
+				shell->exp.new = ft_strdup(shell->env[j + k]);		
+			}
+			else
+			{
+				shell->exp.tmp = shell->exp.new;
+				shell->exp.new = ft_strjoin(shell->exp.new, shell->env[j + k]);
+				free(shell->exp.tmp);
+			}
+			j++;
+		}
+		(*i)++;
+		shell->exp.start = *i;
+	}
+	return (0);
+}
+
+int	only_dolls(t_shell *shell, t_token *current, int *i)
 {
 	shell->exp.size_var = var_size(current->value + *i);
 	if (shell->exp.size_var == 0)
@@ -84,7 +118,8 @@ int	result(t_shell *shell, t_token *current, int *i)
 	else if (current->value[shell->exp.start] != '\0')
 	{
 		shell->exp.tmp = shell->exp.new;
-		shell->exp.new = ft_strjoin(shell->exp.new, current->value + shell->exp.start);
+		shell->exp.new = ft_strjoin(shell->exp.new,
+				current->value + shell->exp.start);
 		free(shell->exp.tmp);
 	}
 	if (shell->exp.new)
@@ -95,20 +130,4 @@ int	result(t_shell *shell, t_token *current, int *i)
 		shell->exp.new = NULL;
 	}
 	return (0);
-}
-
-void	free_split(char **str)
-{
-	int	i;
-
-	if (str == NULL)
-		return ;
-	i = 0;
-	while (str[i] != NULL)
-	{
-		free(str[i]);
-		i++;
-	}
-	free(str);
-	return ;
 }

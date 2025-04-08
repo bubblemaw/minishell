@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 12:00:01 by maw               #+#    #+#             */
-/*   Updated: 2025/04/07 14:29:01 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/08 13:18:56 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	create_cmd_lst(t_shell *shell)
 		}
 		else if (tokken->type == REDIRECTION)
 			ft_cmd_redirection(current, &tokken, shell);
-		else if (tokken && tokken->type == ARGUMENT)
+		else if (tokken && tokken->type == ARG)
 			ft_cmd_maker(shell, current, &tokken);
 	}
 	return (VALID);
@@ -53,7 +53,7 @@ int	ft_cmd_maker(t_shell *shell, t_cmd *cmd, t_token **tokken)
 	shell->exp.valid = 0;
 	if (ft_strlen((*tokken)->value) == 6 && ft_strncmp((*tokken)->value, "export", 6) == 0)
 		shell->exp.valid = 1;
-	while (*tokken && ((*tokken)->type == OPTION || (*tokken)->type == ARGUMENT || (*tokken)->type == COMMAND
+	while (*tokken && ((*tokken)->type == OPTION || (*tokken)->type == ARG || (*tokken)->type == COMMAND
 			|| (*tokken)->type == NAME || (*tokken)->type == EQUALITY || (*tokken)->type == VALUE))
 	{
 		if ((*tokken)->type == NAME && shell->exp.valid == 1)

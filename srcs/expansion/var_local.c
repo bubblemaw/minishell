@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:44:05 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/08 11:05:37 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/08 12:52:33 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_var	*check_doubles(t_var *check, char *name)
 		len = ft_strlen(name);
 		if (ft_strncmp(check->name, name, len) == 0
 			&& check->name[len] == '\0')
-			return(check);
+			return (check);
 		check = check->next;
 	}
 	return (NULL);
@@ -63,7 +63,7 @@ int	replace_var(t_var *exist_var, t_token *temp)
 	{
 		free(exist_var->value);
 		exist_var->value = ft_strdup(temp->value);
-		return (VALID);	
+		return (VALID);
 	}
 	return (0);
 }
@@ -79,7 +79,8 @@ int	crush_export_var(t_shell *shell, char *name, char *value)
 	i = 0;
 	while (temp->env[i] != NULL)
 	{
-		if (ft_strncmp(name, temp->env[i], len) == 0 && temp->env[i][len] == '=')
+		if (ft_strncmp(name, temp->env[i], len) == 0
+			&& temp->env[i][len] == '=')
 		{
 			shell->crash.new_var = ft_strdup(name);
 			shell->crash.tmp = ft_strjoin(shell->crash.new_var, "=");

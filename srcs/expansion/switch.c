@@ -1,0 +1,66 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   switch.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/08 13:30:47 by dchellen          #+#    #+#             */
+/*   Updated: 2025/04/08 14:20:22 by dchellen         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../inc/minishell.h"
+
+int	search_local_var(t_shell *shell, char *str, t_var *temp)
+{
+	char	*tmp;
+
+	if (str[0] == '$' && str[1] != '\0')
+		str++;
+	while (temp != NULL)
+	{
+		if (ft_strncmp(str, temp->name, shell->exp.size_var) == 0
+			&& temp->name[shell->exp.size_var] == '\0')
+		{
+			tmp = shell->exp.new;
+			shell->exp.new = ft_strjoin(shell->exp.new, temp->value);
+			free(tmp);
+			return (VALID);
+		}
+		temp = temp->next;
+	}
+	return (0);
+}
+
+int	search_export_var(t_shell *shell, char *str)
+{
+	int		i;
+	int		j;
+	char	*tmp;
+
+	tmp = NULL;
+	i = 0;
+	if (str[0] == '$' && str[1] != '\0')
+		str++;
+	while (shell->env[i] != NULL)
+	{
+		j = 0;
+		while (shell->env[i][j] != '=')
+			j++;
+		shell->exp.sub_env = ft_substr(shell->env[i], 0, j);
+		if (ft_strncmp(str, shell->exp.sub_env, shell->exp.size_var) == 0
+			&& shell->exp.sub_env[shell->exp.size_var] == '\0')
+		{
+			j++;
+			tmp = shell->exp.new;
+			shell->exp.new = ft_strjoin(shell->exp.new, shell->env[i] + j);
+			free(shell->exp.sub_env);
+			free(tmp);
+			return (0);
+		}
+		free(shell->exp.sub_env);
+		i++;
+	}
+	return (0);
+}

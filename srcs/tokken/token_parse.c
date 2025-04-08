@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:17:05 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/08 12:42:56 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/08 13:18:24 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	creat_list(t_shell *shell, char *input)
 {
-	shell->creat.content = ft_substr(input, shell->creat.begin, shell->creat.end - shell->creat.begin);
+	shell->creat.content = ft_substr(input, shell->creat.begin,
+			shell->creat.end - shell->creat.begin);
 	shell->creat.new = creat_node(shell->creat.content);
 	add_node(shell, shell->creat.new);
 	return (0);
@@ -42,7 +43,7 @@ void	first_case(t_shell *shell, t_token **temp)
 	{
 		(*temp)->type = REDIRECTION;
 		*temp = (*temp)->next;
-		(*temp)->type = ARGUMENT;
+		(*temp)->type = ARG;
 		*temp = (*temp)->next;
 	}
 	free(shell->creat.first);
@@ -52,7 +53,7 @@ void	first_case(t_shell *shell, t_token **temp)
 void	give(t_token **temp, bool *find)
 {
 	if ((*temp)->value[0] == '>' || (*temp)->value[0] == '<')
-	(*temp)->type = REDIRECTION;
+		(*temp)->type = REDIRECTION;
 	else if ((*temp)->value[0] == '=')
 	{
 		(*temp)->type = EQUALITY;
@@ -65,11 +66,11 @@ void	give(t_token **temp, bool *find)
 		(*temp)->type = PIPE;
 		*find = false;
 	}
-	else if ((*temp)->value[0] == '-' 
-			&& (*temp)->value[1] != ' ')
-			(*temp)->type = OPTION;
+	else if ((*temp)->value[0] == '-'
+		&& (*temp)->value[1] != ' ')
+		(*temp)->type = OPTION;
 	else if (*find == true)
-		(*temp)->type = ARGUMENT;
+		(*temp)->type = ARG;
 	else
 	{
 		(*temp)->type = COMMAND;

@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:31:47 by maw               #+#    #+#             */
-/*   Updated: 2025/04/08 11:05:32 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/08 15:32:11 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_expansion(t_shell *shell)
 	current = shell->tokken;
 	while (current != NULL)
 	{
-		if (is_double_quote(current) == VALID && current->type == ARGUMENT)
+		if (is_double_quote(current) == VALID && current->type == ARG)
 			find_var(shell, current);
 		current = current->next;
 	}
@@ -75,7 +75,8 @@ int	new_arg(t_shell *shell, char *value, int *i)
 		shell->exp.new = ft_substr(value, 0, *i);
 	else
 	{
-		shell->exp.add = ft_substr(value, shell->exp.start, *i - shell->exp.start);
+		shell->exp.add = ft_substr(value,
+				shell->exp.start, *i - shell->exp.start);
 		shell->exp.tmp = shell->exp.new;
 		shell->exp.new = ft_strjoin(shell->exp.new, shell->exp.add);
 		free(shell->exp.tmp);
@@ -91,60 +92,9 @@ int	var_size(char *str)
 	i = 0;
 	if (str[0] == '$' && str[1] != '\0')
 		str++;
-	while (str[i] != ' ' && str[i] != '\0' && str[i] != '$' && str[i] != '"' && str[i] != '\'')
+	while (str[i] != ' ' && str[i] != '\0'
+		&& str[i] != '$' && str[i] != '"'
+		&& str[i] != '\'')
 		i++;
 	return (i);
-}
-
-int	search_local_var(t_shell *shell, char *str, t_var *temp)
-{
-	char	*tmp;
-
-	if (str[0] == '$' && str[1] != '\0')
-		str++;
-	while (temp != NULL)
-	{
-		if (ft_strncmp(str, temp->name, shell->exp.size_var) == 0
-			&& temp->name[shell->exp.size_var] == '\0')
-		{
-			tmp = shell->exp.new;
-			shell->exp.new = ft_strjoin(shell->exp.new, temp->value);
-			free(tmp);
-			return (VALID);
-		}
-		temp = temp->next;
-	}
-	return (0);
-}
-
-int	search_export_var(t_shell *shell, char *str)
-{
-	int		i;
-	int		j;
-	char	*tmp;
-
-	tmp = NULL;
-	i = 0;
-	if (str[0] == '$' && str[1] != '\0')
-		str++;
-	while (shell->env[i] != NULL)
-	{
-		j = 0;
-		while (shell->env[i][j] != '=')
-			j++;
-		shell->exp.sub_env = ft_substr(shell->env[i], 0, j);
-		if (ft_strncmp(str, shell->exp.sub_env, shell->exp.size_var) == 0
-			&& shell->exp.sub_env[shell->exp.size_var] == '\0')
-		{
-			j++;
-			tmp = shell->exp.new;
-			shell->exp.new = ft_strjoin(shell->exp.new, shell->env[i] + j);
-			free(shell->exp.sub_env);
-			free(tmp);
-			return (0);
-		}
-		free(shell->exp.sub_env);
-		i++;
-	}
-	return (0);
 }
