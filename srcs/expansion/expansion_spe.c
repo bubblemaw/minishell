@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion_spe.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 14:14:55 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/08 16:11:01 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/09 00:20:02 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,33 +68,32 @@ int	pid_dolls(t_shell *shell, char *current, int *i)
 int	wave(t_shell *shell, char *current, int *i)
 {
 	int	j;
-	int	k;
+	char	*tmp;
 
 	j = 0;
-	k = 0;
-	if (current[1] == ' ' || current[1] == '\0')
+	tmp  = NULL;
+	if (current[1] == ' ' || current[1] == '\0' || current[1] == '/')
 	{
 		while (shell->env[j] != NULL)
 		{
-			while (shell->env[j][k] != '=')
-				k++;
-			k++;
-			if (ft_strncmp(shell->env[j + k], "HOME", 4) == 0)
+			tmp = ft_substr(shell->env[j], 0, 4);
+			if (ft_strncmp(tmp, "HOME", 4) == 0)
 			{
-				printf("YES\n");
 				if (shell->exp.new == NULL)
-				shell->exp.new = ft_strdup(shell->env[j + k]);		
+					shell->exp.new = ft_strdup(shell->env[j] + 5);
+				else
+				{
+					shell->exp.tmp = shell->exp.new;
+					shell->exp.new = ft_strjoin(shell->exp.new, shell->env[j] + 5);
+					free(shell->exp.tmp);
+				}	
 			}
-			else
-			{
-				shell->exp.tmp = shell->exp.new;
-				shell->exp.new = ft_strjoin(shell->exp.new, shell->env[j + k]);
-				free(shell->exp.tmp);
-			}
+			free(tmp);
 			j++;
 		}
 		(*i)++;
 		shell->exp.start = *i;
+		return (VALID);
 	}
 	return (0);
 }
