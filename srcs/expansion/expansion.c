@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:31:47 by maw               #+#    #+#             */
-/*   Updated: 2025/04/09 10:57:39 by david            ###   ########.fr       */
+/*   Updated: 2025/04/09 14:34:15 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,12 @@ int	find_var(t_shell *shell, t_token *current)
 	i = 0;
 	while (current->value[i] != '\0')
 	{
-		if (current->value[i] == '$' || current->value[i] == '~')
+		if (current->value[i] == '$'
+			|| (current->value[i] == '~' && i - 1 < 0
+			&& (current->value[i + 1] == ' ' || current->value[i + 1] == '/'
+			|| current->value[i + 1] == '\0')))
 		{
+			printf("ENTER\n");
 			new_arg(shell, current->value, &i);
 			if (error_case(shell, current->value + i, &i) == VALID)
 				continue ;
