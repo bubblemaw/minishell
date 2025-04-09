@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/08 16:09:33 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/09 12:02:02 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,6 +210,7 @@ int		built_in(t_cmd *cmd, t_shell *shell);
 
 // built in fonctions
 int		export(t_cmd *token, t_shell *shell);
+int		export_check(t_shell *shell);
 int		echo(t_cmd *cmd);
 int		echo_option(t_cmd *cmd);
 int		cd(t_cmd *cmd, t_shell *shell);
