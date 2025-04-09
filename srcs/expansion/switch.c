@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 13:30:47 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/08 14:20:22 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/09 15:53:00 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,39 @@ int	search_export_var(t_shell *shell, char *str)
 		}
 		free(shell->exp.sub_env);
 		i++;
+	}
+	return (0);
+}
+
+int	result(t_shell *shell, t_token *current, int *i)
+{
+	if (current->value[*i] == '\0' && shell->exp.new == NULL)
+		return (0);
+	else if (current->value[shell->exp.start] != '\0')
+	{
+		shell->exp.tmp = shell->exp.new;
+		shell->exp.new = ft_strjoin(shell->exp.new,
+				current->value + shell->exp.start);
+		free(shell->exp.tmp);
+	}
+	if (shell->exp.new)
+	{
+		free(current->value);
+		current->value = ft_strdup(shell->exp.new);
+		free(shell->exp.new);
+		shell->exp.new = NULL;
+	}
+	return (0);
+}
+
+int	only_dolls(t_shell *shell, t_token *current, int *i)
+{
+	shell->exp.size_var = var_size(current->value + *i);
+	if (shell->exp.size_var == 0)
+	{
+		shell->exp.tmp = shell->exp.new;
+		shell->exp.new = ft_strjoin(shell->exp.new, "$");
+		free(shell->exp.tmp);
 	}
 	return (0);
 }

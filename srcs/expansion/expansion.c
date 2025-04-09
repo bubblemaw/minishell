@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:31:47 by maw               #+#    #+#             */
-/*   Updated: 2025/04/09 14:34:15 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/09 16:12:40 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,38 +40,32 @@ int	is_double_quote(t_token *tokken)
 	return (0);
 }
 
-int	find_var(t_shell *shell, t_token *current)
+int	find_var(t_shell *shell, t_token *cur)
 {
 	t_var	*temp;
 	int		i;
 
 	temp = shell->var;
 	i = 0;
-	while (current->value[i] != '\0')
+	while (cur->value[i] != '\0')
 	{
-		if (current->value[i] == '$'
-			|| (current->value[i] == '~' && i - 1 < 0
-			&& (current->value[i + 1] == ' ' || current->value[i + 1] == '/'
-			|| current->value[i + 1] == '\0')))
+		if (cur->value[i] == '$'
+			|| (cur->value[i] == '~' && i - 1 < 0 && (cur->value[i + 1] == ' '
+					|| cur->value[i + 1] == '/' || cur->value[i + 1] == '\0')))
 		{
-			printf("ENTER\n");
-			new_arg(shell, current->value, &i);
-			if (error_case(shell, current->value + i, &i) == VALID)
+			new_arg(shell, cur->value, &i);
+			if (special_cases(shell, cur->value + i, &i) == VALID)
 				continue ;
-			if (pid_dolls(shell, current->value + i, &i) == VALID)
-				continue ;
-			if (wave(shell, current->value + i, &i) == VALID)
-				continue ;
-			only_dolls(shell, current, &i);
-			if (search_local_var(shell, current->value + i, temp) != VALID)
-				search_export_var(shell, current->value + i);
+			only_dolls(shell, cur, &i);
+			if (search_local_var(shell, cur->value + i, temp) != VALID)
+				search_export_var(shell, cur->value + i);
 			i += shell->exp.size_var + 1;
 			shell->exp.start = i;
 		}
 		else
 			i++;
 	}
-	result(shell, current, &i);
+	result(shell, cur, &i);
 	return (0);
 }
 

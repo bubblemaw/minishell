@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/04/09 12:09:32 by david            ###   ########.fr       */
+/*   Updated: 2025/04/09 15:32:44 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	main (int ac, char *av[], char **env)
 			continue ;
 		else if (creat_tokken(shell.input, &shell) == ERROR)
 		{
-			printf("Syntaxe Error...\n");
+			ft_putstr_fd("syntax error near unexpected token\n", STDERR_FILENO);
 			continue ;
 		}
 		give_token_data(&shell);

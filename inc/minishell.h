@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/09 12:02:02 by david            ###   ########.fr       */
+/*   Updated: 2025/04/09 16:13:23 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -273,9 +273,11 @@ int		ft_expansion(t_shell *shell);
 int		is_double_quote(t_token *tokken);
 int		find_var(t_shell *shell, t_token *current);
 int		new_arg(t_shell *shell, char *value, int *i);
+int		special_cases(t_shell *shell, char *current, int *i);
 int		error_case(t_shell *shell, char *current, int *i);
 int		pid_dolls(t_shell *shell, char *current, int *i);
 int		wave(t_shell *shell, char *current, int *i);
+void	switch_home(char *tmp, t_shell *shell, int *j);
 int		var_size(char *str);
 int		only_dolls(t_shell *shell, t_token *current, int *i);
 int		search_export_var(t_shell *shell, char *str);
