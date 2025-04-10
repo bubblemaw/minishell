@@ -6,7 +6,7 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 16:34:33 by maw               #+#    #+#             */
-/*   Updated: 2025/04/07 16:49:46 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/10 15:13:15 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	built_in(t_cmd *cmd, t_shell *shell)
 		return (echo(cmd));
 	else if (ft_strlen(cmd->arg[0]) == 6 && ft_strncmp(cmd->arg[0], "export", 6) == 0)
 	{
+		if (export_check(shell) == ERROR)
+			return (VALID);
 		export(cmd, shell);
 		return (VALID);
 	}
@@ -35,6 +37,24 @@ int	built_in(t_cmd *cmd, t_shell *shell)
 		return (VALID);
 	}
 	return (ERROR);	
+}
+
+int export_check(t_shell *shell)
+{
+	t_token *tmp;
+
+	tmp = shell->tokken;
+	while (tmp != NULL)
+	{
+		if (tmp->type == OPTION || tmp->type == ARG)
+		{
+			ft_putstr_fd("Error export : write only variables\n",
+						STDERR_FILENO);
+			return (ERROR);
+		}
+		tmp = tmp->next;
+	}
+	return (0);
 }
 
 int	built_in_pipe(t_cmd *cmd, t_shell *shell)

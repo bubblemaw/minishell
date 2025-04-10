@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/04/10 09:39:41 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/10 15:19:05 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	main (int ac, char *av[], char **env)
 	ft_memset(&shell, 0, sizeof(t_shell));
 	shell.env = copy_env(env);
 	init_execution(&shell);
+	init_shell(&shell);
 	signal(SIGINT, signalhandler);
 	signal(SIGQUIT, SIG_IGN);
 	(void)av;
@@ -28,7 +29,7 @@ int	main (int ac, char *av[], char **env)
 
 	while (1)
 	{
-		if (shell.tokken != NULL)
+		if (shell.tokken != NULL || shell.input)
 		{
 			free(shell.input);
 			free_list(shell.tokken);
@@ -39,6 +40,7 @@ int	main (int ac, char *av[], char **env)
 			free_cmds(&shell.cmd);
 			shell.cmd = NULL;
 		}
+		init_shell(&shell);
 		shell.input = readline("minishell$ ");
 		if (shell.input == NULL)
 			ft_exit_void(0, &shell);
@@ -49,10 +51,10 @@ int	main (int ac, char *av[], char **env)
 		{
 			printf("Syntaxe Error...\n");
 			g_exit_status = 2;
+			ft_putstr_fd("syntax error near unexpected token\n", STDERR_FILENO);
 			continue ;
 		}
 		give_token_data(&shell);
-		// print_token(shell.tokken);
 		ft_expansion(&shell);
 		kill_quotes(&shell);
 		init_execution(&shell);
@@ -61,13 +63,9 @@ int	main (int ac, char *av[], char **env)
 			free_shell(&shell);
 			error("loading commands\n");
 		}
-		// print_cmds(&shell.cmd);
 		init_var_local(&shell);
-		// print_var_local(shell.var);
-		// print_cmds(&shell.cmd);
 		ft_execute(&shell);
 		// printf("execution fini\n");
-		// printf("%d\n", g_exit_status);
 	}
 	return (0);
 }

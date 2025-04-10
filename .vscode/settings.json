@@ -75,6 +75,9 @@
     "utility": "c",
     "typeinfo": "c",
     "dirent.h": "c",
-    "signal.h": "c"
+    "signal.h": "c",
+    "concepts": "c",
+    "new": "c",
+    "compare": "c"
   }
 }

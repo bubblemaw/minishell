@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:49:23 by masase            #+#    #+#             */
-/*   Updated: 2025/04/04 12:12:47 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/10 15:15:52 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	free_shell(t_shell *shell)
 		free_cmds(&shell->cmd);
 	if (shell->tokken)
 		free_list(shell->tokken);
+	if (shell->var)
+		free_list_var(shell->var);
 	if (shell->input)
 		free(shell->input);
 }
@@ -74,3 +76,20 @@ int	free_new_redirection(t_shell *shell)
 	shell->redir.type = 0;
 	return (VALID);
 }
+
+void	free_split(char **str)
+{
+	int	i;
+
+	if (str == NULL)
+		return ;
+	i = 0;
+	while (str[i] != NULL)
+	{
+		free(str[i]);
+		i++;
+	}
+	free(str);
+	return ;
+}
+

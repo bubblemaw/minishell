@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:44:05 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/02 11:55:20 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/08 12:52:33 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,7 @@ int	init_var_local(t_shell *shell)
 			exist_var = check_doubles(shell->var, temp->value);
 		else if (send == true && temp->type == VALUE)
 		{
-			if (exist_var != NULL)
-				replace_var(exist_var, temp);
-			else
+			if (replace_var(exist_var, temp) != VALID)
 				creat_var_list(shell, temp);
 			send = false;
 		}
@@ -53,17 +51,21 @@ t_var	*check_doubles(t_var *check, char *name)
 		len = ft_strlen(name);
 		if (ft_strncmp(check->name, name, len) == 0
 			&& check->name[len] == '\0')
-			return(check);
+			return (check);
 		check = check->next;
 	}
 	return (NULL);
 }
 
-void	replace_var(t_var *exist_var, t_token *temp)
+int	replace_var(t_var *exist_var, t_token *temp)
 {
-	free(exist_var->value);
-	exist_var->value = ft_strdup(temp->value);
-	return ;
+	if (exist_var != NULL)
+	{
+		free(exist_var->value);
+		exist_var->value = ft_strdup(temp->value);
+		return (VALID);
+	}
+	return (0);
 }
 
 int	crush_export_var(t_shell *shell, char *name, char *value)
@@ -73,17 +75,22 @@ int	crush_export_var(t_shell *shell, char *name, char *value)
 	int		i;
 
 	temp = shell;
-	len = 0;
+	len = ft_strlen(name);
 	i = 0;
 	while (temp->env[i] != NULL)
 	{
-		len = ft_strlen(name);
 		if (ft_strncmp(name, temp->env[i], len) == 0
 			&& temp->env[i][len] == '=')
 		{
-			temp->env[i] = ft_strdup(name);
-			temp->env[i] = ft_strjoin(temp->env[i], "=");
-			temp->env[i] = ft_strjoin(temp->env[i], value); 
+			shell->crash.new_var = ft_strdup(name);
+			shell->crash.tmp = ft_strjoin(shell->crash.new_var, "=");
+			free(shell->crash.new_var);
+			shell->crash.new_var = ft_strjoin(shell->crash.tmp, value);
+			free(shell->crash.tmp);
+			if (temp->env[i] != NULL)
+				free(temp->env[i]);
+			temp->env[i] = shell->crash.new_var;
+			return (0);
 		}
 		i++;
 	}

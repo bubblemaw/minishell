@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: maw <maw@student.42.fr>                    +#+  +:+       +#+         #
+#    By: masase <masase@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 22:16:43 by david             #+#    #+#              #
-#    Updated: 2025/04/04 12:03:05 by maw              ###   ########.fr        #
+#    Updated: 2025/04/10 15:11:53 by masase           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ CC = gcc
 SRCS =  srcs/main/main.c \
 	    srcs/tokken/creat_token.c \
 	    srcs/tokken/token_detect.c \
+	    srcs/tokken/token_detect_2.c \
 	    srcs/tokken/token_parse.c \
 		srcs/tokken/creat_list.c \
 		srcs/execution/execution.c \
@@ -37,6 +38,7 @@ SRCS =  srcs/main/main.c \
 		srcs/builtin/exit.c \
 		srcs/expansion/expansion.c \
 		srcs/expansion/expansion_spe.c \
+		srcs/expansion/switch.c \
 		srcs/expansion/var_local.c \
 		srcs/expansion/creat_var_list.c \
 		srcs/expansion/kill_quotes.c \

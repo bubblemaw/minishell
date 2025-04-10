@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/10 09:49:30 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/10 15:10:46 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@
 # define DELIMITER 20
 
 // global variable
-extern int g_exit_status;
+extern int			g_exit_status;
 
 // parsing's type data
-typedef enum 
+typedef enum s_type
 {
 	NAME,
 	EQUALITY,
@@ -49,39 +49,39 @@ typedef enum
 	COMMAND,
 	REDIRECTION,
 	PIPE,
-	ARGUMENT,
+	ARG,
 	OPTION
-} type;
+}	t_type;
 
 // structures
 // variables's struct without export
 typedef struct s_var
 {
-	char		*name;
-	char 		*value;
-	struct s_var *next;
+	char			*name;
+	char			*value;
+	struct s_var	*next;
 }	t_var;
 
 // structure for the chain
 typedef struct s_token
 {
-	char 			*value;
+	char			*value;
 	struct s_token	*prev;
 	struct s_token	*next;
-	type			type;
+	t_type			type;
 }	t_token;
 
 // structure command's list
 typedef struct s_cmd
 {
-	char **arg;
-	char *infile;
-	char *outfile;
-	char *delimiter;
-	int	append;
-	int	type;// pipe or delimiter
-	struct s_cmd *next;
-	struct s_cmd *prev;
+	char			**arg;
+	char			*infile;
+	char			*outfile;
+	char			*delimiter;
+	int				append;
+	int				type;
+	struct s_cmd	*next;
+	struct s_cmd	*prev;
 }	t_cmd;
 
 //for the parse when the tokens are creat
@@ -90,58 +90,85 @@ typedef struct s_creat
 	int				i;
 	int				begin;
 	int				end;
-	char			*content;
-	char			*last_token;
-	int				result;
-	bool			var;
-	bool			find;
-
 	int				start;
 	int				len;
-
+	int				result;
+	int				v_res;
+	char			*content;
+	char			*first;
+	bool			var;
+	bool			find;
 	t_token			*new;
 	t_var			*new_var;
 }	t_creat;
 
 typedef struct s_redir
 {
-	char *prev_infile;
-	char *prev_outfile;
-	char *prev_delimiter;
-	int apppend;
-	int type;
+	char			*prev_infile;
+	char			*prev_outfile;
+	char			*prev_delimiter;
+	int				apppend;
+	int				type;
 }	t_redir;
 
-typedef struct s_utils
+typedef struct s_crash
 {
-	int		size_var;
-	char	*new_arg;
-	char	*sub_env;
-}	t_utils;
+	t_var			*prev;
+	char			*new_var;
+	char			*tmp;
+}	t_crash;
+
+typedef struct s_exp
+{
+	char			*new;
+	char			*sub_env;
+	char			*tmp;
+	char			*tmp_2;
+	char			*tmp_3;
+	char			*add;
+	char			*line;
+	char			**tab;
+	char			*temp;
+	int				valid;
+	int				size_var;
+	int				start;
+	int				fd;
+}	t_exp;
+
+typedef struct s_kill
+{
+	t_token			*temp;
+	int				start;
+	int				len;
+	char			*new;
+	char			*tmp;
+	char			*stash;
+}	t_kill;
 
 // principal struct
 typedef struct s_shell
 {
-	char **env;
-	int STDIN;
-	int STDOUT;
-	int STDERR;
-	int prev_pipefd;
-	int	exit_status;
-	int invalid_redir;
-	pid_t last_child_pid;
-	t_redir			redir;
-	int here_fd;
-	t_cmd *cmd;
+	char			**env;
+	int				STDIN;
+	int				STDOUT;
+	int				STDERR;
+	int				prev_pipefd;
+	int				exit_status;
+	int				here_fd;
 	char			*input;
+	t_redir			redir;
+	t_cmd			*cmd;
 	t_creat			creat;
 	t_token			*tokken;
 	t_var			*var;
-	t_utils			utils;
+	t_exp			exp;
+	t_kill			kill;
+	t_crash			crash;
 }	t_shell;
 
 // token's fonctions
 int		enter_input(t_shell *shell);
+int		parsing(char *input, t_shell *shell);
 int		creat_tokken(char *input, t_shell *shell);
 int		skip_space(char *str, int *i);
 int		double_quotes(char *str, int *i);
@@ -154,6 +181,8 @@ int		detect_command(char *input, int *i);
 // token's parsing
 int		creat_list(t_shell *shell, char *input);
 void	give_token_data(t_shell *shell);
+void	first_case(t_shell *shell, t_token **temp);
+void	give(t_token **temp, bool *find);
 
 // fonctions to creat list
 t_token	*creat_node(char *content);
@@ -183,6 +212,7 @@ int		wait_exit_status(t_shell *shell, int *pipe_exit_flag);
 int		built_in(t_cmd *cmd, t_shell *shell);
 int		built_in_pipe(t_cmd *cmd, t_shell *shell);
 int		export(t_cmd *token, t_shell *shell);
+int		export_check(t_shell *shell);
 int		echo(t_cmd *cmd);
 int		echo_option(t_cmd *cmd);
 int		cd(t_cmd *cmd, t_shell *shell);
@@ -201,12 +231,12 @@ int		is_arguments_digit(char **tab);
 
 // token list -> cmd list
 t_cmd	*end_list(t_cmd *head);
-int		ft_cmd_maker(t_cmd *cmd, t_token **tokken);
+int		ft_cmd_maker(t_shell *shell, t_cmd *cmd, t_token **tokken);
 int		ft_cmd_pipe(t_cmd *cmd, t_token **tokken);
 int		ft_cmd_redirection(t_cmd *cmd, t_token **tokken, t_shell *shell);
 void	simple_redirection(t_cmd *cmd, t_token **tokken, t_shell *shell);
 void	double_redirection(t_cmd *cmd, t_token **tokken, t_shell *shell);
-void	*ft_realloc(void *ptr,size_t old_size, size_t new_size);
+void	*ft_realloc(void *ptr, size_t old_size, size_t new_size);
 void	add_cmd_lst(t_cmd **head);
 void	add_cmd_before_last(t_cmd **head);
 int		create_cmd_lst(t_shell *shell);
@@ -215,7 +245,7 @@ void	print_cmds(t_cmd **head);
 int		new_cmd(t_cmd **head_cmd, t_cmd **current);
 int		new_cmd_redirection(t_cmd **head_cmd, t_shell *shell);
 void	save_outfile(t_shell *shell, t_cmd *cmd);
-void	save_infile(t_shell *shell, t_cmd  *cmd);
+void	save_infile(t_shell *shell, t_cmd *cmd);
 void	save_delimiter(t_shell *shell, t_cmd *cmd);
 void	insert_node(t_cmd *current, t_cmd *new_cmd);
 
@@ -230,7 +260,7 @@ int		child_processor(t_cmd *cmd, t_shell *shell, int *pipefd);
 // local gestion
 int		init_var_local(t_shell *shell);
 t_var	*check_doubles(t_var *check, char *name);
-void	replace_var(t_var *exist_var, t_token *temp);
+int		replace_var(t_var *exist_var, t_token *temp);
 int		crush_export_var(t_shell *shell, char *name, char *value);
 void	creat_var_list(t_shell *shell, t_token *temp);
 t_var	*creat_node_var(char *name, char *content);
@@ -241,29 +271,39 @@ void	print_var_local(t_var *head);
 int		join_var(t_token **token);
 int		check_double_export(char *var, t_shell *shell);
 int		crush_local_var(t_shell *shell, char *var);
+int		add_var_env(t_shell *shell, int *i, char *var);
 
-int		specials_case(t_shell  *shell, char *current);
-int		pid_dolls(t_shell  *shell, char *current);
 int		ft_expansion(t_shell *shell);
-int		find_var(t_shell  *shell, t_token *current);
-int		search_export_var(t_shell *shell, char* str);
-int		search_local_var(t_shell *shell, char* str, t_var *temp);
-int		var_size(char *str);
 int		is_double_quote(t_token *tokken);
-int		kill_quotes(t_shell *shell);
-void	size_to_kill(t_token *token, t_shell *shell, int *i);
+int		find_var(t_shell *shell, t_token *current);
+int		new_arg(t_shell *shell, char *value, int *i);
+int		special_cases(t_shell *shell, char *current, int *i);
+int		error_case(t_shell *shell, char *current, int *i);
+int		pid_dolls(t_shell *shell, char *current, int *i);
+int		wave(t_shell *shell, char *current, int *i);
+void	switch_home(char *tmp, t_shell *shell, int *j);
+int		var_size(char *str);
+int		only_dolls(t_shell *shell, t_token *current, int *i);
+int		search_export_var(t_shell *shell, char *str);
+int		search_local_var(t_shell *shell, char *str, t_var *temp);
+int		result(t_shell *shell, t_token *current, int *i);
 
-// variables priorities
-void	crush_var(t_shell *shell);
+// kill quotes
+int		kill_quotes(t_shell *shell);
+int		is_double(t_shell *shell, char *value, int *i);
+int		is_single(t_shell *shell, char *value, int *i);
+int		check_out_quotes(t_shell *shell, char *value, int *i);
+int		creat_new_str(t_shell *shell);
 
 //init_minishell
 void	init_execution(t_shell *shell);
+void	init_shell(t_shell *shell);
 char	**copy_env(char **env);
 
 // signal
 void	signalhandler(int signal);
 void	signalhandler_heredoc(int signal);
-void	ft_exit_void(int n,t_shell *shell);
+void	ft_exit_void(int n, t_shell *shell);
 
 // free
 void	free_tab(char **tab);
@@ -271,6 +311,7 @@ void	free_shell(t_shell *shell);
 void	free_cmds(t_cmd **head);
 void	free_tab(char **tab);
 int		free_new_redirection(t_shell *shell);
+void	free_split(char **str);
 
 // error
 int		error_cmd(char *str);

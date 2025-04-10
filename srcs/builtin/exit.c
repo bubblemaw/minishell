@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:12:55 by maw               #+#    #+#             */
-/*   Updated: 2025/04/04 14:07:29 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/10 15:13:57 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_exit(t_cmd *cmd, t_shell *shell)
 	}
 	if (i == 2)
 		n = ft_atoi(cmd->arg[1]);
-	free_shell(shell); 
+	free_shell(shell);
 	printf("exit\n");
 	g_exit_status = n;
 	exit(n);
