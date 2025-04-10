@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 13:20:25 by masase            #+#    #+#             */
-/*   Updated: 2025/04/10 10:29:10 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/10 15:02:38 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ void	pipex_loop(t_cmd *current, t_shell *shell)
 		}
 		else // PARENT PROCESS
 		{
-			if (shell->invalid_redir == 1)
-			{
-				while (current && current->type != PIPE)
-					current = current->next;
-				shell->invalid_redir = 0;
-			}
+			// if (shell->invalid_redir == 1)
+			// {
+			// 	while (current && current->type != PIPE)
+			// 		current = current->next;
+			// 	shell->invalid_redir = 0;
+			// }
 			current = current->next;
 		}
 	}
@@ -35,9 +35,9 @@ void	pipex_loop(t_cmd *current, t_shell *shell)
 
 int	child_processor(t_cmd *cmd , t_shell *shell, int *pipefd) //gestion entree sortie du child process avant son execution
 {
-	char error_flag;
+	// char error_flag;
 
-	error_flag = 0;
+	// error_flag = 0;
 	if (shell->prev_pipefd != -1) // reprendre l'entrée du pipe précédent
 	{
 		dup2(shell->prev_pipefd, STDIN_FILENO);
@@ -46,8 +46,8 @@ int	child_processor(t_cmd *cmd , t_shell *shell, int *pipefd) //gestion entree s
 	if (cmd->infile) // si la commande recoit l'entrée d'un fichier infile
 		if (ft_direction(cmd) == 0)
 		{
-			error_flag = 1;
-			write(pipefd[1], &error_flag, sizeof(char));
+			// error_flag = 1;
+			// write(pipefd[1], &error_flag, sizeof(char));
 			close (pipefd[1]);
 			close(pipefd[0]);
 			if (shell->prev_pipefd != -1)
@@ -59,8 +59,8 @@ int	child_processor(t_cmd *cmd , t_shell *shell, int *pipefd) //gestion entree s
 	{
 		if (ft_direction(cmd) == 0)
 		{
-			error_flag = 1;
-			write(pipefd[1], &error_flag, sizeof(char));			
+			// error_flag = 1;
+			// write(pipefd[1], &error_flag, sizeof(char));			
 			close (pipefd[1]);
 			close(pipefd[0]);
 			if (shell->prev_pipefd != -1)
@@ -76,14 +76,14 @@ int	child_processor(t_cmd *cmd , t_shell *shell, int *pipefd) //gestion entree s
 		dup2(pipefd[1], STDOUT_FILENO);
 		close (pipefd[1]);
 	}
-	write(pipefd[1], &error_flag, sizeof(char));
+	// write(pipefd[1], &error_flag, sizeof(char));
 	return (CHILD_PROCESS);
 }
 
 int	piper(t_cmd *cmd, t_shell *shell) // creation du pipe et fork
 {
 	int		pipefd[2];
-	char	error_flag;
+	// char	error_flag;
 	pid_t	pid;
 
 		if (pipe(pipefd) == -1)
@@ -95,13 +95,13 @@ int	piper(t_cmd *cmd, t_shell *shell) // creation du pipe et fork
 			return(child_processor(cmd ,shell, pipefd));
 		else
 		{
-			if (read(pipefd[0], &error_flag, sizeof(char) > 0))
-			{
-				if (error_flag == 1)
-				{
-					shell->invalid_redir = 1;
-				}
-			}
+			// if (read(pipefd[0], &error_flag, sizeof(char) > 0))
+			// {
+			// 	if (error_flag == 1)
+			// 	{
+			// 		shell->invalid_redir = 1;
+			// 	}
+			// }
 			if (shell->prev_pipefd != -1) // fermeture du pipe de lecture dans le parent(pas besoin)
 				close(shell->prev_pipefd);
 			close(pipefd[1]);
