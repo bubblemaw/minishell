@@ -6,7 +6,7 @@
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/04 11:51:02 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/10 09:49:30 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,8 @@ typedef struct s_shell
 	int STDERR;
 	int prev_pipefd;
 	int	exit_status;
+	int invalid_redir;
+	pid_t last_child_pid;
 	t_redir			redir;
 	int here_fd;
 	t_cmd *cmd;

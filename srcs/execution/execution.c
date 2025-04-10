@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:16:38 by maw               #+#    #+#             */
-/*   Updated: 2025/04/07 18:28:23 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/10 00:16:38 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,23 @@ int	ft_execute(t_shell *shell)
 			pipex_loop(current, shell);
 				break ;
 		}
-
 		if ((current->infile) || current->outfile) // redirection infile outfile
 		{
 			if (ft_direction(current) == 0)
 			{
+				shell->invalid_redir = 1;
 				reset_fd(shell);
-				return (ERROR);
+				if (current->next == NULL)
+					return (ERROR);
+				else 
+				{
+					while (current && current->type != PIPE)
+						current = current->next;
+					if (current == NULL)
+						break ;
+				}
+
+
 				// redirection_flag = 1;
 				// if (current->next == NULL)
 				// {
@@ -57,9 +67,10 @@ int	ft_execute(t_shell *shell)
 		}
 		if (current->delimiter)
 			here_doc(current ,shell);
-		if (current->arg) // execution commande basiquee 
+		if (current->arg && shell->invalid_redir == 0) // execution commande basiquee 
 			ft_exe(current, shell);
 		current = current->next;
+		shell->invalid_redir = 0;
 	}
 	while (wait(&g_exit_status) > 0); // attente de tous les childs process
 	if (WIFEXITED(g_exit_status))
