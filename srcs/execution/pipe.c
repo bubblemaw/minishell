@@ -6,7 +6,7 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 13:20:25 by masase            #+#    #+#             */
-/*   Updated: 2025/04/10 15:02:38 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/10 18:30:23 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,53 @@
 
 void	pipex_loop(t_cmd *current, t_shell *shell)
 {
+	ft_test_direction(current);
+	// print_cmds(&shell->cmd);
 	while (current)
 	{
+		while (current && current->valid == ERROR)
+		{
+			current = current->next;
+		}
 		if (piper(current, shell) == CHILD_PROCESS)
 		{
 			ft_exe_pipe(current, shell);
 		}
 		else // PARENT PROCESS
 		{
-			// if (shell->invalid_redir == 1)
-			// {
-			// 	while (current && current->type != PIPE)
-			// 		current = current->next;
-			// 	shell->invalid_redir = 0;
-			// }
 			current = current->next;
 		}
 	}
 }
 
+int		ft_test_direction(t_cmd *cmd)
+{
+	t_cmd *current;
+
+	current = cmd;
+	while(current)
+	{
+		if (current->infile || current->outfile)
+		{
+			if (ft_direction_fake(current) == 0)
+			{
+				while(current)
+				{
+					current = current->next;
+					current->valid = ERROR;
+					if (current->type == PIPE)
+						break ;
+				}
+			}
+		}
+		current = current->next;
+	}
+	return (VALID);
+}
+
 int	child_processor(t_cmd *cmd , t_shell *shell, int *pipefd) //gestion entree sortie du child process avant son execution
 {
-	// char error_flag;
 
-	// error_flag = 0;
 	if (shell->prev_pipefd != -1) // reprendre l'entrée du pipe précédent
 	{
 		dup2(shell->prev_pipefd, STDIN_FILENO);
@@ -58,9 +81,7 @@ int	child_processor(t_cmd *cmd , t_shell *shell, int *pipefd) //gestion entree s
 	if (cmd->outfile) // si dernière commande -> redirection vers outfile ou terminal
 	{
 		if (ft_direction(cmd) == 0)
-		{
-			// error_flag = 1;
-			// write(pipefd[1], &error_flag, sizeof(char));			
+		{		
 			close (pipefd[1]);
 			close(pipefd[0]);
 			if (shell->prev_pipefd != -1)

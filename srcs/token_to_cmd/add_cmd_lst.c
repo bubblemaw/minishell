@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_cmd_lst.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 12:29:51 by maw               #+#    #+#             */
-/*   Updated: 2025/04/02 11:57:25 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/10 18:15:58 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,5 @@ void	setup_cmd_lst(t_cmd **cmd)
 	(*cmd)->delimiter = NULL;
 	(*cmd)->type = 0;
 	(*cmd)->append = 0;
+	(*cmd)->valid = VALID;
 }

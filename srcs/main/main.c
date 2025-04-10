@@ -6,7 +6,7 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/04/10 15:25:02 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/10 18:24:50 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int	main (int ac, char *av[], char **env)
 			error("loading commands\n");
 		}
 		init_var_local(&shell);
+		// print_cmds(&shell.cmd);
 		ft_execute(&shell);
 		// printf("execution fini\n");
 	}

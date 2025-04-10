@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_cmd_lst.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 21:17:50 by maw               #+#    #+#             */
-/*   Updated: 2025/04/02 11:58:38 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/10 18:22:50 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	print_cmds(t_cmd **head)
 			   current->append ? "Append" : "Truncate");
 		printf("Delimiter : %s\n", current->delimiter ? current->delimiter : "Aucun");
 		printf("Pipe : %d\n", current->type ? current->type : 0);
+		printf("VALID : %d\n", current->valid ? current->valid : 0);
 		printf("----------------------\n");
 		current = current->next;
 	}

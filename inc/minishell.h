@@ -6,7 +6,7 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/10 15:21:21 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/10 18:29:49 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ typedef struct s_cmd
 	char			*delimiter;
 	int				append;
 	int				type;
+	int				valid;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
 }	t_cmd;
@@ -198,6 +199,8 @@ char	*join_path(char **tab_path, t_cmd *cmd);
 
 // redirection
 int		ft_direction(t_cmd *token);
+int		ft_test_direction(t_cmd *cmd);
+int		ft_direction_fake(t_cmd *cmd);
 int		outfile_direction(t_cmd *cmd);
 void	reset_fd(t_shell *shell);
 void	save_fd(t_shell *shell);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:34:17 by maw               #+#    #+#             */
-/*   Updated: 2025/04/10 09:41:33 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/10 18:31:48 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,43 @@ int	ft_direction(t_cmd *cmd)
 			g_exit_status = 1;
 		else if (errno == 2)
 			g_exit_status = 1;
-		perror(cmd->infile);
+		perror(cmd->outfile);
 		return (0);
+	}
+	return (1);
+}
+
+int	ft_direction_fake(t_cmd *cmd)
+{
+	int	infd;
+	int outfd;
+
+	if (cmd->infile != NULL)
+	{
+		infd = open (cmd->infile, O_RDONLY);
+		if (infd == -1)
+		{
+			close(infd);
+			return (0);
+		}
+	}
+	if (cmd->append == 1)
+	{
+		outfd = open (cmd->outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		if (outfd == -1)
+		{
+			close(outfd);
+			return(0);
+		}
+	}
+	else if (cmd->outfile != NULL)
+	{
+		outfd = open (cmd->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		if (outfd == -1)
+		{
+			close(outfd);
+			return (0);
+		}
 	}
 	return (1);
 }
