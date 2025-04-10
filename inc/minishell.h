@@ -6,7 +6,7 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/10 15:10:46 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/10 15:21:21 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,7 @@ typedef struct s_shell
 	int				STDERR;
 	int				prev_pipefd;
 	int				exit_status;
+	int				invalid_redir;
 	int				here_fd;
 	char			*input;
 	t_redir			redir;
