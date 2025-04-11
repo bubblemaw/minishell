@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 12:00:12 by maw               #+#    #+#             */
-/*   Updated: 2025/04/03 12:44:54 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/10 15:15:18 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,19 @@
 
 int		error(char *str)
 {
+	char *error;
+
 	ft_putstr_fd("Error: ", STDERR_FILENO);
 	if(errno)
 	{
-		ft_putstr_fd(str, STDERR_FILENO);
-		ft_putstr_fd(": ", STDERR_FILENO);
-		ft_putstr_fd(strerror(errno), STDERR_FILENO);
+		error = malloc((ft_strlen(str) + ft_strlen(strerror(errno)) + 3) * sizeof(char));
+		error = ft_strjoin(error, str);
+		error = ft_strjoin(error, ": ");
+		error = ft_strjoin(error , strerror(errno));
+		ft_putstr_fd(error, STDERR_FILENO);
+		free(error);
 	}
-	else
+	else 
 		ft_putstr_fd(str, STDERR_FILENO);
 	ft_putchar_fd('\n', STDERR_FILENO);
 	return (0);
@@ -38,7 +43,7 @@ int		error_exit(char *str)
 	else
 		ft_putstr_fd(str, STDERR_FILENO);
 	ft_putchar_fd('\n', STDERR_FILENO);
-	exit (0);
+	exit (g_exit_status);
 }
 
 int	error_cmd(char *str)

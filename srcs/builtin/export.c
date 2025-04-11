@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:19:16 by david             #+#    #+#             */
-/*   Updated: 2025/04/07 17:39:32 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/10 15:15:07 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	export(t_cmd *token, t_shell *shell)
 		check_double_export(current->arg[j], temp);
 		j++;
 	}
-	return (0);
+	return (VALID);
 }
 
 int	check_double_export(char *var, t_shell *shell)

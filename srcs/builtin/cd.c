@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 15:28:31 by maw               #+#    #+#             */
-/*   Updated: 2025/04/02 11:44:28 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/04 12:03:34 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,16 @@
 
 int	cd(t_cmd *cmd, t_shell *shell)
 {
-	DIR		*d;
 	char	*path;
 	char	*buffer;
-	
+
 	buffer = NULL;
 	if (cmd->arg[1] == NULL || (ft_strncmp(cmd->arg[1], "~", 1) == 0 && ft_strlen(cmd->arg[1]) == 1))
-		path = ft_strjoin("/home/", find_user_name(shell->env));
+	{
+		buffer = find_user_name(shell->env);
+		path = ft_strjoin("/home/", buffer);
+		free (buffer);
+	}
 	else if (cmd->arg[2])
 	{
 		error("too much arguments");
@@ -29,12 +32,23 @@ int	cd(t_cmd *cmd, t_shell *shell)
 	}
 	else
 		path = path_finder(cmd, buffer);
+	move_into_dir(cmd, shell, path);
+	return (VALID);
+}
+
+int move_into_dir(t_cmd *cmd, t_shell *shell, char *path)
+{
+	DIR		*d;
+	char	*buffer;
+
+	buffer = NULL;
 	d = opendir(path);
 	if (d)
 	{
 		if (chdir(path) == -1)
 			perror(cmd->arg[1]);
-		findvar_replace(shell, buffer);
+		else
+			findvar_replace(shell, buffer);
 		closedir(d);
 	}
 	else
@@ -44,22 +58,6 @@ int	cd(t_cmd *cmd, t_shell *shell)
 	}
 	free (path);
 	return (VALID);
-}
-
-char	*path_finder(t_cmd *cmd, char *buffer)
-{
-	char	*path;
-
-	path = NULL;
-	if (cmd->arg[1][0] == '/')
-		path = ft_strdup(cmd->arg[1]);
-	else
-	{		
-		buffer = getcwd(NULL, 0);
-		path = ft_strjoin(buffer, "/");
-		path = ft_strjoin(path, cmd->arg[1]);
-	}
-	return (path);
 }
 
 void	findvar_replace(t_shell *shell, char *buffer)
@@ -84,23 +82,16 @@ void	findvar_replace(t_shell *shell, char *buffer)
 		free(shell->env[i]);
 		shell->env[i] = NULL;
 	}
-	shell->env[i] = ft_strjoin("OLD" ,temp);
-	i++;
-	shell->env[i] = NULL;
+	else
+		put_oldpwd(i, shell, temp);
 	free(temp);
+	free(buffer);
 }
 
-char	*find_user_name(char **tab)
+void	put_oldpwd(int i, t_shell *shell, char *temp)
 {
-	int		i;
-	char	*path;
-
-	i = 0;
-	while(tab[i] && strncmp(tab[i], "USER=", 5))
+		shell->env = ft_realloc(shell->env, i * sizeof(char *), (i + 1) * sizeof(char *));
+		shell->env[i] = ft_strjoin("OLD" ,temp);
 		i++;
-	if (tab[i] != NULL)
-	{
-		path = ft_strdup(tab[i] + 5);
-	}
-	return (path);
+		shell->env[i] = NULL;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/09 16:13:23 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/10 15:21:21 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,7 @@ typedef struct s_shell
 	int				STDERR;
 	int				prev_pipefd;
 	int				exit_status;
+	int				invalid_redir;
 	int				here_fd;
 	char			*input;
 	t_redir			redir;
@@ -206,16 +207,20 @@ void	here_doc_child_process(int *pipefd, t_cmd *cmd);
 // execution
 int		ft_execute(t_shell *shell);
 int		ft_exe(t_cmd *token, t_shell *shell);
-int		built_in(t_cmd *cmd, t_shell *shell);
+int		wait_exit_status(t_shell *shell, int *pipe_exit_flag);
 
 // built in fonctions
+int		built_in(t_cmd *cmd, t_shell *shell);
+int		built_in_pipe(t_cmd *cmd, t_shell *shell);
 int		export(t_cmd *token, t_shell *shell);
 int		export_check(t_shell *shell);
 int		echo(t_cmd *cmd);
 int		echo_option(t_cmd *cmd);
 int		cd(t_cmd *cmd, t_shell *shell);
+int		move_into_dir(t_cmd *cmd, t_shell *shell, char *path);
 char	*path_finder(t_cmd *cmd, char *buffer);
 void	findvar_replace(t_shell *shell, char *buffer);
+void	put_oldpwd(int i, t_shell *shell, char *temp);
 char	*find_user_name(char **tab);
 int		ft_env(t_cmd *cmd, t_shell *shell);
 int		pwd(void);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:31:21 by maw               #+#    #+#             */
-/*   Updated: 2025/04/08 12:53:27 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/10 15:16:38 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	init_execution(t_shell *shell)
 	save_fd(shell);
 	shell->cmd = NULL;
 	g_exit_status = 0;
+	shell->invalid_redir = 0;
 	free_new_redirection(shell);
 }
 

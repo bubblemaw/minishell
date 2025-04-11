@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+         #
+#    By: masase <masase@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 22:16:43 by david             #+#    #+#              #
-#    Updated: 2025/04/08 13:32:07 by dchellen         ###   ########.fr        #
+#    Updated: 2025/04/10 15:11:53 by masase           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRCS =  srcs/main/main.c \
 	    srcs/tokken/token_parse.c \
 		srcs/tokken/creat_list.c \
 		srcs/execution/execution.c \
+		srcs/execution/pipe.c \
 		srcs/token_to_cmd/utils_cmd_lst.c \
 		srcs/cmd_parsing/search_cmd.c \
 		srcs/redirection/redirection.c \
@@ -30,6 +31,7 @@ SRCS =  srcs/main/main.c \
 		srcs/builtin/echo.c \
 		srcs/builtin/export.c \
 		srcs/builtin/cd.c \
+		srcs/builtin/cd_utils.c \
 		srcs/builtin/env.c \
 		srcs/builtin/pwd.c \
 		srcs/builtin/unset.c \

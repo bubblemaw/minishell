@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:12:55 by maw               #+#    #+#             */
-/*   Updated: 2025/04/03 23:27:20 by david            ###   ########.fr       */
+/*   Updated: 2025/04/10 15:13:57 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_exit(t_cmd *cmd, t_shell *shell)
 	int	n;
 	int	i;
 
-	i = is_arguments_digit(cmd->arg);
+	i = is_arguments_digit((cmd->arg));
 	if (i == 0)
 		return;
 	n = 0;
@@ -25,6 +25,7 @@ void	ft_exit(t_cmd *cmd, t_shell *shell)
 	{
 		printf("exit\n");
 		error("too much argument");
+		g_exit_status = 1;
 		return ;
 	}
 	if (i == 2)
@@ -35,7 +36,7 @@ void	ft_exit(t_cmd *cmd, t_shell *shell)
 	exit(n);
 }
 
-void	ft_exit_void(int n,t_shell *shell)
+void	ft_exit_void(int n, t_shell *shell)
 {
 	free_shell(shell);
 	printf("exit\n");
@@ -46,18 +47,21 @@ int	is_arguments_digit(char **tab)
 	int	i;
 	int	j;
 	
+
 	i = 1;
 	while (tab[i])
 	{
 		j = 0;
 		while (tab[i][j])
 		{
-			if (ft_isdigit(tab[i][j]) == 0)
+			if  ((tab[i][j] >= '0' && tab[i][j] <= '9') || tab[i][j] == '+' || tab[i][j] == '-')
+				j++;
+			else
 			{
 				error("numerical number necessary");
+				g_exit_status = 2;
 				return (0);
 			}
-			j++;
 		}
 		i++;
 	}	
