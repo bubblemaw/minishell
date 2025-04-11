@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 14:14:55 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/11 11:33:33 by david            ###   ########.fr       */
+/*   Updated: 2025/04/11 12:09:34 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	wave(t_shell *shell, char *current, int *i)
 
 	j = 0;
 	tmp = NULL;
-	if (current[1] == ' ' || current[1] == '\0' || current[1] == '/')
+	if (current[0] == '~' && (current[1] == ' ' || current[1] == '\0' || current[1] == '/'))
 	{
 		while (shell->env[j] != NULL)
 		{
