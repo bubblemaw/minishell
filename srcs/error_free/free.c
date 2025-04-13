@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:49:23 by masase            #+#    #+#             */
-/*   Updated: 2025/04/10 15:15:52 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/13 11:58:29 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ void	free_tab(char **tab)
 
 void	free_cmds(t_cmd **head)
 {
-	t_cmd *tmp;
+	t_cmd	*tmp;
+
 	while (*head)
 	{
 		tmp = *head;
@@ -92,4 +93,3 @@ void	free_split(char **str)
 	free(str);
 	return ;
 }
-

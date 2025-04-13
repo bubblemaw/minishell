@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:31:21 by maw               #+#    #+#             */
-/*   Updated: 2025/04/10 15:16:38 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/13 12:05:04 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	**copy_env(char **env)
 	if (!copy_env)
 		return (NULL);
 	i = 0;
-	while(i < env_size)
+	while (i < env_size)
 	{
 		copy_env[i] = ft_strdup(env[i]);
 		if (copy_env[i] == NULL)

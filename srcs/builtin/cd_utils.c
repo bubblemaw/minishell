@@ -6,7 +6,7 @@
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 12:01:13 by maw               #+#    #+#             */
-/*   Updated: 2025/04/04 12:01:57 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/13 11:52:12 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*path_finder(t_cmd *cmd, char *buffer)
 	if (cmd->arg[1][0] == '/')
 		path = ft_strdup(cmd->arg[1]);
 	else
-	{		
+	{
 		buffer = getcwd(NULL, 0);
 		temp = ft_strjoin(buffer, "/");
 		path = ft_strjoin(temp, cmd->arg[1]);
@@ -37,7 +37,7 @@ char	*find_user_name(char **tab)
 	char	*path;
 
 	i = 0;
-	while(tab[i] && strncmp(tab[i], "USER=", 5))
+	while (tab[i] && strncmp(tab[i], "USER=", 5))
 		i++;
 	if (tab[i] != NULL)
 	{

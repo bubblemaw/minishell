@@ -6,7 +6,7 @@
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 15:28:31 by maw               #+#    #+#             */
-/*   Updated: 2025/04/04 12:03:34 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/13 21:55:40 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int	cd(t_cmd *cmd, t_shell *shell)
 	char	*buffer;
 
 	buffer = NULL;
-	if (cmd->arg[1] == NULL || (ft_strncmp(cmd->arg[1], "~", 1) == 0 && ft_strlen(cmd->arg[1]) == 1))
+	if (cmd->arg[1] == NULL || (ft_strncmp(cmd->arg[1], "~", 1) == 0
+			&& ft_strlen(cmd->arg[1]) == 1))
 	{
 		buffer = find_user_name(shell->env);
 		path = ft_strjoin("/home/", buffer);
@@ -33,10 +34,11 @@ int	cd(t_cmd *cmd, t_shell *shell)
 	else
 		path = path_finder(cmd, buffer);
 	move_into_dir(cmd, shell, path);
+	g_exit_status = 0;
 	return (VALID);
 }
 
-int move_into_dir(t_cmd *cmd, t_shell *shell, char *path)
+int	move_into_dir(t_cmd *cmd, t_shell *shell, char *path)
 {
 	DIR		*d;
 	char	*buffer;
@@ -90,8 +92,9 @@ void	findvar_replace(t_shell *shell, char *buffer)
 
 void	put_oldpwd(int i, t_shell *shell, char *temp)
 {
-		shell->env = ft_realloc(shell->env, i * sizeof(char *), (i + 1) * sizeof(char *));
-		shell->env[i] = ft_strjoin("OLD" ,temp);
-		i++;
-		shell->env[i] = NULL;
+	shell->env = ft_realloc(shell->env, i * sizeof(char *),
+			(i + 1) * sizeof(char *));
+	shell->env[i] = ft_strjoin("OLD", temp);
+	i++;
+	shell->env[i] = NULL;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:12:55 by maw               #+#    #+#             */
-/*   Updated: 2025/04/10 15:13:57 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/13 21:53:54 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_exit(t_cmd *cmd, t_shell *shell)
 
 	i = is_arguments_digit((cmd->arg));
 	if (i == 0)
-		return;
+		return ;
 	n = 0;
 	if (i > 2)
 	{
@@ -42,11 +42,11 @@ void	ft_exit_void(int n, t_shell *shell)
 	printf("exit\n");
 	exit(n);
 }
+
 int	is_arguments_digit(char **tab)
 {
 	int	i;
 	int	j;
-	
 
 	i = 1;
 	while (tab[i])
@@ -54,7 +54,8 @@ int	is_arguments_digit(char **tab)
 		j = 0;
 		while (tab[i][j])
 		{
-			if  ((tab[i][j] >= '0' && tab[i][j] <= '9') || tab[i][j] == '+' || tab[i][j] == '-')
+			if ((tab[i][j] >= '0' && tab[i][j] <= '9')
+				|| tab[i][j] == '+' || tab[i][j] == '-')
 				j++;
 			else
 			{
@@ -64,6 +65,6 @@ int	is_arguments_digit(char **tab)
 			}
 		}
 		i++;
-	}	
+	}
 	return (i);
 }

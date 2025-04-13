@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   kill_quotes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 14:56:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/08 15:00:01 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/13 12:03:59 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	creat_new_str(t_shell *shell)
 			free(shell->kill.stash);
 			free(shell->kill.tmp);
 			return (VALID);
-		}	
+		}
 	}
 	return (0);
 }

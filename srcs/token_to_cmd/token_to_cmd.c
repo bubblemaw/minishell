@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_to_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 12:00:01 by maw               #+#    #+#             */
-/*   Updated: 2025/04/08 13:18:56 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/13 20:29:06 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	create_cmd_lst(t_shell *shell)
 		}
 		else if (tokken->type == REDIRECTION)
 			ft_cmd_redirection(current, &tokken, shell);
-		else if (tokken && tokken->type == ARG)
+		else if ((tokken && tokken->type == ARG) || tokken->type == OPTION)
 			ft_cmd_maker(shell, current, &tokken);
 	}
 	return (VALID);
@@ -48,7 +48,7 @@ int	ft_cmd_maker(t_shell *shell, t_cmd *cmd, t_token **tokken)
 	if (cmd->arg)
 	{
 		while (cmd->arg[i] != NULL)
-		i++;	
+			i++;
 	}
 	shell->exp.valid = 0;
 	if (ft_strlen((*tokken)->value) == 6 && ft_strncmp((*tokken)->value, "export", 6) == 0)
@@ -58,7 +58,6 @@ int	ft_cmd_maker(t_shell *shell, t_cmd *cmd, t_token **tokken)
 	{
 		if ((*tokken)->type == NAME && shell->exp.valid == 1)
 			join_var(tokken);
-
 		cmd->arg = ft_realloc(cmd->arg, i * sizeof(char *), (i + 1) * sizeof(char *));
 		cmd->arg[i] = ft_strdup((*tokken)->value);
 		if (cmd->arg[i] == NULL)
@@ -92,7 +91,7 @@ int	ft_cmd_pipe(t_cmd *cmd, t_token **tokken)
 
 t_cmd	*end_list(t_cmd *head)
 {
-	while((head)->next)
+	while ((head)->next)
 		head = (head)->next;
 	return (head);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion_spe.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 14:14:55 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/11 11:33:33 by david            ###   ########.fr       */
+/*   Updated: 2025/04/13 12:03:44 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	wave(t_shell *shell, char *current, int *i)
 	return (0);
 }
 
-void switch_home(char *tmp, t_shell *shell, int *j)
+void	switch_home(char *tmp, t_shell *shell, int *j)
 {
 	if (ft_strncmp(tmp, "HOME", 4) == 0)
 	{
@@ -110,7 +110,7 @@ void switch_home(char *tmp, t_shell *shell, int *j)
 			shell->exp.tmp = shell->exp.new;
 			shell->exp.new = ft_strjoin(shell->exp.new, shell->env[*j] + 5);
 			free(shell->exp.tmp);
-		}	
+		}
 	}
 	return ;
 }

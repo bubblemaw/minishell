@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/10 18:29:49 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/13 21:41:15 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,9 +150,9 @@ typedef struct s_kill
 typedef struct s_shell
 {
 	char			**env;
-	int				STDIN;
-	int				STDOUT;
-	int				STDERR;
+	int				stdin_;
+	int				stdout_;
+	int				stderr_;
 	int				prev_pipefd;
 	int				exit_status;
 	int				invalid_redir;
@@ -201,6 +201,7 @@ char	*join_path(char **tab_path, t_cmd *cmd);
 int		ft_direction(t_cmd *token);
 int		ft_test_direction(t_cmd *cmd);
 int		ft_direction_fake(t_cmd *cmd);
+int		outfile_direction_fake(t_cmd *cmd);
 int		outfile_direction(t_cmd *cmd);
 void	reset_fd(t_shell *shell);
 void	save_fd(t_shell *shell);
@@ -210,7 +211,9 @@ void	here_doc_child_process(int *pipefd, t_cmd *cmd);
 // execution
 int		ft_execute(t_shell *shell);
 int		ft_exe(t_cmd *token, t_shell *shell);
-int		wait_exit_status(t_shell *shell, int *pipe_exit_flag);
+int		error_redirection(t_cmd **cmd, t_shell *shell);
+void	wait_exit_status(void);
+void	put_exit_status(void);
 
 // built in fonctions
 int		built_in(t_cmd *cmd, t_shell *shell);
@@ -226,7 +229,7 @@ void	findvar_replace(t_shell *shell, char *buffer);
 void	put_oldpwd(int i, t_shell *shell, char *temp);
 char	*find_user_name(char **tab);
 int		ft_env(t_cmd *cmd, t_shell *shell);
-int		pwd(void);
+int		pwd(t_shell *shell);
 int		unset(t_cmd *cmd, t_shell *shell);
 int		ft_strlen_to_equal(char *str);
 int		slide_tab(char **tab, int i);
@@ -255,10 +258,12 @@ void	insert_node(t_cmd *current, t_cmd *new_cmd);
 
 // pipe
 int		piper(t_cmd *cmd, t_shell *shell);
-void	pipex_loop(t_cmd *current, t_shell *shell);
+int		pipex_loop(t_cmd *current, t_shell *shell);
 int		ft_exe_pipe(t_cmd *token, t_shell *shell);
 int		lst_size(t_cmd *token);
 int		child_processor(t_cmd *cmd, t_shell *shell, int *pipefd);
+void	close_pipe_exit(int *pipefd, t_shell *shell);
+void	close_pipe(int *pipefd);
 
 // expansion
 // local gestion

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 15:25:49 by maw               #+#    #+#             */
-/*   Updated: 2025/04/07 16:49:53 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/13 11:53:35 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,10 @@ int	echo(t_cmd *cmd)
 		if (cmd->arg[i + 1] != NULL)
 			ft_putchar_fd(' ', STDOUT_FILENO);
 		i++;
-	}	
+	}
 	if (flag_n == 0)
 		ft_putstr_fd("\n", STDOUT_FILENO);
+	g_exit_status = 0;
 	return (VALID);
 }
 
@@ -49,12 +50,12 @@ int	echo_option(t_cmd *cmd)
 			if (cmd->arg[i][j] != 'n')
 			{
 				flag_n = 0;
-				break;
+				break ;
 			}
 			j++;
 		}
 		if (flag_n == 0)
-			break;
+			break ;
 		i++;
 	}
 	return (i);

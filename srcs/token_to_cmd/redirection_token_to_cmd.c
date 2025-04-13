@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_token_to_cmd.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 16:32:11 by masase            #+#    #+#             */
-/*   Updated: 2025/04/02 11:57:45 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/13 12:47:56 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	double_redirection(t_cmd *cmd, t_token **tokken, t_shell *shell)
 		}
 		cmd->outfile = ft_strdup((*tokken)->value);
 		cmd->append = 1;
-	}	
+	}
 	else if ((*tokken)->value[0] == '<' && (*tokken)->value[1] == '<')
 	{
 		*tokken = (*tokken)->next;
@@ -54,7 +54,7 @@ void	simple_redirection(t_cmd *cmd, t_token **tokken, t_shell *shell)
 		if (cmd->outfile)
 			save_outfile(shell, cmd);
 		cmd->outfile = ft_strdup((*tokken)->value);
-	}	
+	}
 	else if ((*tokken)->value[0] == '<')
 	{
 		*tokken = (*tokken)->next;
@@ -63,13 +63,13 @@ void	simple_redirection(t_cmd *cmd, t_token **tokken, t_shell *shell)
 		else if (cmd->delimiter)
 			save_delimiter(shell, cmd);
 		cmd->infile = ft_strdup((*tokken)->value);
-	}	
+	}
 }
 
 int	new_cmd_redirection(t_cmd **head_cmd, t_shell *shell)
 {
 	t_cmd	*current;
-	
+
 	add_cmd_before_last(head_cmd);
 	current = *head_cmd;
 	while (current->next->next)

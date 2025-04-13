@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_cmd_lst.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 12:29:51 by maw               #+#    #+#             */
-/*   Updated: 2025/04/10 18:15:58 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/13 21:43:02 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,16 @@ void	add_cmd_lst(t_cmd **head)
 {
 	t_cmd	*new_cmd;
 	t_cmd	*tmp;
-	
+
 	new_cmd = malloc(sizeof(t_cmd));
 	if (!new_cmd)
-		return;
+		return ;
 	if (!*head)
 	{
 		*head = new_cmd;
 		new_cmd->next = NULL;
 		new_cmd->prev = NULL;
-	}	
+	}
 	else
 	{
 		tmp = *head;
@@ -36,15 +36,16 @@ void	add_cmd_lst(t_cmd **head)
 		new_cmd->next = NULL;
 	}
 }
+
 void	add_cmd_before_last(t_cmd **head)
 {
 	t_cmd	*new_cmd;
 	t_cmd	*current;
-	
+
 	current = *head;
 	new_cmd = malloc(sizeof(t_cmd));
 	if (!new_cmd)
-		return;
+		return ;
 	if (!*head)
 		*head = new_cmd;
 	else if (lst_size(current) == 1)
@@ -55,7 +56,7 @@ void	add_cmd_before_last(t_cmd **head)
 	}
 	else if (lst_size(current) == 2)
 		insert_node(current, new_cmd);
-	else 
+	else
 	{
 		while (current->next->next)
 			current = current->next;

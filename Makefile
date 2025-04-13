@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: masase <masase@student.42.fr>              +#+  +:+       +#+         #
+#    By: maw <maw@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 22:16:43 by david             #+#    #+#              #
-#    Updated: 2025/04/10 15:11:53 by masase           ###   ########.fr        #
+#    Updated: 2025/04/13 21:42:07 by maw              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,9 +22,12 @@ SRCS =  srcs/main/main.c \
 		srcs/tokken/creat_list.c \
 		srcs/execution/execution.c \
 		srcs/execution/pipe.c \
+		srcs/execution/pipe_utils.c \
 		srcs/token_to_cmd/utils_cmd_lst.c \
 		srcs/cmd_parsing/search_cmd.c \
 		srcs/redirection/redirection.c \
+		srcs/redirection/redirection_fake.c \
+		srcs/redirection/here_doc.c \
 		srcs/error_free/error.c \
 		srcs/error_free/free.c \
 		srcs/token_to_cmd/add_cmd_lst.c \

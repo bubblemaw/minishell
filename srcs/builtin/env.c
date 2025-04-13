@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 17:14:29 by maw               #+#    #+#             */
-/*   Updated: 2025/04/02 11:45:21 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/13 11:53:38 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,6 @@ int	ft_env(t_cmd *cmd, t_shell *shell)
 		printf("%s\n", shell->env[i]);
 		i++;
 	}
+	g_exit_status = 0;
 	return (VALID);
 }

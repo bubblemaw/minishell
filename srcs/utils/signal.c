@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 22:31:22 by maw               #+#    #+#             */
-/*   Updated: 2025/04/02 12:01:07 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/13 20:27:08 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	signalhandler(int signal)
 	}
 	return ;
 }
+
 void	signalhandler_heredoc(int signal)
 {
 	if (signal == SIGINT)

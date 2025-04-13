@@ -3,38 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 12:00:12 by maw               #+#    #+#             */
-/*   Updated: 2025/04/10 15:15:18 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/13 21:52:34 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int		error(char *str)
+int	error(char *str)
 {
-	char *error;
+	char	*error;
 
 	ft_putstr_fd("Error: ", STDERR_FILENO);
-	if(errno)
+	if (errno)
 	{
-		error = malloc((ft_strlen(str) + ft_strlen(strerror(errno)) + 3) * sizeof(char));
+		error = malloc((ft_strlen(str)
+					+ ft_strlen(strerror(errno)) + 3) * sizeof(char));
 		error = ft_strjoin(error, str);
 		error = ft_strjoin(error, ": ");
-		error = ft_strjoin(error , strerror(errno));
+		error = ft_strjoin(error, strerror(errno));
 		ft_putstr_fd(error, STDERR_FILENO);
 		free(error);
 	}
-	else 
+	else
 		ft_putstr_fd(str, STDERR_FILENO);
 	ft_putchar_fd('\n', STDERR_FILENO);
 	return (0);
 }
-int		error_exit(char *str)
+
+int	error_exit(char *str)
 {
 	ft_putstr_fd("Error: ", STDERR_FILENO);
-	if(errno)
+	if (errno)
 	{
 		ft_putstr_fd(str, STDERR_FILENO);
 		ft_putstr_fd(": ", STDERR_FILENO);
@@ -48,7 +50,6 @@ int		error_exit(char *str)
 
 int	error_cmd(char *str)
 {
-	// shell->exit_status = 127;
 	ft_putstr_fd("Error: ", STDERR_FILENO);
 	ft_putstr_fd("Command not found: ", STDERR_FILENO);
 	ft_putstr_fd(str, STDERR_FILENO);

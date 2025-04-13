@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 17:21:32 by maw               #+#    #+#             */
-/*   Updated: 2025/04/08 13:07:56 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/13 20:30:13 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	*ft_realloc(void *ptr, size_t old_size, size_t new_size)
 		return (NULL);
 	}
 	if (ptr == NULL)
-		return malloc(new_size);
+		return (malloc(new_size));
 	new_ptr = malloc(new_size);
 	if (new_ptr == NULL)
 	{
@@ -33,7 +33,7 @@ void	*ft_realloc(void *ptr, size_t old_size, size_t new_size)
 	if (old_size < new_size)
 		copy_size = old_size;
 	else
-		copy_size = new_size;	
+		copy_size = new_size;
 	new_ptr = ft_memcpy(new_ptr, ptr, copy_size);
 	free(ptr);
 	ptr = NULL;
