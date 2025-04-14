@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/13 21:41:15 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/14 15:41:54 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,6 +255,7 @@ void	save_outfile(t_shell *shell, t_cmd *cmd);
 void	save_infile(t_shell *shell, t_cmd *cmd);
 void	save_delimiter(t_shell *shell, t_cmd *cmd);
 void	insert_node(t_cmd *current, t_cmd *new_cmd);
+int		last_arg(t_cmd *cmd);
 
 // pipe
 int		piper(t_cmd *cmd, t_shell *shell);
@@ -311,6 +312,8 @@ char	**copy_env(char **env);
 
 // signal
 void	signalhandler(int signal);
+void	signalhandler_exec(int signal);
+void	signalhandler_back(int signal);
 void	signalhandler_heredoc(int signal);
 void	ft_exit_void(int n, t_shell *shell);
 

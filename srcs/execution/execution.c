@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:16:38 by maw               #+#    #+#             */
-/*   Updated: 2025/04/13 13:07:03 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/14 16:15:32 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,15 @@ int	ft_execute(t_shell *shell)
 		if (current->type == PIPE)
 			if (pipex_loop(current, shell) == VALID)
 				break ;
+		if (current->delimiter)
+			if (here_doc(current, shell) == 130)
+				return (ERROR);
 		if ((current->infile) || current->outfile)
 			if (ft_direction(current) == 0)
 				if (error_redirection(&current, shell) == ERROR)
 					return (ERROR);
 		if (current == NULL)
 			break ;
-		if (current->delimiter)
-			here_doc(current, shell);
 		if (current->arg && shell->invalid_redir == 0)
 			ft_exe(current, shell);
 		current = current->next;

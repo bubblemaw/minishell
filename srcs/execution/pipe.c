@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 13:20:25 by masase            #+#    #+#             */
-/*   Updated: 2025/04/13 21:40:33 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/14 11:02:41 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	child_processor(t_cmd *cmd, t_shell *shell, int *pipefd)
 	return (CHILD_PROCESS);
 }
 
-int	piper(t_cmd *cmd, t_shell *shell) // creation du pipe et fork
+int	piper(t_cmd *cmd, t_shell *shell)
 {
 	int		pipefd[2];
 	pid_t	pid;

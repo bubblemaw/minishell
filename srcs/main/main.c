@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/04/13 22:13:59 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/14 17:56:35 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	g_exit_status = 0;
 
-int	main (int ac, char *av[], char **env)
+int	main(int ac, char *av[], char **env)
 {
 	t_shell	shell;
 
@@ -24,7 +24,6 @@ int	main (int ac, char *av[], char **env)
 	init_shell(&shell);
 	signal(SIGINT, signalhandler);
 	signal(SIGQUIT, SIG_IGN);
-	// signal(SIGPIPE, SIG_IGN);
 	(void)av;
 	(void)ac;
 
@@ -61,11 +60,15 @@ int	main (int ac, char *av[], char **env)
 		if (create_cmd_lst(&shell) == ERROR)
 		{
 			free_shell(&shell);
-			error("loading commands\n");
+			error("loading commands");
 		}
 		init_var_local(&shell);
 		// print_cmds(&shell.cmd);
+		signal(SIGINT, signalhandler_exec);
+		signal(SIGQUIT, signalhandler_back);
 		ft_execute(&shell);
+		signal(SIGQUIT, SIG_IGN);
+		signal(SIGINT, signalhandler);
 		// printf("execution fini\n");
 	}
 	return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 12:21:27 by maw               #+#    #+#             */
-/*   Updated: 2025/04/13 12:46:12 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/14 17:45:29 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,11 @@ int	here_doc(t_cmd *cmd, t_shell *shell)
 		close (pipefd[1]);
 		signal(SIGINT, SIG_IGN);
 		waitpid(pid, &shell->exit_status, 0);
-		signal(SIGINT, signalhandler);
+		signal(SIGINT, signalhandler_exec);
 		if (WEXITSTATUS(shell->exit_status) == 130)
 		{
 			close (pipefd[0]);
+			g_exit_status = 130;
 			return (130);
 		}
 		dup2(pipefd[0], STDIN_FILENO);
@@ -51,7 +52,8 @@ void	here_doc_child_process(int *pipefd, t_cmd *cmd)
 		line = readline(">");
 		if (!line)
 			break ;
-		if (ft_strncmp(line, del, ft_strlen(del)) == 0)
+		if (ft_strncmp(line, del, ft_strlen(del)) == 0
+			&& ft_strlen(line) == ft_strlen(del))
 		{
 			free(line);
 			break ;
