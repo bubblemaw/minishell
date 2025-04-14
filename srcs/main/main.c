@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/04/14 16:33:49 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/14 21:47:24 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int	main (int ac, char *av[], char **env)
 			continue ;
 		}
 		give_token_data(&shell);
+		print_token(shell.tokken);
 		ft_expansion(&shell);
 		kill_quotes(&shell);
 		init_execution(&shell);
@@ -65,6 +66,8 @@ int	main (int ac, char *av[], char **env)
 		}
 		if (shell.creat.var_flag != true)
 			init_var_local(&shell);
+		printf("\n-----------------\n");
+		print_token(shell.tokken);
 		// print_cmds(&shell.cmd);
 		ft_execute(&shell);
 		// printf("execution fini\n");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 16:34:33 by maw               #+#    #+#             */
-/*   Updated: 2025/04/14 17:22:37 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/14 21:48:35 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,10 @@ int	export_check(t_shell *shell)
 	t_token	*tmp;
 
 	tmp = shell->tokken;
-	if (shell->creat.var_flag == true)
-	{
-		ft_putstr_fd("export: not a valid identifier\n", STDERR_FILENO);
+	while (ft_strncmp(tmp->value, "export", 6) != 0)
+		tmp = tmp->next;
+	ft_putstr_fd("export: not a valid identifier\n", STDERR_FILENO);
 		return (ERROR);
-	}
 	while (tmp != NULL)
 	{
 		if (tmp->type == OPTION || tmp->type == ARG)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_parse.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:17:05 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/14 17:17:04 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/14 20:52:42 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	give_token_data(t_shell *shell)
 	temp = shell->tokken;
 	first_case(shell, &temp);
 	shell->creat.find = false;
+	shell->creat.com = NULL;
 	while (temp != NULL)
 	{
 		if (give(shell, &temp, &shell->creat.find) == ERROR)
@@ -59,7 +60,8 @@ int	give(t_shell *shell, t_token **temp, bool *find)
 	else if ((*temp)->value[0] == '=')
 	{
 		(*temp)->type = EQUALITY;
-		if (var_name((*temp)->prev->value) == ERROR)
+		if (var_name((*temp)->prev->value) == ERROR
+			&& ft_strncmp(shell->creat.com, "export", 6) != 0)
 		{
 			shell->creat.var_flag = true;
 			return (ERROR);	
@@ -72,6 +74,7 @@ int	give(t_shell *shell, t_token **temp, bool *find)
 	{
 		(*temp)->type = PIPE;
 		*find = false;
+		shell->creat.com = NULL;
 	}
 	else if ((*temp)->value[0] == '-'
 		&& (*temp)->value[1] != ' ')
@@ -82,6 +85,7 @@ int	give(t_shell *shell, t_token **temp, bool *find)
 	{
 		(*temp)->type = COMMAND;
 		*find = true;
+		shell->creat.com = (*temp)->value;
 	}
 	return (0);
 }
