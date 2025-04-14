@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 16:34:33 by maw               #+#    #+#             */
-/*   Updated: 2025/04/13 21:56:51 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/14 12:10:37 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	export_check(t_shell *shell)
 		if (tmp->type == OPTION || tmp->type == ARG)
 		{
 			ft_putstr_fd("Error export : write only variables\n",
-						STDERR_FILENO);
+				STDERR_FILENO);
 			return (ERROR);
 		}
 		tmp = tmp->next;
