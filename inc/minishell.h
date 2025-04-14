@@ -6,7 +6,7 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/14 15:41:54 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/14 19:29:33 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -282,6 +282,9 @@ int		join_var(t_token **token);
 int		check_double_export(char *var, t_shell *shell);
 int		crush_local_var(t_shell *shell, char *var);
 int		add_var_env(t_shell *shell, int *i, char *var);
+int		display_export_env(t_shell *shell);
+void	write_until_char(char *str, char c);
+void	write_after_char(char *str, char c);
 
 int		ft_expansion(t_shell *shell);
 int		is_double_quote(t_token *tokken);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:19:16 by david             #+#    #+#             */
-/*   Updated: 2025/04/13 11:54:25 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/14 19:23:38 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	export(t_cmd *token, t_shell *shell)
 	j = 1;
 	current = token;
 	temp = shell;
+	if (current->arg[1] == NULL)
+		display_export_env(shell);
 	while (current->arg[j] != NULL)
 	{
 		check_double_export(current->arg[j], temp);
