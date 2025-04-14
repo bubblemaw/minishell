@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 14:14:55 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/14 12:07:27 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/14 14:36:04 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	special_cases(t_shell *shell, char *current, int *i)
 		return (VALID);
 	if (pid_dolls(shell, current, i) == VALID)
 		return (VALID);
-	if (wave(shell, current + *i, i) == VALID)
+	if (wave(shell, current, i) == VALID)
 		return (VALID);
 	return (0);
 }

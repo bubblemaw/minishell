@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/04/13 22:13:59 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/14 16:33:49 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ int	main (int ac, char *av[], char **env)
 			free_shell(&shell);
 			error("loading commands\n");
 		}
-		init_var_local(&shell);
+		if (shell.creat.var_flag != true)
+			init_var_local(&shell);
 		// print_cmds(&shell.cmd);
 		ft_execute(&shell);
 		// printf("execution fini\n");

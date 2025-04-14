@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_parse.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:17:05 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/13 12:08:39 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/14 17:17:04 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ void	give_token_data(t_shell *shell)
 	shell->creat.find = false;
 	while (temp != NULL)
 	{
-		give(&temp, &shell->creat.find);
+		if (give(shell, &temp, &shell->creat.find) == ERROR)
+			return ;
 		temp = temp->next;
 	}
 	return ;
@@ -50,13 +51,19 @@ void	first_case(t_shell *shell, t_token **temp)
 	return ;
 }
 
-void	give(t_token **temp, bool *find)
+int	give(t_shell *shell, t_token **temp, bool *find)
 {
+	shell->creat.var_flag = false;
 	if ((*temp)->value[0] == '>' || (*temp)->value[0] == '<')
 		(*temp)->type = REDIRECTION;
 	else if ((*temp)->value[0] == '=')
 	{
 		(*temp)->type = EQUALITY;
+		if (var_name((*temp)->prev->value) == ERROR)
+		{
+			shell->creat.var_flag = true;
+			return (ERROR);	
+		}
 		(*temp)->prev->type = NAME;
 		(*temp)->next->type = VALUE;
 		*temp = (*temp)->next;
@@ -76,5 +83,5 @@ void	give(t_token **temp, bool *find)
 		(*temp)->type = COMMAND;
 		*find = true;
 	}
-	return ;
+	return (0);
 }

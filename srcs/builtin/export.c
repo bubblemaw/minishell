@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:19:16 by david             #+#    #+#             */
-/*   Updated: 2025/04/13 11:54:25 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/14 16:46:23 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	export(t_cmd *token, t_shell *shell)
 	t_cmd	*current;
 	t_shell	*temp;
 
-	j = 1;
+	j = 0;
 	current = token;
 	temp = shell;
 	while (current->arg[j] != NULL)

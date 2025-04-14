@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/13 21:41:15 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/14 15:52:42 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ typedef struct s_creat
 	char			*first;
 	bool			var;
 	bool			find;
+	bool			var_flag;
 	t_token			*new;
 	t_var			*new_var;
 }	t_creat;
@@ -184,7 +185,8 @@ int		detect_command(char *input, int *i);
 int		creat_list(t_shell *shell, char *input);
 void	give_token_data(t_shell *shell);
 void	first_case(t_shell *shell, t_token **temp);
-void	give(t_token **temp, bool *find);
+int		give(t_shell *shell, t_token **temp, bool *find);
+int		var_name(char *value);
 
 // fonctions to creat list
 t_token	*creat_node(char *content);
