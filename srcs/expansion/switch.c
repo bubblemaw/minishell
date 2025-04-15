@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   switch.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 13:30:47 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/14 12:07:32 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/15 22:39:54 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,9 @@ int	result(t_shell *shell, t_token *current, int *i)
 
 int	only_dolls(t_shell *shell, t_token *current, int *i)
 {
+	// if ((current->value[*i + 1] == '"' || current->value[*i + 1] == '\'')
+	// 	&& (current->value[*i - 1] != '"' || current->value[*i - 1] != '"'))
+	// 	return (0);
 	shell->exp.size_var = var_size(current->value + *i);
 	if (shell->exp.size_var == 0)
 	{

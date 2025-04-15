@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_parse.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:17:05 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/15 18:37:52 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/16 00:38:59 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,14 @@ int	give(t_shell *shell, t_token **temp, bool *find)
 	{
 		(*temp)->type = EQUALITY;
 		if (var_name((*temp)->prev->value) == ERROR
-			&& ft_strncmp(shell->creat.com, "export", 6) != 0)
+			&& ft_strncmp(shell->creat.com, "export", 7) != 0)
 		{
+			var_error(shell, *temp);
 			shell->creat.var_flag = true;
-			return (ERROR);	
+			return (ERROR);
 		}
+		if ((*temp)->prev->type == COMMAND)
+			*find = false;
 		(*temp)->prev->type = NAME;
 		(*temp)->next->type = VALUE;
 		*temp = (*temp)->next;

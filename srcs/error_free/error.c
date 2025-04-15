@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 12:00:12 by maw               #+#    #+#             */
-/*   Updated: 2025/04/13 21:52:34 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/15 22:12:37 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,24 @@ int	error_cmd(char *str)
 	ft_putstr_fd(str, STDERR_FILENO);
 	ft_putchar_fd('\n', STDERR_FILENO);
 	exit (127);
+}
+
+int	error_var(char *str)
+{
+	ft_putstr_fd("Error: ", STDERR_FILENO);
+	ft_putstr_fd("Command not found: ", STDERR_FILENO);
+	ft_putstr_fd(str, STDERR_FILENO);
+	ft_putchar_fd('\n', STDERR_FILENO);
+	g_exit_status = 127;
+	return (0);
+}
+
+int	error_export(char *str)
+{
+	ft_putstr_fd("Error: ", STDERR_FILENO);
+	ft_putstr_fd("export: `", STDERR_FILENO);
+	ft_putstr_fd(str, STDERR_FILENO);
+	ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
+	g_exit_status = 1;
+	return (0);
 }

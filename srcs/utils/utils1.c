@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 17:21:32 by maw               #+#    #+#             */
-/*   Updated: 2025/04/13 20:30:13 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/15 21:23:00 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	init_shell(t_shell *shell)
 	shell->crash.tmp = NULL;
 	shell->creat.content = NULL;
 	shell->creat.first = NULL;
+	shell->creat.err = NULL;
 	shell->exp.new = NULL;
 	shell->exp.sub_env = NULL;
 	shell->exp.tmp = NULL;

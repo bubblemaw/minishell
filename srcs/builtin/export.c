@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:19:16 by david             #+#    #+#             */
-/*   Updated: 2025/04/15 16:57:12 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/15 22:50:18 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,10 @@ int	export(t_cmd *token, t_shell *shell)
 {
 	int		j;
 	t_cmd	*current;
-	t_shell	*temp;
 	t_token	*tmp;
 
 	j = 0;
 	current = token;
-	temp = shell;
 	tmp = shell->tokken;
 	while (ft_strncmp(tmp->value, "export", 6) != 0)
 		tmp = tmp->next;
@@ -38,13 +36,13 @@ int	export(t_cmd *token, t_shell *shell)
 		}
 		else if (tmp->type == NAME && var_name_export(tmp->value) == ERROR)
 		{
-			ft_putstr_fd("export: has a invalid identifier\n", STDERR_FILENO);
+			error_export(tmp->value);
 			tmp = tmp->next;
 			j++;
 		}
 		else
 		{
-			check_double_export(current->arg[j], temp);
+			check_double_export(current->arg[j], shell);
 			tmp = tmp->next;
 			j++;
 		}

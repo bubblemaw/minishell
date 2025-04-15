@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/04/15 18:37:50 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/15 22:42:13 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	g_exit_status = 0;
 
-int	main (int ac, char *av[], char **env)
+int	main(int ac, char *av[], char **env)
 {
 	t_shell	shell;
 
@@ -27,7 +27,6 @@ int	main (int ac, char *av[], char **env)
 	// signal(SIGPIPE, SIG_IGN);
 	(void)av;
 	(void)ac;
-
 	while (1)
 	{
 		if (shell.tokken != NULL || shell.input)
@@ -41,6 +40,8 @@ int	main (int ac, char *av[], char **env)
 			free_cmds(&shell.cmd);
 			shell.cmd = NULL;
 		}
+		if (shell.creat.err != NULL)
+			free(shell.creat.err);
 		init_shell(&shell);
 		shell.input = readline("minishell$ ");
 		if (shell.input == NULL)
@@ -56,10 +57,10 @@ int	main (int ac, char *av[], char **env)
 		}
 		if (give_token_data(&shell) == ERROR)
 		{
-			ft_putstr_fd("Erreur var command not found\n", STDERR_FILENO);
+			error_var(shell.creat.err);
 			continue ;
 		}
-		print_token(shell.tokken);
+		// print_token(shell.tokken);
 		ft_expansion(&shell);
 		kill_quotes(&shell);
 		init_execution(&shell);
