@@ -6,7 +6,7 @@
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:12:55 by maw               #+#    #+#             */
-/*   Updated: 2025/04/13 21:53:54 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/15 17:50:18 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ void	ft_exit(t_cmd *cmd, t_shell *shell)
 	int	n;
 	int	i;
 
-	i = is_arguments_digit((cmd->arg));
+	i = 0;
+	while (cmd->arg[i])
+		i++;
 	if (i == 0)
 		return ;
 	n = 0;
@@ -28,7 +30,9 @@ void	ft_exit(t_cmd *cmd, t_shell *shell)
 		g_exit_status = 1;
 		return ;
 	}
-	if (i == 2)
+	if (is_arguments_digit(cmd->arg) == 0)
+		n = 2;
+	else if (i == 2)
 		n = ft_atoi(cmd->arg[1]);
 	free_shell(shell);
 	printf("exit\n");
@@ -59,6 +63,7 @@ int	is_arguments_digit(char **tab)
 				j++;
 			else
 			{
+				printf("%c\n", tab[i][j]);
 				error("numerical number necessary");
 				g_exit_status = 2;
 				return (0);

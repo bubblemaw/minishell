@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 15:28:31 by maw               #+#    #+#             */
-/*   Updated: 2025/04/14 20:20:34 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/15 17:11:37 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,10 @@ int	cd(t_cmd *cmd, t_shell *shell)
 	}
 	else
 		path = path_finder(cmd, buffer);
-	move_into_dir(cmd, shell, path);
-	g_exit_status = 0;
+	if (move_into_dir(cmd, shell, path) == ERROR)
+		g_exit_status = 1;
+	else
+		g_exit_status = 0;
 	return (VALID);
 }
 
@@ -57,6 +59,8 @@ int	move_into_dir(t_cmd *cmd, t_shell *shell, char *path)
 	{
 		perror(cmd->arg[1]);
 		g_exit_status = 1;
+		free (path);
+		return (ERROR);
 	}
 	free (path);
 	return (VALID);

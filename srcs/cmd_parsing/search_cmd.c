@@ -6,7 +6,7 @@
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 21:59:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/13 21:59:48 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/15 16:31:13 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ char	*ft_parse(t_cmd *cmd, t_shell *shell)
 		cmd_path = ft_strjoin(getcwd(NULL, 0), "/");
 		cmd_path = ft_strjoin(cmd_path, cmd->arg[0]);
 	}
+	else if (ft_strnstr(cmd->arg[0], "/", ft_strlen(cmd->arg[0])) != NULL)
+		cmd_path = cmd->arg[0];
 	else
 		cmd_path = ft_cmd_path(cmd, shell);
 	return (cmd_path);
@@ -37,11 +39,11 @@ char	*ft_cmd_path(t_cmd *cmd, t_shell *shell)
 	int		i;
 
 	i = 0;
-	while (shell->env[i] && strncmp(shell->env[i], "PATH", 4) != 0)
+	while (shell->env[i] && strncmp(shell->env[i], "PATH=", 5) != 0)
 		i++;
-	env = ft_strdup(shell->env[i]);
-	if (!env)
+	if (!shell->env[i])
 		return (NULL);
+	env = ft_strdup(shell->env[i]);
 	tab_path = ft_split(env, ':');
 	if (tab_path == NULL)
 		return (NULL);

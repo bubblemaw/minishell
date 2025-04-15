@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:16:38 by maw               #+#    #+#             */
-/*   Updated: 2025/04/14 16:15:32 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/15 16:31:50 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	ft_exe(t_cmd *cmd, t_shell *shell)
 		if (execve(cmd_path, cmd->arg, shell->env) == -1)
 		{
 			put_exit_status();
-			return (error_exit("execve failed"));
+			return (error_exit(cmd->arg[0]));
 		}
 	}
 	else
