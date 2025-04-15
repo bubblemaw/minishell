@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 16:34:33 by maw               #+#    #+#             */
-/*   Updated: 2025/04/14 21:48:35 by david            ###   ########.fr       */
+/*   Updated: 2025/04/15 11:40:43 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ int	built_in(t_cmd *cmd, t_shell *shell)
 	else if (ft_strlen(cmd->arg[0]) == 6
 		&& ft_strncmp(cmd->arg[0], "export", 6) == 0)
 	{
-		if (export_check(shell) == ERROR)
-			return (VALID);
+		// export_check(shell);
 		export(cmd, shell);
 		return (VALID);
 	}
@@ -52,17 +51,16 @@ int	export_check(t_shell *shell)
 	tmp = shell->tokken;
 	while (ft_strncmp(tmp->value, "export", 6) != 0)
 		tmp = tmp->next;
-	ft_putstr_fd("export: not a valid identifier\n", STDERR_FILENO);
-		return (ERROR);
 	while (tmp != NULL)
 	{
 		if (tmp->type == OPTION || tmp->type == ARG)
+			tmp = tmp->next;			
+		else
 		{
-			ft_putstr_fd("Error export : write only variables\n",
-				STDERR_FILENO);
-			return (ERROR);
+			if (tmp->type == NAME && var_name(tmp->value) == ERROR)
+				ft_putstr_fd("export: has a invalid identifier\n", STDERR_FILENO);
+			tmp = tmp->next;
 		}
-		tmp = tmp->next;
 	}
 	return (0);
 }
