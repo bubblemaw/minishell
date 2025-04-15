@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   kill_quotes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 14:56:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/13 12:03:59 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/15 18:22:52 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int	kill_quotes(t_shell *sl)
 	while (sl->kill.temp != NULL)
 	{
 		i = 0;
-		while (sl->kill.temp->value[i] != '\0' && sl->kill.temp->type == ARG)
+		while (sl->kill.temp->value[i] != '\0'
+			&& (sl->kill.temp->type == ARG || sl->kill.temp->type == OPTION))
 		{
 			if (is_double(sl, sl->kill.temp->value + i, &i) != VALID)
 				if (is_single(sl, sl->kill.temp->value + i, &i) != VALID)

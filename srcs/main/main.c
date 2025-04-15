@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/04/15 17:23:24 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/15 18:37:50 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	main (int ac, char *av[], char **env)
 			ft_putstr_fd("Erreur var command not found\n", STDERR_FILENO);
 			continue ;
 		}
-		// print_token(shell.tokken);
+		print_token(shell.tokken);
 		ft_expansion(&shell);
 		kill_quotes(&shell);
 		init_execution(&shell);
