@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/04/15 12:34:38 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/15 17:23:24 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,11 @@ int	main (int ac, char *av[], char **env)
 			ft_putstr_fd("syntax error near unexpected token\n", STDERR_FILENO);
 			continue ;
 		}
-		give_token_data(&shell);
+		if (give_token_data(&shell) == ERROR)
+		{
+			ft_putstr_fd("Erreur var command not found\n", STDERR_FILENO);
+			continue ;
+		}
 		// print_token(shell.tokken);
 		ft_expansion(&shell);
 		kill_quotes(&shell);
@@ -64,7 +68,7 @@ int	main (int ac, char *av[], char **env)
 			free_shell(&shell);
 			error("loading commands\n");
 		}
-		if (shell.creat.var_flag == false)
+		if (export_boucle(&shell) == 0)
 			init_var_local(&shell);
 		// printf("\n-----------------\n");
 		// print_token(shell.tokken);

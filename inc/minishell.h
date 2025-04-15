@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/15 12:19:38 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/15 17:21:00 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,11 +184,13 @@ int		detect_command(char *input, int *i);
 
 // token's parsing
 int		creat_list(t_shell *shell, char *input);
-void	give_token_data(t_shell *shell);
+int		give_token_data(t_shell *shell);
 void	first_case(t_shell *shell, t_token **temp);
 int		give(t_shell *shell, t_token **temp, bool *find);
 int		var_name(char *value);
 int		var_name_export(char *value);
+int		export_kill(t_shell *shell);
+int		export_boucle(t_shell *shell);
 
 // fonctions to creat list
 t_token	*creat_node(char *content);

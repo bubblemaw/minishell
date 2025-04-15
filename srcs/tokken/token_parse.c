@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:17:05 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/15 12:36:24 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/15 17:23:22 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	creat_list(t_shell *shell, char *input)
 	return (0);
 }
 
-void	give_token_data(t_shell *shell)
+int	give_token_data(t_shell *shell)
 {
 	t_token	*temp;
 
@@ -32,10 +32,11 @@ void	give_token_data(t_shell *shell)
 	while (temp != NULL)
 	{
 		if (give(shell, &temp, &shell->creat.find) == ERROR)
-			return ;
+			return (ERROR);
 		temp = temp->next;
 	}
-	return ;
+	export_kill(shell);
+	return (0);
 }
 
 void	first_case(t_shell *shell, t_token **temp)

@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:55:13 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/15 12:19:39 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/15 17:23:04 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,39 @@ int var_name_export(char *value)
         i++;
     }
     free(var);
+    return (0);
+}
+
+int export_kill(t_shell *shell)
+{
+    if (ft_strncmp(shell->creat.com, "export", 7) != 0)
+        return (0);
+    t_token *tmp;
+
+    tmp = shell->tokken;
+    while (tmp->type == NAME || tmp->type == EQUALITY || tmp->type == VALUE)
+    {
+        tmp = tmp->next;
+    }
+    if (ft_strncmp(tmp->value, "export", 7) == 0)
+    {
+        if (tmp->type != COMMAND)
+            tmp->type = COMMAND;
+        shell->creat.var_flag = true;
+    }
+    return (0);
+}
+
+int export_boucle(t_shell *shell)
+{
+    t_token *tmp;
+
+    tmp = shell->tokken;
+    while (tmp != NULL)
+    {
+        if (ft_strncmp(tmp->value, "export", 7) == 0)
+            return (VALID);
+        tmp = tmp->next;
+    }
     return (0);
 }
