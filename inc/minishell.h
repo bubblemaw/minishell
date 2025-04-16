@@ -6,7 +6,7 @@
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/16 11:16:18 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/16 15:02:43 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ typedef struct s_exp
 	int				size_var;
 	int				start;
 	int				fd;
+	bool			quot;
 }	t_exp;
 
 typedef struct s_kill
@@ -304,7 +305,8 @@ int		pid_dolls(t_shell *shell, char *current, int *i);
 int		wave(t_shell *shell, char *current, int *i);
 void	switch_home(char *tmp, t_shell *shell, int *j);
 int		var_size(char *str);
-int		only_dolls(t_shell *shell, t_token *current, int *i);
+int		only_dolls(t_shell *shell, char *current);
+void	inside(t_shell *shell, t_token *cur, int *i);
 int		search_export_var(t_shell *shell, char *str);
 int		put_new_var(t_shell *shell, char *tmp, int i, int j);
 int		search_local_var(t_shell *shell, char *str, t_var *temp);

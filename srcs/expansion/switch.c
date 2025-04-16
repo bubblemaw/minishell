@@ -6,7 +6,7 @@
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 13:30:47 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/16 15:00:20 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/16 15:02:25 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,12 @@ int	result(t_shell *shell, t_token *current, int *i)
 	return (0);
 }
 
-int	only_dolls(t_shell *shell, t_token *current, int *i)
+int	only_dolls(t_shell *shell, char *cur)
 {
-	// if ((current->value[*i + 1] == '"' || current->value[*i + 1] == '\'')
-	// 	&& (current->value[*i - 1] != '"' || current->value[*i - 1] != '"'))
-	// 	return (0);
-	shell->exp.size_var = var_size(current->value + *i);
+	if (shell->exp.quot == false &&
+		(cur[1] == '"' || cur[1] == '\''))
+		return (0);
+	shell->exp.size_var = var_size(cur);
 	if (shell->exp.size_var == 0)
 	{
 		shell->exp.tmp = shell->exp.new;
@@ -104,4 +104,16 @@ int	only_dolls(t_shell *shell, t_token *current, int *i)
 		free(shell->exp.tmp);
 	}
 	return (0);
+}
+
+void	inside(t_shell *shell, t_token *cur, int *i)
+{
+	if (cur->value[*i] == '"' || cur->value[*i] == '\'')
+	{
+		if (shell->exp.quot == false)
+			shell->exp.quot = true;
+		else
+			shell->exp.quot = false;
+	}
+	return ;
 }

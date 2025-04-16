@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:55:13 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/15 22:42:16 by david            ###   ########.fr       */
+/*   Updated: 2025/04/16 14:01:37 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int	var_name(char *value)
 		return (ERROR);
 	while (value[i] != '\0')
 	{
-		if (ft_isalnum(value[i]) == 0 && value[i] != '_' && value[i] != '=')
+		if (ft_isalnum(value[i]) == 0 && value[i] != '_' && value[i] != '='
+			&& value[i] != '+')
 			return (ERROR);
 		i++;
 	}
