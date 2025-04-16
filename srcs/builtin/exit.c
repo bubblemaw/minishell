@@ -6,7 +6,7 @@
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:12:55 by maw               #+#    #+#             */
-/*   Updated: 2025/04/16 09:51:42 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/16 10:10:05 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ int	is_arguments_digit(char **tab)
 				j++;
 			else
 			{
-				printf("%c\n", tab[i][j]);
 				error("numerical number necessary");
 				g_exit_status = 2;
 				return (0);

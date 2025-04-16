@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   switch.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 13:30:47 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/15 22:39:54 by david            ###   ########.fr       */
+/*   Updated: 2025/04/16 15:00:20 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,20 @@ int	search_export_var(t_shell *shell, char *str)
 			&& shell->exp.sub_env[shell->exp.size_var] == '\0')
 		{
 			j++;
-			tmp = shell->exp.new;
-			shell->exp.new = ft_strjoin(shell->exp.new, shell->env[i] + j);
-			free(shell->exp.sub_env);
-			free(tmp);
-			return (0);
+			return (put_new_var(shell, tmp, i, j));
 		}
 		free(shell->exp.sub_env);
 		i++;
 	}
+	return (0);
+}
+
+int	put_new_var(t_shell *shell, char *tmp, int i, int j)
+{
+	tmp = shell->exp.new;
+	shell->exp.new = ft_strjoin(shell->exp.new, shell->env[i] + j);
+	free(shell->exp.sub_env);
+	free(tmp);
 	return (0);
 }
 

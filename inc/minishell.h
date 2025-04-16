@@ -6,7 +6,7 @@
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/16 09:50:40 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/16 11:16:18 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -306,6 +306,7 @@ void	switch_home(char *tmp, t_shell *shell, int *j);
 int		var_size(char *str);
 int		only_dolls(t_shell *shell, t_token *current, int *i);
 int		search_export_var(t_shell *shell, char *str);
+int		put_new_var(t_shell *shell, char *tmp, int i, int j);
 int		search_local_var(t_shell *shell, char *str, t_var *temp);
 int		result(t_shell *shell, t_token *current, int *i);
 
