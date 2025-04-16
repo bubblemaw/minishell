@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: masase <masase@student.42.fr>              +#+  +:+       +#+         #
+#    By: maw <maw@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 22:16:43 by david             #+#    #+#              #
-#    Updated: 2025/04/14 19:24:35 by masase           ###   ########.fr        #
+#    Updated: 2025/04/16 09:50:53 by maw              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRCS =  srcs/main/main.c \
 	    srcs/tokken/token_detect_2.c \
 	    srcs/tokken/token_parse.c \
 		srcs/tokken/creat_list.c \
+		srcs/tokken/var_error.c \
 		srcs/execution/execution.c \
 		srcs/execution/pipe.c \
 		srcs/execution/pipe_utils.c \

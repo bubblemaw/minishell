@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/14 19:29:33 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/16 09:50:40 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,11 @@ typedef struct s_creat
 	int				v_res;
 	char			*content;
 	char			*first;
+	char			*com;
+	char			*err;
 	bool			var;
 	bool			find;
+	bool			var_flag;
 	t_token			*new;
 	t_var			*new_var;
 }	t_creat;
@@ -182,9 +185,14 @@ int		detect_command(char *input, int *i);
 
 // token's parsing
 int		creat_list(t_shell *shell, char *input);
-void	give_token_data(t_shell *shell);
+int		give_token_data(t_shell *shell);
 void	first_case(t_shell *shell, t_token **temp);
-void	give(t_token **temp, bool *find);
+int		give(t_shell *shell, t_token **temp, bool *find);
+int		var_name(char *value);
+void	var_error(t_shell *shell, t_token *temp);
+int		var_name_export(char *value);
+int		export_kill(t_shell *shell);
+int		export_boucle(t_shell *shell);
 
 // fonctions to creat list
 t_token	*creat_node(char *content);
@@ -332,5 +340,7 @@ void	free_split(char **str);
 int		error_cmd(char *str);
 int		error(char *str);
 int		error_exit(char *str);
+int		error_var(char *str);
+int		error_export(char *str);
 
 #endif

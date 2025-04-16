@@ -6,7 +6,7 @@
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:19:16 by david             #+#    #+#             */
-/*   Updated: 2025/04/15 17:13:04 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/16 09:52:23 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,36 @@ int	export(t_cmd *token, t_shell *shell)
 {
 	int		j;
 	t_cmd	*current;
-	t_shell	*temp;
+	t_token	*tmp;
 
-	j = 1;
+	j = 0;
 	current = token;
-	temp = shell;
-	if (current->arg[1] == NULL)
-		display_export_env(shell);
+	tmp = shell->tokken;
+	while (ft_strncmp(tmp->value, "export", 6) != 0)
+		tmp = tmp->next;
+	while (ft_strncmp(current->arg[j], "export", 6) != 0)
+		j++;
+	tmp = tmp->next;
+	j++;
 	while (current->arg[j] != NULL)
 	{
-		check_double_export(current->arg[j], temp);
-		j++;
+		if (tmp->type == OPTION || tmp->type == ARG)
+		{
+			tmp = tmp->next;
+			j++;
+		}
+		else if (tmp->type == NAME && var_name_export(tmp->value) == ERROR)
+		{
+			error_export(tmp->value);
+			tmp = tmp->next;
+			j++;
+		}
+		else
+		{
+			check_double_export(current->arg[j], shell);
+			tmp = tmp->next;
+			j++;
+		}
 	}
 	return (VALID);
 }

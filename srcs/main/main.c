@@ -6,7 +6,7 @@
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/04/15 17:56:00 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/16 09:55:14 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	main(int ac, char *av[], char **env)
 	signal(SIGQUIT, SIG_IGN);
 	(void)av;
 	(void)ac;
-
 	while (1)
 	{
 		if (shell.tokken != NULL || shell.input)
@@ -40,6 +39,8 @@ int	main(int ac, char *av[], char **env)
 			free_cmds(&shell.cmd);
 			shell.cmd = NULL;
 		}
+		if (shell.creat.err != NULL)
+			free(shell.creat.err);
 		init_shell(&shell);
 		shell.input = readline("minishell$ ");
 		if (shell.input == NULL)
@@ -53,7 +54,12 @@ int	main(int ac, char *av[], char **env)
 			ft_putstr_fd("syntax error near unexpected token\n", STDERR_FILENO);
 			continue ;
 		}
-		give_token_data(&shell);
+		if (give_token_data(&shell) == ERROR)
+		{
+			error_var(shell.creat.err);
+			continue ;
+		}
+		// print_token(shell.tokken);
 		ft_expansion(&shell);
 		kill_quotes(&shell);
 		init_execution(&shell);
@@ -62,7 +68,10 @@ int	main(int ac, char *av[], char **env)
 			free_shell(&shell);
 			error("loading commands");
 		}
-		init_var_local(&shell);
+		if (export_boucle(&shell) == 0)
+			init_var_local(&shell);
+		// printf("\n-----------------\n");
+		// print_token(shell.tokken);
 		// print_cmds(&shell.cmd);
 		signal(SIGINT, signalhandler_exec);
 		signal(SIGQUIT, signalhandler_back);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_parse.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:17:05 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/13 12:08:39 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/16 00:38:59 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,22 @@ int	creat_list(t_shell *shell, char *input)
 	return (0);
 }
 
-void	give_token_data(t_shell *shell)
+int	give_token_data(t_shell *shell)
 {
 	t_token	*temp;
 
 	temp = shell->tokken;
 	first_case(shell, &temp);
 	shell->creat.find = false;
+	shell->creat.com = NULL;
 	while (temp != NULL)
 	{
-		give(&temp, &shell->creat.find);
+		if (give(shell, &temp, &shell->creat.find) == ERROR)
+			return (ERROR);
 		temp = temp->next;
 	}
-	return ;
+	export_kill(shell);
+	return (0);
 }
 
 void	first_case(t_shell *shell, t_token **temp)
@@ -50,13 +53,23 @@ void	first_case(t_shell *shell, t_token **temp)
 	return ;
 }
 
-void	give(t_token **temp, bool *find)
+int	give(t_shell *shell, t_token **temp, bool *find)
 {
+	shell->creat.var_flag = false;
 	if ((*temp)->value[0] == '>' || (*temp)->value[0] == '<')
 		(*temp)->type = REDIRECTION;
 	else if ((*temp)->value[0] == '=')
 	{
 		(*temp)->type = EQUALITY;
+		if (var_name((*temp)->prev->value) == ERROR
+			&& ft_strncmp(shell->creat.com, "export", 7) != 0)
+		{
+			var_error(shell, *temp);
+			shell->creat.var_flag = true;
+			return (ERROR);
+		}
+		if ((*temp)->prev->type == COMMAND)
+			*find = false;
 		(*temp)->prev->type = NAME;
 		(*temp)->next->type = VALUE;
 		*temp = (*temp)->next;
@@ -65,6 +78,7 @@ void	give(t_token **temp, bool *find)
 	{
 		(*temp)->type = PIPE;
 		*find = false;
+		shell->creat.com = NULL;
 	}
 	else if ((*temp)->value[0] == '-'
 		&& (*temp)->value[1] != ' ')
@@ -75,6 +89,7 @@ void	give(t_token **temp, bool *find)
 	{
 		(*temp)->type = COMMAND;
 		*find = true;
+		shell->creat.com = (*temp)->value;
 	}
-	return ;
+	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   creat_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:02:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/11 11:33:11 by david            ###   ########.fr       */
+/*   Updated: 2025/04/14 14:51:37 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,15 @@
 
 int	enter_input(t_shell *shell)
 {
+	int	i;
+
+	i = 0;
 	if (shell->input[0] == '\0')
+		return (VALID);
+	while ((shell->input[i] >= 9 && shell->input[i] <= 13)
+		|| shell->input[i] == 32)
+		i++;
+	if (shell->input[i] == '\0')
 		return (VALID);
 	return (0);
 }
@@ -31,8 +39,9 @@ int	creat_tokken(char *input, t_shell *shell)
 		if (parsing(input, shell) == ERROR)
 			return (ERROR);
 	}
-	if (shell->creat.content[0] == '<' || shell->creat.content[0] == '>'
-		|| shell->creat.content[0] == '|')
+	if (shell->creat.content != NULL
+		&& (shell->creat.content[0] == '<' || shell->creat.content[0] == '>'
+			|| shell->creat.content[0] == '|'))
 		return (ERROR);
 	return (0);
 }
