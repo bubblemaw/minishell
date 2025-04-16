@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:31:47 by maw               #+#    #+#             */
-/*   Updated: 2025/04/16 12:44:23 by david            ###   ########.fr       */
+/*   Updated: 2025/04/16 14:08:05 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_expansion(t_shell *shell)
 	current = shell->tokken;
 	while (current != NULL)
 	{
-		if (is_double_quote(current) == VALID && (current->type == ARG))
+		if (is_double_quote(current) == VALID && (current->type == ARG || current->type == COMMAND))
 			find_var(shell, current);
 		current = current->next;
 	}

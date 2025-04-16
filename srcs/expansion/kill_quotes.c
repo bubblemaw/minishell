@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 14:56:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/16 13:41:25 by david            ###   ########.fr       */
+/*   Updated: 2025/04/16 13:58:47 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ int kill_quotes(t_shell *shell)
 	while (temp != NULL)
 	{
 		i = 0;
-		while (temp->value[i] != '\0' && temp->type == ARG && temp->type == COMMAND)
+		while (temp->value[i] != '\0' &&
+			(temp->type == ARG || temp->type == COMMAND || temp->type == OPTION))
 		{
 			if (temp->value[i] == '"')
 			{
