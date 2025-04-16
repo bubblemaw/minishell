@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:31:47 by maw               #+#    #+#             */
-/*   Updated: 2025/04/15 22:50:01 by david            ###   ########.fr       */
+/*   Updated: 2025/04/16 12:44:23 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ int	ft_expansion(t_shell *shell)
 	current = shell->tokken;
 	while (current != NULL)
 	{
-		if (is_double_quote(current) == VALID && (current->type == ARG
-				|| current->type == COMMAND))
+		if (is_double_quote(current) == VALID && (current->type == ARG))
 			find_var(shell, current);
 		current = current->next;
 	}
@@ -50,6 +49,7 @@ int	find_var(t_shell *shell, t_token *cur)
 	i = 0;
 	while (cur->value[i] != '\0')
 	{
+		inside(shell, cur, &i);
 		if (cur->value[i] == '$'
 			|| (cur->value[i] == '~' && i - 1 < 0 && (cur->value[i + 1] == ' '
 					|| cur->value[i + 1] == '/' || cur->value[i + 1] == '\0')))
@@ -57,7 +57,7 @@ int	find_var(t_shell *shell, t_token *cur)
 			new_arg(shell, cur->value, &i);
 			if (special_cases(shell, cur->value + i, &i) == VALID)
 				continue ;
-			only_dolls(shell, cur, &i);
+			only_dolls(shell, cur->value + i);
 			if (search_local_var(shell, cur->value + i, temp) != VALID)
 				search_export_var(shell, cur->value + i);
 			i += shell->exp.size_var + 1;
