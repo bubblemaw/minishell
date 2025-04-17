@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/16 13:51:54 by david            ###   ########.fr       */
+/*   Updated: 2025/04/17 12:03:02 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,6 +189,7 @@ int		creat_list(t_shell *shell, char *input);
 int		give_token_data(t_shell *shell);
 void	first_case(t_shell *shell, t_token **temp);
 int		give(t_shell *shell, t_token **temp, bool *find);
+int		give_var(t_shell *shell, t_token **temp, bool *find);
 int		var_name(char *value);
 void	var_error(t_shell *shell, t_token *temp);
 int		var_name_export(char *value);

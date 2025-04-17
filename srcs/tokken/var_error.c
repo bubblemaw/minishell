@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_error.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:55:13 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/16 14:01:37 by david            ###   ########.fr       */
+/*   Updated: 2025/04/17 11:35:08 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	var_name_export(char *value)
 int	export_kill(t_shell *shell)
 {
 	t_token	*tmp;
-	if (ft_strncmp(shell->creat.com, "export", 7) != 0)
+	if (shell->creat.com != NULL && ft_strncmp(shell->creat.com, "export", 7) != 0)
 		return (0);
 
 	tmp = shell->tokken;

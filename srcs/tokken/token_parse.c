@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_parse.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:17:05 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/16 00:38:59 by david            ###   ########.fr       */
+/*   Updated: 2025/04/17 13:24:16 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,23 +58,8 @@ int	give(t_shell *shell, t_token **temp, bool *find)
 	shell->creat.var_flag = false;
 	if ((*temp)->value[0] == '>' || (*temp)->value[0] == '<')
 		(*temp)->type = REDIRECTION;
-	else if ((*temp)->value[0] == '=')
-	{
-		(*temp)->type = EQUALITY;
-		if (var_name((*temp)->prev->value) == ERROR
-			&& ft_strncmp(shell->creat.com, "export", 7) != 0)
-		{
-			var_error(shell, *temp);
-			shell->creat.var_flag = true;
-			return (ERROR);
-		}
-		if ((*temp)->prev->type == COMMAND)
-			*find = false;
-		(*temp)->prev->type = NAME;
-		(*temp)->next->type = VALUE;
-		*temp = (*temp)->next;
-	}
-	else if ((*temp)->value[0] == '|')
+	give_var(shell, temp, find);
+	if ((*temp)->value[0] == '|')
 	{
 		(*temp)->type = PIPE;
 		*find = false;
@@ -90,6 +75,27 @@ int	give(t_shell *shell, t_token **temp, bool *find)
 		(*temp)->type = COMMAND;
 		*find = true;
 		shell->creat.com = (*temp)->value;
+	}
+	return (0);
+}
+
+int give_var(t_shell *shell, t_token **temp, bool *find)
+{
+	if ((*temp)->value[0] == '=')
+	{
+		(*temp)->type = EQUALITY;
+		if (var_name((*temp)->prev->value) == ERROR
+			&& ft_strncmp(shell->creat.com, "export", 7) != 0)
+		{
+			var_error(shell, *temp);
+			shell->creat.var_flag = true;
+			return (ERROR);
+		}
+		if ((*temp)->prev->type == COMMAND)
+			*find = false;
+		(*temp)->prev->type = NAME;
+		(*temp)->next->type = VALUE;
+		*temp = (*temp)->next;
 	}
 	return (0);
 }
