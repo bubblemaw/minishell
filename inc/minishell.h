@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/17 15:11:59 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/17 20:56:12 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,7 @@ typedef struct s_kill
 typedef struct s_shell
 {
 	char			**env;
+	int				lvl;
 	int				stdin_;
 	int				stdout_;
 	int				stderr_;
@@ -324,6 +325,11 @@ int		creat_new_str(t_shell *shell);
 void	init_execution(t_shell *shell);
 void	init_shell(t_shell *shell);
 char	**copy_env(char **env);
+
+// lvl shell
+int lvl_shell(t_shell *shell);
+int get_shell_lvl(t_shell *shell);
+int lvl_up(t_shell *shell);
 
 // signal
 void	signalhandler(int signal);

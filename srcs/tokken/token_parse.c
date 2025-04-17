@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_parse.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:17:05 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/17 15:51:38 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/17 19:49:22 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,11 @@ int	give(t_shell *shell, t_token **temp, bool *find)
 	shell->creat.var_flag = false;
 	if ((*temp)->value[0] == '>' || (*temp)->value[0] == '<')
 		(*temp)->type = REDIRECTION;
-	else if (give_var(shell, temp, find) == ERROR)
-		return (ERROR);
+	else if ((*temp)->value[0] == '=')
+	{
+		if (give_var(shell, temp, find) == ERROR)
+			return (ERROR);
+	}
 	else if ((*temp)->value[0] == '|')
 	{
 		(*temp)->type = PIPE;
