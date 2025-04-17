@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   creat_var_list.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 23:36:46 by david             #+#    #+#             */
-/*   Updated: 2025/04/13 12:03:00 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/17 15:29:01 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,17 @@
 
 void	creat_var_list(t_shell *shell, t_token *temp)
 {
+	char *tmp;
+
+	tmp = NULL;
 	shell->creat.new_var = creat_node_var(temp->prev->prev->value, temp->value);
+	if (shell->creat.yes == true)
+	{
+		tmp = shell->creat.new_var->name;
+		shell->creat.new_var->name = ft_substr(shell->creat.new_var->name,
+								0, sub_var_size(shell->creat.new_var->name));
+		free(tmp);
+	}
 	add_node_var(shell, shell->creat.new_var);
 	return ;
 }
@@ -75,8 +85,8 @@ void	print_var_local(t_var *head)
 	i = 0;
 	while (current != NULL)
 	{
-		printf("node[%d] -> %s\n",
-			i, current->value);
+		printf("node[%d] : %s -> %s\n",
+			i, current->name, current->value);
 		current = current->next;
 		i++;
 	}

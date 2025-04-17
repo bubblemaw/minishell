@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/16 13:51:54 by david            ###   ########.fr       */
+/*   Updated: 2025/04/16 21:42:53 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ typedef struct s_creat
 	bool			var;
 	bool			find;
 	bool			var_flag;
+	bool			add;
+	bool			yes;
 	t_token			*new;
 	t_var			*new_var;
 }	t_creat;
@@ -189,11 +191,12 @@ int		creat_list(t_shell *shell, char *input);
 int		give_token_data(t_shell *shell);
 void	first_case(t_shell *shell, t_token **temp);
 int		give(t_shell *shell, t_token **temp, bool *find);
-int		var_name(char *value);
+int		var_name(t_shell *shell, char *value);
 void	var_error(t_shell *shell, t_token *temp);
 int		var_name_export(char *value);
 int		export_kill(t_shell *shell);
 int		export_boucle(t_shell *shell);
+int		sub_var_size(char *name);
 
 // fonctions to creat list
 t_token	*creat_node(char *content);
@@ -279,7 +282,7 @@ void	close_pipe(int *pipefd);
 // local gestion
 int		init_var_local(t_shell *shell);
 t_var	*check_doubles(t_var *check, char *name);
-int		replace_var(t_var *exist_var, t_token *temp);
+int		replace_var(t_shell *shell, t_var *exist_var, t_token *temp);
 int		crush_export_var(t_shell *shell, char *name, char *value);
 void	creat_var_list(t_shell *shell, t_token *temp);
 t_var	*creat_node_var(char *name, char *content);

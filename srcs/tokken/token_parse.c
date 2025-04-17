@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:17:05 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/16 00:38:59 by david            ###   ########.fr       */
+/*   Updated: 2025/04/16 22:44:54 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	give(t_shell *shell, t_token **temp, bool *find)
 	else if ((*temp)->value[0] == '=')
 	{
 		(*temp)->type = EQUALITY;
-		if (var_name((*temp)->prev->value) == ERROR
+		if (var_name(shell, (*temp)->prev->value) == ERROR
 			&& ft_strncmp(shell->creat.com, "export", 7) != 0)
 		{
 			var_error(shell, *temp);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_local.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:44:05 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/16 09:53:06 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/17 15:29:06 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	init_var_local(t_shell *shell)
 			exist_var = check_doubles(shell->var, temp->value);
 		else if (send == true && temp->type == VALUE)
 		{
-			if (replace_var(exist_var, temp) != VALID)
+			if (replace_var(shell, exist_var, temp) != VALID)
 				creat_var_list(shell, temp);
 			send = false;
 		}
@@ -48,7 +48,7 @@ t_var	*check_doubles(t_var *check, char *name)
 	len = 0;
 	while (check != NULL)
 	{
-		len = ft_strlen(name);
+		len = sub_var_size(name);
 		if (ft_strncmp(check->name, name, len) == 0
 			&& check->name[len] == '\0')
 			return (check);
@@ -57,10 +57,20 @@ t_var	*check_doubles(t_var *check, char *name)
 	return (NULL);
 }
 
-int	replace_var(t_var *exist_var, t_token *temp)
+int	replace_var(t_shell *shell, t_var *exist_var, t_token *temp)
 {
+	char *tmp;
+
+	tmp = NULL;
 	if (exist_var != NULL)
 	{
+		if (shell->creat.yes == true)
+		{
+			tmp = exist_var->value;
+			exist_var->value = ft_strjoin(exist_var->value, temp->value);
+			free(tmp);
+			return (VALID);
+		}
 		free(exist_var->value);
 		exist_var->value = ft_strdup(temp->value);
 		return (VALID);
@@ -75,10 +85,10 @@ int	crush_export_var(t_shell *shell, char *name, char *value)
 	int		i;
 
 	temp = shell;
-	len = ft_strlen(name);
 	i = 0;
 	while (temp->env[i] != NULL)
 	{
+		len = sub_var_size(name);
 		if (ft_strncmp(name, temp->env[i], len) == 0
 			&& temp->env[i][len] == '=')
 		{

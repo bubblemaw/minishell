@@ -6,17 +6,19 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:55:13 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/16 14:01:37 by david            ###   ########.fr       */
+/*   Updated: 2025/04/16 21:43:23 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	var_name(char *value)
+int	var_name(t_shell *shell, char *value)
 {
 	int	i;
 
 	i = 0;
+	shell->creat.add = false;
+	shell->creat.yes = false;
 	if (ft_strlen(value) > 1
 		&& (ft_isalpha(value[i]) == 0 && value[i] != '_'))
 		return (ERROR);
@@ -27,8 +29,14 @@ int	var_name(char *value)
 		if (ft_isalnum(value[i]) == 0 && value[i] != '_' && value[i] != '='
 			&& value[i] != '+')
 			return (ERROR);
+		if (value[i] == '+' && value[i + 1] != '\0')
+			shell->creat.add = true;
 		i++;
 	}
+	if (shell->creat.add == true)
+		return (ERROR);
+	if(value[i] == '\0' && value[i - 1] == '+')
+		shell->creat.yes = true;
 	return (VALID);
 }
 

@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 16:34:33 by maw               #+#    #+#             */
-/*   Updated: 2025/04/15 20:01:34 by david            ###   ########.fr       */
+/*   Updated: 2025/04/16 15:32:15 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,26 +44,26 @@ int	built_in(t_cmd *cmd, t_shell *shell)
 	return (ERROR);
 }
 
-int	export_check(t_shell *shell)
-{
-	t_token	*tmp;
+// int	export_check(t_shell *shell)
+// {
+// 	t_token	*tmp;
 
-	tmp = shell->tokken;
-	while (ft_strncmp(tmp->value, "export", 6) != 0)
-		tmp = tmp->next;
-	while (tmp != NULL)
-	{
-		if (tmp->type == OPTION || tmp->type == ARG)
-			tmp = tmp->next;			
-		else
-		{
-			if (tmp->type == NAME && var_name(tmp->value) == ERROR)
-				ft_putstr_fd("export: has a invalid identifier\n", STDERR_FILENO);
-			tmp = tmp->next;
-		}
-	}
-	return (0);
-}
+// 	tmp = shell->tokken;
+// 	while (ft_strncmp(tmp->value, "export", 6) != 0)
+// 		tmp = tmp->next;
+// 	while (tmp != NULL)
+// 	{
+// 		if (tmp->type == OPTION || tmp->type == ARG)
+// 			tmp = tmp->next;			
+// 		else
+// 		{
+// 			if (tmp->type == NAME && var_name(tmp->value) == ERROR)
+// 				ft_putstr_fd("export: has a invalid identifier\n", STDERR_FILENO);
+// 			tmp = tmp->next;
+// 		}
+// 	}
+// 	return (0);
+// }
 
 int	built_in_pipe(t_cmd *cmd, t_shell *shell)
 {

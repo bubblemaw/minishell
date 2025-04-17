@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/04/16 14:49:52 by david            ###   ########.fr       */
+/*   Updated: 2025/04/16 21:59:29 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	main(int ac, char *av[], char **env)
 		ft_execute(&shell);
 		signal(SIGQUIT, SIG_IGN);
 		signal(SIGINT, signalhandler);
-		// print_var_local(shell.var);
+		print_var_local(shell.var);
 		// printf("execution fini\n");
 	}
 	return (0);
