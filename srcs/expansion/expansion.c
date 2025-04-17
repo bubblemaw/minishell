@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:31:47 by maw               #+#    #+#             */
-/*   Updated: 2025/04/16 14:08:05 by david            ###   ########.fr       */
+/*   Updated: 2025/04/17 15:11:31 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,15 @@
 int	ft_expansion(t_shell *shell)
 {
 	t_token	*current;
+	t_var	*temp;
 
 	current = shell->tokken;
+	temp = shell->var;
 	while (current != NULL)
 	{
-		if (is_double_quote(current) == VALID && (current->type == ARG || current->type == COMMAND))
-			find_var(shell, current);
+		if (is_double_quote(current) == VALID
+			&& (current->type == ARG || current->type == COMMAND))
+			find_var(shell, current, temp);
 		current = current->next;
 	}
 	return (VALID);
@@ -40,19 +43,17 @@ int	is_double_quote(t_token *tokken)
 	return (0);
 }
 
-int	find_var(t_shell *shell, t_token *cur)
+int	find_var(t_shell *shell, t_token *cur, t_var *temp)
 {
-	t_var	*temp;
 	int		i;
 
-	temp = shell->var;
 	i = 0;
 	while (cur->value[i] != '\0')
 	{
 		inside(shell, cur, &i);
-		if (cur->value[i] == '$'
-			|| (cur->value[i] == '~' && i - 1 < 0 && (cur->value[i + 1] == ' '
-					|| cur->value[i + 1] == '/' || cur->value[i + 1] == '\0')))
+		if (cur->value[i] == '$' || (cur->value[i] == '~' && i - 1 < 0
+				&& (cur->value[i + 1] == ' ' || cur->value[i + 1] == '/'
+					|| cur->value[i + 1] == '\0')))
 		{
 			new_arg(shell, cur->value, &i);
 			if (special_cases(shell, cur->value + i, &i) == VALID)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:19:16 by david             #+#    #+#             */
-/*   Updated: 2025/04/16 13:58:48 by david            ###   ########.fr       */
+/*   Updated: 2025/04/17 14:17:31 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,26 +27,7 @@ int	export(t_cmd *token, t_shell *shell)
 		j++;
 	tmp = tmp->next;
 	j++;
-	while (current->arg[j] != NULL)
-	{
-		if (tmp->type == OPTION || tmp->type == ARG)
-		{
-			tmp = tmp->next;
-			j++;
-		}
-		else if (tmp->type == NAME && var_name_export(tmp->value) == ERROR)
-		{
-			error_export(tmp->value);
-			tmp = tmp->next;
-			j++;
-		}
-		else
-		{
-			check_double_export(current->arg[j], shell);
-			tmp = tmp->next;
-			j++;
-		}
-	}
+	make_export(shell, current, tmp, &j);
 	return (VALID);
 }
 

@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:17:05 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/17 13:24:16 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/17 15:51:38 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,15 +58,15 @@ int	give(t_shell *shell, t_token **temp, bool *find)
 	shell->creat.var_flag = false;
 	if ((*temp)->value[0] == '>' || (*temp)->value[0] == '<')
 		(*temp)->type = REDIRECTION;
-	give_var(shell, temp, find);
-	if ((*temp)->value[0] == '|')
+	else if (give_var(shell, temp, find) == ERROR)
+		return (ERROR);
+	else if ((*temp)->value[0] == '|')
 	{
 		(*temp)->type = PIPE;
 		*find = false;
 		shell->creat.com = NULL;
 	}
-	else if ((*temp)->value[0] == '-'
-		&& (*temp)->value[1] != ' ')
+	else if ((*temp)->value[0] == '-' && (*temp)->value[1] != ' ')
 		(*temp)->type = OPTION;
 	else if (*find == true)
 		(*temp)->type = ARG;
@@ -79,7 +79,7 @@ int	give(t_shell *shell, t_token **temp, bool *find)
 	return (0);
 }
 
-int give_var(t_shell *shell, t_token **temp, bool *find)
+int	give_var(t_shell *shell, t_token **temp, bool *find)
 {
 	if ((*temp)->value[0] == '=')
 	{

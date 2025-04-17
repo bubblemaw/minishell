@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:55:13 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/17 11:35:08 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/17 15:34:29 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ int	var_name(char *value)
 		return (ERROR);
 	while (value[i] != '\0')
 	{
-		if (ft_isalnum(value[i]) == 0 && value[i] != '_' && value[i] != '='
-			&& value[i] != '+')
+		if (ft_isalnum(value[i]) == 0 && value[i] != '_' && value[i] != '=')
 			return (ERROR);
 		i++;
 	}
@@ -45,22 +44,13 @@ int	var_name_export(char *value)
 	var = ft_substr(value, 0, size);
 	if (ft_strlen(var) > 1
 		&& (ft_isalpha(var[i]) == 0 && var[i] != '_'))
-	{
-		free(var);
-		return (ERROR);
-	}
+		return (free(var), ERROR);
 	else if (ft_strlen(var) == 1 && var[i] == '_')
-	{
-		free(var);
-		return (ERROR);
-	}
+		return (free(var), ERROR);
 	while (var[i] != '\0')
 	{
 		if (ft_isalnum(var[i]) == 0 && var[i] != '_' && var[i] != '=')
-		{
-			free(var);
-			return (ERROR);
-		}
+			return (free(var), ERROR);
 		i++;
 	}
 	free(var);
@@ -70,9 +60,10 @@ int	var_name_export(char *value)
 int	export_kill(t_shell *shell)
 {
 	t_token	*tmp;
-	if (shell->creat.com != NULL && ft_strncmp(shell->creat.com, "export", 7) != 0)
-		return (0);
 
+	if (shell->creat.com != NULL
+		&& ft_strncmp(shell->creat.com, "export", 7) != 0)
+		return (0);
 	tmp = shell->tokken;
 	while (tmp->type == NAME || tmp->type == EQUALITY || tmp->type == VALUE)
 	{

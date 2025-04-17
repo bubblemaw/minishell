@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/17 12:03:02 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/17 15:11:59 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,6 +229,7 @@ void	put_exit_status(void);
 int		built_in(t_cmd *cmd, t_shell *shell);
 int		built_in_pipe(t_cmd *cmd, t_shell *shell);
 int		export(t_cmd *token, t_shell *shell);
+void	make_export(t_shell *shell, t_cmd *current, t_token *tmp, int *j);
 int		export_check(t_shell *shell);
 int		echo(t_cmd *cmd);
 int		echo_option(t_cmd *cmd);
@@ -298,7 +299,7 @@ void	write_after_char(char *str, char c);
 
 int		ft_expansion(t_shell *shell);
 int		is_double_quote(t_token *tokken);
-int		find_var(t_shell *shell, t_token *current);
+int		find_var(t_shell *shell, t_token *cur, t_var *temp);
 int		new_arg(t_shell *shell, char *value, int *i);
 int		special_cases(t_shell *shell, char *current, int *i);
 int		error_case(t_shell *shell, char *current, int *i);
