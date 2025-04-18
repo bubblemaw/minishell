@@ -6,7 +6,7 @@
 /*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/16 15:02:43 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/16 18:52:31 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,7 @@ typedef struct s_exp
 typedef struct s_kill
 {
 	t_token			*temp;
+	int				i;
 	int				start;
 	int				len;
 	char			*new;
@@ -314,6 +315,11 @@ int		result(t_shell *shell, t_token *current, int *i);
 
 // kill quotes
 int		kill_quotes(t_shell *shell);
+int		kill_quotes_new(t_shell *shell);
+void	exchange_value(t_shell *shell, t_token *temp);
+void	create_new_value(t_shell *shell, t_token *temp);
+void	iterate_into_quote(t_shell *shell, t_token *temp, char c);
+void	iterate_into_non_quote(t_shell *shell, t_token *temp);
 int		is_double(t_shell *shell, char *value, int *i);
 int		is_single(t_shell *shell, char *value, int *i);
 int		check_out_quotes(t_shell *shell, char *value, int *i);
