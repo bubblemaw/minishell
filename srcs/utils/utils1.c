@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 17:21:32 by maw               #+#    #+#             */
-/*   Updated: 2025/04/15 21:23:00 by david            ###   ########.fr       */
+/*   Updated: 2025/04/18 14:57:16 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,27 +38,4 @@ void	*ft_realloc(void *ptr, size_t old_size, size_t new_size)
 	free(ptr);
 	ptr = NULL;
 	return (new_ptr);
-}
-
-void	init_shell(t_shell *shell)
-{
-	shell->crash.prev = NULL;
-	shell->crash.new_var = NULL;
-	shell->crash.tmp = NULL;
-	shell->creat.content = NULL;
-	shell->creat.first = NULL;
-	shell->creat.err = NULL;
-	shell->exp.new = NULL;
-	shell->exp.sub_env = NULL;
-	shell->exp.tmp = NULL;
-	shell->exp.tmp_2 = NULL;
-	shell->exp.tmp_3 = NULL;
-	shell->exp.add = NULL;
-	shell->exp.line = NULL;
-	shell->exp.tab = NULL;
-	shell->exp.temp = NULL;
-	shell->kill.new = NULL;
-	shell->kill.tmp = NULL;
-	shell->kill.stash = NULL;
-	return ;
 }

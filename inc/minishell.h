@@ -6,7 +6,7 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/18 12:27:15 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/18 15:07:35 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,12 @@ typedef struct s_kill
 	char			*stash;
 }	t_kill;
 
+typedef struct s_pwd
+{
+	char *pwd;
+	char *oldpwd;
+}	t_pwd;
+
 // principal struct
 typedef struct s_shell
 {
@@ -164,6 +170,7 @@ typedef struct s_shell
 	int				invalid_redir;
 	int				here_fd;
 	char			*input;
+	t_pwd			path;
 	t_redir			redir;
 	t_cmd			*cmd;
 	t_creat			creat;
@@ -332,6 +339,7 @@ int		creat_new_str(t_shell *shell);
 void	init_execution(t_shell *shell);
 void	init_shell(t_shell *shell);
 char	**copy_env(char **env);
+void	save_pwd(t_shell *shell);
 
 // lvl shell
 int lvl_shell(t_shell *shell);

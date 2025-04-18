@@ -6,7 +6,7 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/04/18 12:33:06 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/18 16:01:23 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	main(int ac, char *av[], char **env)
 	init_shell(&shell);
 	signal(SIGINT, signalhandler);
 	signal(SIGQUIT, SIG_IGN);
+	save_pwd(&shell);
 	(void)av;
 	(void)ac;
 	while (1)

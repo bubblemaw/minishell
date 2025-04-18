@@ -6,7 +6,7 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 15:28:31 by maw               #+#    #+#             */
-/*   Updated: 2025/04/18 13:35:25 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/18 16:45:00 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	cd(t_cmd *cmd, t_shell *shell)
 		g_exit_status = 1;
 	else
 		g_exit_status = 0;
+	printf("on va return VALID\n");
 	return (VALID);
 }
 
@@ -50,6 +51,7 @@ int	move_into_dir(t_cmd *cmd, t_shell *shell, char *path)
 	d = opendir(path);
 	if (d)
 	{
+		printf("on est dans le open dir\n");
 		if (chdir(path) == -1)
 			perror(cmd->arg[1]);
 		else
@@ -63,41 +65,43 @@ int	move_into_dir(t_cmd *cmd, t_shell *shell, char *path)
 		free (path);
 		return (ERROR);
 	}
+	printf("on va free le path\n");	
 	free (path);
 	return (VALID);
 }
 
 void	findvar_replace(t_shell *shell, char *buffer)
 {
-	char	*temp;
 	int		i;
 
-	temp = NULL;
 	i = 0;
+	if (shell->path.oldpwd)
+		free(shell->path.oldpwd);
+	if (shell->path.pwd)
+		shell->path.oldpwd = ft_strjoin("OLD" ,shell->path.pwd);
+	if (shell->path.pwd)
+		free(shell->path.pwd);
+	buffer = getcwd(NULL, 0);
+	shell->path.pwd = ft_strjoin("PWD=", buffer);
+	free(buffer);
 	while (shell->env[i] && strncmp(shell->env[i], "PWD=", 4) != 0)
 		i++;
 	if (shell->env[i] != NULL)
 	{
-		temp = ft_strdup(shell->env[i]);
+		printf("on remet un pwd\n");
 		free(shell->env[i]);
-		shell->env[i] = NULL;
-		buffer = getcwd(NULL, 0);
-		shell->env[i] = ft_strjoin("PWD=", buffer);
-		free(buffer);
+		shell->env[i] = ft_strdup(shell->path.pwd);
 	}
 	i = 0;
 	while (shell->env[i] && strncmp(shell->env[i], "OLDPWD=", 7) != 0)
 		i++;
-	if (shell->env != NULL)
+	printf("le old trouve: %s", shell->env[i]);
+	if (shell->env[i] != NULL)
 	{
+		printf("on remet un oldpwd\n");
 		free(shell->env[i]);
-		shell->env[i] = NULL;
-		shell->env[i] = ft_strjoin("OLD", temp);
-		free(temp);
-		temp = NULL;
+		shell->env[i] = ft_strdup(shell->path.oldpwd);
 	}
-	if (temp)
-		free(temp);
 }
 
 void	put_oldpwd(int i, t_shell *shell, char *temp)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:31:21 by maw               #+#    #+#             */
-/*   Updated: 2025/04/13 12:05:04 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/18 16:03:56 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,42 @@ char	**copy_env(char **env)
 	}
 	copy_env[i] = NULL;
 	return (copy_env);
+}
+
+void	init_shell(t_shell *shell)
+{
+	shell->crash.prev = NULL;
+	shell->crash.new_var = NULL;
+	shell->crash.tmp = NULL;
+	shell->creat.content = NULL;
+	shell->creat.first = NULL;
+	shell->creat.err = NULL;
+	shell->exp.new = NULL;
+	shell->exp.sub_env = NULL;
+	shell->exp.tmp = NULL;
+	shell->exp.tmp_2 = NULL;
+	shell->exp.tmp_3 = NULL;
+	shell->exp.add = NULL;
+	shell->exp.line = NULL;
+	shell->exp.tab = NULL;
+	shell->exp.temp = NULL;
+	shell->kill.new = NULL;
+	shell->kill.tmp = NULL;
+	shell->kill.stash = NULL;
+	return ;
+}
+void save_pwd(t_shell *shell)
+{
+	int	i;
+
+	i = 0;
+	while (shell->env[i] && strncmp(shell->env[i], "PWD=", 4) != 0)
+		i++;
+	if (shell->env[i] != NULL)
+		shell->path.pwd = ft_strdup(shell->env[i]); 
+	i = 0;
+	while (shell->env[i] && strncmp(shell->env[i], "OLDPWD=", 7) != 0)
+		i++;
+	if (shell->env[i] != NULL)
+		shell->path.oldpwd = ft_strdup(shell->env[i]);
 }
