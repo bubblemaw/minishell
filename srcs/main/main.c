@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/04/17 10:28:24 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/18 12:19:00 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,20 +54,15 @@ int	main(int ac, char *av[], char **env)
 			ft_putstr_fd("syntax error near unexpected token\n", STDERR_FILENO);
 			continue ;
 		}
-		printf("give token donc\n");
 		if (give_token_data(&shell) == ERROR)
 		{
 			error_var(shell.creat.err);
 			continue ;
 		}
 		// print_token(shell.tokken);
-		printf("avant expansion\n");
 		ft_expansion(&shell);
-		printf("apres expansion\n");
-		kill_quotes(&shell);
-		printf("apres kill quotes\n");
+		kill_quotes_new(&shell);
 		init_execution(&shell);
-		printf("on est la \n");
 		if (create_cmd_lst(&shell) == ERROR)
 		{
 			free_shell(&shell);
@@ -77,7 +72,7 @@ int	main(int ac, char *av[], char **env)
 			init_var_local(&shell);
 		// printf("\n-----------------\n");
 		// print_token(shell.tokken);
-		print_cmds(&shell.cmd);
+		// print_cmds(&shell.cmd);
 		signal(SIGINT, signalhandler_exec);
 		signal(SIGQUIT, signalhandler_back);
 		ft_execute(&shell);
