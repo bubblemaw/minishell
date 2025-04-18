@@ -6,7 +6,7 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/04/18 12:27:26 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/18 12:33:06 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	main(int ac, char *av[], char **env)
 			continue ;
 		}
 		ft_expansion(&shell);
-		kill_quotes_new(&shell);
+		kill_quotes(&shell);
 		init_execution(&shell);
 		if (create_cmd_lst(&shell) == ERROR)
 		{

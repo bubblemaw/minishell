@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 15:28:31 by maw               #+#    #+#             */
-/*   Updated: 2025/04/15 17:11:37 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/18 13:35:25 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	move_into_dir(t_cmd *cmd, t_shell *shell, char *path)
 	char	*buffer;
 
 	buffer = NULL;
+	(void)shell;
 	d = opendir(path);
 	if (d)
 	{
@@ -73,25 +74,30 @@ void	findvar_replace(t_shell *shell, char *buffer)
 
 	temp = NULL;
 	i = 0;
-	while (shell->env[i] && strncmp(shell->env[i], "PWD", 3) != 0)
+	while (shell->env[i] && strncmp(shell->env[i], "PWD=", 4) != 0)
 		i++;
-	temp = ft_strdup(shell->env[i]);
-	free(shell->env[i]);
-	shell->env[i] = NULL;
-	buffer = getcwd(NULL, 0);
-	shell->env[i] = ft_strjoin("PWD=", buffer);
+	if (shell->env[i] != NULL)
+	{
+		temp = ft_strdup(shell->env[i]);
+		free(shell->env[i]);
+		shell->env[i] = NULL;
+		buffer = getcwd(NULL, 0);
+		shell->env[i] = ft_strjoin("PWD=", buffer);
+		free(buffer);
+	}
 	i = 0;
-	while (shell->env[i] && strncmp(shell->env[i], "OLDPWD", 6) != 0)
+	while (shell->env[i] && strncmp(shell->env[i], "OLDPWD=", 7) != 0)
 		i++;
 	if (shell->env != NULL)
 	{
 		free(shell->env[i]);
 		shell->env[i] = NULL;
+		shell->env[i] = ft_strjoin("OLD", temp);
+		free(temp);
+		temp = NULL;
 	}
-	else
-		put_oldpwd(i, shell, temp);
-	free(temp);
-	free(buffer);
+	if (temp)
+		free(temp);
 }
 
 void	put_oldpwd(int i, t_shell *shell, char *temp)
