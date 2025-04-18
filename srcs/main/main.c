@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/04/17 20:58:14 by david            ###   ########.fr       */
+/*   Updated: 2025/04/18 11:35:04 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	main(int ac, char *av[], char **env)
 
 	ft_memset(&shell, 0, sizeof(t_shell));
 	shell.env = copy_env(env);
+	lvl_shell(&shell);
 	init_execution(&shell);
 	init_shell(&shell);
 	signal(SIGINT, signalhandler);
@@ -71,7 +72,6 @@ int	main(int ac, char *av[], char **env)
 			init_var_local(&shell);
 		signal(SIGINT, signalhandler_exec);
 		signal(SIGQUIT, signalhandler_back);
-		lvl_shell(&shell);
 		ft_execute(&shell);
 		signal(SIGQUIT, SIG_IGN);
 		signal(SIGINT, signalhandler);

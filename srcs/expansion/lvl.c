@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 19:54:14 by david             #+#    #+#             */
-/*   Updated: 2025/04/17 22:50:48 by david            ###   ########.fr       */
+/*   Updated: 2025/04/18 11:40:41 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,8 @@
 
 int lvl_shell(t_shell *shell)
 {
-    t_token *cur;
-
-    cur = shell->tokken;
-    while (cur != NULL)
-    {
-        if (cur->type == COMMAND
-            && strncmp(cur->value, "./minishell", 12) == 0)
-        {
-            shell->lvl = get_shell_lvl(shell);
-            lvl_up(shell);
-        }
-        cur = cur->next;
-    }
+    shell->lvl = get_shell_lvl(shell);
+    lvl_up(shell);
     return (0);
 }
 
