@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: maw <maw@student.42.fr>                    +#+  +:+       +#+         #
+#    By: david <david@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 22:16:43 by david             #+#    #+#              #
-#    Updated: 2025/04/16 09:50:53 by maw              ###   ########.fr        #
+#    Updated: 2025/04/17 19:54:57 by david            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ SRCS =  srcs/main/main.c \
 		srcs/token_to_cmd/add_cmd_lst.c \
 		srcs/builtin/echo.c \
 		srcs/builtin/export.c \
+		srcs/builtin/make_export.c \
 		srcs/builtin/export.utils.c \
 		srcs/builtin/cd.c \
 		srcs/builtin/cd_utils.c \
@@ -47,6 +48,7 @@ SRCS =  srcs/main/main.c \
 		srcs/expansion/var_local.c \
 		srcs/expansion/creat_var_list.c \
 		srcs/expansion/kill_quotes.c \
+		srcs/expansion/lvl.c \
 		srcs/builtin/built_in.c \
 		srcs/main/init_minishell.c \
 		srcs/token_to_cmd/token_to_cmd.c \

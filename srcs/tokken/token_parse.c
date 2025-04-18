@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:17:05 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/16 00:38:59 by david            ###   ########.fr       */
+/*   Updated: 2025/04/17 19:49:22 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,32 @@ int	give(t_shell *shell, t_token **temp, bool *find)
 		(*temp)->type = REDIRECTION;
 	else if ((*temp)->value[0] == '=')
 	{
+		if (give_var(shell, temp, find) == ERROR)
+			return (ERROR);
+	}
+	else if ((*temp)->value[0] == '|')
+	{
+		(*temp)->type = PIPE;
+		*find = false;
+		shell->creat.com = NULL;
+	}
+	else if ((*temp)->value[0] == '-' && (*temp)->value[1] != ' ')
+		(*temp)->type = OPTION;
+	else if (*find == true)
+		(*temp)->type = ARG;
+	else
+	{
+		(*temp)->type = COMMAND;
+		*find = true;
+		shell->creat.com = (*temp)->value;
+	}
+	return (0);
+}
+
+int	give_var(t_shell *shell, t_token **temp, bool *find)
+{
+	if ((*temp)->value[0] == '=')
+	{
 		(*temp)->type = EQUALITY;
 		if (var_name((*temp)->prev->value) == ERROR
 			&& ft_strncmp(shell->creat.com, "export", 7) != 0)
@@ -73,23 +99,6 @@ int	give(t_shell *shell, t_token **temp, bool *find)
 		(*temp)->prev->type = NAME;
 		(*temp)->next->type = VALUE;
 		*temp = (*temp)->next;
-	}
-	else if ((*temp)->value[0] == '|')
-	{
-		(*temp)->type = PIPE;
-		*find = false;
-		shell->creat.com = NULL;
-	}
-	else if ((*temp)->value[0] == '-'
-		&& (*temp)->value[1] != ' ')
-		(*temp)->type = OPTION;
-	else if (*find == true)
-		(*temp)->type = ARG;
-	else
-	{
-		(*temp)->type = COMMAND;
-		*find = true;
-		shell->creat.com = (*temp)->value;
 	}
 	return (0);
 }
