@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 13:30:47 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/17 19:49:36 by david            ###   ########.fr       */
+/*   Updated: 2025/04/19 20:49:25 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	search_export_var(t_shell *shell, char *str)
 			shell->exp.new = ft_strjoin(shell->exp.new, shell->env[i] + j);
 			free(shell->exp.sub_env);
 			free(tmp);
-			return (0);
+			return (VALID);
 		}
 		free(shell->exp.sub_env);
 		i++;
@@ -103,12 +103,18 @@ int	only_dolls(t_shell *shell, char *cur)
 
 void	inside(t_shell *shell, t_token *cur, int *i)
 {
-	if (cur->value[*i] == '"' || cur->value[*i] == '\'')
+	if (cur->value[*i] == '"')
 	{
 		if (shell->exp.quot == false)
+		{
 			shell->exp.quot = true;
+			shell->exp.D = true;
+		}
 		else
+		{
 			shell->exp.quot = false;
+			shell->exp.D = false;
+		}
 	}
 	return ;
 }
