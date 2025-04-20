@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:19:16 by david             #+#    #+#             */
-/*   Updated: 2025/04/20 11:46:04 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/20 18:03:36 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ int	export(t_cmd *token, t_shell *shell)
 	j = 0;
 	current = token;
 	tmp = shell->tokken;
+	if (token->arg[1] == NULL)
+	{
+		display_export_env(shell);
+		return (VALID);
+	}
 	while (ft_strncmp(tmp->value, "export", 6) != 0)
 		tmp = tmp->next;
 	while (ft_strncmp(current->arg[j], "export", 6) != 0)

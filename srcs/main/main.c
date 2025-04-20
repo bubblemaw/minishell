@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/04/20 17:27:35 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/20 18:22:26 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	main(int ac, char *av[], char **env)
 	init_shell(&shell);
 	signal(SIGINT, signalhandler);
 	signal(SIGQUIT, SIG_IGN);
+	shell.export = NULL;
 	save_pwd(&shell);
 	(void)av;
 	(void)ac;

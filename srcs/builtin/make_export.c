@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_export.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 14:06:09 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/17 14:25:20 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/20 19:31:22 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@ void	make_export(t_shell *shell, t_cmd *current, t_token *tmp, int *j)
 	{
 		if (tmp->type == OPTION || tmp->type == ARG)
 		{
+			if (compare_with_env(shell, tmp) == ERROR)
+			{
+				printf("ya  pas double reuf \n");
+				add_export(shell, tmp);
+			}
 			tmp = tmp->next;
 			(*j)++;
 		}
@@ -35,4 +40,26 @@ void	make_export(t_shell *shell, t_cmd *current, t_token *tmp, int *j)
 		}
 	}
 	return ;
+}
+
+int compare_with_env(t_shell *shell, t_token *tmp)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while (shell->env[i] != NULL)
+	{
+		j = 0;
+		while (shell->env[i][j] != '=')
+			j++;
+		if (ft_strncmp(tmp->value, shell->env[i], j) == 0)
+			//&& tmp->value[j] == '=' && shell->env[i][j] == '=')
+		{
+
+			return (VALID);
+		}
+		i++;
+	}
+	return(ERROR);
 }
