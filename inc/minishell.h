@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/20 16:52:38 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/20 21:48:21 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,7 @@ typedef struct s_pwd
 typedef struct s_shell
 {
 	char			**env;
+	char			**export;
 	int				lvl;
 	int				stdin_;
 	int				stdout_;
@@ -242,6 +243,8 @@ int		built_in(t_cmd *cmd, t_shell *shell);
 int		built_in_pipe(t_cmd *cmd, t_shell *shell);
 int		export(t_cmd *token, t_shell *shell);
 void	make_export(t_shell *shell, t_cmd *current, t_token *tmp, int *j);
+int		compare_with_env(t_shell *shell, t_token *tmp);
+int		compare_with_export_tab(t_shell *shell, char *var);
 int		export_check(t_shell *shell);
 int		echo(t_cmd *cmd);
 int		echo_option(t_cmd *cmd);
@@ -305,9 +308,12 @@ int		join_var(t_token **token);
 int		check_double_export(char *var, t_shell *shell);
 int		crush_local_var(t_shell *shell, char *var);
 int		add_var_env(t_shell *shell, int *i, char *var);
+
+// export display
 int		display_export_env(t_shell *shell);
 void	write_until_char(char *str, char c);
 void	write_after_char(char *str, char c);
+void	add_export(t_shell *shell, t_token *tmp);
 
 int		ft_expansion(t_shell *shell);
 int		is_double_quote(t_token *tokken);
@@ -380,5 +386,8 @@ int		error(char *str);
 int		error_exit(char *str);
 int		error_var(char *str);
 int		error_export(char *str);
+
+//utils
+void	print_tab(char **tab);
 
 #endif
