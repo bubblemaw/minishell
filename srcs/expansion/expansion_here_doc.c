@@ -6,7 +6,7 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 12:31:42 by masase            #+#    #+#             */
-/*   Updated: 2025/04/20 14:01:37 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/20 17:27:12 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,23 +29,28 @@ int	is_double_quote_here_doc(char *str)
 int	find_var_here_doc(t_shell *shell, char *str, t_var *temp)
 {
 	int		i;
+	int		var_found;
 
 	i = 0;
 	while (str[i] != '\0')
 	{
-		// inside(shell, cur, &i);
-		if (str[i] == '$')// && i - 1 < 0
-				// && (str[i + 1] == ' ' || str[i + 1] == '/'
-				// 	|| str[i + 1] == '\0'))
+		if (str[i] == '$')
 		{
-			printf("on rentre dans new arg\n");
 			new_arg(shell, str, &i);
-			// if (special_cases(shell, str + i, &i) == VALID)
-			// 	continue ;
-			// only_dolls(shell, str + i);
-			if (search_local_var(shell, str + i, temp) != VALID)
-				search_export_var(shell, str + i);
-			i += shell->exp.size_var + 1;
+			if (special_cases(shell, str + i, &i) == VALID)
+				continue ;
+			only_dolls_here_doc(shell, str + i);
+			if (search_local_var(shell, str + i, temp) == VALID)
+				var_found = 1;
+			else if (search_export_var(shell, str + i) == VALID)
+				var_found = 1;
+			if (var_found)
+				i += shell->exp.size_var + 1;
+			else
+			{
+				i += shell->exp.size_var + 1;
+				shell->exp.size_var = 0;
+			}
 			shell->exp.start = i;
 		}
 		else
@@ -72,6 +77,18 @@ int	result_here_doc(t_shell *shell, char *str, int *i)
 		str = ft_strdup(shell->exp.new);
 		free(shell->exp.new);
 		shell->exp.new = NULL;
+	}
+	return (0);
+}
+
+int	only_dolls_here_doc(t_shell *shell, char *cur)
+{
+	shell->exp.size_var = var_size(cur);
+	if (shell->exp.size_var == 0)
+	{
+		shell->exp.tmp = shell->exp.new;
+		shell->exp.new = ft_strjoin(shell->exp.new, "$");
+		free(shell->exp.tmp);
 	}
 	return (0);
 }

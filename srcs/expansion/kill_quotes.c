@@ -6,7 +6,7 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 14:56:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/20 14:08:21 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/20 17:27:24 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,14 @@ void	iterate_into_token(t_shell *shell, t_token *current)
 	{
 		if (current->value[shell->kill.i] == '"')
 			iterate_into_quote(shell, current, '"');
-		if (current->value[shell->kill.i] == '\'')
+		else if (current->value[shell->kill.i] == '\'')
 			iterate_into_quote(shell, current, '\'');
-		if (current->value[shell->kill.i] != '\''
+		else if (current->value[shell->kill.i] != '\''
 			&& current->value[shell->kill.i] != '"')
 			iterate_into_non_quote(shell, current);
 		if (shell->kill.len >= 0)
 			create_new_value(shell, current);
-		if (current->value[shell->kill.i] != '\0')
+		else if (current->value[shell->kill.i] != '\0')
 			shell->kill.i++;
 	}
 }

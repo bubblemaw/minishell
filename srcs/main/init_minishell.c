@@ -6,7 +6,7 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:31:21 by maw               #+#    #+#             */
-/*   Updated: 2025/04/20 12:02:35 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/20 14:40:11 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	init_shell(t_shell *shell)
 	shell->kill.new = NULL;
 	shell->kill.tmp = NULL;
 	shell->kill.stash = NULL;
+	shell->here_doc_expan = VALID;
 	return ;
 }
 

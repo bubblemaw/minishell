@@ -6,7 +6,7 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 12:21:27 by maw               #+#    #+#             */
-/*   Updated: 2025/04/20 13:41:55 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/20 17:26:33 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,9 @@ void	here_doc_child_process(t_shell *shell, int *pipefd, t_cmd *cmd)
 	char	*del;
 	char	*line;
 	char	*tmp;
-	int		expan_flag;
 
-	expan_flag = VALID;
 	signal(SIGINT, signalhandler_heredoc);
 	del = ft_strdup(cmd->delimiter);
-	// if (is_double_quote_here_doc(del) == VALID)
-	// 	expan_flag = ERROR;
 	while (1)
 	{
 		tmp = readline(">");
@@ -63,12 +59,8 @@ void	here_doc_child_process(t_shell *shell, int *pipefd, t_cmd *cmd)
 			free(tmp);
 			break ;
 		}
-		if (expan_flag ==  VALID)
-		{
-			printf("on rentre dans le expansion here\n");
+		if (shell->here_doc_expan == VALID)
 			find_var_here_doc(shell, tmp, shell->var);
-		}
-
 		line = ft_strjoin(tmp, "\n");
 		ft_putstr_fd(line, pipefd[1]);
 		free(tmp);
@@ -78,3 +70,24 @@ void	here_doc_child_process(t_shell *shell, int *pipefd, t_cmd *cmd)
 	close_pipe(pipefd);
 	exit(0);
 }
+
+void	check_here_doc_expansion(t_token *token, t_shell *shell)
+{
+	t_token	*tokken;
+
+	tokken = token;
+
+	while (tokken)
+	{
+		if (tokken->type == REDIRECTION && tokken->value[0] == '<'
+			&& tokken->value[1] == '<')
+		{
+			tokken = tokken->next;
+			if (tokken->value[0] == '"' || tokken->value[0] == '\'')
+				shell->here_doc_expan = ERROR;
+		}
+		tokken = tokken->next;
+	}
+}
+
+

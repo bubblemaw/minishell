@@ -6,7 +6,7 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/20 14:06:00 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/20 16:52:38 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ typedef struct s_cmd
 	char			*infile;
 	char			*outfile;
 	char			*delimiter;
+	int				db_flag;
 	int				append;
 	int				type;
 	int				valid;
@@ -153,8 +154,8 @@ typedef struct s_kill
 
 typedef struct s_pwd
 {
-	char *pwd;
-	char *oldpwd;
+	char	*pwd;
+	char	*oldpwd;
 }	t_pwd;
 
 // principal struct
@@ -168,6 +169,7 @@ typedef struct s_shell
 	int				prev_pipefd;
 	int				exit_status;
 	int				invalid_redir;
+	int				here_doc_expan;
 	int				here_fd;
 	char			*input;
 	t_pwd			path;
@@ -329,6 +331,8 @@ int		result(t_shell *shell, t_token *current, int *i);
 int		is_double_quote_here_doc(char *str);
 int		find_var_here_doc(t_shell *shell, char *str, t_var *temp);
 int		result_here_doc(t_shell *shell, char *str, int *i);
+void	check_here_doc_expansion(t_token *token, t_shell *shell);
+int		only_dolls_here_doc(t_shell *shell, char *cur);
 
 // kill quotes
 int		kill_quotes(t_shell *shell);

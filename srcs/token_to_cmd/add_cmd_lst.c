@@ -6,7 +6,7 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 12:29:51 by maw               #+#    #+#             */
-/*   Updated: 2025/04/20 12:13:22 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/20 14:22:42 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void	setup_cmd_lst(t_cmd **cmd)
 	(*cmd)->outfile = NULL;
 	(*cmd)->delimiter = NULL;
 	(*cmd)->type = 0;
+	(*cmd)->db_flag = 0;
 	(*cmd)->append = 0;
 	(*cmd)->valid = VALID;
 }
