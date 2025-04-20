@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_export.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 14:06:09 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/20 19:31:22 by david            ###   ########.fr       */
+/*   Updated: 2025/04/20 21:48:31 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,7 @@ void	make_export(t_shell *shell, t_cmd *current, t_token *tmp, int *j)
 		if (tmp->type == OPTION || tmp->type == ARG)
 		{
 			if (compare_with_env(shell, tmp) == ERROR)
-			{
-				printf("ya  pas double reuf \n");
 				add_export(shell, tmp);
-			}
 			tmp = tmp->next;
 			(*j)++;
 		}
@@ -34,6 +31,7 @@ void	make_export(t_shell *shell, t_cmd *current, t_token *tmp, int *j)
 		}
 		else
 		{
+			compare_with_export_tab(shell, current->arg[*j]);
 			check_double_export(current->arg[*j], shell);
 			tmp = tmp->next;
 			(*j)++;
@@ -42,10 +40,10 @@ void	make_export(t_shell *shell, t_cmd *current, t_token *tmp, int *j)
 	return ;
 }
 
-int compare_with_env(t_shell *shell, t_token *tmp)
+int	compare_with_env(t_shell *shell, t_token *tmp)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (shell->env[i] != NULL)
@@ -54,12 +52,31 @@ int compare_with_env(t_shell *shell, t_token *tmp)
 		while (shell->env[i][j] != '=')
 			j++;
 		if (ft_strncmp(tmp->value, shell->env[i], j) == 0)
-			//&& tmp->value[j] == '=' && shell->env[i][j] == '=')
 		{
-
 			return (VALID);
 		}
 		i++;
 	}
-	return(ERROR);
+	return (ERROR);
+}
+
+int	compare_with_export_tab(t_shell *shell, char *var)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (shell->export[i] != NULL)
+	{
+		j = 0;
+		while (var[j] != '=')
+			j++;
+		if (ft_strncmp(var, shell->export[i], j) == 0)
+		{
+			slide_tab(shell->export, i);
+			return (VALID);
+		}
+		i++;
+	}
+	return (ERROR);
 }

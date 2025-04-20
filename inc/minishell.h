@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/20 19:10:43 by david            ###   ########.fr       */
+/*   Updated: 2025/04/20 21:48:21 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,6 +244,7 @@ int		built_in_pipe(t_cmd *cmd, t_shell *shell);
 int		export(t_cmd *token, t_shell *shell);
 void	make_export(t_shell *shell, t_cmd *current, t_token *tmp, int *j);
 int		compare_with_env(t_shell *shell, t_token *tmp);
+int		compare_with_export_tab(t_shell *shell, char *var);
 int		export_check(t_shell *shell);
 int		echo(t_cmd *cmd);
 int		echo_option(t_cmd *cmd);
@@ -385,5 +386,8 @@ int		error(char *str);
 int		error_exit(char *str);
 int		error_var(char *str);
 int		error_export(char *str);
+
+//utils
+void	print_tab(char **tab);
 
 #endif
