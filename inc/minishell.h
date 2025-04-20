@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/19 20:46:05 by david            ###   ########.fr       */
+/*   Updated: 2025/04/20 13:09:31 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,8 +138,6 @@ typedef struct s_exp
 	int				start;
 	int				fd;
 	bool			quot;
-	bool			D;
-	bool			S;
 }	t_exp;
 
 typedef struct s_kill
@@ -311,7 +309,8 @@ int		wave(t_shell *shell, char *current, int *i);
 void	switch_home(char *tmp, t_shell *shell, int *j);
 int		var_size(char *str);
 int		only_dolls(t_shell *shell, char *current);
-void	inside(t_shell *shell, t_token *cur, int *i);
+int		inside(char *cur, int *i);
+void	inside_D(t_shell *shell, t_token *cur, int *i);
 int		search_export_var(t_shell *shell, char *str);
 int		search_local_var(t_shell *shell, char *str, t_var *temp);
 int		result(t_shell *shell, t_token *current, int *i);

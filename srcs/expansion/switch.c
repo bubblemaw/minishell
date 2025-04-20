@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 13:30:47 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/19 20:49:25 by david            ###   ########.fr       */
+/*   Updated: 2025/04/20 13:58:50 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,8 @@ int	result(t_shell *shell, t_token *current, int *i)
 
 int	only_dolls(t_shell *shell, char *cur)
 {
-	if (shell->exp.quot == false
-		&& (cur[1] == '"' || cur[1] == '\''))
+	if ((cur[1] == '"' && shell->exp.quot == false)
+		|| cur[1] == '\'')
 		return (0);
 	shell->exp.size_var = var_size(cur);
 	if (shell->exp.size_var == 0)
@@ -101,20 +101,28 @@ int	only_dolls(t_shell *shell, char *cur)
 	return (0);
 }
 
-void	inside(t_shell *shell, t_token *cur, int *i)
+int	inside(char *cur, int *i)
+{
+	if (cur[*i] == '\'')
+	{
+		(*i)++;
+		while (cur[*i] != '\'' && cur[*i] != '\0')
+			(*i)++;
+		if (cur[*i] == '\'')
+			(*i)++;
+		return (VALID);
+	}
+	return (0);
+}
+
+void inside_D(t_shell *shell, t_token *cur, int *i)
 {
 	if (cur->value[*i] == '"')
 	{
 		if (shell->exp.quot == false)
-		{
 			shell->exp.quot = true;
-			shell->exp.D = true;
-		}
 		else
-		{
 			shell->exp.quot = false;
-			shell->exp.D = false;
-		}
 	}
 	return ;
 }
