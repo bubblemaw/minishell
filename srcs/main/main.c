@@ -6,7 +6,7 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/04/20 11:27:54 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/20 14:05:35 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	main(int ac, char *av[], char **env)
 
 	ft_memset(&shell, 0, sizeof(t_shell));
 	shell.env = copy_env(env);
-	lvl_shell(&shell);
+	// lvl_shell(&shell);
 	init_execution(&shell);
 	init_shell(&shell);
 	signal(SIGINT, signalhandler);
@@ -61,6 +61,7 @@ int	main(int ac, char *av[], char **env)
 			error_var(shell.creat.err);
 			continue ;
 		}
+		// print_token(shell.tokken);
 		ft_expansion(&shell);
 		kill_quotes_new(&shell);
 		init_execution(&shell);

@@ -6,7 +6,7 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/20 13:35:17 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/20 14:06:00 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -318,7 +318,8 @@ int		wave(t_shell *shell, char *current, int *i);
 void	switch_home(char *tmp, t_shell *shell, int *j);
 int		var_size(char *str);
 int		only_dolls(t_shell *shell, char *current);
-void	inside(t_shell *shell, t_token *cur, int *i);
+int		inside(char *cur, int *i);
+void	inside_D(t_shell *shell, t_token *cur, int *i);
 int		search_export_var(t_shell *shell, char *str);
 int		put_new_var(t_shell *shell, char *tmp, int i, int j);
 int		search_local_var(t_shell *shell, char *str, t_var *temp);

@@ -6,7 +6,7 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 13:30:47 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/20 12:18:47 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/20 14:05:26 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,11 @@ int	search_export_var(t_shell *shell, char *str)
 			&& shell->exp.sub_env[shell->exp.size_var] == '\0')
 		{
 			j++;
-			return (put_new_var(shell, tmp, i, j));
+			tmp = shell->exp.new;
+			shell->exp.new = ft_strjoin(shell->exp.new, shell->env[i] + j);
+			free(shell->exp.sub_env);
+			free(tmp);
+			return (VALID);
 		}
 		free(shell->exp.sub_env);
 		i++;
@@ -93,8 +97,8 @@ int	result(t_shell *shell, t_token *current, int *i)
 
 int	only_dolls(t_shell *shell, char *cur)
 {
-	if (shell->exp.quot == false
-		&& (cur[1] == '"' || cur[1] == '\''))
+	if ((cur[1] == '"' && shell->exp.quot == false)
+		|| cur[1] == '\'')
 		return (0);
 	shell->exp.size_var = var_size(cur);
 	if (shell->exp.size_var == 0)
@@ -106,9 +110,23 @@ int	only_dolls(t_shell *shell, char *cur)
 	return (0);
 }
 
-void	inside(t_shell *shell, t_token *cur, int *i)
+int	inside(char *cur, int *i)
 {
-	if (cur->value[*i] == '"' || cur->value[*i] == '\'')
+	if (cur[*i] == '\'')
+	{
+		(*i)++;
+		while (cur[*i] != '\'' && cur[*i] != '\0')
+			(*i)++;
+		if (cur[*i] == '\'')
+			(*i)++;
+		return (VALID);
+	}
+	return (0);
+}
+
+void inside_D(t_shell *shell, t_token *cur, int *i)
+{
+	if (cur->value[*i] == '"')
 	{
 		if (shell->exp.quot == false)
 			shell->exp.quot = true;
