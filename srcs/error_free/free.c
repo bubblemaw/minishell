@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 14:21:49 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/20 11:47:22 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/20 21:51:27 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	free_shell(t_shell *shell)
 		free(shell->path.pwd);
 	if (shell->path.oldpwd)
 		free(shell->path.oldpwd);
+	if (shell->export)
+		free_tab(shell->export);
 }
 
 void	free_tab(char **tab)

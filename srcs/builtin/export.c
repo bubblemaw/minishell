@@ -5,10 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/25 12:19:16 by david             #+#    #+#             */
-/*   Updated: 2025/04/20 20:18:59 by david            ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2025/04/20 22:17:08 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "../../inc/minishell.h"
 
@@ -21,6 +23,11 @@ int	export(t_cmd *token, t_shell *shell)
 	j = 0;
 	current = token;
 	tmp = shell->tokken;
+	if (token->arg[1] == NULL)
+	{
+		display_export_env(shell);
+		return (VALID);
+	}
 	while (ft_strncmp(tmp->value, "export", 6) != 0)
 		tmp = tmp->next;
 	while (ft_strncmp(current->arg[j], "export", 6) != 0)

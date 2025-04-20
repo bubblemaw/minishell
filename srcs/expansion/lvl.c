@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lvl.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 19:54:14 by david             #+#    #+#             */
-/*   Updated: 2025/04/20 12:01:51 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/20 17:40:17 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,20 @@ int	lvl_up(t_shell *shell)
 {
 	int		i;
 	char	*tmp;
+	char	*lvl;
 
 	i = 0;
 	tmp = NULL;
+	lvl = NULL;
 	while (shell->env[i] != NULL)
 	{
 		if (ft_strncmp(shell->env[i], "SHLVL", 5) == 0)
 		{
 			shell->lvl++;
 			free(shell->env[i]);
-			tmp = ft_strjoin("SHLVL=", ft_itoa(shell->lvl));
+			lvl = ft_itoa(shell->lvl);
+			tmp = ft_strjoin("SHLVL=", lvl);
+			free(lvl);
 			shell->env[i] = tmp;
 			return (0);
 		}

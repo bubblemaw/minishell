@@ -6,7 +6,7 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 14:56:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/20 17:27:24 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/20 18:24:21 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ void	iterate_into_token(t_shell *shell, t_token *current)
 	while (current->value[shell->kill.i] != '\0' && (current->type == ARG
 			|| current->type == COMMAND || current->type == OPTION))
 	{
+		printf("le caractere a gerer: %c\n", current->value[shell->kill.i]);
+		printf("iteration numero : %d\n", shell->kill.i);
 		if (current->value[shell->kill.i] == '"')
 			iterate_into_quote(shell, current, '"');
 		else if (current->value[shell->kill.i] == '\'')
@@ -57,8 +59,8 @@ void	iterate_into_token(t_shell *shell, t_token *current)
 			iterate_into_non_quote(shell, current);
 		if (shell->kill.len >= 0)
 			create_new_value(shell, current);
-		else if (current->value[shell->kill.i] != '\0')
-			shell->kill.i++;
+		// if (current->value[shell->kill.i] != '\0')
+			// shell->kill.i++;
 	}
 }
 
@@ -90,6 +92,7 @@ void	create_new_value(t_shell *shell, t_token *temp)
 		tmp = NULL;
 		stash = NULL;
 	}
+	printf("le nouveau token :%s\n", shell->kill.new);
 }
 
 // int kill_quotes(t_shell *shell)
