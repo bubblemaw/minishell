@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/20 16:52:38 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/20 22:11:05 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -358,6 +358,15 @@ void	save_pwd(t_shell *shell);
 int		lvl_shell(t_shell *shell);
 int		get_shell_lvl(t_shell *shell);
 int		lvl_up(t_shell *shell);
+
+// bubble sort
+void	bubble_sort(char **tab1, char **tab2);
+char	**merge_arrays(char **tab1, int size1, char **tab2, int size2);
+char **allocate_and_copy_first_array(char **tab1, int size1, int total_size);
+int copy_second_array(char **temp, char **tab2, int size1, int size2);
+void sort_array(char **temp, int size);
+int calculate_size(char **tab);
+void print_and_free(char **temp, int size);
 
 // signal
 void	signalhandler(int signal);

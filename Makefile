@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: masase <masase@student.42.fr>              +#+  +:+       +#+         #
+#    By: david <david@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 22:16:43 by david             #+#    #+#              #
-#    Updated: 2025/04/20 13:33:39 by masase           ###   ########.fr        #
+#    Updated: 2025/04/20 22:07:11 by david            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,8 @@ SRCS =  srcs/main/main.c \
 		srcs/builtin/pwd.c \
 		srcs/builtin/unset.c \
 		srcs/builtin/exit.c \
+		srcs/builtin/bubble_sort.c \
+		srcs/builtin/bubble_sort_utils.c \
 		srcs/expansion/expansion.c \
 		srcs/expansion/expansion_spe.c \
 		srcs/expansion/expansion_here_doc.c \
