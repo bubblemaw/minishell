@@ -6,7 +6,7 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:31:21 by maw               #+#    #+#             */
-/*   Updated: 2025/04/18 16:03:56 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/20 12:02:35 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ void	init_shell(t_shell *shell)
 	shell->kill.stash = NULL;
 	return ;
 }
-void save_pwd(t_shell *shell)
+
+void	save_pwd(t_shell *shell)
 {
 	int	i;
 
@@ -79,7 +80,7 @@ void save_pwd(t_shell *shell)
 	while (shell->env[i] && strncmp(shell->env[i], "PWD=", 4) != 0)
 		i++;
 	if (shell->env[i] != NULL)
-		shell->path.pwd = ft_strdup(shell->env[i]); 
+		shell->path.pwd = ft_strdup(shell->env[i]);
 	i = 0;
 	while (shell->env[i] && strncmp(shell->env[i], "OLDPWD=", 7) != 0)
 		i++;

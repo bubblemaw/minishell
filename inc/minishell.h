@@ -6,7 +6,7 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/18 15:07:35 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/20 13:35:17 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,10 +225,11 @@ int		outfile_direction(t_cmd *cmd);
 void	reset_fd(t_shell *shell);
 void	save_fd(t_shell *shell);
 int		here_doc(t_cmd *cmd, t_shell *shell);
-void	here_doc_child_process(int *pipefd, t_cmd *cmd);
+void	here_doc_child_process(t_shell *shell, int *pipefd, t_cmd *cmd);
 
 // execution
 int		ft_execute(t_shell *shell);
+int		exec_redirection(t_shell *shell, t_cmd *current);
 int		ft_exe(t_cmd *token, t_shell *shell);
 int		error_redirection(t_cmd **cmd, t_shell *shell);
 void	wait_exit_status(void);
@@ -246,7 +247,7 @@ int		cd(t_cmd *cmd, t_shell *shell);
 int		move_into_dir(t_cmd *cmd, t_shell *shell, char *path);
 char	*path_finder(t_cmd *cmd, char *buffer);
 void	findvar_replace(t_shell *shell, char *buffer);
-void	put_oldpwd(int i, t_shell *shell, char *temp);
+void	update_pwd(t_shell *shell);
 char	*find_user_name(char **tab);
 int		ft_env(t_cmd *cmd, t_shell *shell);
 int		pwd(t_shell *shell);
@@ -323,11 +324,18 @@ int		put_new_var(t_shell *shell, char *tmp, int i, int j);
 int		search_local_var(t_shell *shell, char *str, t_var *temp);
 int		result(t_shell *shell, t_token *current, int *i);
 
+//expansion here_doc
+int		is_double_quote_here_doc(char *str);
+int		find_var_here_doc(t_shell *shell, char *str, t_var *temp);
+int		result_here_doc(t_shell *shell, char *str, int *i);
+
 // kill quotes
 int		kill_quotes(t_shell *shell);
 int		kill_quotes_new(t_shell *shell);
+void	init_kill_quotes(t_shell *shell);
 void	exchange_value(t_shell *shell, t_token *temp);
 void	create_new_value(t_shell *shell, t_token *temp);
+void	iterate_into_token(t_shell *shell, t_token *current);
 void	iterate_into_quote(t_shell *shell, t_token *temp, char c);
 void	iterate_into_non_quote(t_shell *shell, t_token *temp);
 int		is_double(t_shell *shell, char *value, int *i);
@@ -342,9 +350,9 @@ char	**copy_env(char **env);
 void	save_pwd(t_shell *shell);
 
 // lvl shell
-int lvl_shell(t_shell *shell);
-int get_shell_lvl(t_shell *shell);
-int lvl_up(t_shell *shell);
+int		lvl_shell(t_shell *shell);
+int		get_shell_lvl(t_shell *shell);
+int		lvl_up(t_shell *shell);
 
 // signal
 void	signalhandler(int signal);

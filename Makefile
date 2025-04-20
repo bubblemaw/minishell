@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: david <david@student.42.fr>                +#+  +:+       +#+         #
+#    By: masase <masase@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 22:16:43 by david             #+#    #+#              #
-#    Updated: 2025/04/17 19:54:57 by david            ###   ########.fr        #
+#    Updated: 2025/04/20 13:33:39 by masase           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,10 +44,12 @@ SRCS =  srcs/main/main.c \
 		srcs/builtin/exit.c \
 		srcs/expansion/expansion.c \
 		srcs/expansion/expansion_spe.c \
+		srcs/expansion/expansion_here_doc.c \
 		srcs/expansion/switch.c \
 		srcs/expansion/var_local.c \
 		srcs/expansion/creat_var_list.c \
 		srcs/expansion/kill_quotes.c \
+		srcs/expansion/kill_quotes_utils.c \
 		srcs/expansion/lvl.c \
 		srcs/builtin/built_in.c \
 		srcs/main/init_minishell.c \

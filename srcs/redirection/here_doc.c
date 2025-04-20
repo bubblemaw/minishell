@@ -6,7 +6,7 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 12:21:27 by maw               #+#    #+#             */
-/*   Updated: 2025/04/14 17:45:29 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/20 13:41:55 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	here_doc(t_cmd *cmd, t_shell *shell)
 		return (error("error occurs during the pipe"));
 	pid = fork();
 	if (pid == 0)
-		here_doc_child_process(pipefd, cmd);
+		here_doc_child_process(shell, pipefd, cmd);
 	else
 	{
 		close (pipefd[1]);
@@ -40,30 +40,41 @@ int	here_doc(t_cmd *cmd, t_shell *shell)
 	return (1);
 }
 
-void	here_doc_child_process(int *pipefd, t_cmd *cmd)
+void	here_doc_child_process(t_shell *shell, int *pipefd, t_cmd *cmd)
 {
 	char	*del;
 	char	*line;
+	char	*tmp;
+	int		expan_flag;
 
+	expan_flag = VALID;
 	signal(SIGINT, signalhandler_heredoc);
 	del = ft_strdup(cmd->delimiter);
+	// if (is_double_quote_here_doc(del) == VALID)
+	// 	expan_flag = ERROR;
 	while (1)
 	{
-		line = readline(">");
-		if (!line)
+		tmp = readline(">");
+		if (!tmp)
 			break ;
-		if (ft_strncmp(line, del, ft_strlen(del)) == 0
-			&& ft_strlen(line) == ft_strlen(del))
+		if (ft_strncmp(tmp, del, ft_strlen(del)) == 0
+			&& ft_strlen(tmp) == ft_strlen(del))
 		{
-			free(line);
+			free(tmp);
 			break ;
 		}
-		line = ft_strjoin(line, "\n");
+		if (expan_flag ==  VALID)
+		{
+			printf("on rentre dans le expansion here\n");
+			find_var_here_doc(shell, tmp, shell->var);
+		}
+
+		line = ft_strjoin(tmp, "\n");
 		ft_putstr_fd(line, pipefd[1]);
+		free(tmp);
 		free(line);
 	}
 	free(del);
-	close (pipefd[0]);
-	close (pipefd[1]);
+	close_pipe(pipefd);
 	exit(0);
 }

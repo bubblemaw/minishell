@@ -3,29 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   join_var.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 15:49:44 by david             #+#    #+#             */
-/*   Updated: 2025/04/17 19:49:31 by david            ###   ########.fr       */
+/*   Updated: 2025/04/20 12:16:05 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-// int add_var_loc(t_var *check, char *name)
-// {
-    
-//     return ();
-// }
-
-int sub_var_size(char *name)
+int	sub_var_size(char *name)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (name[i] != '\0')
-        i++;
-    if (name[i - 1] == '+')
-    i--;
-    return (i);
+	i = 0;
+	while (name[i] != '\0')
+		i++;
+	if (name[i - 1] == '+')
+		i--;
+	return (i);
 }

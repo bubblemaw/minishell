@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:16:38 by maw               #+#    #+#             */
-/*   Updated: 2025/04/17 22:50:50 by david            ###   ########.fr       */
+/*   Updated: 2025/04/20 12:10:10 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,15 @@ int	ft_execute(t_shell *shell)
 		if (current->type == PIPE)
 			if (pipex_loop(current, shell) == VALID)
 				break ;
-		if (current->delimiter)
-			if (here_doc(current, shell) == 130)
-				return (ERROR);
-		if ((current->infile) || current->outfile)
-			if (ft_direction(current) == 0)
-				if (error_redirection(&current, shell) == ERROR)
-					return (ERROR);
+		if (exec_redirection(shell, current) == ERROR)
+			return (ERROR);
+		// if (current->delimiter)
+		// 	if (here_doc(current, shell) == 130)
+		// 		return (ERROR);
+		// if ((current->infile) || current->outfile)
+		// 	if (ft_direction(current) == 0)
+		// 		if (error_redirection(&current, shell) == ERROR)
+		// 			return (ERROR);
 		if (current == NULL)
 			break ;
 		if (current->arg && shell->invalid_redir == 0)
@@ -39,6 +41,18 @@ int	ft_execute(t_shell *shell)
 	while (wait(&g_exit_status) > 0)
 		wait_exit_status();
 	reset_fd(shell);
+	return (VALID);
+}
+
+int	exec_redirection(t_shell *shell, t_cmd *current)
+{
+	if (current->delimiter)
+		if (here_doc(current, shell) == 130)
+			return (ERROR);
+	if ((current->infile) || current->outfile)
+		if (ft_direction(current) == 0)
+			if (error_redirection(&current, shell) == ERROR)
+				return (ERROR);
 	return (VALID);
 }
 

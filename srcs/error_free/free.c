@@ -6,7 +6,7 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 14:21:49 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/18 15:32:35 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/20 11:47:22 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ void	free_shell(t_shell *shell)
 	if (shell->input)
 		free(shell->input);
 	if (shell->path.pwd)
-			free(shell->path.pwd);
+		free(shell->path.pwd);
 	if (shell->path.oldpwd)
-			free(shell->path.oldpwd);
+		free(shell->path.oldpwd);
 }
 
 void	free_tab(char **tab)
