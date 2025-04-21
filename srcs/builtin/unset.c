@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 00:03:17 by maw               #+#    #+#             */
-/*   Updated: 2025/04/21 14:13:01 by david            ###   ########.fr       */
+/*   Updated: 2025/04/21 15:08:29 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	unset(t_cmd *cmd, t_shell *shell)
 {
 	int	i;
 	int	j;
-	int k;
+	int	k;
 
 	j = 1;
 	while (cmd->arg[j])

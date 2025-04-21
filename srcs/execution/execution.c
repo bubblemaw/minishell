@@ -6,7 +6,7 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:16:38 by maw               #+#    #+#             */
-/*   Updated: 2025/04/21 12:36:02 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/21 16:27:33 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ int	ft_execute(t_shell *shell)
 		if (current->type == PIPE)
 			if (pipex_loop(current, shell) == VALID)
 				break ;
-		if (exec_redirection(shell, current) == ERROR)
+		if (exec_redirection(shell, &current) == ERROR)
 			return (ERROR);
 		if (current == NULL)
 			break ;
 		if (current->arg && shell->invalid_redir == 0)
 			ft_exe(current, shell);
 		current = current->next;
-		shell->invalid_redir = 0;
+		// shell->invalid_redir = 0;
 	}
 	while (wait(&g_exit_status) > 0)
 		wait_exit_status();
@@ -37,14 +37,14 @@ int	ft_execute(t_shell *shell)
 	return (VALID);
 }
 
-int	exec_redirection(t_shell *shell, t_cmd *current)
+int	exec_redirection(t_shell *shell, t_cmd **current)
 {
-	if (current->delimiter)
+	if ((*current)->delimiter)
 		if (here_doc(current, shell) == 130)
 			return (ERROR);
-	if ((current->infile) || current->outfile)
+	if (((*current)->infile) || (*current)->outfile)
 		if (ft_direction(current) == 0)
-			if (error_redirection(&current, shell) == ERROR)
+			if (error_redirection(current, shell) == ERROR)
 				return (ERROR);
 	return (VALID);
 }
@@ -67,8 +67,14 @@ int	error_redirection(t_cmd **cmd, t_shell *shell)
 	{
 		while (*cmd && (*cmd)->type != PIPE)
 			*cmd = (*cmd)->next;
+		if (*cmd)
+		{
+			if ((*cmd)->next)
+				*cmd = (*cmd)->next;
+			return (VALID);
+		}
 	}
-	return (VALID);
+	return (ERROR);
 }
 
 int	ft_exe(t_cmd *cmd, t_shell *shell)
