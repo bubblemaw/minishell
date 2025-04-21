@@ -6,7 +6,7 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 12:21:27 by maw               #+#    #+#             */
-/*   Updated: 2025/04/20 17:26:33 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/21 14:41:46 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,10 @@ int	here_doc(t_cmd *cmd, t_shell *shell)
 void	here_doc_child_process(t_shell *shell, int *pipefd, t_cmd *cmd)
 {
 	char	*del;
-	char	*line;
 	char	*tmp;
+	char	*line;
 
+	line = NULL;
 	signal(SIGINT, signalhandler_heredoc);
 	del = ft_strdup(cmd->delimiter);
 	while (1)
@@ -59,12 +60,7 @@ void	here_doc_child_process(t_shell *shell, int *pipefd, t_cmd *cmd)
 			free(tmp);
 			break ;
 		}
-		if (shell->here_doc_expan == VALID)
-			find_var_here_doc(shell, tmp, shell->var);
-		line = ft_strjoin(tmp, "\n");
-		ft_putstr_fd(line, pipefd[1]);
-		free(tmp);
-		free(line);
+		manage_line(shell, line, tmp, pipefd);
 	}
 	free(del);
 	close_pipe(pipefd);
@@ -76,7 +72,6 @@ void	check_here_doc_expansion(t_token *token, t_shell *shell)
 	t_token	*tokken;
 
 	tokken = token;
-
 	while (tokken)
 	{
 		if (tokken->type == REDIRECTION && tokken->value[0] == '<'
@@ -89,5 +84,3 @@ void	check_here_doc_expansion(t_token *token, t_shell *shell)
 		tokken = tokken->next;
 	}
 }
-
-

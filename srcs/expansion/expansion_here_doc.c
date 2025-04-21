@@ -6,7 +6,7 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 12:31:42 by masase            #+#    #+#             */
-/*   Updated: 2025/04/20 17:27:12 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/21 14:38:02 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,9 @@ int	is_double_quote_here_doc(char *str)
 	return (0);
 }
 
-int	find_var_here_doc(t_shell *shell, char *str, t_var *temp)
+char	*find_var_here_doc(t_shell *shell, char *str, t_var *temp)
 {
 	int		i;
-	int		var_found;
 
 	i = 0;
 	while (str[i] != '\0')
@@ -39,29 +38,39 @@ int	find_var_here_doc(t_shell *shell, char *str, t_var *temp)
 			new_arg(shell, str, &i);
 			if (special_cases(shell, str + i, &i) == VALID)
 				continue ;
-			only_dolls_here_doc(shell, str + i);
-			if (search_local_var(shell, str + i, temp) == VALID)
-				var_found = 1;
-			else if (search_export_var(shell, str + i) == VALID)
-				var_found = 1;
-			if (var_found)
-				i += shell->exp.size_var + 1;
-			else
-			{
-				i += shell->exp.size_var + 1;
-				shell->exp.size_var = 0;
-			}
+			search_var_here_doc(shell, str, &i, temp);
 			shell->exp.start = i;
 		}
 		else
 			i++;
 	}
-	result_here_doc(shell, str, &i);
+	return (result_here_doc(shell, str, &i));
+}
+
+int	search_var_here_doc(t_shell *shell, char *str, int *i, t_var *temp)
+{
+	int		var_found;
+
+	only_dolls(shell, str + *i);
+	var_found = 0;
+	if (search_local_var(shell, str + *i, temp) == VALID)
+		var_found = 1;
+	else if (search_export_var(shell, str + *i) == VALID)
+		var_found = 1;
+	if (var_found)
+		*i += shell->exp.size_var + 1;
+	else
+	{
+		*i += shell->exp.size_var + 1;
+		shell->exp.size_var = 0;
+	}
 	return (0);
 }
 
-int	result_here_doc(t_shell *shell, char *str, int *i)
+char	*result_here_doc(t_shell *shell, char *str, int *i)
 {
+	char	*line;
+
 	if (str[*i] == '\0' && shell->exp.new == NULL)
 		return (0);
 	else if (str[shell->exp.start] != '\0')
@@ -74,11 +83,12 @@ int	result_here_doc(t_shell *shell, char *str, int *i)
 	if (shell->exp.new)
 	{
 		free(str);
-		str = ft_strdup(shell->exp.new);
+		line = ft_strdup(shell->exp.new);
 		free(shell->exp.new);
 		shell->exp.new = NULL;
+		return (line);
 	}
-	return (0);
+	return (NULL);
 }
 
 int	only_dolls_here_doc(t_shell *shell, char *cur)
