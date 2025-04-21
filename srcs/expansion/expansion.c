@@ -6,7 +6,7 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:31:47 by maw               #+#    #+#             */
-/*   Updated: 2025/04/20 16:45:04 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/21 12:44:34 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,32 +28,16 @@ int	ft_expansion(t_shell *shell)
 	return (VALID);
 }
 
-// int	is_double_quote(t_token *tokken)
-// {
-// 	int i;
-
-// 	i = 0;
-// 	if (ft_strlen(tokken->value) == 1 && tokken->value[0] == '$')
-// 		return (0);
-// 	while (tokken->value[i] != '"' && tokken->value[i] != '\''
-// 			&& tokken->value[i] != '\0')
-// 		i++;
-// 	if (tokken->value[i] == '"')
-// 		return (VALID);
-// 	return (0);
-// }
-
 int	find_var(t_shell *shell, t_token *cur, t_var *temp)
 {
 	int		i;
-	int var_found;
 
 	i = 0;
 	while (cur->value[i] != '\0')
 	{
 		if (inside(cur->value, &i) == VALID)
 			continue ;
-		inside_D(shell, cur, &i);
+		inside_d(shell, cur, &i);
 		if (cur->value[i] == '$' || (cur->value[i] == '~' && i - 1 < 0
 				&& (cur->value[i + 1] == ' ' || cur->value[i + 1] == '/'
 					|| cur->value[i + 1] == '\0')))
@@ -61,20 +45,8 @@ int	find_var(t_shell *shell, t_token *cur, t_var *temp)
 			new_arg(shell, cur->value, &i);
 			if (special_cases(shell, cur->value + i, &i) == VALID)
 				continue ;
-			only_dolls(shell, cur->value + i);
-            var_found = 0;
-            if (search_local_var(shell, cur->value + i, temp) == VALID)
-                var_found = 1;
-            else if (search_export_var(shell, cur->value + i) == VALID)
-                var_found = 1;
-            if (var_found)
-				i += shell->exp.size_var + 1;
-            else
-			{
-				i += shell->exp.size_var + 1;
-                shell->exp.size_var = 0;
-            }
-            shell->exp.start = i;
+			search_var(shell, cur, &i, temp);
+			shell->exp.start = i;
 		}
 		else
 			i++;
@@ -82,6 +54,26 @@ int	find_var(t_shell *shell, t_token *cur, t_var *temp)
 	result(shell, cur, &i);
 	shell->exp.size_var = 0;
 	shell->exp.quot = false;
+	return (0);
+}
+
+int	search_var(t_shell *shell, t_token *cur, int *i, t_var *temp)
+{
+	int		var_found;
+
+	only_dolls(shell, cur->value + *i);
+	var_found = 0;
+	if (search_local_var(shell, cur->value + *i, temp) == VALID)
+		var_found = 1;
+	else if (search_export_var(shell, cur->value + *i) == VALID)
+		var_found = 1;
+	if (var_found)
+		*i += shell->exp.size_var + 1;
+	else
+	{
+		*i += shell->exp.size_var + 1;
+		shell->exp.size_var = 0;
+	}
 	return (0);
 }
 

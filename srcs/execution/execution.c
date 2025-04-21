@@ -6,7 +6,7 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:16:38 by maw               #+#    #+#             */
-/*   Updated: 2025/04/20 12:10:10 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/21 12:36:02 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,6 @@ int	ft_execute(t_shell *shell)
 				break ;
 		if (exec_redirection(shell, current) == ERROR)
 			return (ERROR);
-		// if (current->delimiter)
-		// 	if (here_doc(current, shell) == 130)
-		// 		return (ERROR);
-		// if ((current->infile) || current->outfile)
-		// 	if (ft_direction(current) == 0)
-		// 		if (error_redirection(&current, shell) == ERROR)
-		// 			return (ERROR);
 		if (current == NULL)
 			break ;
 		if (current->arg && shell->invalid_redir == 0)
@@ -105,12 +98,4 @@ int	ft_exe(t_cmd *cmd, t_shell *shell)
 		wait_exit_status();
 	}
 	return (VALID);
-}
-
-void	put_exit_status(void)
-{
-	if (errno == 13)
-		g_exit_status = 126;
-	else if (errno == 2)
-		g_exit_status = 127;
 }

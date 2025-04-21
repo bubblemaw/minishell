@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   switch.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 13:30:47 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/20 17:48:26 by david            ###   ########.fr       */
+/*   Updated: 2025/04/21 12:54:04 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,7 @@ int	search_export_var(t_shell *shell, char *str)
 		if (ft_strncmp(str, shell->exp.sub_env, shell->exp.size_var) == 0
 			&& shell->exp.sub_env[shell->exp.size_var] == '\0')
 		{
-			j++;
-			tmp = shell->exp.new;
-			shell->exp.new = ft_strjoin(shell->exp.new, shell->env[i] + j);
-			free(shell->exp.sub_env);
-			free(tmp);
+			search_export_var_2(shell, tmp, &j, i);
 			return (VALID);
 		}
 		free(shell->exp.sub_env);
@@ -65,13 +61,14 @@ int	search_export_var(t_shell *shell, char *str)
 	return (0);
 }
 
-int	put_new_var(t_shell *shell, char *tmp, int i, int j)
+void	search_export_var_2(t_shell *shell, char *tmp, int *j, int i)
 {
+	(*j)++;
 	tmp = shell->exp.new;
-	shell->exp.new = ft_strjoin(shell->exp.new, shell->env[i] + j);
+	shell->exp.new = ft_strjoin(shell->exp.new, shell->env[i] + *j);
 	free(shell->exp.sub_env);
 	free(tmp);
-	return (0);
+	return ;
 }
 
 int	result(t_shell *shell, t_token *current, int *i)
@@ -108,30 +105,4 @@ int	only_dolls(t_shell *shell, char *cur)
 		free(shell->exp.tmp);
 	}
 	return (0);
-}
-
-int	inside(char *cur, int *i)
-{
-	if (cur[*i] == '\'')
-	{
-		(*i)++;
-		while (cur[*i] != '\'' && cur[*i] != '\0')
-			(*i)++;
-		if (cur[*i] == '\'')
-			(*i)++;
-		return (VALID);
-	}
-	return (0);
-}
-
-void inside_D(t_shell *shell, t_token *cur, int *i)
-{
-	if (cur->value[*i] == '"')
-	{
-		if (shell->exp.quot == false)
-			shell->exp.quot = true;
-		else
-			shell->exp.quot = false;
-	}
-	return ;
 }

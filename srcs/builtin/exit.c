@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:12:55 by maw               #+#    #+#             */
-/*   Updated: 2025/04/16 10:10:05 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/21 12:32:30 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,12 @@ int	is_arguments_digit(char **tab)
 		i++;
 	}
 	return (i);
+}
+
+void	put_exit_status(void)
+{
+	if (errno == 13)
+		g_exit_status = 126;
+	else if (errno == 2)
+		g_exit_status = 127;
 }

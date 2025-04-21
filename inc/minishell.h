@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/20 22:37:20 by david            ###   ########.fr       */
+/*   Updated: 2025/04/21 12:52:10 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -310,10 +310,11 @@ int		crush_local_var(t_shell *shell, char *var);
 int		add_var_env(t_shell *shell, int *i, char *var);
 
 // export display
-int		display_export_env(t_shell *shell);
 int		write_until_char(char *str, char c);
 void	write_after_char(char *str, char c);
 void	add_export(t_shell *shell, t_token *tmp);
+int		if_tab_is_empty(t_shell *shell, char *new_value);
+void	copy_export_tab(t_shell *shell, char **new_export, int i);
 
 int		ft_expansion(t_shell *shell);
 int		is_double_quote(t_token *tokken);
@@ -325,10 +326,12 @@ int		pid_dolls(t_shell *shell, char *current, int *i);
 int		wave(t_shell *shell, char *current, int *i);
 void	switch_home(char *tmp, t_shell *shell, int *j);
 int		var_size(char *str);
+int		search_var(t_shell *shell, t_token *cur, int *i, t_var *temp);
 int		only_dolls(t_shell *shell, char *current);
 int		inside(char *cur, int *i);
-void	inside_D(t_shell *shell, t_token *cur, int *i);
+void	inside_d(t_shell *shell, t_token *cur, int *i);
 int		search_export_var(t_shell *shell, char *str);
+void	search_export_var_2(t_shell *shell, char *tmp, int *j, int i);
 int		put_new_var(t_shell *shell, char *tmp, int i, int j);
 int		search_local_var(t_shell *shell, char *str, t_var *temp);
 int		result(t_shell *shell, t_token *current, int *i);
@@ -341,7 +344,6 @@ void	check_here_doc_expansion(t_token *token, t_shell *shell);
 int		only_dolls_here_doc(t_shell *shell, char *cur);
 
 // kill quotes
-int		kill_quotes(t_shell *shell);
 int		kill_quotes_new(t_shell *shell);
 void	init_kill_quotes(t_shell *shell);
 void	exchange_value(t_shell *shell, t_token *temp);
@@ -349,10 +351,6 @@ void	create_new_value(t_shell *shell, t_token *temp);
 void	iterate_into_token(t_shell *shell, t_token *current);
 void	iterate_into_quote(t_shell *shell, t_token *temp, char c);
 void	iterate_into_non_quote(t_shell *shell, t_token *temp);
-int		is_double(t_shell *shell, char *value, int *i);
-int		is_single(t_shell *shell, char *value, int *i);
-int		check_out_quotes(t_shell *shell, char *value, int *i);
-int		creat_new_str(t_shell *shell);
 
 //init_minishell
 void	init_execution(t_shell *shell);
@@ -366,13 +364,13 @@ int		get_shell_lvl(t_shell *shell);
 int		lvl_up(t_shell *shell);
 
 // bubble sort
-void	bubble_sort(char **tab1, char **tab2);
+int		display_export_sort(char **tab1, char **tab2);
 char	**merge_arrays(char **tab1, int size1, char **tab2, int size2);
-char **allocate_and_copy_first_array(char **tab1, int size1, int total_size);
-int copy_second_array(char **temp, char **tab2, int size1, int size2);
-void sort_array(char **temp, int size);
-int calculate_size(char **tab);
-void print_and_free(char **temp, int size);
+char	**allocate_and_copy_first_array(char **tab1, int size1, int total_size);
+int		copy_second_array(char **temp, char **tab2, int size1, int size2);
+void	sort_array(char **temp, int size);
+int		calculate_size(char **tab);
+void	print_and_free(char **temp, int size);
 
 // signal
 void	signalhandler(int signal);
