@@ -6,7 +6,7 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/21 12:52:10 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/21 14:58:38 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,6 +229,7 @@ void	reset_fd(t_shell *shell);
 void	save_fd(t_shell *shell);
 int		here_doc(t_cmd *cmd, t_shell *shell);
 void	here_doc_child_process(t_shell *shell, int *pipefd, t_cmd *cmd);
+void	join_free_line(char *tmp, int *pipefd);
 
 // execution
 int		ft_execute(t_shell *shell);
@@ -317,7 +318,6 @@ int		if_tab_is_empty(t_shell *shell, char *new_value);
 void	copy_export_tab(t_shell *shell, char **new_export, int i);
 
 int		ft_expansion(t_shell *shell);
-int		is_double_quote(t_token *tokken);
 int		find_var(t_shell *shell, t_token *cur, t_var *temp);
 int		new_arg(t_shell *shell, char *value, int *i);
 int		special_cases(t_shell *shell, char *current, int *i);
@@ -332,16 +332,19 @@ int		inside(char *cur, int *i);
 void	inside_d(t_shell *shell, t_token *cur, int *i);
 int		search_export_var(t_shell *shell, char *str);
 void	search_export_var_2(t_shell *shell, char *tmp, int *j, int i);
-int		put_new_var(t_shell *shell, char *tmp, int i, int j);
 int		search_local_var(t_shell *shell, char *str, t_var *temp);
 int		result(t_shell *shell, t_token *current, int *i);
 
 //expansion here_doc
 int		is_double_quote_here_doc(char *str);
-int		find_var_here_doc(t_shell *shell, char *str, t_var *temp);
-int		result_here_doc(t_shell *shell, char *str, int *i);
+char	*find_var_here_doc(t_shell *shell, char *str, t_var *temp);
+char	*result_here_doc(t_shell *shell, char *str, int *i);
 void	check_here_doc_expansion(t_token *token, t_shell *shell);
 int		only_dolls_here_doc(t_shell *shell, char *cur);
+void	join_free_line(char *tmp, int *pipefd);
+void	join_free_line_expan(char *tmp, int *pipefd);
+void	manage_line(t_shell *shell, char *line, char *tmp, int *pipefd);
+int		search_var_here_doc(t_shell *shell, char *str, int *i, t_var *temp);
 
 // kill quotes
 int		kill_quotes_new(t_shell *shell);
@@ -362,6 +365,10 @@ void	save_pwd(t_shell *shell);
 int		lvl_shell(t_shell *shell);
 int		get_shell_lvl(t_shell *shell);
 int		lvl_up(t_shell *shell);
+void	init_main(t_shell *shell, char **env);
+void	free_before_prompt(t_shell *shell);
+void	start_execution(t_shell *shell);
+void	read_input(t_shell *shell);
 
 // bubble sort
 int		display_export_sort(char **tab1, char **tab2);

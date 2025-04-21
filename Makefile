@@ -6,7 +6,7 @@
 #    By: masase <masase@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 22:16:43 by david             #+#    #+#              #
-#    Updated: 2025/04/21 12:52:44 by masase           ###   ########.fr        #
+#    Updated: 2025/04/21 14:41:37 by masase           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SRCS =  srcs/main/main.c \
 		srcs/redirection/redirection.c \
 		srcs/redirection/redirection_fake.c \
 		srcs/redirection/here_doc.c \
+		srcs/redirection/here_doc_utils.c \
 		srcs/error_free/error.c \
 		srcs/error_free/free.c \
 		srcs/token_to_cmd/add_cmd_lst.c \
