@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/20 22:17:59 by david            ###   ########.fr       */
+/*   Updated: 2025/04/20 22:37:20 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -311,7 +311,7 @@ int		add_var_env(t_shell *shell, int *i, char *var);
 
 // export display
 int		display_export_env(t_shell *shell);
-void	write_until_char(char *str, char c);
+int		write_until_char(char *str, char c);
 void	write_after_char(char *str, char c);
 void	add_export(t_shell *shell, t_token *tmp);
 

@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 14:06:09 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/20 22:17:53 by david            ###   ########.fr       */
+/*   Updated: 2025/04/21 11:32:13 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,17 +66,20 @@ int	compare_with_export_tab(t_shell *shell, char *var)
 	int	j;
 
 	i = 0;
-	while (shell->export[i] != NULL)
+	if (shell->export != NULL)
 	{
-		j = 0;
-		while (var[j] != '=')
-			j++;
-		if (ft_strncmp(var, shell->export[i], j) == 0)
+		while (shell->export[i] != NULL)
 		{
-			slide_tab(shell->export, i);
-			return (VALID);
+			j = 0;
+			while (var[j] != '=')
+				j++;
+			if (ft_strncmp(var, shell->export[i], j) == 0)
+			{
+				slide_tab(shell->export, i);
+				return (VALID);
+			}
+			i++;
 		}
-		i++;
 	}
 	return (ERROR);
 }
