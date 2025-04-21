@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 00:03:17 by maw               #+#    #+#             */
-/*   Updated: 2025/04/20 22:51:04 by david            ###   ########.fr       */
+/*   Updated: 2025/04/21 14:13:01 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,22 @@ int	unset(t_cmd *cmd, t_shell *shell)
 {
 	int	i;
 	int	j;
+	int k;
 
 	j = 1;
 	while (cmd->arg[j])
 	{
 		i = 0;
-		while (shell->env[i] && strncmp(shell->env[i], cmd->arg[j],
-				ft_strlen_to_equal(cmd->arg[j])) != 0)
+		while (shell->env[i])
+		{
+			k = 0;
+			while (shell->env[i][k] != '=')
+				k++;
+			if (strncmp(shell->env[i], cmd->arg[j], k) == 0
+				&& cmd->arg[j][k] == '\0')
+				slide_tab(shell->env, i);
 			i++;
-		if (shell->env[i] != NULL)
-			slide_tab(shell->env, i);
+		}
 		j++;
 	}
 	g_exit_status = 0;
