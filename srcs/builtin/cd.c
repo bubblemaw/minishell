@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 15:28:31 by maw               #+#    #+#             */
-/*   Updated: 2025/04/20 11:45:50 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/22 22:55:34 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	move_into_dir(t_cmd *cmd, t_shell *shell, char *path)
 		g_exit_status = 1;
 		free (path);
 		return (ERROR);
-	}	
+	}
 	free (path);
 	return (VALID);
 }

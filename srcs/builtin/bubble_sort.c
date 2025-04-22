@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bubble_sort.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 20:19:57 by david             #+#    #+#             */
-/*   Updated: 2025/04/21 13:38:51 by david            ###   ########.fr       */
+/*   Updated: 2025/04/22 22:56:56 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void	sort_array(char **temp, int size)
 		i = 0;
 		while (i < size - 1)
 		{
-			len = ft_strlen(temp[i]);      
+			len = ft_strlen(temp[i]);
 			if (ft_strncmp(temp[i], temp[i + 1], len) > 0)
 			{
 				swap = temp[i];

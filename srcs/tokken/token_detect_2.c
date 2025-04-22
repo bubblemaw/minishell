@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_detect_2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 13:03:24 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/22 16:39:00 by david            ###   ########.fr       */
+/*   Updated: 2025/04/22 22:57:49 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	detect_redirections(char *str, int *i)
 int	detect_variables(bool *var, char *str, int *i)
 {
 	if (str[*i] == '=' && (str[*i + 1] == ' ' || str[*i + 1] == '\0'
-		|| str[*i - 1] == ' '))
+			|| str[*i - 1] == ' '))
 		return (ERROR);
 	else if (*i > 0 && str[*i - 1] == '=' && *var == true)
 	{
