@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/04/21 16:31:34 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/22 22:41:27 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void	start_execution(t_shell *shell)
 	signal(SIGINT, signalhandler_exec);
 	signal(SIGQUIT, signalhandler_back);
 	ft_execute(shell);
-	// print_cmds(&shell->cmd);
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, signalhandler);
 }

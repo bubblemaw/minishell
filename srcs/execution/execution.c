@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:16:38 by maw               #+#    #+#             */
-/*   Updated: 2025/04/21 16:27:33 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/22 22:42:53 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ft_execute(t_shell *shell)
 		if (current->arg && shell->invalid_redir == 0)
 			ft_exe(current, shell);
 		current = current->next;
-		// shell->invalid_redir = 0;
+		shell->invalid_redir = 0;
 	}
 	while (wait(&g_exit_status) > 0)
 		wait_exit_status();
@@ -68,11 +68,7 @@ int	error_redirection(t_cmd **cmd, t_shell *shell)
 		while (*cmd && (*cmd)->type != PIPE)
 			*cmd = (*cmd)->next;
 		if (*cmd)
-		{
-			if ((*cmd)->next)
-				*cmd = (*cmd)->next;
 			return (VALID);
-		}
 	}
 	return (ERROR);
 }
