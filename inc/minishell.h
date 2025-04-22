@@ -6,7 +6,7 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/21 14:58:38 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/21 16:27:31 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,20 +220,20 @@ char	*ft_cmd_path(t_cmd *cmd, t_shell *shell);
 char	*join_path(char **tab_path, t_cmd *cmd);
 
 // redirection
-int		ft_direction(t_cmd *token);
+int		ft_direction(t_cmd **cmd);
 int		ft_test_direction(t_cmd *cmd);
 int		ft_direction_fake(t_cmd *cmd);
 int		outfile_direction_fake(t_cmd *cmd);
-int		outfile_direction(t_cmd *cmd);
+int		outfile_direction(t_cmd **cmd);
 void	reset_fd(t_shell *shell);
 void	save_fd(t_shell *shell);
-int		here_doc(t_cmd *cmd, t_shell *shell);
-void	here_doc_child_process(t_shell *shell, int *pipefd, t_cmd *cmd);
+int		here_doc(t_cmd **cmd, t_shell *shell);
+void	here_doc_child_process(t_shell *shell, int *pipefd, t_cmd **cmd);
 void	join_free_line(char *tmp, int *pipefd);
 
 // execution
 int		ft_execute(t_shell *shell);
-int		exec_redirection(t_shell *shell, t_cmd *current);
+int		exec_redirection(t_shell *shell, t_cmd **current);
 int		ft_exe(t_cmd *token, t_shell *shell);
 int		error_redirection(t_cmd **cmd, t_shell *shell);
 void	wait_exit_status(void);

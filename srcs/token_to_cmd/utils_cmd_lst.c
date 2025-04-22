@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils_cmd_lst.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 21:17:50 by maw               #+#    #+#             */
-/*   Updated: 2025/04/21 12:33:39 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/22 22:43:36 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-// Fonction pour afficher les commandes stockées
+//Fonction pour afficher les commandes stockées
 // void	print_cmds(t_cmd **head)
 // {
 // 	t_cmd	*current;

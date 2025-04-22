@@ -6,13 +6,13 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 12:21:27 by maw               #+#    #+#             */
-/*   Updated: 2025/04/21 14:41:46 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/21 16:30:35 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	here_doc(t_cmd *cmd, t_shell *shell)
+int	here_doc(t_cmd **cmd, t_shell *shell)
 {
 	int		pipefd[2];
 	pid_t	pid;
@@ -40,7 +40,7 @@ int	here_doc(t_cmd *cmd, t_shell *shell)
 	return (1);
 }
 
-void	here_doc_child_process(t_shell *shell, int *pipefd, t_cmd *cmd)
+void	here_doc_child_process(t_shell *shell, int *pipefd, t_cmd **cmd)
 {
 	char	*del;
 	char	*tmp;
@@ -48,7 +48,7 @@ void	here_doc_child_process(t_shell *shell, int *pipefd, t_cmd *cmd)
 
 	line = NULL;
 	signal(SIGINT, signalhandler_heredoc);
-	del = ft_strdup(cmd->delimiter);
+	del = ft_strdup((*cmd)->delimiter);
 	while (1)
 	{
 		tmp = readline(">");

@@ -6,7 +6,7 @@
 /*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:34:17 by maw               #+#    #+#             */
-/*   Updated: 2025/04/14 17:45:34 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/21 16:27:32 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,17 @@ void	save_fd(t_shell *shell)
 	shell->stderr_ = dup(STDERR_FILENO);
 }
 
-int	ft_direction(t_cmd *cmd)
+int	ft_direction(t_cmd **cmd)
 {
 	int	infd;
 
-	if (cmd->infile != NULL)
+	if ((*cmd)->infile != NULL)
 	{
-		infd = open (cmd->infile, O_RDONLY);
+		infd = open ((*cmd)->infile, O_RDONLY);
 		if (infd == -1)
 		{
 			g_exit_status = 1;
-			perror(cmd->infile);
+			perror((*cmd)->infile);
 			return (0);
 		}
 		dup2(infd, STDIN_FILENO);
@@ -45,27 +45,27 @@ int	ft_direction(t_cmd *cmd)
 	if (outfile_direction(cmd) == 0)
 	{
 		g_exit_status = 1;
-		perror(cmd->outfile);
+		perror((*cmd)->outfile);
 		return (0);
 	}
 	return (1);
 }
 
-int	outfile_direction(t_cmd *cmd)
+int	outfile_direction(t_cmd **cmd)
 {
 	int	outfd;
 
-	if (cmd->append == 1)
+	if ((*cmd)->append == 1)
 	{
-		outfd = open (cmd->outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		outfd = open ((*cmd)->outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (outfd == -1)
 			return (0);
 		dup2(outfd, STDOUT_FILENO);
 		close(outfd);
 	}
-	else if (cmd->outfile != NULL)
+	else if ((*cmd)->outfile != NULL)
 	{
-		outfd = open (cmd->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		outfd = open ((*cmd)->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (outfd == -1)
 			return (0);
 		dup2(outfd, STDOUT_FILENO);
