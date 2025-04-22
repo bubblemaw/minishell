@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/21 14:58:38 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/22 15:57:08 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,7 @@ int		skip_space(char *str, int *i);
 int		double_quotes(char *str, int *i);
 int		single_quotes(char *str, int *i);
 int		detect_redirections(char *str, int *i);
-int		detect_variables(bool *var, char *str, int *i);
+int		detect_variables(char *str, int *i);
 int		detect_var_value(char *input, int *i);
 int		detect_command(char *input, int *i);
 
@@ -203,6 +203,7 @@ void	first_case(t_shell *shell, t_token **temp);
 int		give(t_shell *shell, t_token **temp, bool *find);
 int		give_var(t_shell *shell, t_token **temp, bool *find);
 int		var_name(char *value);
+int		var_name_b(t_shell *shell, char *value);
 void	var_error(t_shell *shell, t_token *temp);
 int		var_name_export(char *value);
 int		export_kill(t_shell *shell);
@@ -403,5 +404,6 @@ int		error_export(char *str);
 
 //utils
 void	print_tab(char **tab);
+void split_name_tokens(t_token **temp);
 
 #endif

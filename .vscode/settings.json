@@ -78,6 +78,7 @@
     "signal.h": "c",
     "concepts": "c",
     "new": "c",
-    "compare": "c"
+    "compare": "c",
+    "initializer_list": "c"
   }
 }

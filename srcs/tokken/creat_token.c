@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   creat_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:02:21 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/14 14:51:37 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/22 14:57:04 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,7 @@ int	creat_tokken(char *input, t_shell *shell)
 int	parsing(char *input, t_shell *shell)
 {
 	shell->creat.begin = shell->creat.i;
-	shell->creat.v_res = detect_variables(&shell->creat.var,
-			input, &shell->creat.i);
-	if (shell->creat.v_res == ERROR)
-		return (ERROR);
-	else if (shell->creat.v_res == VALID)
+	if (detect_variables(input, &shell->creat.i) == VALID)
 		shell->creat.end = shell->creat.i;
 	else if (detect_redirections(input, &shell->creat.i) == ERROR)
 		return (ERROR);

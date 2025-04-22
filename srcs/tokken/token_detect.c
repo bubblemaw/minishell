@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_detect.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:53:52 by david             #+#    #+#             */
-/*   Updated: 2025/04/14 12:04:50 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/22 14:43:30 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ int	skip_space(char *str, int *i)
 			return (0);
 		(*i)++;
 	}
-	if (check_first == 0
-		&& (str[*i] == '=' || str[*i] == '|'))
+	if (check_first == 0 && str[*i] == '|')
 		return (ERROR);
 	return (0);
 }

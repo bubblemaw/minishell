@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_error.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:55:13 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/17 15:34:29 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/22 15:52:25 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,29 +31,60 @@ int	var_name(char *value)
 	return (VALID);
 }
 
+int	var_name_b(t_shell *shell, char *value)
+{
+	int i;
+
+	i = 0;
+
+	if (value[i] == '=' || value[i] == '_' || ft_isalpha(value[i]) == 0)
+	{
+		shell->creat.err = ft_strdup(value);
+		return (ERROR);
+	}
+	while (value[i] != '=')
+	{
+		if (ft_isalnum(value[i]) == 0 && value[i] != '_')
+		{
+			shell->creat.err = ft_strdup(value);
+			return (ERROR);
+		}
+		i++;
+	}
+	if (value[i] == '=' && value[i + 1] == '\0')
+	{
+		shell->creat.err = ft_strdup(value);
+		return (ERROR);
+	}
+	return (0);
+}
+
 int	var_name_export(char *value)
 {
 	int		i;
 	int		size;
 	char	*var;
 
-	i = 0;
-	size = 0;
-	while (value[size] != '=')
-		size++;
-	var = ft_substr(value, 0, size);
-	if (ft_strlen(var) > 1
-		&& (ft_isalpha(var[i]) == 0 && var[i] != '_'))
-		return (free(var), ERROR);
-	else if (ft_strlen(var) == 1 && var[i] == '_')
-		return (free(var), ERROR);
-	while (var[i] != '\0')
-	{
-		if (ft_isalnum(var[i]) == 0 && var[i] != '_' && var[i] != '=')
-			return (free(var), ERROR);
-		i++;
-	}
-	free(var);
+			i = 0;
+			size = 0;
+			while (value[size] != '=')
+				size++;
+			var = ft_substr(value, 0, size);
+			if (ft_strlen(var) > 1
+				&& (ft_isalpha(var[i]) == 0 && var[i] != '_'))
+				return (free(var), ERROR);
+			else if (ft_strlen(var) == 1 && var[i] == '_')
+				return (free(var), ERROR);
+			while (var[i] != '\0')
+			{
+				if (ft_isalnum(var[i]) == 0 && var[i] != '_' && var[i] != '=')
+				{
+					free(var);
+					return (ERROR);
+				}
+				i++;
+			}
+			free(var);
 	return (0);
 }
 
@@ -92,14 +123,14 @@ int	export_boucle(t_shell *shell)
 	return (0);
 }
 
-void	var_error(t_shell *shell, t_token *temp)
-{
-	char	*tmp;
+// void	var_error(t_shell *shell, t_token *temp)
+// {
+// 	char	*tmp;
 
-	tmp = NULL;
-	shell->creat.err = ft_strjoin(temp->prev->value, temp->value);
-	tmp = shell->creat.err;
-	shell->creat.err = ft_strjoin(shell->creat.err, temp->next->value);
-	free(tmp);
-	return ;
-}
+// 	tmp = NULL;
+// 	shell->creat.err = ft_strjoin(temp->prev->value, temp->value);
+// 	tmp = shell->creat.err;
+// 	shell->creat.err = ft_strjoin(shell->creat.err, temp->next->value);
+// 	free(tmp);
+// 	return ;
+// }

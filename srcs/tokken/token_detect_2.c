@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_detect_2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 13:03:24 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/09 15:13:04 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/22 14:57:05 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,31 +37,19 @@ int	detect_redirections(char *str, int *i)
 	return (0);
 }
 
-int	detect_variables(bool *var, char *str, int *i)
+int	detect_variables(char *str, int *i)
 {
-	if (str[*i] == '=' && (str[*i + 1] == ' ' || str[*i - 1] == ' '))
-		return (ERROR);
-	else if (*i > 0 && str[*i - 1] == '=' && *var == true)
+	bool var = false;
+	while (str[*i] != ' ' && str[*i] != '>'
+		&& str[*i] != '<' && str[*i] != '|'
+		&& str[*i] != '\0')
 	{
-		while (str[*i] != ' ' && str[*i] != '\0'
-			&& str[*i] != '>' && str[*i] != '<'
-			&& str[*i] != '|')
-		{
-			if (detect_var_value(str, i) == ERROR)
-				return (ERROR);
-			else if (str[*i] == '\\' || str[*i] == ';')
-				return (ERROR);
-			(*i)++;
-		}
-		*var = false;
-		return (VALID);
-	}
-	else if (str[*i] == '=')
-	{
+		if (str[*i] == '=')
+			var = true;
 		(*i)++;
-		*var = true;
-		return (VALID);
 	}
+	if (var == true)
+		return (VALID);
 	return (0);
 }
 
