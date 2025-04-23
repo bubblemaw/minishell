@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 12:21:27 by maw               #+#    #+#             */
-/*   Updated: 2025/04/21 16:30:35 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/23 09:33:20 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	here_doc(t_cmd **cmd, t_shell *shell)
 		if (WEXITSTATUS(shell->exit_status) == 130)
 		{
 			close (pipefd[0]);
-			g_exit_status = 130;
+			shell->exit_status = 130;
 			return (130);
 		}
 		dup2(pipefd[0], STDIN_FILENO);

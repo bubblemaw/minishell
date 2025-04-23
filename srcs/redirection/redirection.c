@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:34:17 by maw               #+#    #+#             */
-/*   Updated: 2025/04/21 16:27:32 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/23 09:32:42 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	save_fd(t_shell *shell)
 	shell->stderr_ = dup(STDERR_FILENO);
 }
 
-int	ft_direction(t_cmd **cmd)
+int	ft_direction(t_cmd **cmd, t_shell *shell)
 {
 	int	infd;
 
@@ -35,7 +35,7 @@ int	ft_direction(t_cmd **cmd)
 		infd = open ((*cmd)->infile, O_RDONLY);
 		if (infd == -1)
 		{
-			g_exit_status = 1;
+			shell->exit_status = 1;
 			perror((*cmd)->infile);
 			return (0);
 		}
@@ -44,7 +44,7 @@ int	ft_direction(t_cmd **cmd)
 	}
 	if (outfile_direction(cmd) == 0)
 	{
-		g_exit_status = 1;
+		shell->exit_status = 1;
 		perror((*cmd)->outfile);
 		return (0);
 	}

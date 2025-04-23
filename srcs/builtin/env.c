@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 17:14:29 by maw               #+#    #+#             */
-/*   Updated: 2025/04/13 11:53:38 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/23 09:28:33 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_env(t_cmd *cmd, t_shell *shell)
 	if (cmd->arg[1])
 	{
 		error("too much arguments");
-		g_exit_status = 1;
+		shell->exit_status = 1;
 		return (VALID);
 	}
 	if (!shell->env)
@@ -33,6 +33,6 @@ int	ft_env(t_cmd *cmd, t_shell *shell)
 		printf("%s\n", shell->env[i]);
 		i++;
 	}
-	g_exit_status = 0;
+	shell->exit_status = 0;
 	return (VALID);
 }

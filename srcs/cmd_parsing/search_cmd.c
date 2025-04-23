@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   search_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 21:59:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/20 11:46:48 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/23 08:51:10 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*ft_cmd_path(t_cmd *cmd, t_shell *shell)
 	int		i;
 
 	i = 0;
-	while (shell->env[i] && strncmp(shell->env[i], "PATH", 4) != 0)
+	while (shell->env[i] && ft_strncmp(shell->env[i], "PATH", 4) != 0)
 		i++;
 	if (!shell->env[i])
 		return (NULL);

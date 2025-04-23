@@ -6,7 +6,7 @@
 /*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 12:00:12 by maw               #+#    #+#             */
-/*   Updated: 2025/04/17 14:21:07 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/23 09:31:07 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	error(char *str)
 	return (0);
 }
 
-int	error_exit(char *str)
+int	error_exit(char *str, t_shell *shell)
 {
 	ft_putstr_fd("Error: ", STDERR_FILENO);
 	if (errno)
@@ -45,7 +45,7 @@ int	error_exit(char *str)
 	else
 		ft_putstr_fd(str, STDERR_FILENO);
 	ft_putchar_fd('\n', STDERR_FILENO);
-	exit (g_exit_status);
+	exit (shell->exit_status);
 }
 
 int	error_cmd(char *str)
@@ -57,22 +57,22 @@ int	error_cmd(char *str)
 	exit (127);
 }
 
-int	error_var(char *str)
+int	error_var(char *str, t_shell *shell)
 {
 	ft_putstr_fd("Error: ", STDERR_FILENO);
 	ft_putstr_fd("Command not found: ", STDERR_FILENO);
 	ft_putstr_fd(str, STDERR_FILENO);
 	ft_putchar_fd('\n', STDERR_FILENO);
-	g_exit_status = 127;
+	shell->exit_status = 127;
 	return (0);
 }
 
-int	error_export(char *str)
+int	error_export(char *str, t_shell *shell)
 {
 	ft_putstr_fd("Error: ", STDERR_FILENO);
 	ft_putstr_fd("export: `", STDERR_FILENO);
 	ft_putstr_fd(str, STDERR_FILENO);
 	ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
-	g_exit_status = 1;
+	shell->exit_status = 1;
 	return (0);
 }

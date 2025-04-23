@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/04/22 23:00:41 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/23 09:36:43 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-int	g_exit_status = 0;
 
 void	init_main(t_shell *shell, char **env)
 {
@@ -88,13 +86,13 @@ int	main(int ac, char *av[], char **env)
 			continue ;
 		else if (creat_tokken(shell.input, &shell) == ERROR)
 		{
-			g_exit_status = 2;
+			shell.exit_status = 2;
 			ft_putstr_fd("syntax error near unexpected token\n", STDERR_FILENO);
 			continue ;
 		}
 		if (give_token_data(&shell) == ERROR)
 		{
-			error_var(shell.creat.err);
+			error_var(shell.creat.err, &shell);
 			continue ;
 		}
 		start_execution(&shell);

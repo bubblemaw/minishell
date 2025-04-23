@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:16:38 by maw               #+#    #+#             */
-/*   Updated: 2025/04/22 22:42:53 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/23 09:36:09 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ int	ft_execute(t_shell *shell)
 		current = current->next;
 		shell->invalid_redir = 0;
 	}
-	while (wait(&g_exit_status) > 0)
-		wait_exit_status();
+	while (wait(&shell->exit_status) > 0)
+		wait_exit_status(shell);
 	reset_fd(shell);
 	return (VALID);
 }
@@ -43,18 +43,18 @@ int	exec_redirection(t_shell *shell, t_cmd **current)
 		if (here_doc(current, shell) == 130)
 			return (ERROR);
 	if (((*current)->infile) || (*current)->outfile)
-		if (ft_direction(current) == 0)
+		if (ft_direction(current, shell) == 0)
 			if (error_redirection(current, shell) == ERROR)
 				return (ERROR);
 	return (VALID);
 }
 
-void	wait_exit_status(void)
+void	wait_exit_status(t_shell *shell)
 {
-	if (WIFEXITED(g_exit_status))
-		g_exit_status = WEXITSTATUS(g_exit_status);
-	else if (WIFSIGNALED(g_exit_status))
-		g_exit_status = 128 + WTERMSIG(g_exit_status);
+	if (WIFEXITED(shell->exit_status))
+		shell->exit_status = WEXITSTATUS(shell->exit_status);
+	else if (WIFSIGNALED(shell->exit_status))
+		shell->exit_status = 128 + WTERMSIG(shell->exit_status);
 }
 
 int	error_redirection(t_cmd **cmd, t_shell *shell)
@@ -90,14 +90,14 @@ int	ft_exe(t_cmd *cmd, t_shell *shell)
 			return (error_cmd(cmd->arg[0]));
 		if (execve(cmd_path, cmd->arg, shell->env) == -1)
 		{
-			put_exit_status();
-			return (error_exit(cmd->arg[0]));
+			put_exit_status(shell);
+			return (error_exit(cmd->arg[0], shell));
 		}
 	}
 	else
 	{
-		waitpid(pid1, &g_exit_status, 0);
-		wait_exit_status();
+		waitpid(pid1, &shell->exit_status, 0);
+		wait_exit_status(shell);
 	}
 	return (VALID);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 23:24:52 by maw               #+#    #+#             */
-/*   Updated: 2025/04/20 11:46:13 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/23 09:28:43 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,6 @@ int	pwd(t_shell *shell)
 	buffer = getcwd(NULL, 0);
 	printf("%s\n", buffer);
 	free(buffer);
-	g_exit_status = 0;
+	shell->exit_status = 0;
 	return (VALID);
 }

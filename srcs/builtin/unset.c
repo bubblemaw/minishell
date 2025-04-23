@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 00:03:17 by maw               #+#    #+#             */
-/*   Updated: 2025/04/22 23:00:29 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/23 09:28:50 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@ int	unset(t_cmd *cmd, t_shell *shell)
 			k = 0;
 			while (shell->env[i][k] != '=')
 				k++;
-			if (strncmp(shell->env[i], cmd->arg[j], k) == 0
+			if (ft_strncmp(shell->env[i], cmd->arg[j], k) == 0
 				&& cmd->arg[j][k] == '\0')
 				slide_tab(shell->env, i);
 			i++;
 		}
 		j++;
 	}
-	g_exit_status = 0;
+	shell->exit_status = 0;
 	return (VALID);
 }
 

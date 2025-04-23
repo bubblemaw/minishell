@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: masase <masase@student.42.fr>              +#+  +:+       +#+         #
+#    By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 22:16:43 by david             #+#    #+#              #
-#    Updated: 2025/04/21 14:41:37 by masase           ###   ########.fr        #
+#    Updated: 2025/04/23 09:02:58 by dchellen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-CC = gcc
+CC = cc
 
 SRCS =  srcs/main/main.c \
 	    srcs/tokken/creat_token.c \
@@ -64,7 +64,7 @@ SRCS =  srcs/main/main.c \
 		srcs/utils/signal.c \
 		GNL/get_next_line.c \
 
-FLAGS = -Wall -Wextra -Werror  -g
+FLAGS = -Wall -Wextra -Werror
 
 LIBS = -lreadline
 

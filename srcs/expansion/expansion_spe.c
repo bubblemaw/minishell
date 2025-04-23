@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion_spe.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 14:14:55 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/16 09:52:54 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/23 09:21:09 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,14 @@ int	error_case(t_shell *shell, char *current, int *i)
 	{
 		if (shell->exp.new == NULL)
 		{
-			shell->exp.tmp_2 = ft_itoa(g_exit_status);
+			shell->exp.tmp_2 = ft_itoa(shell->exit_status);
 			shell->exp.new = ft_strdup(shell->exp.tmp_2);
 			free(shell->exp.tmp_2);
 		}
 		else
 		{
 			shell->exp.tmp_2 = shell->exp.new;
-			shell->exp.tmp_3 = ft_itoa(g_exit_status);
+			shell->exp.tmp_3 = ft_itoa(shell->exit_status);
 			shell->exp.new = ft_strjoin(shell->exp.new, shell->exp.tmp_3);
 			free(shell->exp.tmp_2);
 			free(shell->exp.tmp_3);

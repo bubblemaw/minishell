@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 15:25:49 by maw               #+#    #+#             */
-/*   Updated: 2025/04/13 11:53:35 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/23 09:26:01 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	echo(t_cmd *cmd)
+int	echo(t_cmd *cmd, t_shell *shell)
 {
 	int	flag_n;
 	int	i;
@@ -30,7 +30,7 @@ int	echo(t_cmd *cmd)
 	}
 	if (flag_n == 0)
 		ft_putstr_fd("\n", STDOUT_FILENO);
-	g_exit_status = 0;
+	shell->exit_status = 0;
 	return (VALID);
 }
 

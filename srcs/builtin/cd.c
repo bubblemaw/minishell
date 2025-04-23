@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 15:28:31 by maw               #+#    #+#             */
-/*   Updated: 2025/04/22 23:00:09 by maw              ###   ########.fr       */
+/*   Updated: 2025/04/23 09:23:42 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,15 @@ int	cd(t_cmd *cmd, t_shell *shell)
 	else if (cmd->arg[2])
 	{
 		error("too much arguments");
-		g_exit_status = 1;
+		shell->exit_status = 1;
 		return (VALID);
 	}
 	else
 		path = path_finder(cmd, buffer);
 	if (move_into_dir(cmd, shell, path) == ERROR)
-		g_exit_status = 1;
+		shell->exit_status = 1;
 	else
-		g_exit_status = 0;
+		shell->exit_status = 0;
 	return (VALID);
 }
 
@@ -59,7 +59,7 @@ int	move_into_dir(t_cmd *cmd, t_shell *shell, char *path)
 	else
 	{
 		perror(cmd->arg[1]);
-		g_exit_status = 1;
+		shell->exit_status = 1;
 		free (path);
 		return (ERROR);
 	}
@@ -76,7 +76,7 @@ void	findvar_replace(t_shell *shell, char *buffer)
 	buffer = getcwd(NULL, 0);
 	shell->path.pwd = ft_strjoin("PWD=", buffer);
 	free(buffer);
-	while (shell->env[i] && strncmp(shell->env[i], "PWD=", 4) != 0)
+	while (shell->env[i] && ft_strncmp(shell->env[i], "PWD=", 4) != 0)
 		i++;
 	if (shell->env[i] != NULL)
 	{
@@ -84,7 +84,7 @@ void	findvar_replace(t_shell *shell, char *buffer)
 		shell->env[i] = ft_strdup(shell->path.pwd);
 	}
 	i = 0;
-	while (shell->env[i] && strncmp(shell->env[i], "OLDPWD=", 7) != 0)
+	while (shell->env[i] && ft_strncmp(shell->env[i], "OLDPWD=", 7) != 0)
 		i++;
 	if (shell->env[i] != NULL)
 	{

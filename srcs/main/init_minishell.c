@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:31:21 by maw               #+#    #+#             */
-/*   Updated: 2025/04/20 18:22:28 by david            ###   ########.fr       */
+/*   Updated: 2025/04/23 09:33:18 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	init_execution(t_shell *shell)
 	shell->prev_pipefd = -1;
 	save_fd(shell);
 	shell->cmd = NULL;
-	g_exit_status = 0;
+	shell->exit_status = 0;
 	shell->invalid_redir = 0;
 	free_new_redirection(shell);
 }
@@ -78,12 +78,12 @@ void	save_pwd(t_shell *shell)
 	int	i;
 
 	i = 0;
-	while (shell->env[i] && strncmp(shell->env[i], "PWD=", 4) != 0)
+	while (shell->env[i] && ft_strncmp(shell->env[i], "PWD=", 4) != 0)
 		i++;
 	if (shell->env[i] != NULL)
 		shell->path.pwd = ft_strdup(shell->env[i]);
 	i = 0;
-	while (shell->env[i] && strncmp(shell->env[i], "OLDPWD=", 7) != 0)
+	while (shell->env[i] && ft_strncmp(shell->env[i], "OLDPWD=", 7) != 0)
 		i++;
 	if (shell->env[i] != NULL)
 		shell->path.oldpwd = ft_strdup(shell->env[i]);

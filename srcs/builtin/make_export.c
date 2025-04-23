@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_export.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 14:06:09 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/21 11:32:13 by david            ###   ########.fr       */
+/*   Updated: 2025/04/23 09:38:13 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	make_export(t_shell *shell, t_cmd *current, t_token *tmp, int *j)
 		}
 		else if (tmp->type == NAME && var_name_export(tmp->value) == ERROR)
 		{
-			error_export(tmp->value);
+			error_export(tmp->value, shell);
 			tmp = tmp->next;
 			(*j)++;
 		}

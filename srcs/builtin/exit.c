@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:12:55 by maw               #+#    #+#             */
-/*   Updated: 2025/04/21 12:32:30 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/23 09:28:18 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,16 @@ void	ft_exit(t_cmd *cmd, t_shell *shell)
 	{
 		printf("exit\n");
 		error("too much argument");
-		g_exit_status = 1;
+		shell->exit_status = 1;
 		return ;
 	}
-	if (is_arguments_digit(cmd->arg) == 0)
+	if (is_arguments_digit(cmd->arg, shell) == 0)
 		n = 2;
 	else if (i == 2)
 		n = ft_atoi(cmd->arg[1]);
 	free_shell(shell);
 	printf("exit\n");
-	g_exit_status = n;
+	shell->exit_status = n;
 	exit(n);
 }
 
@@ -47,7 +47,7 @@ void	ft_exit_void(int n, t_shell *shell)
 	exit(n);
 }
 
-int	is_arguments_digit(char **tab)
+int	is_arguments_digit(char **tab, t_shell *shell)
 {
 	int	i;
 	int	j;
@@ -64,7 +64,7 @@ int	is_arguments_digit(char **tab)
 			else
 			{
 				error("numerical number necessary");
-				g_exit_status = 2;
+				shell->exit_status = 2;
 				return (0);
 			}
 		}
@@ -73,10 +73,10 @@ int	is_arguments_digit(char **tab)
 	return (i);
 }
 
-void	put_exit_status(void)
+void	put_exit_status(t_shell *shell)
 {
 	if (errno == 13)
-		g_exit_status = 126;
+		shell->exit_status = 126;
 	else if (errno == 2)
-		g_exit_status = 127;
+		shell->exit_status = 127;
 }

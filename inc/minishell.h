@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/21 16:27:31 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/23 09:35:02 by dchellen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,6 @@
 # define PARENT_PROCESS 1
 # define CHILD_PROCESS 2
 # define DELIMITER 20
-
-// global variable
-extern int			g_exit_status;
 
 // parsing's type data
 typedef enum s_type
@@ -168,10 +165,10 @@ typedef struct s_shell
 	int				stdout_;
 	int				stderr_;
 	int				prev_pipefd;
-	int				exit_status;
 	int				invalid_redir;
 	int				here_doc_expan;
 	int				here_fd;
+	int				exit_status;
 	char			*input;
 	t_pwd			path;
 	t_redir			redir;
@@ -220,7 +217,7 @@ char	*ft_cmd_path(t_cmd *cmd, t_shell *shell);
 char	*join_path(char **tab_path, t_cmd *cmd);
 
 // redirection
-int		ft_direction(t_cmd **cmd);
+int		ft_direction(t_cmd **cmd, t_shell *shell);
 int		ft_test_direction(t_cmd *cmd);
 int		ft_direction_fake(t_cmd *cmd);
 int		outfile_direction_fake(t_cmd *cmd);
@@ -236,8 +233,8 @@ int		ft_execute(t_shell *shell);
 int		exec_redirection(t_shell *shell, t_cmd **current);
 int		ft_exe(t_cmd *token, t_shell *shell);
 int		error_redirection(t_cmd **cmd, t_shell *shell);
-void	wait_exit_status(void);
-void	put_exit_status(void);
+void	wait_exit_status(t_shell *shell);
+void	put_exit_status(t_shell *shell);
 
 // built in fonctions
 int		built_in(t_cmd *cmd, t_shell *shell);
@@ -247,7 +244,7 @@ void	make_export(t_shell *shell, t_cmd *current, t_token *tmp, int *j);
 int		compare_with_env(t_shell *shell, t_token *tmp);
 int		compare_with_export_tab(t_shell *shell, char *var);
 int		export_check(t_shell *shell);
-int		echo(t_cmd *cmd);
+int		echo(t_cmd *cmd, t_shell *shell);
 int		echo_option(t_cmd *cmd);
 int		cd(t_cmd *cmd, t_shell *shell);
 int		move_into_dir(t_cmd *cmd, t_shell *shell, char *path);
@@ -261,7 +258,7 @@ int		unset(t_cmd *cmd, t_shell *shell);
 int		ft_strlen_to_equal(char *str);
 int		slide_tab(char **tab, int i);
 void	ft_exit(t_cmd *cmd, t_shell *shell);
-int		is_arguments_digit(char **tab);
+int		is_arguments_digit(char **tab, t_shell *shell);
 
 // token list -> cmd list
 t_cmd	*end_list(t_cmd *head);
@@ -397,9 +394,9 @@ void	free_split(char **str);
 // error
 int		error_cmd(char *str);
 int		error(char *str);
-int		error_exit(char *str);
-int		error_var(char *str);
-int		error_export(char *str);
+int		error_exit(char *str, t_shell *shell);
+int		error_var(char *str, t_shell *shell);
+int		error_export(char *str, t_shell *shell);
 
 //utils
 void	print_tab(char **tab);
