@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/04/23 09:36:43 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/23 10:10:02 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,7 @@ void	start_execution(t_shell *shell)
 	if (export_boucle(shell) == 0)
 		init_var_local(shell);
 	signal(SIGINT, signalhandler_exec);
-	signal(SIGQUIT, signalhandler_back);
 	ft_execute(shell);
-	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, signalhandler);
 }
 

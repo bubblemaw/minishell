@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 22:31:22 by maw               #+#    #+#             */
-/*   Updated: 2025/04/23 09:33:52 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/23 09:58:44 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	signalhandler_exec(int signal)
 	{
 		write(1, "\n", 1);
 		rl_on_new_line();
-		rl_replace_line("", 0);;
+		rl_replace_line("", 0);
 	}
 	return ;
 }
@@ -50,6 +50,7 @@ void	signalhandler_heredoc(int signal)
 	if (signal == SIGINT)
 	{
 		write(STDOUT_FILENO, "\n", 1);
+		exit(130);
 	}
 	return ;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:16:38 by maw               #+#    #+#             */
-/*   Updated: 2025/04/23 09:36:09 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/23 10:07:59 by masase           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,12 @@ int	ft_execute(t_shell *shell)
 			return (ERROR);
 		if (current == NULL)
 			break ;
+		signal(SIGQUIT, signalhandler_back);
 		if (current->arg && shell->invalid_redir == 0)
 			ft_exe(current, shell);
 		current = current->next;
 		shell->invalid_redir = 0;
+		signal(SIGQUIT, SIG_IGN);
 	}
 	while (wait(&shell->exit_status) > 0)
 		wait_exit_status(shell);
