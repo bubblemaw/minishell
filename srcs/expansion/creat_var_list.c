@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   creat_var_list.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 23:36:46 by david             #+#    #+#             */
-/*   Updated: 2025/04/20 11:56:45 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/23 02:03:12 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	creat_var_list(t_shell *shell, t_token *temp)
+void	creat_var_list(t_shell *shell, char *name, char *value)
 {
-	shell->creat.new_var = creat_node_var(temp->prev->prev->value, temp->value);
+	shell->creat.new_var = creat_node_var(name, value);
 	add_node_var(shell, shell->creat.new_var);
 	return ;
 }
@@ -75,8 +75,8 @@ void	print_var_local(t_var *head)
 	i = 0;
 	while (current != NULL)
 	{
-		printf("node[%d] -> %s\n",
-			i, current->value);
+		printf("var[%d] / %s / %s\n",
+			i, current->name, current->value);
 		current = current->next;
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:44:05 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/22 15:54:53 by david            ###   ########.fr       */
+/*   Updated: 2025/04/23 01:57:19 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,27 +16,35 @@ int	init_var_local(t_shell *shell)
 {
 	t_token	*temp;
 	t_var	*exist_var;
-	bool	send;
+	int		i;
+	int		start;
+	char	*name;
+	char	*value;
 
 	temp = shell->tokken;
-	send = false;
+	i = 0;
+	name = NULL;
+	value = NULL;
 	if (temp->type == COMMAND)
 		return (0);
 	while (temp != NULL)
 	{
-		if (temp->type == NAME)
-			exist_var = check_doubles(shell->var, temp->value);
-		else if (send == true && temp->type == VALUE)
+		if (temp->type == VAR)
 		{
-			if (replace_var(exist_var, temp) != VALID)
-				creat_var_list(shell, temp);
-			send = false;
+			while (temp->value[i] != '=')
+				i++;
+			name = ft_substr(temp->value, 0, i);
+			i++;
+			start = i;
+			while (temp->value[i] != '\0')
+				i++;
+			value = ft_substr(temp->value, start, i);
+			exist_var = check_doubles(shell->var, name);
+			if (replace_var(exist_var, value) != VALID)
+				creat_var_list(shell, name, value);
+			crush_export_var(shell, name, value);
+			temp = temp->next;
 		}
-		else if (temp->type == EQUALITY)
-			send = true;
-		if (temp->type == NAME)
-			crush_export_var(shell, temp->value, temp->next->next->value);
-		temp = temp->next;
 	}
 	return (0);
 }
@@ -57,12 +65,12 @@ t_var	*check_doubles(t_var *check, char *name)
 	return (NULL);
 }
 
-int	replace_var(t_var *exist_var, t_token *temp)
+int	replace_var(t_var *exist_var, char *value)
 {
 	if (exist_var != NULL)
 	{
 		free(exist_var->value);
-		exist_var->value = ft_strdup(temp->value);
+		exist_var->value = ft_strdup(value);
 		return (VALID);
 	}
 	return (0);

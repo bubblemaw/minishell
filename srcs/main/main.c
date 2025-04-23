@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 12:34:48 by david             #+#    #+#             */
-/*   Updated: 2025/04/22 16:21:45 by david            ###   ########.fr       */
+/*   Updated: 2025/04/23 10:16:30 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,9 @@ int	main(int ac, char *av[], char **env)
 			error_var(shell.creat.err);
 			continue ;
 		}
-		// print_token(shell.tokken);
+		print_token(shell.tokken);
 		start_execution(&shell);
+		print_var_local(shell.var);
 	}
 	return (0);
 }

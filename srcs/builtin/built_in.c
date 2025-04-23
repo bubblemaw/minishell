@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 16:34:33 by maw               #+#    #+#             */
-/*   Updated: 2025/04/22 15:30:21 by david            ###   ########.fr       */
+/*   Updated: 2025/04/23 01:45:33 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	export_check(t_shell *shell)
 			tmp = tmp->next;
 		else
 		{
-			if (tmp->type == NAME && var_name(tmp->value) == ERROR)
+			if (tmp->type == VAR && var_name(tmp->value) == ERROR)
 				ft_putstr_fd("export: has a invalid identifier\n",
 					STDERR_FILENO);
 			tmp = tmp->next;

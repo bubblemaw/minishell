@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:04:10 by maw               #+#    #+#             */
-/*   Updated: 2025/04/22 15:57:08 by david            ###   ########.fr       */
+/*   Updated: 2025/04/23 10:00:00 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,7 @@ extern int			g_exit_status;
 // parsing's type data
 typedef enum s_type
 {
-	NAME,
-	EQUALITY,
-	VALUE,
+	VAR,
 	COMMAND,
 	REDIRECTION,
 	PIPE,
@@ -298,9 +296,9 @@ void	close_pipe(int *pipefd);
 // local gestion
 int		init_var_local(t_shell *shell);
 t_var	*check_doubles(t_var *check, char *name);
-int		replace_var(t_var *exist_var, t_token *temp);
+int		replace_var(t_var *exist_var, char *value);
 int		crush_export_var(t_shell *shell, char *name, char *value);
-void	creat_var_list(t_shell *shell, t_token *temp);
+void	creat_var_list(t_shell *shell, char *name, char *value);
 t_var	*creat_node_var(char *name, char *content);
 void	add_node_var(t_shell *shell, t_var *new);
 void	free_list_var(t_var *head);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_to_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masase <masase@student.42.fr>              +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 12:00:01 by maw               #+#    #+#             */
-/*   Updated: 2025/04/20 12:13:51 by masase           ###   ########.fr       */
+/*   Updated: 2025/04/23 01:48:13 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ int	create_cmd_lst(t_shell *shell)
 	new_cmd(&shell->cmd, &current);
 	while (tokken)
 	{
-		if (tokken->type == NAME || tokken->type == EQUALITY
-			|| tokken->type == VALUE)
+		if (tokken->type == VAR)
 			tokken = tokken->next;
 		else if (tokken->type == COMMAND)
 			ft_cmd_maker(shell, current, &tokken);
@@ -50,11 +49,10 @@ int	ft_cmd_maker(t_shell *shell, t_cmd *cmd, t_token **tokken)
 		&& ft_strncmp((*tokken)->value, "export", 6) == 0)
 		shell->exp.valid = 1;
 	while (*tokken && ((*tokken)->type == OPTION || (*tokken)->type == ARG
-			|| (*tokken)->type == COMMAND || (*tokken)->type == NAME
-			|| (*tokken)->type == EQUALITY || (*tokken)->type == VALUE))
+			|| (*tokken)->type == COMMAND || (*tokken)->type == VAR))
 	{
-		if ((*tokken)->type == NAME && shell->exp.valid == 1)
-			join_var(tokken);
+		// if ((*tokken)->type == NAME && shell->exp.valid == 1)
+		// 	join_var(tokken);
 		cmd->arg = ft_realloc(cmd->arg, i * sizeof(char *),
 				(i + 1) * sizeof(char *));
 		cmd->arg[i] = ft_strdup((*tokken)->value);

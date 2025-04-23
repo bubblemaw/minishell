@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 14:06:09 by dchellen          #+#    #+#             */
-/*   Updated: 2025/04/21 11:32:13 by david            ###   ########.fr       */
+/*   Updated: 2025/04/23 01:43:11 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	make_export(t_shell *shell, t_cmd *current, t_token *tmp, int *j)
 			tmp = tmp->next;
 			(*j)++;
 		}
-		else if (tmp->type == NAME && var_name_export(tmp->value) == ERROR)
+		else if (tmp->type == VAR && var_name_export(tmp->value) == ERROR)
 		{
 			error_export(tmp->value);
 			tmp = tmp->next;
