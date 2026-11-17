@@ -1,132 +1,115 @@
-PLAN DE MINSHELL
+# Minishell
 
-(1) boucle infini qui attend un str ce str etant la commande souhaitee
-    - afficher un prompt qui attend une commande
-    - Tokkenisation de la commande
+Minishell est un shell minimaliste écrit en C, inspiré du comportement de
+`bash`. Le projet implémente la lecture, l'analyse et l'exécution de commandes
+dans un terminal interactif.
 
-        - Les commandes doivent obligatoirement etre separees par un ou plusieurs
-            espaces
-        - les options egalement
-        - mais les redirection peuve etre collees ou avoir plusieurs espaces
-        - quand on crée des variables tout doit être collé avant et apres le =
-        - si on detecte des "" ou '' c est considere comme
- 		  un separateur jusqu a ce qu on le retrouve
+## Fonctionnalités
 
-        - GESTIONS A DISTINGUER EN TYPE
-            - tab en 2 dimensions
-            - commande + arguments / options
-            - a voir pour les redirections
-            - ajout pour les append
+- prompt interactif avec historique via Readline ;
+- exécution de commandes externes trouvées dans `PATH` ;
+- arguments et options ;
+- pipes (`|`) ;
+- redirections :
+  - entrée (`<`) ;
+  - sortie avec écrasement (`>`) ;
+  - sortie en mode append (`>>`) ;
+  - heredoc (`<<`) ;
+- guillemets simples et doubles ;
+- expansion des variables d'environnement ;
+- builtins :
+  `echo`, `cd`, `pwd`, `export`, `unset`, `env` et `exit` ;
+- gestion des signaux du terminal.
 
-        - mettre un flag begin et end pour savoir de ou a ou va le mot dans le string
-        - injecter cette partie du string dans un noeud de la liste chainee
-        - pour injecter le noeud il faut faire un substr de la partie du string
-	        que l on souhaite prendre
+## Plateforme cible et prérequis
 
-        GESTION ERREUR DES TOKKENS
-        - verifier l'ordre des elements
-        - verifier la validiter de la commande
-        - verifier la validiter des redirection
+Le projet est principalement conçu pour **Linux**, qui constitue la plateforme
+cible. La gestion des signaux utilise `rl_replace_line()`, disponible dans
+l'environnement Readline attendu sous Linux.
 
-(2) parsing pour aller chercher les commandes
-    - verifier tous les chemins du PATH, donc mettre **env en arg
-    - verifier si la commande est executable (execve)
-    - gerer une erreur si la commande n'est pas trouvee
+macOS n'est pas la plateforme cible et peut nécessiter des adaptations liées à
+la version de Readline fournie par le système. La compilation et le support
+complet ne sont donc pas garantis sur macOS.
 
-//-------------------------------------------------------------------------------//
+- Linux (plateforme recommandée) ;
+- compilateur C compatible avec `cc` ;
+- `make` ;
+- bibliothèque Readline (`libreadline`).
 
-(3) execution des commandes.
-    (2)
-    - comparaisons de verifications de commande
-        - comparer les tokken recus avec les foncions du PATH ou les built in
-    (4)
-    - creation du processsus enfant
-    - gere les redirection avec les fonctions
-    - execution de l'enfant
-    - mise en attente du parent (waitpid)
+Sur Debian/Ubuntu, les dépendances peuvent être installées avec :
 
-(4) redirection des inputs/outputs et pipe
-    - une fonction pour chaque type de redirection
-        - inputs / outputs
-            - > redirige dans un fichier et ecrase
-            - >> redirige mais n ecrase pas
-            - < redirige un fichier vers une commande
-            - << pas bien compris pour le moment
-        - pipe
-            - la sortie avant | devient l entree de la prochaine commande
-    - appliquer n'importe quelle fonction de redirection a un tokken
-        - quotes ''  $ a gerer
-            - '' = Afficher tous les char sans aucune interpretation
-            -  = les char doivent etre interprete dchellen
-            - sans quotes, interpretation
+```bash
+sudo apt install build-essential libreadline-dev
+```
 
-recodage des commandes internes built in
-    - echo with -n (le n enleve le retour a la ligne automatique)
-    - cd     (deplacements)
-    - pwd    (affiche le repertoire courrant)
-    - export (modifie le nom d'une variable env ou cree si existe pas)
-    - unset  (desactive une variable d environnement)
-    - env    (affiche l environnement)
-    - exit   (quitte le terminal)
-        - la commande exit doit return la bonne valeur de sortie si on fait echo
-gestion des signaux ctrl-C ctrl-D ctr-    - sigint
-    - sigquit
+Sur macOS, Readline peut être installée avec Homebrew, mais cette plateforme
+n'est pas la cible principale :
 
-historique
-    - gerer un historique qui repertorie TOUTES les commandes effectuers
+```bash
+brew install readline
+```
 
+## Compilation
 
-//-------------------------------------------------------------------------------//
+```bash
+make
+```
 
-QUELQUES TEST DE fonctions
+Pour supprimer les fichiers générés :
 
-echo
+```bash
+make clean
+make fclean
+```
 
-dchellen@c1r7s1:~/Desktop/minishell$ echo "bonjour"
-bonjour
-dchellen@c1r7s1:~/Desktop/minishell$ echo "bonjour" "ca va"
-bonjour ca va
-dchellen@c1r7s1:~/Desktop/minishell$ echo "bonjour""ca va"
-bonjourca va
-dchellen@c1r7s1:~/Desktop/minishell$ echo ""bonjour" "ca va""
-bonjour ca va
-dchellen@c1r7s1:~/Desktop/minishell$ echo "bonjour" "ca va"
-bonjour ca va
-dchellen@c1r7s1:~/Desktop/minishell$ echo "bonjour" "ca va" 'eh'
-bonjour ca va eh
-dchellen@c1r7s1:~/Desktop/minishell$ echo "bonjour" "ca va" 'eh''
-> ^C
-dchellen@c1r7s1:~/Desktop/minishell$ echo "bonjour"""
-bonjour
-dchellen@c1r7s1:~/Desktop/minishell$ echo "bonjour"""""
-bonjour
-dchellen@c1r7s1:~/Desktop/minishell$ echo "bonjour"""""""
-bonjour
-dchellen@c1r7s1:~/Desktop/minishell$ echo "bonjour""""""""
-> ^C
-dchellen@c1r7s1:~/Desktop/minishell$ echo "bonjour" "ca va"
-bonjour ca va
-dchellen@c1r7s1:~/Desktop/minishell$ echo "bonjour" " ca va"
-bonjour  ca va
-dchellen@c1r7s1:~/Desktop/minishell$ echo "bonjour" "ca va"
-bonjour ca va
+Pour recompiler entièrement :
 
-//-----------------------------------------------------------------------------//
+```bash
+make re
+```
 
-GESTION DES PRIORITEES EN BASH
+## Utilisation
 
-1. preparer l entree avec les redirection
-    < et << prennent ce qu il y a a droite 
-    et en font l'entree de l'element a gauche
+```bash
+./minishell
+```
 
-2. transmissions entre processsusavec les pipes
-    transmissions des entree et sortie a tranvers Les
-    child processsus
+Exemples :
 
-3. executer la commande
-    execture la commande avec les redirections au 
-    prealable
+```bash
+echo "hello world"
+pwd
+ls -la | grep minishell
+echo "$HOME"
+cat < input.txt > output.txt
+cat << EOF
+contenu du heredoc
+EOF
+```
 
-4. rediriger vers la sortie
-    prendre la sortie de l'exec de la commande et
-    le mettre dans la sortie
+## Organisation du projet
+
+- `srcs/main/` : point d'entrée et initialisation ;
+- `srcs/tokken/` : tokenisation et validation des tokens ;
+- `srcs/token_to_cmd/` : conversion des tokens en commandes ;
+- `srcs/cmd_parsing/` : recherche des exécutables ;
+- `srcs/execution/` : exécution et gestion des pipes ;
+- `srcs/redirection/` : redirections et heredocs ;
+- `srcs/expansion/` : variables, guillemets et expansions ;
+- `srcs/builtin/` : commandes internes ;
+- `srcs/error_free/` : erreurs et libération mémoire ;
+- `srcs/utils/` : fonctions utilitaires et signaux ;
+- `libft/` : bibliothèque C personnalisée ;
+- `GNL/` : fonctions de lecture de lignes ;
+- `inc/minishell.h` : structures et prototypes principaux.
+
+## État du projet
+
+La branche `develop` a été fusionnée dans `main`. Le projet compile avec
+`make` et contient désormais l'implémentation complète prévue pour le shell.
+Des tests complémentaires restent recommandés pour valider tous les cas
+limites, notamment les erreurs de syntaxe, les heredocs et les signaux.
+
+## Licence
+
+Projet personnel / projet académique.

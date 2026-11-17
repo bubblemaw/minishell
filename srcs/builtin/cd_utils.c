@@ -37,6 +37,7 @@ char	*find_user_name(char **tab)
 	char	*path;
 
 	i = 0;
+	path = NULL;
 	while (tab[i] && strncmp(tab[i], "USER=", 5))
 		i++;
 	if (tab[i] != NULL)
