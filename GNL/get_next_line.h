@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchellen <dchellen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maw <maw@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 18:42:57 by maw               #+#    #+#             */
-/*   Updated: 2025/03/06 15:35:08 by dchellen         ###   ########.fr       */
+/*   Updated: 2025/04/13 11:49:42 by maw              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 512
+
 char	*get_next_line(int fd);
+
 # endif
 #endif
