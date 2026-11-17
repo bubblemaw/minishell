@@ -1,49 +1,48 @@
 # Minishell
 
-Minishell est un shell minimaliste écrit en C, inspiré du comportement de
-`bash`. Le projet implémente la lecture, l'analyse et l'exécution de commandes
-dans un terminal interactif.
+Minishell is a minimal shell written in C and inspired by `bash`. The project
+implements command reading, parsing, and execution in an interactive terminal.
 
-## Fonctionnalités
+## Features
 
-- prompt interactif avec historique via Readline ;
-- exécution de commandes externes trouvées dans `PATH` ;
-- arguments et options ;
-- pipes (`|`) ;
-- redirections :
-  - entrée (`<`) ;
-  - sortie avec écrasement (`>`) ;
-  - sortie en mode append (`>>`) ;
-  - heredoc (`<<`) ;
-- guillemets simples et doubles ;
-- expansion des variables d'environnement ;
-- builtins :
-  `echo`, `cd`, `pwd`, `export`, `unset`, `env` et `exit` ;
-- gestion des signaux du terminal.
+- interactive prompt with Readline history;
+- execution of external commands found in `PATH`;
+- arguments and options;
+- pipes (`|`);
+- redirections:
+  - input (`<`);
+  - output with overwrite (`>`);
+  - output in append mode (`>>`);
+  - heredoc (`<<`);
+- single and double quotes;
+- environment variable expansion;
+- builtins:
+  `echo`, `cd`, `pwd`, `export`, `unset`, `env`, and `exit`;
+- terminal signal handling.
 
-## Plateforme cible et prérequis
+## Target platform and prerequisites
 
-Le projet est principalement conçu pour **Linux**, qui constitue la plateforme
-cible. La gestion des signaux utilise `rl_replace_line()`, disponible dans
-l'environnement Readline attendu sous Linux.
+The project is primarily designed for **Linux**, which is the target platform.
+Signal handling uses `rl_replace_line()`, available in the expected Linux
+Readline environment.
 
-macOS n'est pas la plateforme cible et peut nécessiter des adaptations liées à
-la version de Readline fournie par le système. La compilation et le support
-complet ne sont donc pas garantis sur macOS.
+macOS is not the target platform and may require adaptations depending on the
+Readline version provided by the system. Full compilation and support are
+therefore not guaranteed on macOS.
 
-- Linux (plateforme recommandée) ;
-- compilateur C compatible avec `cc` ;
-- `make` ;
-- bibliothèque Readline (`libreadline`).
+- Linux (recommended platform);
+- a C compiler compatible with `cc`;
+- `make`;
+- the Readline library (`libreadline`).
 
-Sur Debian/Ubuntu, les dépendances peuvent être installées avec :
+On Debian/Ubuntu, install the dependencies with:
 
 ```bash
 sudo apt install build-essential libreadline-dev
 ```
 
-Sur macOS, Readline peut être installée avec Homebrew, mais cette plateforme
-n'est pas la cible principale :
+On macOS, Readline can be installed with Homebrew, but macOS is not the main
+target platform:
 
 ```bash
 brew install readline
@@ -55,26 +54,26 @@ brew install readline
 make
 ```
 
-Pour supprimer les fichiers générés :
+To remove generated files:
 
 ```bash
 make clean
 make fclean
 ```
 
-Pour recompiler entièrement :
+To perform a full rebuild:
 
 ```bash
 make re
 ```
 
-## Utilisation
+## Usage
 
 ```bash
 ./minishell
 ```
 
-Exemples :
+Examples:
 
 ```bash
 echo "hello world"
@@ -83,33 +82,22 @@ ls -la | grep minishell
 echo "$HOME"
 cat < input.txt > output.txt
 cat << EOF
-contenu du heredoc
+heredoc content
 EOF
 ```
 
-## Organisation du projet
+## Project structure
 
-- `srcs/main/` : point d'entrée et initialisation ;
-- `srcs/tokken/` : tokenisation et validation des tokens ;
-- `srcs/token_to_cmd/` : conversion des tokens en commandes ;
-- `srcs/cmd_parsing/` : recherche des exécutables ;
-- `srcs/execution/` : exécution et gestion des pipes ;
-- `srcs/redirection/` : redirections et heredocs ;
-- `srcs/expansion/` : variables, guillemets et expansions ;
-- `srcs/builtin/` : commandes internes ;
-- `srcs/error_free/` : erreurs et libération mémoire ;
-- `srcs/utils/` : fonctions utilitaires et signaux ;
-- `libft/` : bibliothèque C personnalisée ;
-- `GNL/` : fonctions de lecture de lignes ;
-- `inc/minishell.h` : structures et prototypes principaux.
-
-## État du projet
-
-La branche `develop` a été fusionnée dans `main`. Le projet compile avec
-`make` et contient désormais l'implémentation complète prévue pour le shell.
-Des tests complémentaires restent recommandés pour valider tous les cas
-limites, notamment les erreurs de syntaxe, les heredocs et les signaux.
-
-## Licence
-
-Projet personnel / projet académique.
+- `srcs/main/`: entry point and initialization;
+- `srcs/tokken/`: tokenization and token validation;
+- `srcs/token_to_cmd/`: conversion from tokens to commands;
+- `srcs/cmd_parsing/`: executable lookup;
+- `srcs/execution/`: command execution and pipe handling;
+- `srcs/redirection/`: redirections and heredocs;
+- `srcs/expansion/`: variables, quotes, and expansions;
+- `srcs/builtin/`: builtin commands;
+- `srcs/error_free/`: error handling and memory cleanup;
+- `srcs/utils/`: utility functions and signal handling;
+- `libft/`: custom C library;
+- `GNL/`: line-reading functions;
+- `inc/minishell.h`: main structures and prototypes.
